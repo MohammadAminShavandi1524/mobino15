@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import "./Webfonts/fontiran.css";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
@@ -14,11 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider enableSystem>
-          {children}
-        </ThemeProvider>
+    <html dir="rtl" lang="en" suppressHydrationWarning>
+      <body className="font-IRANYekanX">
+        <ThemeProvider enableSystem>{children}</ThemeProvider>
       </body>
     </html>
   );
