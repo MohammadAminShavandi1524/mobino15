@@ -17,14 +17,14 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import NavbarSidebar from "./NavbarSidebar";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Header = () => {
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
-  console.log("🚀 ~ Header ~ isSideBarOpen:", isSideBarOpen);
-  
+
   useEffect(() => {
     if (isSideBarOpen) {
       document.body.style.overflow = "hidden";
@@ -49,6 +49,7 @@ const Header = () => {
 
       {/* banners */}
       <Image
+        className={cn("", isBannerDisplayed && "block")}
         src="/banner.png"
         alt="top banner"
         width={0}
@@ -106,7 +107,10 @@ const Header = () => {
             onClick={() => {
               setIsSideBarOpen(!isSideBarOpen);
             }}
-            className="p-2.5 flex items-center gap-x-2 cursor-pointer "
+            className={cn(
+              "p-2.5 flex items-center gap-x-2 cursor-pointer rounded-md hover:bg-[#f1f8ff] hover:text-primary ",
+              isSideBarOpen && "bg-[#f1f8ff] text-primary"
+            )}
           >
             <span>
               <Menu />
