@@ -7,7 +7,7 @@ import {
   ShoppingCart,
   Wallet,
 } from "lucide-react";
-import { Button } from "../ui/button";
+
 import Link from "next/link";
 import ThemeButton from "./ThemeButton";
 import { useTheme } from "next-themes";
@@ -15,14 +15,38 @@ import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import NavbarSidebar from "./NavbarSidebar";
 
 const Header = () => {
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
+  const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
+  const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
+  console.log("🚀 ~ Header ~ isSideBarOpen:", isSideBarOpen);
+  
+  useEffect(() => {
+    if (isSideBarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isSideBarOpen]);
 
   return (
-    
-    <header className="border-2 border-chart-1 mb-10 bg-background flex flex-col w-full mx-auto">
+    <header className="relative border-2 border-chart-1 mb-10 bg-background flex flex-col w-full mx-auto">
+      {/* sidebar */}
+
+      <NavbarSidebar
+        isOpen={isSideBarOpen}
+        setIsOpen={setIsSideBarOpen}
+        isBannerDisplayed={isBannerDisplayed}
+      />
+
       {/* banners */}
       <Image
         src="/banner.png"
@@ -41,7 +65,7 @@ const Header = () => {
             {/* logo */}
             <Logo />
             {/* searchbar */}
-            <div className="flex gap-x-4 w-[600px] rounded-xl bg-[#f0f0f0] px-4 py-3">
+            <div className=" flex gap-x-4 w-[600px] rounded-xl bg-[#f0f0f0] px-4 py-3">
               <span className="text-3xl text-gray-400">
                 <Search />
               </span>
@@ -52,7 +76,7 @@ const Header = () => {
               />
             </div>
           </section>
-           {/* auth and cart button  */}
+          {/* auth and cart button  */}
           <section className="flex items-center gap-x-6">
             {/* dark/light mode button */}
             <ThemeButton />
@@ -78,12 +102,17 @@ const Header = () => {
         {/* navbar */}
         <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3">
           {/* Product categories */}
-          <div className="p-2.5 flex items-center gap-x-2 cursor-pointer ">
+          <button
+            onClick={() => {
+              setIsSideBarOpen(!isSideBarOpen);
+            }}
+            className="p-2.5 flex items-center gap-x-2 cursor-pointer "
+          >
             <span>
               <Menu />
             </span>
             <span>دسته بندی محصولات</span>
-          </div>
+          </button>
           {/* optional pages */}
           <div className="flex items-center gap-x-4 mx-2">
             <Link
@@ -129,5 +158,5 @@ const Header = () => {
     </header>
   );
 };
-console.log("🚀 ~ Header ~ useTheme:", useTheme);
+
 export default Header;

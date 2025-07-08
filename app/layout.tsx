@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" lang="en" suppressHydrationWarning>
-      <body className="font-IRANYekanX flex flex-col items-center w-full">
+      <body className="font-IRANYekanX flex flex-col items-center w-full ">
         <ThemeProvider enableSystem>
           <Header/>
           {children}
