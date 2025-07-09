@@ -20,10 +20,10 @@ export default function RootLayout({
     <html dir="rtl" lang="en" suppressHydrationWarning>
       <body className="font-IRANYekanX flex flex-col items-center w-full ">
         <ThemeProvider enableSystem>
-          <Header/>
+          <Header />
           {children}
-          <Footer/>
-          </ThemeProvider>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

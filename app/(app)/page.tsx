@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Hello from "../components/mycomponents/Hello";
+import Hello from "../../components/mycomponents/Hello";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

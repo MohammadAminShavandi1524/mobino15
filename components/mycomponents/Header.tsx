@@ -103,7 +103,8 @@ const Header = () => {
         {/* navbar */}
         <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3">
           {/* Product categories */}
-          <button
+          <motion.button
+            key="modal"
             onClick={() => {
               setIsSideBarOpen(!isSideBarOpen);
             }}
@@ -116,7 +117,7 @@ const Header = () => {
               <Menu />
             </span>
             <span>دسته بندی محصولات</span>
-          </button>
+          </motion.button>
           {/* optional pages */}
           <div className="flex items-center gap-x-4 mx-2">
             <Link
