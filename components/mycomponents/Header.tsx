@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import NavbarSidebar from "./NavbarSidebar";
 import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "../ui/button";
 
 const Header = () => {
   const { resolvedTheme } = useTheme();
@@ -79,6 +80,10 @@ const Header = () => {
           </section>
           {/* auth and cart button  */}
           <section className="flex items-center gap-x-6">
+            {/* experimental admin panel button  */}
+            <Button asChild variant={"default"}>
+              <Link href="/admin">پنل ادمین</Link>
+            </Button>
             {/* dark/light mode button */}
             <ThemeButton />
             {/* login/signup button */}
