@@ -69,7 +69,7 @@ const NavbarSidebar = ({
                 //     ? {
                 //         backgroundColor: adjustAlpha(
                 //           doc.logoColor ?? "#111111",
-                //           0.15
+                //           0.30
                 //         ),
                 //       }
                 //     : undefined
@@ -104,15 +104,21 @@ const NavbarSidebar = ({
                   </div>
                   {/* arrow logo */}
                   {!!doc.subcategories?.docs?.length && (
-                    <div
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      whileHover={{ scale: 1.3 }}
+                      whileTap={{ scale: 0.8 }}
                       className={cn(
-                        "opacity-0",
+                        "w-8 h-8 flex items-center justify-center opacity-0",
                         activeCategory === doc && "opacity-100"
                       )}
-                      style={{ color: doc.logoColor ?? undefined }}
+                      style={{
+                        color: doc.logoColor ?? undefined,
+                        display: "inline-flex",
+                      }}
                     >
-                      <ChevronLeft size={20} />
-                    </div>
+                      <ChevronLeft size={22} />
+                    </motion.div>
                   )}
                 </Link>
               </li>
