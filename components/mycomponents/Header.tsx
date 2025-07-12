@@ -16,11 +16,17 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import NavbarSidebar from "./NavbarSidebar";
+import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "../ui/button";
+import { Category } from "@/payload-types";
+import { PaginatedDocs } from "payload";
 
-const Header = () => {
+interface HeaderProps {
+  data: PaginatedDocs<Category>;
+}
+
+const Header = ({ data }: HeaderProps) => {
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
@@ -46,6 +52,7 @@ const Header = () => {
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}
+        data={data}
       />
 
       {/* banners */}
