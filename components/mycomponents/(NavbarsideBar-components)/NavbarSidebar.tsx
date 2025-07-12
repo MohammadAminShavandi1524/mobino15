@@ -22,18 +22,24 @@ const NavbarSidebar = ({
   data,
 }: NavbarSidebarProps) => {
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
-
+  const [activeSubCategory, setActiveSubCategory] = useState<null | Category>(
+    null
+  );
   const selectedCategory = data.docs.find((doc: Category) => {
     const findedDoc = doc === activeCategory;
     return findedDoc;
   });
 
-  const filteredData = data.docs.filter((doc) => {
-    if (doc.subcategories?.docs?.length)
-      return doc.subcategories?.docs?.length > 0;
-  });
+  function adjustAlpha(rgba: string, newAlpha: number): string {
+    return rgba.replace(
+      /rgba?\((\d+),\s*(\d+),\s*(\d+),\s*\d*\.?\d+\)/,
+      `rgba($1, $2, $3, ${newAlpha})`
+    );
+  }
 
-  console.log(filteredData);
+  function generateGradient(rgba: string): string {
+    return `linear-gradient(to left, ${rgba}, ${adjustAlpha(rgba, 0.1)})`;
+  }
 
   if (isOpen) {
     return (
@@ -58,6 +64,25 @@ const NavbarSidebar = ({
                   "pb-1 mb-1 border-b border-b-[#f0f0f0] rounded-md group",
                   activeCategory === doc && "bg-[#f1f8ff]"
                 )}
+                // style={
+                //   activeCategory === doc
+                //     ? {
+                //         backgroundColor: adjustAlpha(
+                //           doc.logoColor ?? "#111111",
+                //           0.15
+                //         ),
+                //       }
+                //     : undefined
+                // }
+                style={
+                  activeCategory === doc
+                    ? {
+                        background: generateGradient(
+                          doc.logoColor ?? "rgba(100,166,227,1)"
+                        ),
+                      }
+                    : undefined
+                }
               >
                 <Link
                   className="flex items-center py-[10px] pr-[14px] pl-3 "
@@ -84,6 +109,7 @@ const NavbarSidebar = ({
                         "opacity-0",
                         activeCategory === doc && "opacity-100"
                       )}
+                      style={{ color: doc.logoColor ?? undefined }}
                     >
                       <ChevronLeft size={20} />
                     </div>
@@ -101,7 +127,17 @@ const NavbarSidebar = ({
           >
             <Link
               href={""}
-              className="min-h-10 text-[#333] bg-[#f1f8ff] font-semibold py-2 px-4 rounded-md mr-4"
+              className="min-h-10 text-[#333]  font-semibold py-2 px-4 rounded-md mr-4"
+              style={
+                activeCategory
+                  ? {
+                      backgroundColor: adjustAlpha(
+                        activeCategory.logoColor ?? "#111111",
+                        0.3
+                      ),
+                    }
+                  : undefined
+              }
             >
               <span>همه محصولات</span>
               <span> </span>
@@ -113,8 +149,20 @@ const NavbarSidebar = ({
                 (sub) => {
                   return (
                     <li
-                      className="min-h-10 flex items-center text-base pr-8 text-[#333] hover:bg-[#f1f8ff] rounded-sm"
                       key={sub.id}
+                      onMouseEnter={() => setActiveSubCategory(sub || null)}
+                      onMouseLeave={() => setActiveSubCategory(null)}
+                      className="min-h-10 flex items-center text-base pr-8 text-[#333] hover:bg-[#f1f8ff] rounded-sm cursor-pointer "
+                      style={
+                        activeSubCategory?.id === sub.id
+                          ? {
+                              backgroundColor: adjustAlpha(
+                                activeCategory?.logoColor ?? "#111111",
+                                0.1
+                              ),
+                            }
+                          : undefined
+                      }
                     >
                       <Link href="">{sub.label}</Link>
                     </li>
