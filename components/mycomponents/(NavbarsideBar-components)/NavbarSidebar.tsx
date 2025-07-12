@@ -21,12 +21,19 @@ const NavbarSidebar = ({
   isBannerDisplayed,
   data,
 }: NavbarSidebarProps) => {
-  const [activeCategory, setActiveCategory] = useState("");
+  const [activeCategory, setActiveCategory] = useState<null | Category>(null);
 
   const selectedCategory = data.docs.find((doc: Category) => {
-    const findedDoc = doc.id === activeCategory;
+    const findedDoc = doc === activeCategory;
     return findedDoc;
   });
+
+  const filteredData = data.docs.filter((doc) => {
+    if (doc.subcategories?.docs?.length)
+      return doc.subcategories?.docs?.length > 0;
+  });
+
+  console.log(filteredData);
 
   if (isOpen) {
     return (
@@ -46,8 +53,11 @@ const NavbarSidebar = ({
             return (
               <li
                 key={doc.id}
-                onMouseEnter={() => setActiveCategory(doc.id)}
-                className="pb-1 mb-1 border-b border-b-[#f0f0f0] hover:bg-[#f1f8ff] rounded-md group"
+                onMouseEnter={() => setActiveCategory(doc)}
+                className={cn(
+                  "pb-1 mb-1 border-b border-b-[#f0f0f0] rounded-md group",
+                  activeCategory === doc && "bg-[#f1f8ff]"
+                )}
               >
                 <Link
                   className="flex items-center py-[10px] pr-[14px] pl-3 "
@@ -68,16 +78,23 @@ const NavbarSidebar = ({
                     {doc.label}
                   </div>
                   {/* arrow logo */}
-                  <div className={cn("opacity-0  group-hover:opacity-100 ")}>
-                    <ChevronLeft size={20} />
-                  </div>
+                  {!!doc.subcategories?.docs?.length && (
+                    <div
+                      className={cn(
+                        "opacity-0",
+                        activeCategory === doc && "opacity-100"
+                      )}
+                    >
+                      <ChevronLeft size={20} />
+                    </div>
+                  )}
                 </Link>
               </li>
             );
           })}
         </ul>
         {/* subCategories */}
-        {activeCategory && activeCategory.length > 0 && (
+        {activeCategory && !!activeCategory.subcategories?.docs?.length && (
           <div
             style={{ boxShadow: "-2px -2px 10px -5px rgba(0,0,0,0.3) inset" }}
             className="min-w-[280px] bg-white text-custom-primary pt-4 pb-8 pl-4 flex flex-col gap-y-4"
@@ -112,7 +129,7 @@ const NavbarSidebar = ({
         <div
           onClick={() => {
             setIsOpen(false);
-            setActiveCategory("");
+            setActiveCategory(null);
           }}
           className={cn(
             "flex-1 bg-transparent/50  transition-opacity duration-300",
