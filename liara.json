@@ -1,0 +1,9 @@
+{
+  "app": "mobino",
+  "platform": "next",
+  "port": 3000,
+  "build": {
+    "installCommand": "npm install",
+    "location": "iran"
+  }
+}

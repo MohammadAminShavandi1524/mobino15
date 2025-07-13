@@ -9,6 +9,7 @@ import Footer from "@/components/mycomponents/Footer";
 import configPromise from "@payload-config";
 import { getPayload, PaginatedDocs } from "payload";
 import { Category } from "@/payload-types";
+import { TRPCReactProvider } from "@/trpc/client";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -25,7 +26,7 @@ export default async function RootLayout({
   });
   const data: PaginatedDocs<Category> = await payload.find({
     collection: "categories",
-    sort : "order",
+    sort: "order",
     depth: 1,
     where: {
       parent: {
@@ -34,16 +35,17 @@ export default async function RootLayout({
     },
     pagination: false,
   });
- 
 
   return (
     <html dir="rtl" lang="en" suppressHydrationWarning>
       <body className="font-IRANYekanX flex flex-col items-center w-full transition-all">
-        <ThemeProvider enableSystem>
-          <Header data={data} />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <TRPCReactProvider>
+          <ThemeProvider enableSystem>
+            <Header data={data} />
+            {children}
+            <Footer />
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );
