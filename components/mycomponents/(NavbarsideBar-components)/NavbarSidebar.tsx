@@ -60,10 +60,7 @@ const NavbarSidebar = ({
               <li
                 key={doc.id}
                 onMouseEnter={() => setActiveCategory(doc)}
-                className={cn(
-                  "pb-1 mb-1 border-b border-b-[#f0f0f0] rounded-md group",
-                  activeCategory === doc && "bg-[#f1f8ff]"
-                )}
+                className={cn("pb-1 mb-1 border-b rounded-md group")}
                 // style={
                 //   activeCategory === doc
                 //     ? {
@@ -74,15 +71,20 @@ const NavbarSidebar = ({
                 //       }
                 //     : undefined
                 // }
-                style={
-                  activeCategory === doc
+                style={{
+                  borderBottomColor: adjustAlpha(
+                    doc.logoColor ?? "#111111",
+                    0.5
+                  ),
+                  borderBottomWidth: "1px",
+                  ...(activeCategory === doc
                     ? {
                         background: generateGradient(
                           doc.logoColor ?? "rgba(100,166,227,1)"
                         ),
                       }
-                    : undefined
-                }
+                    : {}),
+                }}
               >
                 <Link
                   className="flex items-center py-[10px] pr-[14px] pl-3 "
