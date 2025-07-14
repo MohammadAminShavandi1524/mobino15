@@ -19,14 +19,15 @@ import { useEffect, useState } from "react";
 import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "../ui/button";
-import { Category } from "@/payload-types";
-import { PaginatedDocs } from "payload";
 
-interface HeaderProps {
-  data: PaginatedDocs<Category>;
-}
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-const Header = ({ data }: HeaderProps) => {
+const Header = () => {
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+ 
+
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
@@ -52,7 +53,7 @@ const Header = ({ data }: HeaderProps) => {
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}
-        data={data}
+      
       />
 
       {/* banners */}

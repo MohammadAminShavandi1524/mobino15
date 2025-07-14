@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import "./Webfonts/fontiran.css";
+import "../../Webfonts/fontiran.css";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/mycomponents/Header";
 import Footer from "@/components/mycomponents/Footer";
 
-import configPromise from "@payload-config";
-import { getPayload, PaginatedDocs } from "payload";
-import { Category } from "@/payload-types";
 import { TRPCReactProvider } from "@/trpc/client";
+import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -21,27 +20,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const payload = await getPayload({
-    config: configPromise,
-  });
-  const data: PaginatedDocs<Category> = await payload.find({
-    collection: "categories",
-    sort: "order",
-    depth: 1,
-    where: {
-      parent: {
-        exists: false,
-      },
-    },
-    pagination: false,
-  });
+  
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
   return (
     <html dir="rtl" lang="en" suppressHydrationWarning>
       <body className="font-IRANYekanX flex flex-col items-center w-full transition-all">
         <TRPCReactProvider>
           <ThemeProvider enableSystem>
-            <Header data={data} />
+            <HydrateClient>
+              <Suspense fallback={<p>loading....</p>}>
+                <Header />
+              </Suspense>
+            </HydrateClient>
             {children}
             <Footer />
           </ThemeProvider>

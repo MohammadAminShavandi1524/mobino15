@@ -1,45 +1,39 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { adjustAlpha, cn, generateGradient } from "@/lib/utils";
 import { ChevronLeft, X } from "lucide-react";
 import * as Icons from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { PaginatedDocs } from "payload";
 import { Category } from "@/payload-types";
 import Link from "next/link";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
 interface NavbarSidebarProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isBannerDisplayed: boolean;
-  data: PaginatedDocs<Category>;
 }
 
 const NavbarSidebar = ({
   isOpen,
   setIsOpen,
   isBannerDisplayed,
-  data,
 }: NavbarSidebarProps) => {
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
   const [activeSubCategory, setActiveSubCategory] = useState<null | Category>(
     null
   );
-  const selectedCategory = data.docs.find((doc: Category) => {
+
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
+
+  const selectedCategory = data?.docs.find((doc: Category) => {
     const findedDoc = doc === activeCategory;
     return findedDoc;
   });
 
-  function adjustAlpha(rgba: string, newAlpha: number): string {
-    return rgba.replace(
-      /rgba?\((\d+),\s*(\d+),\s*(\d+),\s*\d*\.?\d+\)/,
-      `rgba($1, $2, $3, ${newAlpha})`
-    );
-  }
 
-  function generateGradient(rgba: string): string {
-    return `linear-gradient(to left, ${rgba}, ${adjustAlpha(rgba, 0.1)})`;
-  }
 
   if (isOpen) {
     return (
@@ -51,7 +45,7 @@ const NavbarSidebar = ({
       >
         {/* categories */}
         <ul className="min-w-[280px] bg-white text-custom-primary pt-4 px-4 flex flex-col ">
-          {data.docs.map((doc) => {
+          {data?.docs.map((doc) => {
             const LucideIcon = Icons[
               doc.logo as keyof typeof Icons
             ] as Icons.LucideIcon;
