@@ -9,6 +9,7 @@ import Footer from "@/components/mycomponents/Footer";
 import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
+import HeaderSkeleton from "@/components/mycomponents/HeaderSkeleton";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -20,7 +21,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
@@ -30,7 +30,7 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <ThemeProvider enableSystem>
             <HydrateClient>
-              <Suspense fallback={<p>loading....</p>}>
+              <Suspense fallback={<HeaderSkeleton />}>
                 <Header />
               </Suspense>
             </HydrateClient>
