@@ -10,6 +10,7 @@ import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
 import HeaderSkeleton from "@/components/mycomponents/HeaderSkeleton";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -34,7 +35,9 @@ export default async function RootLayout({
                 <Header />
               </Suspense>
             </HydrateClient>
+
             {children}
+
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>

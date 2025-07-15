@@ -1,31 +1,17 @@
 "use client";
-import {
-  CirclePercent,
-  Info,
-  Menu,
-  Search,
-  ShoppingCart,
-  Wallet,
-} from "lucide-react";
 
-import Link from "next/link";
-import ThemeButton from "./ThemeButton";
-import { useTheme } from "next-themes";
-import Logo from "@/components/mycomponents/Logo";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
-import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "../ui/button";
-
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {  useState } from "react";
 import Skeleton from "./Skleton";
+
+
 
 const HeaderSkeleton = () => {
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
+  const pathname = usePathname();
+  if (pathname === "/auth") {
+    return <div className="hidden"></div>;
+  }
 
   return (
     <header className="mb-10 bg-background flex flex-col w-full mx-auto ">
