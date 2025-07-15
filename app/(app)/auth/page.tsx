@@ -1,25 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import Logo from "@/components/mycomponents/Logo";
 
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  useFormField,
-} from "@/components/ui/form";
-
-import { registerSchema } from "@/modules/auth/schemas";
-import { cn } from "@/lib/utils";
 import RegisterForm from "@/components/mycomponents/(auth)/RegisterForm";
 import ThemeButton from "@/components/mycomponents/ThemeButton";
 
