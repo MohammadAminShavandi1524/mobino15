@@ -1,4 +1,4 @@
-"use client"
+
 import Image from "next/image";
 import Hello from "../../components/mycomponents/Hello";
 
@@ -10,9 +10,7 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-export default  function Home() {
-
-  
+export default async function Home() {
   // SERVER
 
   // const queryClient = getQueryClient();
@@ -22,26 +20,26 @@ export default  function Home() {
 
   // console.log("🚀 ~ Home ~ categories:", categories);
 
-  // CLIENT 
+  // CLIENT
 
-  const trpc = useTRPC();
-  const {data} = useQuery(trpc.auth.session.queryOptions());
-  
+  // const trpc = useTRPC();
+  // const { data } = useQuery(trpc.auth.session.queryOptions());
+
   // console.log("🚀 ~ Home ~ data:", data?.user)
 
 
- 
+ const queryClient = getQueryClient();
+  const session = await queryClient.fetchQuery(
+    trpc.auth.session.queryOptions()
+  );
+  console.log("🚀 ~ Home ~ session:", session)
 
-
-
-
-
+  
 
 
   return (
-    <div className="max-w-[1920px] flex flex-col gap-y-3 text-3xl bg-primaryBackground text-center min-h-[1000px] mmd">lorem19999</div>
+    <div className="max-w-[1920px] flex flex-col gap-y-3 text-3xl bg-primaryBackground text-center min-h-[1000px] mmd">
+      lorem19999
+    </div>
   );
 }
-
-
-

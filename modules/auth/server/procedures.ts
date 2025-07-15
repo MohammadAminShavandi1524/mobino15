@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
 import z, { email } from "zod";
 import { AUTH_COOKIE } from "../constants";
-import { registerSchema } from "../schemas";
+import { loginSchema, registerSchema } from "../schemas";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -95,42 +95,35 @@ export const authRouter = createTRPCRouter({
       });
     }),
 
-  login: baseProcedure
-    .input(
-      z.object({
-        email: z.string().email("ایمیل معتبر نیست"),
-        password: z.string(),
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      const data = await ctx.db.login({
-        collection: "users",
-        data: {
-          email: input.email,
-          password: input.password,
-        },
+  login: baseProcedure.input(loginSchema).mutation(async ({ ctx, input }) => {
+    const data = await ctx.db.login({
+      collection: "users",
+      data: {
+        email: input.email,
+        password: input.password,
+      },
+    });
+
+    if (!data.token) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "ایمیل یا رمز عبور اشتباه است.",
       });
+    }
 
-      if (!data.token) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "ورود ناموفق بود",
-        });
-      }
+    const cookies = await getCookies();
+    cookies.set({
+      name: AUTH_COOKIE,
+      value: data.token,
+      httpOnly: true,
+      path: "/",
+      //? for later
+      // sameSite : "none",
+      // domain : ""
+    });
 
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
-        value: data.token,
-        httpOnly: true,
-        path: "/",
-        //? for later
-        // sameSite : "none",
-        // domain : ""
-      });
-
-      return data;
-    }),
+    return data;
+  }),
 
   logout: baseProcedure.mutation(async () => {
     const cookies = await getCookies();

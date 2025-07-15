@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import Logo from "@/components/mycomponents/Logo";
-
 import RegisterForm from "@/components/mycomponents/(auth)/RegisterForm";
 import ThemeButton from "@/components/mycomponents/ThemeButton";
+import LoginForm from "@/components/mycomponents/(auth)/LoginForm";
 
 const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
@@ -48,7 +47,7 @@ const AuthPage = () => {
 
         {isSignIn ? (
           // ? Sign In
-          <div></div>
+          <LoginForm />
         ) : (
           // ? Sign Up
           <RegisterForm />

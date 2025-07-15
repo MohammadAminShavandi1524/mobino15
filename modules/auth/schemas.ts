@@ -1,8 +1,5 @@
 import z from "zod";
 
-
-
-
 export const passwordSchema = z
   .string()
   .min(8, "رمز عبور باید حداقل ۸ کاراکتر باشد")
@@ -36,13 +33,13 @@ export const emailSchema = z
     message: "ایمیل باید با .com یا .ir تمام شود",
   });
 
-
-
-
-
-
 export const registerSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
   username: usernameSchema,
+});
+
+export const loginSchema = z.object({
+  email: z.string().email("ایمیل معتبر نیست"),
+  password: z.string(),
 });

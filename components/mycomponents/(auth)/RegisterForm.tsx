@@ -15,13 +15,14 @@ import { registerSchema } from "@/modules/auth/schemas";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-
-
 const RegisterForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(registerSchema),
@@ -34,17 +35,21 @@ const RegisterForm = () => {
 
   const registerOnSubmit = (values: z.infer<typeof registerSchema>) => {
     // console.log("🚀 ~ onSubmit ~ values:", values);
-    register.mutate(values)
+    register.mutate(values);
   };
 
+  const trpc = useTRPC();
+  const register = useMutation(
+    trpc.auth.register.mutationOptions({
+      onError: (error) => {
+        toast.error(error.message);
+      },
 
-  const trpc = useTRPC()
-  const register = useMutation(trpc.auth.register.mutationOptions({
-    onError : (error)=>{
-      toast.error(error.message)
-    }
-  }))
-
+      onSuccess: () => {
+        router.push("/");
+      },
+    })
+  );
 
   // const username = form.watch("username");
   // const usernameErrors = form.formState.errors.username;
@@ -75,7 +80,7 @@ const RegisterForm = () => {
                 <span className="font-semibold">{username}</span>
                 <span>.shop.com</span>
               </FormDescription> */}
-              <FormMessage className="mr-[10px] text-[12px]"/>
+              <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}
         />
@@ -88,7 +93,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input className="w-[380px] h-[60px] text-base" {...field} />
               </FormControl>
-              <FormMessage className="mr-[10px] text-[12px]"/>
+              <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}
         />
@@ -99,15 +104,15 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-                <Input className="w-[380px] h-[60px] text-base" {...field} />
+                <Input type="password" className="w-[380px] h-[60px] text-base" {...field} />
               </FormControl>
-               <FormMessage className="mr-[10px] text-[12px]"/>
+              <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}
         />
         {/* submit button */}
         <button
-        disabled={register.isPending}
+          disabled={register.isPending}
           type="submit"
           className="block w-full h-[60px] mt-5 bg-custom-primary text-white text-xl font-semibold rounded-md cursor-pointer"
         >
