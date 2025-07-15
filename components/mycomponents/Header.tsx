@@ -26,13 +26,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 const Header = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
- 
 
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
-
+  console.log(pathname);
   useEffect(() => {
     if (isSideBarOpen) {
       document.body.style.overflow = "hidden";
@@ -45,6 +44,10 @@ const Header = () => {
     };
   }, [isSideBarOpen]);
 
+  if (pathname === "/auth") {
+    return <div className="hidden"></div>;
+  }
+
   return (
     <header className="relative border-2 border-chart-1 mb-10 bg-background flex flex-col w-full mx-auto">
       {/* sidebar */}
@@ -53,7 +56,6 @@ const Header = () => {
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}
-      
       />
 
       {/* banners */}
@@ -95,8 +97,12 @@ const Header = () => {
             {/* dark/light mode button */}
             <ThemeButton />
             {/* login/signup button */}
+            {/* اگر صفحه ورود و ثبت نام جدا شد اونموقع prefetch میزاریم  */}
             <Link
-              href="/api/auth/signin"
+              onClick={() => {
+                setIsSideBarOpen(false);
+              }}
+              href="/auth"
               className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
               "
             >
@@ -105,6 +111,9 @@ const Header = () => {
             </Link>
             {/* cart button */}
             <Link
+              onClick={() => {
+                setIsSideBarOpen(false);
+              }}
               className="flex items-center justify-center text-primary w-10 h-10 border border-border
               rounded-md"
               href="/cart"

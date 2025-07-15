@@ -1,4 +1,4 @@
-
+"use client"
 import Image from "next/image";
 import Hello from "../../components/mycomponents/Hello";
 
@@ -10,7 +10,7 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { useQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 
-export default async function Home() {
+export default  function Home() {
 
   
   // SERVER
@@ -24,12 +24,13 @@ export default async function Home() {
 
   // CLIENT 
 
-  // const trpc = useTRPC();
-  // const categories = useQuery(trpc.categories.getMany.queryOptions());
+  const trpc = useTRPC();
+  const {data} = useQuery(trpc.auth.session.queryOptions());
   
+  // console.log("🚀 ~ Home ~ data:", data?.user)
 
 
-  // console.log("🚀 ~ Home ~ categories:", categories.data);
+ 
 
 
 
@@ -38,6 +39,9 @@ export default async function Home() {
 
 
   return (
-    <div className="max-w-[1920px] flex flex-col gap-y-3 text-3xl bg-primaryBackground text-center min-h-[1000px]"></div>
+    <div className="max-w-[1920px] flex flex-col gap-y-3 text-3xl bg-primaryBackground text-center min-h-[1000px] mmd">lorem19999</div>
   );
 }
+
+
+
