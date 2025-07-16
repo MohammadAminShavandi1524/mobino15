@@ -28,17 +28,13 @@ export default async function Home() {
   // console.log("🚀 ~ Home ~ data:", data?.user)
 
 
- const queryClient = getQueryClient();
-  const session = await queryClient.fetchQuery(
-    trpc.auth.session.queryOptions()
-  );
-  console.log("🚀 ~ Home ~ session:", session.user)
+
 
   
 
 
   return (
-    <div className="max-w-[1920px] flex flex-col gap-y-3 text-3xl bg-primaryBackground text-center min-h-[1000px] mmd">
+    <div className=" w-full flex flex-col gap-y-3 text-3xl bg-primaryBackground  min-h-[1000px] ">
       lorem19999
     </div>
   );

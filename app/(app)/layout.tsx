@@ -36,8 +36,10 @@ export default async function RootLayout({
                 <Header />
               </Suspense>
             </HydrateClient>
-            <Toaster />
-            {children}
+            <div className="max-w-[1920px] w-[90%] mx-auto px-6">
+              <Toaster />
+              {children}
+            </div>
 
             <Footer />
           </ThemeProvider>

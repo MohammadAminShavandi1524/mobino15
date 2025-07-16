@@ -33,8 +33,6 @@ const NavbarSidebar = ({
     return findedDoc;
   });
 
-
-
   if (isOpen) {
     return (
       <div
@@ -66,10 +64,11 @@ const NavbarSidebar = ({
                 //     : undefined
                 // }
                 style={{
-                  borderBottomColor: adjustAlpha(
-                    doc.logoColor ?? "#111111",
-                    0.5
-                  ),
+                  // borderBottomColor: adjustAlpha(
+                  //   doc.logoColor ?? "#f0f0f0",
+                  //   0.5
+                  // ),
+                  borderBottomColor: "#f0f0f0",
                   borderBottomWidth: "1px",
                   ...(activeCategory === doc
                     ? {
@@ -81,8 +80,9 @@ const NavbarSidebar = ({
                 }}
               >
                 <Link
-                  className="flex items-center py-[10px] pr-[14px] pl-3 "
-                  href={""}
+                  className="flex items-center py-[10px] pr-[14px] pl-3"
+                  href={`/${doc.name}`}
+                  onClick={() => setIsOpen(false)}
                 >
                   {/* logo */}
                   <div
@@ -128,7 +128,8 @@ const NavbarSidebar = ({
             className="min-w-[280px] bg-white text-custom-primary pt-4 pb-8 pl-4 flex flex-col gap-y-4"
           >
             <Link
-              href={""}
+              href={`/${activeCategory.name}`}
+              onClick={() => setIsOpen(false)}
               className="min-h-10 text-[#333]  font-semibold py-2 px-4 rounded-md mr-4"
               style={
                 activeCategory
@@ -146,7 +147,7 @@ const NavbarSidebar = ({
               <span>{selectedCategory?.label}</span>
             </Link>
 
-            <ul className="py-2 ">
+            <ul className="py-2">
               {(selectedCategory?.subcategories?.docs as Category[]).map(
                 (sub) => {
                   return (
@@ -166,7 +167,13 @@ const NavbarSidebar = ({
                           : undefined
                       }
                     >
-                      <Link href="">{sub.label}</Link>
+                      <Link
+                        className="flex items-center h-full w-full  min-h-10"
+                        href={`/${activeCategory.name}/${sub.name}`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {sub.label}
+                      </Link>
                     </li>
                   );
                 }

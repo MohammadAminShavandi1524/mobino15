@@ -47,7 +47,7 @@ const LoginForm = () => {
         toast.error("ایمیل یا رمز عبور اشتباه است");
       },
 
-      onSuccess: async () => {
+      onSuccess:  () => {
         // await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
         router.push("/");
       },

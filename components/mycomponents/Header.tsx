@@ -43,16 +43,12 @@ const Header = () => {
     };
   }, [isSideBarOpen]);
 
-
-
- 
-
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
   }
 
   return (
-    <header className="relative border-2 border-chart-1 mb-10 bg-background flex flex-col w-full mx-auto">
+    <header className="relative mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
       {/* sidebar */}
 
       <NavbarSidebar
@@ -101,7 +97,7 @@ const Header = () => {
             <ThemeButton />
             {/* login/signup button */}
 
-            { data?.user ? (
+            {data?.user ? (
               <Link
                 onClick={() => {
                   setIsSideBarOpen(false);

@@ -9,6 +9,6 @@ const Footer = () => {
     return <div className="hidden"></div>;
   }
 
-  return <div>Footer</div>;
+  return <div className="mt-[1000px]">Footer</div>;
 };
 export default Footer;
