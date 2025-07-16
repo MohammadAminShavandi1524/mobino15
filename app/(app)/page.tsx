@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 import Image from "next/image";
 import Hello from "../../components/mycomponents/Hello";
 
@@ -32,7 +32,7 @@ export default async function Home() {
   const session = await queryClient.fetchQuery(
     trpc.auth.session.queryOptions()
   );
-  console.log("🚀 ~ Home ~ session:", session)
+  console.log("🚀 ~ Home ~ session:", session.user)
 
   
 

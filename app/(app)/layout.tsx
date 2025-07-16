@@ -10,7 +10,7 @@ import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
 import HeaderSkeleton from "@/components/mycomponents/HeaderSkeleton";
-import { headers } from "next/headers";
+
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {

@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { registerSchema } from "@/modules/auth/schemas";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -39,6 +39,8 @@ const RegisterForm = () => {
   };
 
   const trpc = useTRPC();
+  // const queryClient = useQueryClient();
+
   const register = useMutation(
     trpc.auth.register.mutationOptions({
       onError: (error) => {
@@ -46,6 +48,7 @@ const RegisterForm = () => {
       },
 
       onSuccess: () => {
+        // await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
     })
@@ -104,7 +107,11 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-                <Input type="password" className="w-[380px] h-[60px] text-base" {...field} />
+                <Input
+                  type="password"
+                  className="w-[380px] h-[60px] text-base"
+                  {...field}
+                />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>

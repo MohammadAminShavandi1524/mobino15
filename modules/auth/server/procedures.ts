@@ -4,6 +4,7 @@ import { headers as getHeaders, cookies as getCookies } from "next/headers";
 import z, { email } from "zod";
 import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../schemas";
+import { generateCookies } from "../utils";
 
 export const authRouter = createTRPCRouter({
   session: baseProcedure.query(async ({ ctx }) => {
@@ -57,6 +58,7 @@ export const authRouter = createTRPCRouter({
           message: "این ایمیل قبلاً انتخاب شده است.",
         });
       }
+      // ******************************************************************************
 
       await ctx.db.create({
         collection: "users",
@@ -66,7 +68,6 @@ export const authRouter = createTRPCRouter({
           password: input.password,
         },
       });
-      // ******************************************************************************
 
       const data = await ctx.db.login({
         collection: "users",
@@ -83,15 +84,9 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const cookies = await getCookies();
-      cookies.set({
-        name: AUTH_COOKIE,
+      await generateCookies({
+        prefix: ctx.db.config.cookiePrefix,
         value: data.token,
-        httpOnly: true,
-        path: "/",
-        //? for later
-        // sameSite : "none",
-        // domain : ""
       });
     }),
 
@@ -111,15 +106,17 @@ export const authRouter = createTRPCRouter({
       });
     }
 
-    const cookies = await getCookies();
-    cookies.set({
-      name: AUTH_COOKIE,
+    // const cookies = await getCookies();
+    // cookies.set({
+    //   name: AUTH_COOKIE,
+    //   value: data.token,
+    //   httpOnly: true,
+    //   path: "/",
+    // });
+
+    await generateCookies({
+      prefix: ctx.db.config.cookiePrefix,
       value: data.token,
-      httpOnly: true,
-      path: "/",
-      //? for later
-      // sameSite : "none",
-      // domain : ""
     });
 
     return data;

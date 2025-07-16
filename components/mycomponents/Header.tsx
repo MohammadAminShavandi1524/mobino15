@@ -21,13 +21,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "../ui/button";
 
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const { data } = useQuery(trpc.auth.session.queryOptions());
 
-  const { resolvedTheme } = useTheme();
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
@@ -43,6 +42,10 @@ const Header = () => {
       document.body.style.overflow = "";
     };
   }, [isSideBarOpen]);
+
+
+
+ 
 
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
@@ -97,18 +100,35 @@ const Header = () => {
             {/* dark/light mode button */}
             <ThemeButton />
             {/* login/signup button */}
-            {/* اگر صفحه ورود و ثبت نام جدا شد اونموقع prefetch میزاریم  */}
-            <Link
-              onClick={() => {
-                setIsSideBarOpen(false);
-              }}
-              href="/auth"
-              className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
+
+            { data?.user ? (
+              <Link
+                onClick={() => {
+                  setIsSideBarOpen(false);
+                }}
+                href="/admin"
+                className="min-w-[140px] px-4 py-2 border border-custom-primary rounded-lg text-[15px]
+                flex items-center justify-center"
+              >
+                پنل کاربری
+              </Link>
+            ) : (
+              <Link
+                onClick={() => {
+                  setIsSideBarOpen(false);
+                }}
+                prefetch
+                href="/auth"
+                className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
               "
-            >
-              <span className="pl-4 border-l border-custom-primary">ورود</span>
-              <span className="pr-4">ثبت نام</span>
-            </Link>
+              >
+                <span className="pl-4 border-l border-custom-primary">
+                  ورود
+                </span>
+                <span className="pr-4">ثبت نام</span>
+              </Link>
+            )}
+
             {/* cart button */}
             <Link
               onClick={() => {
