@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
+    products: Product;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -176,6 +178,9 @@ export interface Category {
    */
   order: number;
   logo?: string | null;
+  /**
+   * only rgba
+   */
   logoColor?: string | null;
   parent?: (string | null) | Category;
   subcategories?: {
@@ -183,6 +188,186 @@ export interface Category {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  address: string;
+  name: string;
+  label: string;
+  color:
+    | 'TitaniumBlack'
+    | 'Black'
+    | 'Two colors (black and red)'
+    | 'Silver'
+    | 'Purple'
+    | 'yellow'
+    | 'Dark blue'
+    | 'Gray'
+    | 'Lemon'
+    | 'Titanium silver'
+    | 'Dark gray'
+    | 'Natural titanium'
+    | 'Golden'
+    | 'Titanium gray'
+    | 'Titanium Ice Blue'
+    | 'Navy blue'
+    | 'Brick'
+    | 'Titanium desert'
+    | 'Titanium Purple'
+    | 'Jet Black Titanium'
+    | 'Light green'
+    | 'Turquoise'
+    | 'Light gray'
+    | 'Light blue'
+    | 'Pink'
+    | 'Titanium white'
+    | 'Green'
+    | 'Cream'
+    | 'Blue'
+    | 'White'
+    | 'Red'
+    | 'Orange'
+    | 'graphite'
+    | 'oceanBlue'
+    | 'roseGold'
+    | 'oliveGreen'
+    | 'copper'
+    | 'bronze'
+    | 'charcoalGray'
+    | 'skyBlue'
+    | 'lilac'
+    | 'mintGreen';
+  price: number;
+  offPrice?: number | null;
+  category: string | Category;
+  subCategory: string | Category;
+  images?:
+    | {
+        url: string;
+        isMain?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  quantity: number;
+  seller?: 'mobino' | null;
+  introduction: string;
+  available?: boolean | null;
+  productType?:
+    | (
+        | {
+            brand: 'apple' | 'samsung' | 'xiaomi' | 'huawei' | 'nokia' | 'sony';
+            model: string;
+            /**
+             * دسته بندی گوشی
+             */
+            classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
+            ram: '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
+            storage: '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
+            /**
+             * سیستم عامل
+             */
+            os: 'ios' | 'android' | 'harmony';
+            batteryCapacity: number;
+            mainCameraResolution: number;
+            FrontCameraResolution: number;
+            /**
+             * نوع پردازنده - CPU
+             */
+            chipset: string;
+            /**
+             * تعداد هسته پردازشگر
+             */
+            cpuCores: '1' | '2' | '4' | '8' | '9' | '10';
+            /**
+             * پردازنده گرافیکی - GPU :
+             */
+            gpu: string;
+            simCount: '1' | '2';
+            dimensions: string;
+            weight: number;
+            isRegistered?: boolean | null;
+            displayType: 'ips' | 'oled' | 'amoled' | 'super_amoled' | 'dynamic_amoled';
+            displaySize: string;
+            displayResolution: string;
+            refreshRate: number;
+            network: '2g' | '3g' | '4g' | '5g';
+            waterResistant?: boolean | null;
+            accessories?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'mobile';
+          }
+        | {
+            brand: 'apple' | 'asus' | 'hp' | 'lenovo' | 'msi' | 'dell' | 'acer';
+            model: string;
+            ram:
+              | '2gb'
+              | '4gb'
+              | '8gb'
+              | '12gb'
+              | '16gb'
+              | '20gb'
+              | '28gb'
+              | '32gb'
+              | '36gb'
+              | '40gb'
+              | '44gb'
+              | '48gb'
+              | '64gb'
+              | '128gb';
+            AbilityToUpgradeLaptopRAM?: boolean | null;
+            storages: {
+              type: 'ssd' | 'hdd';
+              capacity: '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb' | '4tb';
+              id?: string | null;
+            }[];
+            usage: 'صنعتی' | 'حرفه ای' | 'مالتی مدیا' | 'دسکتاپ' | 'طراحی' | 'عمومی' | 'گیمینگ';
+            cpuSeries:
+              | 'intel_i3'
+              | 'intel_i5'
+              | 'intel_i7'
+              | 'intel_i9'
+              | 'intel_pentium'
+              | 'intel_celeron'
+              | 'intel_xeon'
+              | 'amd_ryzen3'
+              | 'amd_ryzen5'
+              | 'amd_ryzen7'
+              | 'amd_ryzen9'
+              | 'amd_athlon'
+              | 'amd_fx'
+              | 'apple_m1'
+              | 'apple_m2'
+              | 'apple_m3'
+              | 'other';
+            CPUProcessorGeneration: '10' | '11' | '12' | '13' | '14';
+            gpuInfo: {
+              series:
+                | 'nvidia_mx'
+                | 'nvidia_gtx'
+                | 'nvidia_rtx'
+                | 'nvidia_quadro'
+                | 'amd_rx'
+                | 'amd_vega'
+                | 'amd_pro'
+                | 'intel_iris_xe'
+                | 'intel_uhd'
+                | 'apple_m_series_gpu'
+                | 'other';
+              model: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'laptop';
+          }
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -204,6 +389,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -300,6 +489,92 @@ export interface CategoriesSelect<T extends boolean = true> {
   logoColor?: T;
   parent?: T;
   subcategories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  address?: T;
+  name?: T;
+  label?: T;
+  color?: T;
+  price?: T;
+  offPrice?: T;
+  category?: T;
+  subCategory?: T;
+  images?:
+    | T
+    | {
+        url?: T;
+        isMain?: T;
+        id?: T;
+      };
+  quantity?: T;
+  seller?: T;
+  introduction?: T;
+  available?: T;
+  productType?:
+    | T
+    | {
+        mobile?:
+          | T
+          | {
+              brand?: T;
+              model?: T;
+              classification?: T;
+              ram?: T;
+              storage?: T;
+              os?: T;
+              batteryCapacity?: T;
+              mainCameraResolution?: T;
+              FrontCameraResolution?: T;
+              chipset?: T;
+              cpuCores?: T;
+              gpu?: T;
+              simCount?: T;
+              dimensions?: T;
+              weight?: T;
+              isRegistered?: T;
+              displayType?: T;
+              displaySize?: T;
+              displayResolution?: T;
+              refreshRate?: T;
+              network?: T;
+              waterResistant?: T;
+              accessories?: T;
+              id?: T;
+              blockName?: T;
+            };
+        laptop?:
+          | T
+          | {
+              brand?: T;
+              model?: T;
+              ram?: T;
+              AbilityToUpgradeLaptopRAM?: T;
+              storages?:
+                | T
+                | {
+                    type?: T;
+                    capacity?: T;
+                    id?: T;
+                  };
+              usage?: T;
+              cpuSeries?: T;
+              CPUProcessorGeneration?: T;
+              gpuInfo?:
+                | T
+                | {
+                    series?: T;
+                    model?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }

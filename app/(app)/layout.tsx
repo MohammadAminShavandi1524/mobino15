@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import HeaderSkeleton from "@/components/mycomponents/HeaderSkeleton";
 
 import { Toaster } from "@/components/ui/sonner";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -35,13 +36,13 @@ export default async function RootLayout({
               <Suspense fallback={<HeaderSkeleton />}>
                 <Header />
               </Suspense>
-            </HydrateClient>
-            <div className="max-w-[1920px] w-[90%] mx-auto px-6">
-              <Toaster />
-              {children}
-            </div>
+              <div className={cn("w-full")}>
+                <Toaster />
+                {children}
+              </div>
 
-            <Footer />
+              <Footer />
+            </HydrateClient>
           </ThemeProvider>
         </TRPCReactProvider>
       </body>
