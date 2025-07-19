@@ -13,5 +13,5 @@ export function adjustAlpha(rgba: string, newAlpha: number): string {
 }
 
 export function generateGradient(rgba: string): string {
-  return `linear-gradient(to left, ${rgba}, ${adjustAlpha(rgba, 0.1)})`;
+  return `linear-gradient(to left, ${rgba}, ${adjustAlpha(rgba, 0.2)})`;
 }

@@ -1,3 +1,4 @@
+import BreadCrump from "@/components/mycomponents/BreadCrump";
 import { Category } from "@/payload-types";
 import { getQueryClient, trpc } from "@/trpc/server";
 import Link from "next/link";
@@ -30,25 +31,15 @@ const Subcategory = async ({ params }: SubCategoryProps) => {
   });
 
   return (
-    <div className="flex flex-col w-full ">
-      {/* bread crump  */}
-      <div className="flex flex-col px-[10px] gap-y-4">
-        {/* bread crump */}
-        <div className="flex items-center gap-x-3 text-[12px] text-[#81858b]">
-          <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
-          <span>/</span>
-          <Link className="" href={`/${selectedCategoryData?.name}`}>
-            {selectedCategoryData?.label}
-          </Link>
-          <span>/</span>
-          <Link
-            className="text-[#000002]"
-            href={`/${selectedCategoryData?.name}/${selectedSubCategoryData?.name}`}
-          >
-            {selectedSubCategoryData?.label}
-          </Link>
-        </div>
-      </div>
+    <div className="w90 flex flex-col ">
+      {/* bread crump */}
+      <BreadCrump
+        activePage="subcategory"
+        selectedCategoryData={selectedCategoryData}
+        selectedSubCategoryData={selectedSubCategoryData}
+        className="px-[10px]"
+      />
+
       {/* product and product filters */}
     </div>
   );

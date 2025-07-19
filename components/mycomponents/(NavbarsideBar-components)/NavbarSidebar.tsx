@@ -13,12 +13,14 @@ interface NavbarSidebarProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isBannerDisplayed: boolean;
+  headerHeight: number;
 }
 
 const NavbarSidebar = ({
   isOpen,
   setIsOpen,
   isBannerDisplayed,
+  headerHeight,
 }: NavbarSidebarProps) => {
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
   const [activeSubCategory, setActiveSubCategory] = useState<null | Category>(
@@ -33,13 +35,22 @@ const NavbarSidebar = ({
     return findedDoc;
   });
 
+  // ? sort by subcategory order
+
+  selectedCategory &&
+    (selectedCategory?.subcategories?.docs as Category[]).sort(
+      (a, b) => a.order - b.order
+    );
+
+  // ?
+
   if (isOpen) {
     return (
       <div
         className={cn(
-          "fixed z-50 right-0 top-0  flex w-full  bg-zinc-900/50 h-screen mt-[160px] border-t border-[#d7dee0]",
-          isBannerDisplayed && "mt-[207px]"
+          "fixed z-50 right-0 top-0  flex w-full  bg-zinc-900/50 h-screen  border-t border-[#d7dee0]"
         )}
+        style={{ marginTop: headerHeight }}
       >
         {/* categories */}
         <ul className="min-w-[280px] bg-white text-custom-primary pt-4 px-4 flex flex-col ">
@@ -73,7 +84,7 @@ const NavbarSidebar = ({
                   ...(activeCategory === doc
                     ? {
                         background: generateGradient(
-                          doc.logoColor ?? "rgba(100,166,227,1)"
+                         adjustAlpha(doc.logoColor || "rgba(100,166,227,0.8)", 0.75)  ?? "rgba(100,166,227,1)"
                         ),
                       }
                     : {}),
@@ -90,12 +101,12 @@ const NavbarSidebar = ({
                       boxShadow: "0 2px 8px 0 rgba(0,0,0,.1)",
                       color: doc.logoColor || "#7ab2e6",
                     }}
-                    className="w-8 h-8 flex items-center justify-center bg-background rounded-full"
+                    className="w-9 h-9 flex items-center justify-center bg-background rounded-full"
                   >
-                    <LucideIcon size={20} />
+                    <LucideIcon size={24} />
                   </div>
                   {/* label */}
-                  <div className="flex-1 font-medium text-[14px] text-[#333333] mr-[10px]">
+                  <div className="flex-1 font-medium text-[14px] text-[#333333] mr-[14px]">
                     {doc.label}
                   </div>
                   {/* arrow logo */}
@@ -125,7 +136,7 @@ const NavbarSidebar = ({
         {activeCategory && !!activeCategory.subcategories?.docs?.length && (
           <div
             style={{ boxShadow: "-2px -2px 10px -5px rgba(0,0,0,0.3) inset" }}
-            className="min-w-[280px] bg-white text-custom-primary pt-4 pb-8 pl-4 flex flex-col gap-y-4"
+            className="min-w-[280px] bg-white text-custom-primary pt-4 pb-8 pl-4 flex flex-col gap-y-3"
           >
             <Link
               href={`/${activeCategory.name}`}
@@ -148,36 +159,37 @@ const NavbarSidebar = ({
             </Link>
 
             <ul className="py-2">
-              {(selectedCategory?.subcategories?.docs as Category[]).map(
-                (sub) => {
-                  return (
-                    <li
-                      key={sub.id}
-                      onMouseEnter={() => setActiveSubCategory(sub || null)}
-                      onMouseLeave={() => setActiveSubCategory(null)}
-                      className="min-h-10 flex items-center text-base pr-8 text-[#333] hover:bg-[#f1f8ff] rounded-sm cursor-pointer "
-                      style={
-                        activeSubCategory?.id === sub.id
-                          ? {
-                              backgroundColor: adjustAlpha(
-                                activeCategory?.logoColor ?? "#111111",
-                                0.1
-                              ),
-                            }
-                          : undefined
-                      }
-                    >
-                      <Link
-                        className="flex items-center h-full w-full  min-h-10"
-                        href={`/${activeCategory.name}/${sub.name}`}
-                        onClick={() => setIsOpen(false)}
+              {selectedCategory &&
+                (selectedCategory?.subcategories?.docs as Category[]).map(
+                  (sub) => {
+                    return (
+                      <li
+                        key={sub.id}
+                        onMouseEnter={() => setActiveSubCategory(sub || null)}
+                        onMouseLeave={() => setActiveSubCategory(null)}
+                        className="min-h-10 flex items-center text-base pr-8 text-[#333] hover:bg-[#f1f8ff] rounded-sm cursor-pointer "
+                        style={
+                          activeSubCategory?.id === sub.id
+                            ? {
+                                backgroundColor: adjustAlpha(
+                                  activeCategory?.logoColor ?? "#111111",
+                                  0.1
+                                ),
+                              }
+                            : undefined
+                        }
                       >
-                        {sub.label}
-                      </Link>
-                    </li>
-                  );
-                }
-              )}
+                        <Link
+                          className="flex items-center h-full w-full  min-h-10"
+                          href={`/${activeCategory.name}/${sub.name}`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {sub.label}
+                        </Link>
+                      </li>
+                    );
+                  }
+                )}
             </ul>
           </div>
         )}

@@ -15,7 +15,13 @@ import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import {
+  ReactElement,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "../ui/button";
@@ -24,6 +30,22 @@ import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 
 const Header = () => {
+  
+  // ? header height for navbarsidebar margin top
+
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+      // یا log بگیر ببینی
+      // console.log("Header height:", headerRef.current.offsetHeight);
+    }
+  }, []);
+
+  // ?
+
   const trpc = useTRPC();
   const { data } = useQuery(trpc.auth.session.queryOptions());
 
@@ -48,10 +70,14 @@ const Header = () => {
   }
 
   return (
-    <header className="relative mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
+    <header
+      ref={headerRef}
+      className="relative mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]"
+    >
       {/* sidebar */}
 
       <NavbarSidebar
+        headerHeight={headerHeight}
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}
