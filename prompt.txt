@@ -779,7 +779,7 @@ https://dkstatics-public.digikala.com/digikala-products/6e2bd6462a44e5782e5e0978
 
 1 دونه عکس رو بیشتر نمیخادش فقط عکسش به همون فرمتی که گفتم باشه 
 
-
+اسم سلر موبینو طبق فیلد ها حتما باید mobino باشه 
 
 
 

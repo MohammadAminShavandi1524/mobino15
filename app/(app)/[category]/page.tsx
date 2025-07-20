@@ -1,31 +1,34 @@
+"use client";
+
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import ProductList from "@/components/mycomponents/ProductList";
 import ProductListSkeleton from "@/components/mycomponents/ProductListSkeleton";
 import { Category } from "@/payload-types";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
+import { ArrowDownWideNarrow } from "lucide-react";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import { convertToPersianNumber } from "@/lib/utils";
+import Orderbar from "@/components/mycomponents/Orderbar";
+import { useParams } from "next/navigation";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
-interface CategoryProps {
-  params: Promise<{
-    category: string;
-  }>;
-}
+interface CategoryProps {}
 
-const CategoryPage = async ({ params }: CategoryProps) => {
-  const { category } = await params;
+const CategoryPage = ({}: CategoryProps) => {
+  const [activeOrder, setActiveOrder] = useState<string>("Newest");
 
-  const queryClient = getQueryClient();
-  const categories = await queryClient.fetchQuery(
-    trpc.categories.getMany.queryOptions()
-  );
+  const { category } = useParams();
+  const trpc = useTRPC();
 
-  const products = await queryClient.fetchQuery(
-    trpc.products.getMany.queryOptions()
-  );
-  console.log("🚀 ~ CategoryPage ~ products:", products);
+  const _categories = useQuery(trpc.categories.getMany.queryOptions());
+  const categories = _categories.data;
 
-  const selectedCategoryData = categories.docs.find((doc) => {
+  const _products = useQuery(trpc.products.getMany.queryOptions());
+  const products = _products.data;
+
+  const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
     return findedCategory;
   });
@@ -68,15 +71,22 @@ const CategoryPage = async ({ params }: CategoryProps) => {
         </div>
       </div>
       {/* product and product filters */}
-      <div className="flex flex-col gap-y-6">
-        {/* filters and sort */}
-        <div className=""></div>
-        {/* products list */}
+      <div className="relative flex px-[10px] mt-8 gap-x-8">
+        {/* filter*/}
+        <aside className="flex flex-col w-[270px] h-[150px] sticky top-0 right-0 border border-red-600 rounded-md">
+          filter
+        </aside>
 
-        <Suspense fallback={<ProductListSkeleton />}>
-          {/* <ProductList /> */}
-          {JSON.stringify(products, null, 2)}
-        </Suspense>
+        {/*orderbar and products list  */}
+        <div className="flex flex-col h-[3000px] w-full   ">
+          {/* order bar */}
+          <Orderbar activeOrder={activeOrder} setActiveOrder={setActiveOrder} />
+
+          {/* products list */}
+          <Suspense fallback={<ProductListSkeleton />}>
+            <ProductList products={products}/>
+          </Suspense>
+        </div>
       </div>
     </div>
   );

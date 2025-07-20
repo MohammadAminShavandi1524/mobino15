@@ -15,3 +15,7 @@ export function adjustAlpha(rgba: string, newAlpha: number): string {
 export function generateGradient(rgba: string): string {
   return `linear-gradient(to left, ${rgba}, ${adjustAlpha(rgba, 0.2)})`;
 }
+
+export function convertToPersianNumber(num: number | string): string {
+  return num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[parseInt(d)]);
+}

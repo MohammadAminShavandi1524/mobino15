@@ -36,7 +36,7 @@ export default async function RootLayout({
               <Suspense fallback={<HeaderSkeleton />}>
                 <Header />
               </Suspense>
-              <div className={cn("w-full")}>
+              <div className={cn("w-full bg-[#fcfeff]")}>
                 <Toaster />
                 {children}
               </div>

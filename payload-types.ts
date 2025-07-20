@@ -197,36 +197,40 @@ export interface Category {
  */
 export interface Product {
   id: string;
+  productAddress: string;
   address: string;
+  /**
+   * اعداد کوچکتر در بالای لیست نمایش داده می‌شوند.
+   */
+  order: number;
   name: string;
   label: string;
   color:
     | 'TitaniumBlack'
     | 'Black'
-    | 'Two colors (black and red)'
     | 'Silver'
     | 'Purple'
     | 'yellow'
-    | 'Dark blue'
-    | 'Gray'
+    | 'DarkBlue'
     | 'Lemon'
-    | 'Titanium silver'
-    | 'Dark gray'
-    | 'Natural titanium'
+    | 'TitaniumSilver'
+    | 'DarkGray'
+    | 'NaturalTitanium'
     | 'Golden'
-    | 'Titanium gray'
-    | 'Titanium Ice Blue'
-    | 'Navy blue'
+    | 'TitaniumGray'
+    | 'TitaniumIceBlue'
+    | 'Gray'
+    | 'NavyBlue'
     | 'Brick'
-    | 'Titanium desert'
-    | 'Titanium Purple'
-    | 'Jet Black Titanium'
-    | 'Light green'
+    | 'TitaniumDesert'
+    | 'TitaniumPurple'
+    | 'JetBlackTitanium'
+    | 'LightGreen'
     | 'Turquoise'
-    | 'Light gray'
-    | 'Light blue'
+    | 'LightGray'
+    | 'LightBlue'
     | 'Pink'
-    | 'Titanium white'
+    | 'TitaniumWhite'
     | 'Green'
     | 'Cream'
     | 'Blue'
@@ -513,7 +517,9 @@ export interface CategoriesSelect<T extends boolean = true> {
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
+  productAddress?: T;
   address?: T;
+  order?: T;
   name?: T;
   label?: T;
   color?: T;

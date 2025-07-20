@@ -1,0 +1,178 @@
+[
+  {
+    "address": "https://www.digikala.com/product/dkp-13714776/",
+    "name": "Samsung Galaxy S24 Ultra Dual SIM 256GB 12GB",
+    "label": "گوشی موبایل سامسونگ مدل Galaxy S24 Ultra دو سیم‌کارت ظرفیت 256 گیگابایت و رم 12 گیگابایت",
+    "color": "Black",
+    "price": 95500000,
+    "offPrice": null,
+    "category": "686ff08bd6713d28c018821b",
+    "subCategory": "68724255c794390510ef3cc5",
+    "images": [
+      {
+        "url": "https://dkstatics-public.digikala.com/digikala-products/6e2bd6462a44e5782e5e097875de74ed8b00c974_1732034976.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
+        "isMain": true
+      }
+    ],
+    "quantity": 10,
+    "seller": "digikala",
+    "introduction": "گلکسی S24 Ultra با نمایشگر Dynamic LTPO AMOLED ۲X شش‌و‌هشت اینچی، نرخ نوسازی ۱۲۰ هرتز، چیپ‌ست Snapdragon 8 Gen 3 و دوربین ۲۰۰ مگاپیکسلی، عملکرد بی‌نظیری در همه زمینه‌ها ارائه می‌دهد.",
+    "available": true,
+    "productType": [
+      {
+        "mobile": {
+          "brand": "samsung",
+          "model": "Galaxy S24 Ultra",
+          "classification": "FlagBearer",
+          "ram": "12gb",
+          "storage": "256gb",
+          "os": "android",
+          "batteryCapacity": 5000,
+          "mainCameraResolution": 200,
+          "FrontCameraResolution": 12,
+          "chipset": "Snapdragon 8 Gen 3",
+          "cpuCores": "8",
+          "gpu": "Adreno 750",
+          "simCount": "2",
+          "dimensions": "162.3×79×8.6",
+          "weight": 233,
+          "isRegistered": true,
+          "displayType": "amoled",
+          "displaySize": "6.8",
+          "displayResolution": "3088×1440",
+          "refreshRate": 120,
+          "network": "5g",
+          "waterResistant": true,
+          "accessories": "شارژر، کابل، دفترچه راهنما"
+        }
+      }
+    ]
+  },
+  {
+    "address": "https://www.digikala.com/product/dkp-16226123/",
+    "name": "Samsung Galaxy S24 Ultra Dual SIM 512GB 12GB",
+    "label": "گوشی موبایل سامسونگ مدل Galaxy S24 Ultra دو سیم‌کارت ظرفیت 512 گیگابایت و رم 12 گیگابایت",
+    "color": "TitaniumBlack",
+    "price": 105000000,
+    "offPrice": null,
+    "category": "686ff08bd6713d28c018821b",
+    "subCategory": "68724255c794390510ef3cc5",
+    "images": [
+      {
+        "url": "https://dkstatics-public.digikala.com/digikala-products/another_s24ultra_main.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
+        "isMain": true
+      }
+    ],
+    "quantity": 7,
+    "seller": "digikala",
+    "introduction": "نسخه ۵۱۲ گیگابایتی گلکسی S24 Ultra با حافظه داخلی بالا و مشخصات فنی یکسان، برای حرفه‌ای‌ها و گیمرها مناسب است.",
+    "available": true,
+    "productType": [
+      {
+        "mobile": {
+          "brand": "samsung",
+          "model": "Galaxy S24 Ultra",
+          "classification": "FlagBearer",
+          "ram": "12gb",
+          "storage": "512gb",
+          "os": "android",
+          "batteryCapacity": 5000,
+          "mainCameraResolution": 200,
+          "FrontCameraResolution": 12,
+          "chipset": "Snapdragon 8 Gen 3",
+          "cpuCores": "8",
+          "gpu": "Adreno 750",
+          "simCount": "2",
+          "dimensions": "162.3×79×8.6",
+          "weight": 233,
+          "isRegistered": true,
+          "displayType": "amoled",
+          "displaySize": "6.8",
+          "displayResolution": "3088×1440",
+          "refreshRate": 120,
+          "network": "5g",
+          "waterResistant": true,
+          "accessories": "شارژر، کابل، دفترچه راهنما"
+        }
+      }
+    ]
+  },
+  {
+    "address": "https://www.digikala.com/product/dkp-14813020/",
+    "name": "Lenovo Legion Pro 5 16IRX8 i9 16GB 1TB SSD RTX 4060",
+    "label": "لپ‌تاپ لنوو مدل Legion Pro 5 16IRX8 i9 با رم 16 گیگابایت و حافظه 1 ترابایت SSD",
+    "color": "Black",
+    "price": 118000000,
+    "offPrice": null,
+    "category": "68721e69c794390510ef3922",
+    "subCategory": "687263c05d5a724e3846b79f",
+    "images": [
+      {
+        "url": "https://dkstatics-public.digikala.com/digikala-products/legion5pro_i9_main.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
+        "isMain": true
+      }
+    ],
+    "quantity": 5,
+    "seller": "digikala",
+    "introduction": "Legion Pro 5 با پردازنده i9 نسل ۱۳، کارت گرافیک RTX 4060، و نمایشگر QHD ۲۴۰ هرتز، گزینه‌ای تمام‌عیار برای علاقه‌مندان به گیمینگ و تدوین است.",
+    "available": true,
+    "productType": [
+      {
+        "laptop": {
+          "brand": "lenovo",
+          "model": "Legion Pro 5 16IRX8",
+          "classification": "Gaming",
+          "ram": "16gb",
+          "storages": [{"type":"ssd","capacity":"1tb"}],
+          "AbilityToUpgradeLaptopRAM": true,
+          "AbilityToUpgradeLaptopStorage": true,
+          "usage": "گیمینگ",
+          "cpuSeries": "intel_i9",
+          "CPUProcessorGeneration": "13",
+          "gpuInfo": {"series":"nvidia_rtx","model":"RTX 4060"},
+          "DisplaySize": 16,
+          "screenResolution": "qhd2560x1600",
+          "accessories": "آداپتور شارژ، دفترچه راهنما"
+        }
+      }
+    ]
+  },
+  {
+    "address": "https://www.digikala.com/product/dkp-12162625/",
+    "name": "Lenovo Legion Pro 5 16IRX8 i7 16GB 1TB SSD RTX 4060",
+    "label": "لپ‌تاپ لنوو مدل Legion Pro 5 16IRX8 i7 با رم 16 گیگابایت و حافظه 1 ترابایت SSD",
+    "color": "Black",
+    "price": 108000000,
+    "offPrice": null,
+    "category": "68721e69c794390510ef3922",
+    "subCategory": "687263c05d5a724e3846b79f",
+    "images": [
+      {
+        "url": "https://dkstatics-public.digikala.com/digikala-products/legion5pro_i7_main.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/format,webp/quality,q_90",
+        "isMain": true
+      }
+    ],
+    "quantity": 6,
+    "seller": "digikala",
+    "introduction": "نسخه i7 Legon Pro 5 با گرافیک RTX 4060 برای گیمرهای نیمه‌حرفه‌ای و کاربران متعهد گرافیکی عالی است.",
+    "available": true,
+    "productType": [ { "laptop": {
+        "brand": "lenovo",
+        "model": "Legion Pro 5 16IRX8",
+        "classification": "Gaming",
+        "ram": "16gb",
+        "storages":[{"type":"ssd","capacity":"1tb"}],
+        "AbilityToUpgradeLaptopRAM": true,
+        "AbilityToUpgradeLaptopStorage": true,
+        "usage": "گیمینگ",
+        "cpuSeries": "intel_i7",
+        "CPUProcessorGeneration": "13",
+        "gpuInfo": {"series":"nvidia_rtx","model":"RTX 4060"},
+        "DisplaySize": 16,
+        "screenResolution": "qhd2560x1600",
+        "accessories": "آداپتور شارژ، دفترچه راهنما"
+    }} ]
+  },
+
+  
+]

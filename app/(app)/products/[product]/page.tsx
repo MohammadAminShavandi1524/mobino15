@@ -3,7 +3,7 @@ const Product = () => {
 
   let selectedColor = "#ddd";
 
-  if (true) {
+ 
     switch (temp) {
       case "TitaniumBlack":
         selectedColor = "#383838";
@@ -11,10 +11,6 @@ const Product = () => {
 
       case "Black":
         selectedColor = "#1a1a1a";
-        break;
-
-      case "Two colors (black and red)":
-        selectedColor = "#351919";
         break;
 
       case "Silver":
@@ -29,27 +25,23 @@ const Product = () => {
         selectedColor = "#ffee59";
         break;
 
-      case "Dark blue":
+      case "DarkBlue":
         selectedColor = "#253873";
-        break;
-
-      case "Gray":
-        selectedColor = "#c4c7ce";
         break;
 
       case "Lemon":
         selectedColor = "#f6f436";
         break;
 
-      case "Titanium silver":
+      case "TitaniumSilver":
         selectedColor = "#dacccc";
         break;
 
-      case "Dark gray":
+      case "DarkGray":
         selectedColor = "#1f1d1f";
         break;
 
-      case "Natural titanium":
+      case "NaturalTitanium":
         selectedColor = "#d7d6d6";
         break;
 
@@ -57,11 +49,11 @@ const Product = () => {
         selectedColor = "#d4a54c";
         break;
 
-      case "Titanium gray":
+      case "TitaniumGray":
         selectedColor = "#64635f";
         break;
 
-      case "Titanium Ice Blue":
+      case "TitaniumIceBlue":
         selectedColor = "#bddafc";
         break;
 
@@ -69,7 +61,7 @@ const Product = () => {
         selectedColor = "#8f8f8f";
         break;
 
-      case "Navy blue":
+      case "NavyBlue":
         selectedColor = "#00009c";
         break;
 
@@ -77,19 +69,19 @@ const Product = () => {
         selectedColor = "#c47020";
         break;
 
-      case "Titanium desert":
+      case "TitaniumDesert":
         selectedColor = "#e6c794";
         break;
 
-      case "Titanium Purple":
+      case "TitaniumPurple":
         selectedColor = "#a98ead";
         break;
 
-      case "Jet Black Titanium":
+      case "JetBlackTitanium":
         selectedColor = "#1b1b1a";
         break;
 
-      case "Light green":
+      case "LightGreen":
         selectedColor = "#7fff00";
         break;
 
@@ -97,11 +89,11 @@ const Product = () => {
         selectedColor = "#00ffff";
         break;
 
-      case "Light gray":
+      case "LightGray":
         selectedColor = "#cecece";
         break;
 
-      case "Light blue":
+      case "LightBlue":
         selectedColor = "#74c1f6";
         break;
 
@@ -109,7 +101,7 @@ const Product = () => {
         selectedColor = "#e05ce0";
         break;
 
-      case "Titanium white":
+      case "TitaniumWhite":
         selectedColor = "#f9f6f6";
         break;
 
@@ -181,7 +173,7 @@ const Product = () => {
         selectedColor = "#fff";
         break;
     }
-  }
+  
 
   return <div>Product</div>;
 };
