@@ -327,6 +327,7 @@ export interface Product {
               capacity: '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb' | '4tb';
               id?: string | null;
             }[];
+            AbilityToUpgradeLaptopStorage?: boolean | null;
             usage: 'صنعتی' | 'حرفه ای' | 'مالتی مدیا' | 'دسکتاپ' | 'طراحی' | 'عمومی' | 'گیمینگ';
             cpuSeries:
               | 'intel_i3'
@@ -362,6 +363,21 @@ export interface Product {
                 | 'other';
               model: string;
             };
+            DisplaySize?: number | null;
+            screenResolution:
+              | 'hd1366x768'
+              | 'fullHd1920x1080'
+              | 'qhd2560x1440'
+              | 'wqhd2560x1600'
+              | 'threeK2880x1620'
+              | 'retina2880x1800'
+              | 'uhd4k3840x2160'
+              | 'wuxga1920x1200'
+              | 'wxga1280x800'
+              | 'qhdPlus3200x1800'
+              | 'fiveK5120x2880'
+              | 'sixK6016x3384';
+            accessories: string;
             id?: string | null;
             blockName?: string | null;
             blockType: 'laptop';
@@ -562,6 +578,7 @@ export interface ProductsSelect<T extends boolean = true> {
                     capacity?: T;
                     id?: T;
                   };
+              AbilityToUpgradeLaptopStorage?: T;
               usage?: T;
               cpuSeries?: T;
               CPUProcessorGeneration?: T;
@@ -571,6 +588,9 @@ export interface ProductsSelect<T extends boolean = true> {
                     series?: T;
                     model?: T;
                   };
+              DisplaySize?: T;
+              screenResolution?: T;
+              accessories?: T;
               id?: T;
               blockName?: T;
             };
