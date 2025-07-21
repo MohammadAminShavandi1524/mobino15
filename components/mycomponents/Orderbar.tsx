@@ -1,15 +1,18 @@
 "use client";
 
 import { cn, convertToPersianNumber } from "@/lib/utils";
+import { Product } from "@/payload-types";
 import { ArrowDownWideNarrow } from "lucide-react";
+import { PaginatedDocs } from "payload";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface OrderbarProps {
   activeOrder: string;
   setActiveOrder: Dispatch<SetStateAction<string>>;
+  products: Product[] | undefined;
 }
 
-const Orderbar = ({ activeOrder, setActiveOrder }: OrderbarProps) => {
+const Orderbar = ({ activeOrder, setActiveOrder, products }: OrderbarProps) => {
   return (
     <div
       className="flex items-center justify-between text-[12px] bg-[#e9ecf2] pr-[14px] pl-6 mb-6
@@ -26,6 +29,15 @@ const Orderbar = ({ activeOrder, setActiveOrder }: OrderbarProps) => {
         </div>
         {/* order tags */}
         <div className="flex gap-x-6 font-light text-[#212121]">
+          <span
+            onClick={() => setActiveOrder("MostPopular")}
+            className={cn(
+              "py-4 cursor-pointer",
+              activeOrder === "MostPopular" && "text-[#004b68] font-medium"
+            )}
+          >
+            محبوب‌ترین‌ها
+          </span>
           <span
             onClick={() => setActiveOrder("HighestPrice")}
             className={cn(
@@ -44,15 +56,7 @@ const Orderbar = ({ activeOrder, setActiveOrder }: OrderbarProps) => {
           >
             کم ترین قیمت
           </span>
-          <span
-            onClick={() => setActiveOrder("Newest")}
-            className={cn(
-              "py-4 cursor-pointer",
-              activeOrder === "Newest" && "text-[#004b68] font-medium"
-            )}
-          >
-            جدید ترین
-          </span>
+
           <span
             onClick={() => setActiveOrder("BiggestDiscount")}
             className={cn(
@@ -66,7 +70,7 @@ const Orderbar = ({ activeOrder, setActiveOrder }: OrderbarProps) => {
       </div>
       {/* total products */}
       <div className="flex gap-x-1">
-        <span>{convertToPersianNumber(2000)}</span>
+        <span>{convertToPersianNumber(products?.length || 0)}</span>
         <span>کالا</span>
       </div>
     </div>

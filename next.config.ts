@@ -1,21 +1,14 @@
-// import { withPayload } from "@payloadcms/next/withPayload";
-// import type { NextConfig } from "next";
 
-// const nextConfig: NextConfig = {
-//   eslint: {
-//     ignoreDuringBuilds: true,
-//   },
-// };
+import { withPayload } from "@payloadcms/next/withPayload";
+import type { NextConfig } from "next";
 
-// export default withPayload(nextConfig);
-
-const { withPayload } = require("@payloadcms/next/withPayload");
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["dkstatics-public.digikala.com"],
+  },
 };
 
-module.exports = withPayload(nextConfig);
+export default withPayload(nextConfig);

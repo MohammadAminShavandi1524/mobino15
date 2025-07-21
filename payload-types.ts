@@ -259,6 +259,7 @@ export interface Product {
       }[]
     | null;
   quantity: number;
+  rating: number;
   seller?: 'mobino' | null;
   introduction: string;
   available?: boolean | null;
@@ -535,6 +536,7 @@ export interface ProductsSelect<T extends boolean = true> {
         id?: T;
       };
   quantity?: T;
+  rating?: T;
   seller?: T;
   introduction?: T;
   available?: T;

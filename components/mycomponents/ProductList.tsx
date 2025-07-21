@@ -1,17 +1,21 @@
-import { cn } from "@/lib/utils";
+"use client";
+
+import { cn, convertToPersianNumber } from "@/lib/utils";
 import { Product } from "@/payload-types";
+import { Box, Gamepad2, Percent, Star } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { PaginatedDocs } from "payload";
 
 interface ProductListProps {
-  products: PaginatedDocs<Product> | undefined;
+  products: Product[] | undefined;
 }
 
 const ProductList = ({ products }: ProductListProps) => {
   return (
-    <div className="grid grid-cols-5 gap-x-3">
+    <div className="grid grid-cols-5 gap-x-3 gap-y-3">
       {products &&
-        products.docs.map((product) => {
+        products.map((product) => {
           let selectedColor = "#ddd";
 
           switch (product.color) {
@@ -183,19 +187,30 @@ const ProductList = ({ products }: ProductListProps) => {
               selectedColor = "#fff";
               break;
           }
-          console.log(product.color);
+
+          const mainImage = product.images?.find((image) => {
+            return image.isMain;
+          });
+
+          const discountPercent =
+            product.offPrice &&
+            Math.ceil(
+              ((product.price - product.offPrice) / product.price) * 100
+            );
+
+          
 
           return (
             <Link
               href={""}
-              className="relative w-full h-[550px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
+              className="relative w-full h-[495px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
               key={product.id}
             >
               {/* بخش نشون دادن تخفیف  */}
               {product.offPrice && (
                 <div className="w-full absolute  top-4 px-5 pb-2 ">
-                  <div className="text-[14px] font-medium text-[#e6123d]">
-                    فروش ویژه
+                  <div className="text-[14px] font-bold text-[#e6123d]">
+                    {discountPercent && discountPercent > 5 ? "پیشنهاد شگفت انگیز" : "فروش ویژه"}
                   </div>
                   <div className="mt-2 h-[4px] bg-[#e6123d] rounded-sm"></div>
                 </div>
@@ -204,7 +219,7 @@ const ProductList = ({ products }: ProductListProps) => {
               {/* دایره رنگ ها  */}
               <div
                 className={cn(
-                  "absolute top-[70px] right-[8px] w-[10px] h-[10px] rounded-full",
+                  "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full",
                   [
                     "Silver",
                     "TitaniumSilver",
@@ -217,17 +232,104 @@ const ProductList = ({ products }: ProductListProps) => {
                 style={{ backgroundColor: selectedColor }}
               ></div>
               {/* تصویر */}
-              <div></div>
-              {/* مشخصات فنی */}
-              <div>
-                <div></div>
-                <div></div>
-                <div></div>
+              <div className="w-full flex items-center justify-center mt-5 mb-5">
+                {mainImage?.url && (
+                  <Image
+                    className={cn("")}
+                    src={mainImage.url}
+                    alt={`${product.name}`}
+                    width={206}
+                    height={206}
+                  />
+                )}
               </div>
+
               {/* title */}
-              <div></div>
+              <div className="productlist-title  px-6 text-justify text-[14px] text-[#212121] font-light mb-3">
+                {product.label}
+              </div>
+
+              {/* rating and quntity */}
+
+              <div className="flex items-center justify-between px-6 mb-6">
+                {/* quntity if x is 1 or 2*/}
+                {product.quantity === 1 || product.quantity === 2 ? (
+                  <div className="flex items-center gap-x-0.5  text-[#e6123d] text-[10px]">
+                    <span>
+                      <Box size={16} />
+                    </span>
+                    <span>{convertToPersianNumber(product.quantity)}</span>
+                    <span>عدد در انبار باقی مانده</span>
+                  </div>
+                ) : (
+                  <>
+                    {product.productType?.[0].blockType === "laptop" &&
+                    product.productType?.[0].usage === "گیمینگ" ? (
+                      <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
+                        <span>
+                          <Gamepad2 size={16} color="#004c72" />
+                        </span>
+                        <span className="text-[12px] text-[#81858b]">
+                          {product.productType?.[0].usage}
+                        </span>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </>
+                )}
+
+                {/* rating */}
+                <div className="flex items-center gap-x-0.5">
+                  {/* logo */}
+                  <span>
+                    <Star color="#f1c21b" size={16} />
+                  </span>
+                  {/* rate */}
+                  <span className="text-[#666666] text-[10px]">
+                    {convertToPersianNumber(product.rating)}
+                  </span>
+                </div>
+              </div>
+
               {/* price - offPrice - decount percent */}
-              <div></div>
+              {product.offPrice ? (
+                <div className="relative flex items-center justify-between px-4 pb-[42px]">
+                  {/* discount percent */}
+                  <div
+                    className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 w-7 rounded-sm
+                  px-1"
+                  >
+                    <span>
+                      <Percent strokeWidth={2.5} size={14} />
+                    </span>
+                    <span className="text-[12px] pt-[2px]">
+                      {convertToPersianNumber(discountPercent || "33")}
+                    </span>
+                  </div>
+                  {/* price */}
+                  <div className="flex items-center gap-x-1 text-[#212121]">
+                    <span className="font-bold text-[20px]">
+                      {product.offPrice.toLocaleString("fa-IR")}
+                    </span>
+                    <span className="text-[12px]">تومان</span>
+                  </div>
+                  {/* off price */}
+                  <div className="absolute bottom-[12px] left-[5px] px-4 gap-x-1 text-[#919ebc]">
+                    <span className="font-bold text-[17px] line-through">
+                      {product.price.toLocaleString("fa-IR")}
+                    </span>
+                    <span className="text-[12px]">تومان</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-end gap-x-1 pl-4 pb-[42px] text-[#212121]">
+                  <span className="font-bold text-[20px]">
+                    {product.price.toLocaleString("fa-IR")}
+                  </span>
+                  <span className="text-[12px]">تومان</span>
+                </div>
+              )}
             </Link>
           );
         })}

@@ -147,6 +147,15 @@ export const Products: CollectionConfig = {
       required: true,
     },
 
+    //**          امتیاز        **//
+    {
+      name: "rating",
+      type: "number",
+      required: true,
+      max: 5,
+      min: 3,
+    },
+
     //**         seller         **//
     {
       name: "seller",

@@ -13,6 +13,7 @@ import Orderbar from "@/components/mycomponents/Orderbar";
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import ProductsFilter from "@/components/mycomponents/ProductsFilter";
 
 interface CategoryProps {}
 
@@ -26,14 +27,56 @@ const CategoryPage = ({}: CategoryProps) => {
   const categories = _categories.data;
 
   const _products = useQuery(trpc.products.getMany.queryOptions());
-  const products = _products.data;
+  const __products = _products.data;
 
   const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
     return findedCategory;
   });
 
-  // ? sort by subcategory order
+  // محصولات فیلتر شده بر اساس کتگوری
+  const products =__products &&  __products?.docs.filter((product) => {
+    return product.category === selectedCategoryData?.id;
+  });
+
+  if (products) {
+    switch (activeOrder) {
+      case "MostPopular":
+        products.sort((a, b) => b.rating - a.rating);
+        break;
+
+      case "HighestPrice":
+        products.sort((a, b) => {
+          const priceA = a.offPrice || a.price;
+          const priceB = b.offPrice || b.price;
+          return priceB - priceA;
+        });
+        break;
+
+      case "LowestPrice":
+        products.sort((a, b) => {
+          const priceA = a.offPrice || a.price;
+          const priceB = b.offPrice || b.price;
+          return priceA - priceB;
+        });
+        break;
+
+      case "BiggestDiscount":
+        products.sort((a, b) => {
+          const discountA = a.price - (a.offPrice || a.price);
+          const discountB = b.price - (b.offPrice || b.price);
+          return discountB - discountA;
+        });
+
+        break;
+
+      default:
+        products;
+        break;
+    }
+  }
+
+  // ? subcategory sorted by order
 
   selectedCategoryData &&
     (selectedCategoryData?.subcategories?.docs as Category[]).sort(
@@ -73,18 +116,20 @@ const CategoryPage = ({}: CategoryProps) => {
       {/* product and product filters */}
       <div className="relative flex px-[10px] mt-8 gap-x-8">
         {/* filter*/}
-        <aside className="flex flex-col w-[270px] h-[150px] sticky top-0 right-0 border border-red-600 rounded-md">
-          filter
-        </aside>
+       <ProductsFilter/>
 
         {/*orderbar and products list  */}
         <div className="flex flex-col h-[3000px] w-full   ">
           {/* order bar */}
-          <Orderbar activeOrder={activeOrder} setActiveOrder={setActiveOrder} />
+          <Orderbar
+            products={products}
+            activeOrder={activeOrder}
+            setActiveOrder={setActiveOrder}
+          />
 
           {/* products list */}
           <Suspense fallback={<ProductListSkeleton />}>
-            <ProductList products={products}/>
+            <ProductList products={products} />
           </Suspense>
         </div>
       </div>

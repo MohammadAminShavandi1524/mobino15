@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Skeleton from "./Skleton";
 
 interface LogoProps {
   logoImage_width?: number;
@@ -25,7 +26,7 @@ const Logo = ({
     setMounted(true);
   }, []);
 
-  if (!mounted) return null; // قبل از mount هیچ چیزی رندر نمی‌کنیم
+  if (!mounted) return <Skeleton width={145} height={45} />; // قبل از mount هیچ چیزی رندر نمی‌کنیم
 
   return (
     <Link href="/" className="flex items-center  gap-x-2">
