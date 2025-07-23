@@ -3,17 +3,17 @@
 import { useState } from "react";
 import Logo from "@/components/mycomponents/Logo";
 import RegisterForm from "@/components/mycomponents/(auth)/RegisterForm";
-import ThemeButton from "@/components/mycomponents/ThemeButton";
+import ThemeButton from "@/components/mycomponents/(theme)/ThemeButton";
 import LoginForm from "@/components/mycomponents/(auth)/LoginForm";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
 
   const trpc = useTRPC();
-  const { data } = useQuery(trpc.auth.session.queryOptions());
+  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
 
   // console.log("🚀 ~ Home ~ data:", data?.user);
 

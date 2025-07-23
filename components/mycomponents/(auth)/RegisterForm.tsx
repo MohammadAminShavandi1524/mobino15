@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { registerSchema } from "@/modules/auth/schemas";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -39,7 +39,7 @@ const RegisterForm = () => {
   };
 
   const trpc = useTRPC();
-  // const queryClient = useQueryClient();
+  
 
   const register = useMutation(
     trpc.auth.register.mutationOptions({

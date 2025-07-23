@@ -9,10 +9,12 @@ import Footer from "@/components/mycomponents/Footer";
 import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
-import HeaderSkeleton from "@/components/mycomponents/HeaderSkeleton";
+
 
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import HeaderSkeleton from "@/components/mycomponents/(skeletonComponets)/HeaderSkeleton";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -30,21 +32,23 @@ export default async function RootLayout({
   return (
     <html dir="rtl" lang="en" suppressHydrationWarning>
       <body className="font-IRANYekanX flex flex-col items-center w-full transition-all">
-        <TRPCReactProvider>
-          <ThemeProvider enableSystem>
-            <HydrateClient>
-              <Suspense fallback={<HeaderSkeleton />}>
-                <Header />
-              </Suspense>
-              <div className={cn("w-full bg-[#fcfeff]")}>
-                <Toaster />
-                {children}
-              </div>
+        <NuqsAdapter>
+          <TRPCReactProvider>
+            <ThemeProvider enableSystem>
+              <HydrateClient>
+                <Suspense fallback={<HeaderSkeleton />}>
+                  <Header />
+                </Suspense>
+                <div className={cn("w-full bg-[#fcfeff]")}>
+                  <Toaster />
+                  {children}
+                </div>
 
-              <Footer />
-            </HydrateClient>
-          </ThemeProvider>
-        </TRPCReactProvider>
+                <Footer />
+              </HydrateClient>
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

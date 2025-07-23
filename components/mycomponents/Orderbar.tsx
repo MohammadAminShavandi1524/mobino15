@@ -15,7 +15,7 @@ interface OrderbarProps {
 const Orderbar = ({ activeOrder, setActiveOrder, products }: OrderbarProps) => {
   return (
     <div
-      className="flex items-center justify-between text-[12px] bg-[#e9ecf2] pr-[14px] pl-6 mb-6
+      className=" flex items-center justify-between w-full text-[12px] bg-[#e9ecf2] pr-[14px] pl-6 mb-6
           rounded-lg"
     >
       {/* orders */}

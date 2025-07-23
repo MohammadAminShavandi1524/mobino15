@@ -1,9 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import {  useState } from "react";
+import { useState } from "react";
 import Skeleton from "./Skleton";
-
 
 
 const HeaderSkeleton = () => {

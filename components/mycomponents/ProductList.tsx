@@ -6,14 +6,21 @@ import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { PaginatedDocs } from "payload";
+import { Dispatch, SetStateAction } from "react";
 
 interface ProductListProps {
   products: Product[] | undefined;
+  isFiltersOpened: boolean;
 }
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
   return (
-    <div className="grid grid-cols-5 gap-x-3 gap-y-3">
+    <div
+      className={cn(
+        "grid grid-cols-5 gap-x-3 gap-y-3",
+        !isFiltersOpened && "grid-cols-6"
+      )}
+    >
       {products &&
         products.map((product) => {
           let selectedColor = "#ddd";
@@ -198,8 +205,6 @@ const ProductList = ({ products }: ProductListProps) => {
               ((product.price - product.offPrice) / product.price) * 100
             );
 
-          
-
           return (
             <Link
               href={""}
@@ -210,7 +215,9 @@ const ProductList = ({ products }: ProductListProps) => {
               {product.offPrice && (
                 <div className="w-full absolute  top-4 px-5 pb-2 ">
                   <div className="text-[14px] font-bold text-[#e6123d]">
-                    {discountPercent && discountPercent > 5 ? "پیشنهاد شگفت انگیز" : "فروش ویژه"}
+                    {discountPercent && discountPercent > 5
+                      ? "پیشنهاد شگفت انگیز"
+                      : "فروش ویژه"}
                   </div>
                   <div className="mt-2 h-[4px] bg-[#e6123d] rounded-sm"></div>
                 </div>

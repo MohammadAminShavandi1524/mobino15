@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Skeleton from "./Skleton";
+import Skeleton from "./(skeletonComponets)/Skleton";
 
 interface LogoProps {
   logoImage_width?: number;

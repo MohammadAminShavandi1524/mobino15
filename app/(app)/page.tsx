@@ -4,10 +4,10 @@ import Hello from "../../components/mycomponents/Hello";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import ThemeButton from "@/components/mycomponents/ThemeButton";
+import ThemeButton from "@/components/mycomponents/(theme)/ThemeButton";
 import NavbarSidebar from "@/components/mycomponents/(NavbarsideBar-components)/NavbarSidebar";
 import { getQueryClient, trpc } from "@/trpc/server";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { Category } from "@/payload-types";
 
@@ -24,7 +24,7 @@ export default async function Home() {
   // CLIENT
 
   // const trpc = useTRPC();
-  // const { data } = useQuery(trpc.auth.session.queryOptions());
+  // const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
 
   // console.log("🚀 ~ Home ~ data:", data?.user)
 

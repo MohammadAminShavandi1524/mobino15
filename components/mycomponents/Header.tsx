@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import Link from "next/link";
-import ThemeButton from "./ThemeButton";
+import ThemeButton from "./(theme)/ThemeButton";
 import { useTheme } from "next-themes";
 import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
@@ -23,14 +23,13 @@ import {
   useState,
 } from "react";
 import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import {  useSuspenseQuery } from "@tanstack/react-query";
 
 const Header = () => {
-  
   // ? header height for navbarsidebar margin top
 
   const headerRef = useRef<HTMLElement>(null);
@@ -39,15 +38,15 @@ const Header = () => {
   useLayoutEffect(() => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
-      // یا log بگیر ببینی
-      // console.log("Header height:", headerRef.current.offsetHeight);
     }
   }, []);
+
+  // console.log(headerHeight);
 
   // ?
 
   const trpc = useTRPC();
-  const { data } = useQuery(trpc.auth.session.queryOptions());
+  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
 
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
