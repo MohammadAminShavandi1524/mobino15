@@ -165,8 +165,6 @@ export const Brands = [
   "acer",
 ];
 
-const sort = 
-
 export const params = {
   minPrice: parseAsString.withOptions({
     clearOnDefault: true,
@@ -181,7 +179,14 @@ export const params = {
   brand: parseAsArrayOf(parseAsStringLiteral(Brands)).withOptions({
     clearOnDefault: true,
   }),
-  // sort:parseAsString()
+  sort: parseAsStringLiteral([
+    "MostPopular",
+    "HighestPrice",
+    "LowestPrice",
+    "BiggestDiscount",
+  ]).withOptions({
+    clearOnDefault: true,
+  }),
 };
 
 export const useProductFilters = () => {

@@ -21,7 +21,7 @@ interface CategoryProps {}
 const CategoryPage = ({}: CategoryProps) => {
   const [activeOrder, setActiveOrder] = useState<string>("Newest");
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
-  const [filters] = useProductFilters();
+  const [filters, setFilters] = useProductFilters();
 
   const { category } = useParams();
   const trpc = useTRPC();
@@ -138,9 +138,10 @@ const CategoryPage = ({}: CategoryProps) => {
           <div className="flex flex-col h-[3000px] w-full   ">
             {/* order bar */}
             <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
               products={products}
-              activeOrder={activeOrder}
-              setActiveOrder={setActiveOrder}
+          
             />
 
             {/* products list */}
@@ -157,14 +158,15 @@ const CategoryPage = ({}: CategoryProps) => {
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
-            activePage="category"
+              activePage="category"
               isFiltersOpened={isFiltersOpened}
               setIsFiltersOpened={setIsFiltersOpened}
             />
             <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
               products={products}
-              activeOrder={activeOrder}
-              setActiveOrder={setActiveOrder}
+             
             />
           </div>
           {/* product list */}

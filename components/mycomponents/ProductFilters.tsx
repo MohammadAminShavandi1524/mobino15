@@ -24,8 +24,15 @@ const ProductFilters = ({
 
   type ProductFilters = ReturnType<typeof useProductFilters>[0];
 
-  const hasActiveFilters = Object.values(filters).some(
-    (value) => value !== null && value !== undefined
+  const { sort, ...filtersWithoutSort } = filters;
+
+  const hasActiveFilters = Object.values(filtersWithoutSort).some(
+    (value) =>
+      value !== null &&
+      value !== undefined &&
+      value !== false &&
+      value !== "" &&
+      (!Array.isArray(value) || value.length > 0)
   );
 
   const isPriceFilterActive = (filters: ProductFilters) => {

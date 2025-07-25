@@ -13,6 +13,15 @@ export const productsRouter = createTRPCRouter({
         maxPrice: z.string().nullable().optional(),
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
+        sort: z
+          .enum([
+            "MostPopular",
+            "HighestPrice",
+            "LowestPrice",
+            "BiggestDiscount",
+          ])
+          .nullable()
+          .optional(),
       })
     )
     .query(async ({ ctx, input }) => {
@@ -103,6 +112,42 @@ export const productsRouter = createTRPCRouter({
       });
       // deley
       // await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      // ** مرتب سازی ها
+      if (input.sort) {
+        switch (input.sort) {
+          case "MostPopular":
+            data.docs.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+            break;
+
+          case "HighestPrice":
+            data.docs.sort((a, b) => {
+              const priceA = a.offPrice ?? a.price;
+              const priceB = b.offPrice ?? b.price;
+              return priceB - priceA;
+            });
+            break;
+
+          case "LowestPrice":
+            data.docs.sort((a, b) => {
+              const priceA = a.offPrice ?? a.price;
+              const priceB = b.offPrice ?? b.price;
+              return priceA - priceB;
+            });
+            break;
+
+          case "BiggestDiscount":
+            data.docs.sort((a, b) => {
+              const discountA = (a.price ?? 0) - (a.offPrice ?? a.price ?? 0);
+              const discountB = (b.price ?? 0) - (b.offPrice ?? b.price ?? 0);
+              return discountB - discountA;
+            });
+            break;
+
+          default:
+            break;
+        }
+      }
 
       return data;
     }),

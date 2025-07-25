@@ -16,7 +16,7 @@ interface ProductsProps {}
 const Products = ({}: ProductsProps) => {
   const [activeOrder, setActiveOrder] = useState<string>("Newest");
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
-  const [filters] = useProductFilters();
+  const [filters, setFilters] = useProductFilters();
 
   const trpc = useTRPC();
   const _products = useSuspenseQuery(
@@ -64,8 +64,6 @@ const Products = ({}: ProductsProps) => {
     }
   }
 
-
-
   return (
     <div className="w90 flex flex-col">
       {/* bread crump and categories tags */}
@@ -88,9 +86,9 @@ const Products = ({}: ProductsProps) => {
           <div className="flex flex-col h-[3000px] w-full   ">
             {/* order bar */}
             <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
               products={products}
-              activeOrder={activeOrder}
-              setActiveOrder={setActiveOrder}
             />
 
             {/* products list */}
@@ -112,9 +110,9 @@ const Products = ({}: ProductsProps) => {
               setIsFiltersOpened={setIsFiltersOpened}
             />
             <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
               products={products}
-              activeOrder={activeOrder}
-              setActiveOrder={setActiveOrder}
             />
           </div>
           {/* product list */}

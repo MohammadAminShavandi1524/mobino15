@@ -3,16 +3,43 @@
 import { cn, convertToPersianNumber } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { ArrowDownWideNarrow } from "lucide-react";
+import { ParserBuilder, SetValues } from "nuqs";
 import { PaginatedDocs } from "payload";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface OrderbarProps {
-  activeOrder: string;
-  setActiveOrder: Dispatch<SetStateAction<string>>;
   products: Product[] | undefined;
+  setFilters: SetValues<{
+    sort: ParserBuilder<
+      "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"
+    >;
+  }>;
+  sorts:
+    | "MostPopular"
+    | "HighestPrice"
+    | "LowestPrice"
+    | "BiggestDiscount"
+    | null;
 }
 
-const Orderbar = ({ activeOrder, setActiveOrder, products }: OrderbarProps) => {
+const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
+  const handleSortChange = (
+    value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"
+  ) => {
+    if (sorts === value) {
+      setFilters({ sort: null });
+    } else {
+      setFilters({ sort: value });
+    }
+  };
+
+  const sortOptions = [
+    { label: "محبوب‌ترین‌ها", value: "MostPopular" },
+    { label: "بیشترین قیمت", value: "HighestPrice" },
+    { label: "کم ترین قیمت", value: "LowestPrice" },
+    { label: "بیشترین تخفیف", value: "BiggestDiscount" },
+  ];
+
   return (
     <div
       className=" flex items-center justify-between w-full text-[12px] bg-[#e9ecf2] pr-[14px] pl-6 mb-6
@@ -29,43 +56,30 @@ const Orderbar = ({ activeOrder, setActiveOrder, products }: OrderbarProps) => {
         </div>
         {/* order tags */}
         <div className="flex gap-x-6 font-light text-[#212121]">
-          <span
-            onClick={() => setActiveOrder("MostPopular")}
-            className={cn(
-              "py-4 cursor-pointer",
-              activeOrder === "MostPopular" && "text-[#004b68] font-medium"
-            )}
-          >
-            محبوب‌ترین‌ها
-          </span>
-          <span
-            onClick={() => setActiveOrder("HighestPrice")}
-            className={cn(
-              "py-4 cursor-pointer",
-              activeOrder === "HighestPrice" && "text-[#004b68] font-medium"
-            )}
-          >
-            بیشترین قیمت
-          </span>
-          <span
-            onClick={() => setActiveOrder("LowestPrice")}
-            className={cn(
-              "py-4 cursor-pointer",
-              activeOrder === "LowestPrice" && "text-[#004b68] font-medium"
-            )}
-          >
-            کم ترین قیمت
-          </span>
+          {sortOptions.map((sort, index) => {
+            const isSelected = sorts?.includes(sort.value);
 
-          <span
-            onClick={() => setActiveOrder("BiggestDiscount")}
-            className={cn(
-              "py-4 cursor-pointer",
-              activeOrder === "BiggestDiscount" && "text-[#004b68] font-medium"
-            )}
-          >
-            بیشترین تخفیف
-          </span>
+            return (
+              <div
+                key={index}
+                onClick={() =>
+                  handleSortChange(
+                    sort.value as
+                      | "MostPopular"
+                      | "HighestPrice"
+                      | "LowestPrice"
+                      | "BiggestDiscount"
+                  )
+                }
+                className={cn(
+                  "py-4 cursor-pointer",
+                  isSelected && "text-[#004b68] font-medium"
+                )}
+              >
+                {sort.label}
+              </div>
+            );
+          })}
         </div>
       </div>
       {/* total products */}
