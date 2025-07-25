@@ -41,7 +41,7 @@ const Header = () => {
     }
   }, []);
 
-  // console.log(headerHeight);
+ 
 
   // ?
 
@@ -51,7 +51,7 @@ const Header = () => {
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
-  // console.log(pathname);
+
   useEffect(() => {
     if (isSideBarOpen) {
       document.body.style.overflow = "hidden";

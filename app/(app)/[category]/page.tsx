@@ -29,7 +29,6 @@ const CategoryPage = ({}: CategoryProps) => {
   const _categories = useSuspenseQuery(trpc.categories.getMany.queryOptions());
   const categories = _categories.data;
 
-  // console.log(cleanedFilters);
   const _products = useSuspenseQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
@@ -130,6 +129,7 @@ const CategoryPage = ({}: CategoryProps) => {
         <div className="relative flex px-[10px] mt-8 gap-x-8">
           {/* filter*/}
           <ProductFilters
+            activePage="category"
             isFiltersOpened={isFiltersOpened}
             setIsFiltersOpened={setIsFiltersOpened}
           />
@@ -157,6 +157,7 @@ const CategoryPage = ({}: CategoryProps) => {
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
+            activePage="category"
               isFiltersOpened={isFiltersOpened}
               setIsFiltersOpened={setIsFiltersOpened}
             />

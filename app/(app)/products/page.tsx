@@ -19,9 +19,11 @@ const Products = ({}: ProductsProps) => {
   const [filters] = useProductFilters();
 
   const trpc = useTRPC();
-  const _products = useSuspenseQuery(trpc.products.getMany.queryOptions({
-    ...filters
-  }));
+  const _products = useSuspenseQuery(
+    trpc.products.getMany.queryOptions({
+      ...filters,
+    })
+  );
   const __products = _products.data;
   const products = __products?.docs;
 
@@ -62,6 +64,8 @@ const Products = ({}: ProductsProps) => {
     }
   }
 
+
+
   return (
     <div className="w90 flex flex-col">
       {/* bread crump and categories tags */}
@@ -75,6 +79,7 @@ const Products = ({}: ProductsProps) => {
         <div className="relative flex px-[10px] mt-8 gap-x-8">
           {/* filter*/}
           <ProductFilters
+            activePage="all"
             isFiltersOpened={isFiltersOpened}
             setIsFiltersOpened={setIsFiltersOpened}
           />
@@ -102,6 +107,7 @@ const Products = ({}: ProductsProps) => {
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
+              activePage="all"
               isFiltersOpened={isFiltersOpened}
               setIsFiltersOpened={setIsFiltersOpened}
             />

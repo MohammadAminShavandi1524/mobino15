@@ -15,7 +15,7 @@ const AuthPage = () => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
 
-  // console.log("🚀 ~ Home ~ data:", data?.user);
+
 
   if (data?.user) {
     redirect("/");

@@ -5,15 +5,20 @@ import { Dispatch, SetStateAction } from "react";
 import Pricefilter from "./Pricefilter";
 import { useProductFilters } from "@/hooks/useProductFilter";
 import AppliedFilters from "./AppliedFilters";
+import AvailableProductsFilter from "@/components/mycomponents/AvailableProductsFilter";
+import ColorFilter from "./ColorFilter";
+import BrandFilter from "./BrandFilter";
 
 interface ProductFiltersProps {
   isFiltersOpened: boolean;
   setIsFiltersOpened: Dispatch<SetStateAction<boolean>>;
+  activePage: "category" | "all";
 }
 
 const ProductFilters = ({
   isFiltersOpened,
   setIsFiltersOpened,
+  activePage,
 }: ProductFiltersProps) => {
   const [filters, setFilters] = useProductFilters();
 
@@ -30,6 +35,22 @@ const ProductFilters = ({
     );
   };
 
+  const isColorFilterActive = (filters: ProductFilters) => {
+    return (
+      filters.color !== null &&
+      filters.color !== undefined &&
+      filters.color.length > 0
+    );
+  };
+
+  const isBrandFilterActive = (filters: ProductFilters) => {
+    return (
+      filters.brand !== null &&
+      filters.brand !== undefined &&
+      filters.brand.length > 0
+    );
+  };
+
   const onChange = (key: keyof typeof filters, value: unknown) => {
     setFilters({ ...filters, [key]: value });
   };
@@ -37,7 +58,7 @@ const ProductFilters = ({
   //
   if (isFiltersOpened)
     return (
-      <aside className="flex flex-col min-w-[270px] h-[650px] sticky top-0 right-0 border border-[#ced0d0] rounded-md">
+      <aside className="flex flex-col self-start min-w-[270px] max-w-[270px]  sticky top-0 right-0 border border-[#ced0d0] rounded-md pb-4">
         {/* header */}
         <div className="flex items-center justify-between  p-[14px] border-b border-b-[#ced0d0]">
           <div className="flex items-center gap-x-2 text-[#333333]">
@@ -56,7 +77,7 @@ const ProductFilters = ({
 
         {/* enabled filters */}
         {hasActiveFilters && (
-          <div className="flex flex-col mx-[14px] border-b border-b-[#ced0d0]">
+          <div className="flex flex-col  mx-[14px] border-b border-b-[#ced0d0]">
             {/*  Applied filters tag and the Remove filters button  */}
             <div className="flex justify-between items-center py-3">
               <div className="text-[12px] text-[#333333]">
@@ -67,6 +88,9 @@ const ProductFilters = ({
                   setFilters({
                     minPrice: null,
                     maxPrice: null,
+                    available: null,
+                    color: null,
+                    brand: null,
                   })
                 }
                 className="flex items-center gap-x-1 text-[#9c9d9e] cursor-pointer"
@@ -78,7 +102,7 @@ const ProductFilters = ({
               </button>
             </div>
             {/* Applied filters */}
-            <div className="w-full">
+            <div className="max-w-full">
               <AppliedFilters />
             </div>
           </div>
@@ -86,12 +110,30 @@ const ProductFilters = ({
 
         {/* filters */}
         <div className="flex flex-col mx-[14px]">
+          <AvailableProductsFilter
+            available={filters.available}
+            onAvailableChange={(value) => onChange("available", value)}
+          />
+
           <Pricefilter
             maxPrice={filters.maxPrice}
             minPrice={filters.minPrice}
             onMaxPriceChange={(value) => onChange("maxPrice", value)}
             onMinPriceChange={(value) => onChange("minPrice", value)}
             isPriceFilterActive={isPriceFilterActive(filters)}
+          />
+
+          <ColorFilter
+            colors={filters.color}
+            setFilters={setFilters}
+            isColorFilterActive={isColorFilterActive(filters)}
+          />
+
+          <BrandFilter
+            brands={filters.brand}
+            activePage={activePage}
+            isBrandFilterActive={isBrandFilterActive(filters)}
+            setFilters={setFilters}
           />
         </div>
       </aside>

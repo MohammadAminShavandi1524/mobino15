@@ -24,7 +24,7 @@ const Pricefilter = ({
   isPriceFilterActive,
 }: PricefilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [setFilters] = useProductFilters();
+
   const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const numericValue = e.target.value.replace(/\D/g, "");
 
@@ -46,7 +46,7 @@ const Pricefilter = ({
           <div className="relative">
             <div> محدوده قیمت</div>
             {isPriceFilterActive && (
-              <div className="absolute top-[7px] left-[-14px] w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
+              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
             )}
           </div>
 
@@ -68,6 +68,7 @@ const Pricefilter = ({
               type="text"
               value={minPrice ? formatWithThousandSeparator(minPrice) : ""}
               onChange={handleMinPriceChange}
+              onFocus={(e) => e.target.select()}
             />
 
             <TomanLogo />
@@ -81,6 +82,7 @@ const Pricefilter = ({
               type="text"
               value={maxPrice ? formatWithThousandSeparator(maxPrice) : ""}
               onChange={handleMaxPriceChange}
+              onFocus={(e) => e.target.select()}
             />
             <TomanLogo />
           </div>
@@ -96,7 +98,7 @@ const Pricefilter = ({
       <div className="relative">
         <div> محدوده قیمت</div>
         {isPriceFilterActive && (
-          <div className="absolute top-[7px] left-[-14px] w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
+          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
         )}
       </div>
       <motion.div

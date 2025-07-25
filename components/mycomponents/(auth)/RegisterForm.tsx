@@ -34,7 +34,7 @@ const RegisterForm = () => {
   });
 
   const registerOnSubmit = (values: z.infer<typeof registerSchema>) => {
-    // console.log("🚀 ~ onSubmit ~ values:", values);
+    
     register.mutate(values);
   };
 
