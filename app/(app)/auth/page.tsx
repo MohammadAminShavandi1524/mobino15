@@ -6,14 +6,14 @@ import RegisterForm from "@/components/mycomponents/(auth)/RegisterForm";
 import ThemeButton from "@/components/mycomponents/(theme)/ThemeButton";
 import LoginForm from "@/components/mycomponents/(auth)/LoginForm";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
+  const { data } = useQuery(trpc.auth.session.queryOptions());
 
 
 
@@ -24,7 +24,7 @@ const AuthPage = () => {
   return (
     <div className="flex w-full h-screen bg-white">
       {/* content part  */}
-      <section className="w-1/4 h-full flex flex-col items-center px-12 pt-20">
+      <section className="w-1/4 h-full flex flex-col items-center px-12 pt-15">
         {/* logo */}
         <Logo
           logoImage_height={50}
@@ -32,7 +32,7 @@ const AuthPage = () => {
           text_className="text-[40px]"
         />
         {/* ورود یا ثبت نام */}
-        <div className="flex gap-x-5 items-center mt-20 mb-10 text-[22px]/[22px]  transition-all min-h-[30px] ">
+        <div className="flex gap-x-5 items-center mt-12 mb-10 text-[22px]/[22px]  transition-all min-h-[30px] ">
           <button
             className={`pb-1.5  cursor-pointer ${
               isSignIn
@@ -57,7 +57,7 @@ const AuthPage = () => {
             ثبت نام
           </button>
         </div>
-        <div className="font-medium text-sm mb-10">خوش اومدی !</div>
+        <div className="font-medium text-sm mb-6">خوش اومدی !</div>
 
         {/**  form **/}
 

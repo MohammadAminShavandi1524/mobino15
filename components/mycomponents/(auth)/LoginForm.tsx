@@ -28,8 +28,8 @@ const LoginForm = () => {
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "maminshavandi@gmail.com",
-      password: "v;>Pe23wLC^w^P_",
+      email: "",
+      password: "",
     },
   });
 

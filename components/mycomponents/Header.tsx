@@ -27,7 +27,7 @@ import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
 import { useTRPC } from "@/trpc/client";
-import {  useSuspenseQuery } from "@tanstack/react-query";
+import {  useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 const Header = () => {
   // ? header height for navbarsidebar margin top
@@ -46,7 +46,7 @@ const Header = () => {
   // ?
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
+  const { data } = useQuery(trpc.auth.session.queryOptions());
 
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);

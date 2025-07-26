@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 interface NavbarSidebarProps {
   isOpen: boolean;
@@ -30,7 +30,7 @@ const NavbarSidebar = ({
   );
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
 
   const selectedCategory = data?.docs.find((doc: Category) => {
     const findedDoc = doc === activeCategory;

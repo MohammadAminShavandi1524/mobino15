@@ -6,7 +6,7 @@ import ProductList from "@/components/mycomponents/ProductList";
 import ProductListSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListSkeleton";
 import ProductsFilter from "@/components/mycomponents/ProductFilters";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense, useState } from "react";
 import ProductFilters from "@/components/mycomponents/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
@@ -18,7 +18,7 @@ const Products = ({}: ProductsProps) => {
   const [filters, setFilters] = useProductFilters();
 
   const trpc = useTRPC();
-  const _products = useSuspenseQuery(
+  const _products = useQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
@@ -54,12 +54,11 @@ const Products = ({}: ProductsProps) => {
             />
 
             {/* products list */}
-            <Suspense fallback={<ProductListSkeleton />}>
-              <ProductList
-                products={products}
-                isFiltersOpened={isFiltersOpened}
-              />
-            </Suspense>
+
+            <ProductList
+              products={products}
+              isFiltersOpened={isFiltersOpened}
+            />
           </div>
         </div>
       ) : (

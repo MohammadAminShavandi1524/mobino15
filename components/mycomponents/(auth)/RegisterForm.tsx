@@ -27,9 +27,10 @@ const RegisterForm = () => {
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "maminshavandi",
-      email: "maminshavandi@gmail.com",
-      password: "v;>Pe23wLC^w^P_",
+      username: "",
+      email: "",
+      password: "",
+      sellername: "",
     },
   });
 
@@ -74,7 +75,23 @@ const RegisterForm = () => {
               <FormControl>
                 <Input className="w-[380px] h-[60px] text-base" {...field} />
               </FormControl>
-
+              <FormMessage className="mr-[10px] text-[12px]" />
+            </FormItem>
+          )}
+        />
+        {/*seller name */}
+        <FormField
+          name="sellername"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="mr-[10px] text-[12px] flex gap-x-1">
+                <span>نام فروشگاه</span>
+                {/* <span>(اسمی که نمایش داده میشود)</span> */}
+              
+              </FormLabel>
+              <FormControl>
+                <Input className="w-[380px] h-[60px] text-base" {...field} />
+              </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}

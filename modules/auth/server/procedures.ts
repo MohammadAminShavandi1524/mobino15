@@ -37,6 +37,27 @@ export const authRouter = createTRPCRouter({
         });
       }
 
+      //* sellername error
+
+      const existingSellername = await ctx.db.find({
+        collection: "users",
+        limit: 1,
+        where: {
+          sellername: {
+            equals: input.sellername,
+          },
+        },
+      });
+
+      const existingSeller = existingSellername.docs[0];
+
+      if (existingSeller) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "این نام فروشگاه قبلاً انتخاب شده است.",
+        });
+      }
+
       //* email error
 
       const existingEamil = await ctx.db.find({
@@ -62,7 +83,7 @@ export const authRouter = createTRPCRouter({
       const tenant = await ctx.db.create({
         collection: "tenants",
         data: {
-          name: input.username,
+          name: input.sellername,
           slug: input.username,
         },
       });
@@ -73,6 +94,8 @@ export const authRouter = createTRPCRouter({
           username: input.username,
           email: input.email,
           password: input.password,
+          sellername: input.sellername,
+          roles: ["seller"],
           tenants: [
             {
               tenant: tenant.id,

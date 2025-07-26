@@ -31,6 +31,19 @@ export const Users: CollectionConfig = {
       type: "text",
     },
     {
+      name: "sellername",
+      required: true,
+      unique: true,
+      type: "text",
+    },
+
+
+
+
+
+
+
+    {
       admin: {
         position: "sidebar",
       },

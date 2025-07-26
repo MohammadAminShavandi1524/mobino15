@@ -12,7 +12,7 @@ import { convertToPersianNumber } from "@/lib/utils";
 import Orderbar from "@/components/mycomponents/Orderbar";
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import ProductFilters from "@/components/mycomponents/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
 
@@ -25,10 +25,10 @@ const CategoryPage = ({}: CategoryProps) => {
   const { category } = useParams();
   const trpc = useTRPC();
 
-  const _categories = useSuspenseQuery(trpc.categories.getMany.queryOptions());
+  const _categories = useQuery(trpc.categories.getMany.queryOptions());
   const categories = _categories.data;
 
-  const _products = useSuspenseQuery(
+  const _products = useQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
@@ -47,8 +47,6 @@ const CategoryPage = ({}: CategoryProps) => {
       return product.category === selectedCategoryData?.id;
     });
 
-
-
   // ? subcategory sorted by order
 
   selectedCategoryData &&
@@ -58,8 +56,6 @@ const CategoryPage = ({}: CategoryProps) => {
 
   // ?
 
-
-  
   return (
     <div className="w90 flex flex-col">
       {/* bread crump and categories tags */}
@@ -134,12 +130,8 @@ const CategoryPage = ({}: CategoryProps) => {
             />
           </div>
           {/* product list */}
-          <Suspense fallback={<ProductListSkeleton />}>
-            <ProductList
-              isFiltersOpened={isFiltersOpened}
-              products={products}
-            />
-          </Suspense>
+
+          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
         </div>
       )}
     </div>

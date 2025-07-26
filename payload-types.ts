@@ -130,6 +130,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   username: string;
+  sellername: string;
   roles?: ('user' | 'seller' | 'superAdmin')[] | null;
   tenants?:
     | {
@@ -487,6 +488,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   username?: T;
+  sellername?: T;
   roles?: T;
   tenants?:
     | T
