@@ -19,7 +19,6 @@ import { useProductFilters } from "@/hooks/useProductFilter";
 interface CategoryProps {}
 
 const CategoryPage = ({}: CategoryProps) => {
-  const [activeOrder, setActiveOrder] = useState<string>("Newest");
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
@@ -48,42 +47,7 @@ const CategoryPage = ({}: CategoryProps) => {
       return product.category === selectedCategoryData?.id;
     });
 
-  if (products) {
-    switch (activeOrder) {
-      case "MostPopular":
-        products.sort((a, b) => b.rating - a.rating);
-        break;
 
-      case "HighestPrice":
-        products.sort((a, b) => {
-          const priceA = a.offPrice || a.price;
-          const priceB = b.offPrice || b.price;
-          return priceB - priceA;
-        });
-        break;
-
-      case "LowestPrice":
-        products.sort((a, b) => {
-          const priceA = a.offPrice || a.price;
-          const priceB = b.offPrice || b.price;
-          return priceA - priceB;
-        });
-        break;
-
-      case "BiggestDiscount":
-        products.sort((a, b) => {
-          const discountA = a.price - (a.offPrice || a.price);
-          const discountB = b.price - (b.offPrice || b.price);
-          return discountB - discountA;
-        });
-
-        break;
-
-      default:
-        products;
-        break;
-    }
-  }
 
   // ? subcategory sorted by order
 
@@ -94,6 +58,8 @@ const CategoryPage = ({}: CategoryProps) => {
 
   // ?
 
+
+  
   return (
     <div className="w90 flex flex-col">
       {/* bread crump and categories tags */}
@@ -141,7 +107,6 @@ const CategoryPage = ({}: CategoryProps) => {
               sorts={filters.sort}
               setFilters={setFilters}
               products={products}
-          
             />
 
             {/* products list */}
@@ -166,7 +131,6 @@ const CategoryPage = ({}: CategoryProps) => {
               sorts={filters.sort}
               setFilters={setFilters}
               products={products}
-             
             />
           </div>
           {/* product list */}

@@ -1,7 +1,6 @@
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
-import z, { email } from "zod";
 import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../schemas";
 import { generateCookies } from "../utils";
@@ -60,12 +59,25 @@ export const authRouter = createTRPCRouter({
       }
       // ******************************************************************************
 
+      const tenant = await ctx.db.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          slug: input.username,
+        },
+      });
+
       await ctx.db.create({
         collection: "users",
         data: {
           username: input.username,
           email: input.email,
           password: input.password,
+          tenants: [
+            {
+              tenant: tenant.id,
+            },
+          ],
         },
       });
 

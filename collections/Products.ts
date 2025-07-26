@@ -1,7 +1,26 @@
+import { Tenant } from "@/payload-types";
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "products",
+
+  // hooks: {
+  //   beforeChange: [
+  //     async ({ data, req, operation }) => {
+  //       if (operation === "create" && !data.seller) {
+  //         const tenantObj = req?.user?.tenants?.[0]?.tenant;
+
+  //         if (typeof tenantObj === "object" && tenantObj !== null && "id" in tenantObj) {
+  //           data.seller = tenantObj.id;
+  //         } else if (typeof tenantObj === "string") {
+  //           data.seller = tenantObj; // اگر فقط id باشه
+  //         }
+  //       }
+
+  //       return data;
+  //     },
+  //   ],
+  // },
 
   fields: [
     //**        آدرس محصول         */
@@ -156,13 +175,13 @@ export const Products: CollectionConfig = {
       min: 3,
     },
 
-    //**         seller         **//
-    {
-      name: "seller",
-      type: "select",
-      options: ["mobino"],
-      defaultValue: "mobino",
-    },
+    // //**         seller         **//
+    // {
+    //   name: "seller",
+    //   type: "relationship",
+    //   relationTo: "tenants",
+    //   required: true,
+    // },
 
     //**         معرفی محصول یا توضیحی راجع به محصول          **//
     {

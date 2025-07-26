@@ -1,4 +1,4 @@
-import { Product } from "@/payload-types";
+import { Product, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
 import z from "zod";
@@ -109,46 +109,54 @@ export const productsRouter = createTRPCRouter({
         depth: 1,
         pagination: true,
         where,
+        limit: 100,
       });
       // deley
       // await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // ** مرتب سازی ها
-      if (input.sort) {
-        switch (input.sort) {
-          case "MostPopular":
-            data.docs.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
-            break;
 
-          case "HighestPrice":
-            data.docs.sort((a, b) => {
-              const priceA = a.offPrice ?? a.price;
-              const priceB = b.offPrice ?? b.price;
+      data.docs.sort((a: Product, b: Product) => {
+        const availabilityDiff = Number(b.available) - Number(a.available);
+        if (availabilityDiff !== 0) return availabilityDiff;
+
+        if (input.sort) {
+          switch (input.sort) {
+            case "MostPopular":
+              return (b.rating ?? 0) - (a.rating ?? 0);
+
+            case "HighestPrice": {
+              const priceA = a.offPrice ?? a.price ?? 0;
+              const priceB = b.offPrice ?? b.price ?? 0;
               return priceB - priceA;
-            });
-            break;
+            }
 
-          case "LowestPrice":
-            data.docs.sort((a, b) => {
-              const priceA = a.offPrice ?? a.price;
-              const priceB = b.offPrice ?? b.price;
+            case "LowestPrice": {
+              const priceA = a.offPrice ?? a.price ?? 0;
+              const priceB = b.offPrice ?? b.price ?? 0;
               return priceA - priceB;
-            });
-            break;
+            }
 
-          case "BiggestDiscount":
-            data.docs.sort((a, b) => {
+            case "BiggestDiscount": {
               const discountA = (a.price ?? 0) - (a.offPrice ?? a.price ?? 0);
               const discountB = (b.price ?? 0) - (b.offPrice ?? b.price ?? 0);
               return discountB - discountA;
-            });
-            break;
+            }
 
-          default:
-            break;
+            default:
+              return 0;
+          }
         }
-      }
 
-      return data;
+        return 0;
+      });
+
+      return {
+        ...data,
+        docs: data.docs.map((doc) => ({
+          ...doc,
+          tenant: doc.tenant as Tenant,
+        })),
+      };
     }),
 });

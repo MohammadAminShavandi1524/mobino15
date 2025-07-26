@@ -794,3 +794,100 @@ https://dkstatics-public.digikala.com/digikala-products/6e2bd6462a44e5782e5e0978
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+  "createdAt": "2025-07-09T15:07:39.111Z",
+  "updatedAt": "2025-07-26T12:16:54.725Z",
+  "email": "maminshavandi1524@gmail.com",
+  "sessions": [
+    {
+      "id": "c60e85ee-bce0-4168-89d8-01e6c7768277",
+      "createdAt": "2025-07-26T10:48:26.870Z",
+      "expiresAt": "2025-07-26T12:48:26.870Z"
+    },
+    {
+      "id": "39f49a82-cfa2-4d0d-bc56-51d5d777fd1a",
+      "createdAt": "2025-07-26T11:56:39.870Z",
+      "expiresAt": "2025-07-26T13:56:39.870Z"
+    },
+    {
+      "id": "7b7ff000-6f77-429c-b59a-e5ae59ab664b",
+      "createdAt": "2025-07-26T12:14:59.203Z",
+      "expiresAt": "2025-07-26T14:14:59.203Z"
+    }
+  ],
+  "username": "maminshavandi1524",
+  "roles": [
+    "superAdmin"
+  ],
+  "tenants": [
+    {
+      "tenant": {
+        "createdAt": "2025-07-26T12:16:04.657Z",
+        "updatedAt": "2025-07-26T12:16:04.657Z",
+        "name": "موبینو",
+        "slug": "mobino",
+        "id": "6884c7045fe084cc5973629d"
+      },
+      "id": "6884c72adb1b5a65f4d0d8ae"
+    }
+  ],
+  "id": "686e85bb86a50ac54378d568",
+  "_sid": "7b7ff000-6f77-429c-b59a-e5ae59ab664b",
+  "collection": "users",
+  "_strategy": "local-jwt"
+}
+
+

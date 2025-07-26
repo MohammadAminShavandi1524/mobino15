@@ -14,7 +14,6 @@ import { useProductFilters } from "@/hooks/useProductFilter";
 interface ProductsProps {}
 
 const Products = ({}: ProductsProps) => {
-  const [activeOrder, setActiveOrder] = useState<string>("Newest");
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
@@ -26,43 +25,6 @@ const Products = ({}: ProductsProps) => {
   );
   const __products = _products.data;
   const products = __products?.docs;
-
-  if (products) {
-    switch (activeOrder) {
-      case "MostPopular":
-        products.sort((a, b) => b.rating - a.rating);
-        break;
-
-      case "HighestPrice":
-        products.sort((a, b) => {
-          const priceA = a.offPrice || a.price;
-          const priceB = b.offPrice || b.price;
-          return priceB - priceA;
-        });
-        break;
-
-      case "LowestPrice":
-        products.sort((a, b) => {
-          const priceA = a.offPrice || a.price;
-          const priceB = b.offPrice || b.price;
-          return priceA - priceB;
-        });
-        break;
-
-      case "BiggestDiscount":
-        products.sort((a, b) => {
-          const discountA = a.price - (a.offPrice || a.price);
-          const discountB = b.price - (b.offPrice || b.price);
-          return discountB - discountA;
-        });
-
-        break;
-
-      default:
-        products;
-        break;
-    }
-  }
 
   return (
     <div className="w90 flex flex-col">

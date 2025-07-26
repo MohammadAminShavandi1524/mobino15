@@ -205,6 +205,9 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               ((product.price - product.offPrice) / product.price) * 100
             );
 
+
+            console.log(product);
+
           return (
             <Link
               href={""}
@@ -212,7 +215,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               key={product.id}
             >
               {/* بخش نشون دادن تخفیف  */}
-              {product.offPrice && (
+              {product.available && product.offPrice && (
                 <div className="w-full absolute  top-4 px-5 pb-2 ">
                   <div className="text-[14px] font-bold text-[#e6123d]">
                     {discountPercent && discountPercent > 5
@@ -261,13 +264,21 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               <div className="flex items-center justify-between px-6 mb-6">
                 {/* quntity if x is 1 or 2*/}
                 {product.quantity === 1 || product.quantity === 2 ? (
-                  <div className="flex items-center gap-x-0.5  text-[#e6123d] text-[10px]">
-                    <span>
-                      <Box size={16} />
-                    </span>
-                    <span>{convertToPersianNumber(product.quantity)}</span>
-                    <span>عدد در انبار باقی مانده</span>
-                  </div>
+                  product.available ? (
+                    <div
+                      className={cn(
+                        "flex items-center gap-x-0.5  text-[#e6123d] text-[10px]"
+                      )}
+                    >
+                      <span>
+                        <Box size={16} />
+                      </span>
+                      <span>{convertToPersianNumber(product.quantity)}</span>
+                      <span>عدد در انبار باقی مانده</span>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )
                 ) : (
                   <>
                     {product.productType?.[0].blockType === "laptop" &&
@@ -300,43 +311,54 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               </div>
 
               {/* price - offPrice - decount percent */}
-              {product.offPrice ? (
-                <div className="relative flex items-center justify-between px-4 pb-[42px]">
-                  {/* discount percent */}
-                  <div
-                    className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 w-7 rounded-sm
+
+              {product.available ? (
+                product.offPrice ? (
+                  <div className="relative flex items-center justify-between px-4 pb-[42px]">
+                    {/* discount percent */}
+                    <div
+                      className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 w-7 rounded-sm
                   px-1"
-                  >
-                    <span>
-                      <Percent strokeWidth={2.5} size={14} />
-                    </span>
-                    <span className="text-[12px] pt-[2px]">
-                      {convertToPersianNumber(discountPercent || "33")}
-                    </span>
+                    >
+                      <span>
+                        <Percent strokeWidth={2.5} size={14} />
+                      </span>
+                      <span className="text-[12px] pt-[2px]">
+                        {convertToPersianNumber(discountPercent || "33")}
+                      </span>
+                    </div>
+                    {/* price */}
+                    <div className="flex items-center gap-x-1 text-[#212121]">
+                      <span className="font-bold text-[20px]">
+                        {product.offPrice.toLocaleString("fa-IR")}
+                      </span>
+                      <span className="text-[12px]">تومان</span>
+                    </div>
+                    {/* off price */}
+                    <div className="absolute bottom-[12px] left-[5px] px-4 gap-x-1 text-[#919ebc]">
+                      <span className="font-bold text-[17px] line-through">
+                        {product.price.toLocaleString("fa-IR")}
+                      </span>
+                      <span className="text-[12px]">تومان</span>
+                    </div>
                   </div>
-                  {/* price */}
-                  <div className="flex items-center gap-x-1 text-[#212121]">
+                ) : (
+                  <div className="flex items-center justify-end gap-x-1 pl-4 pb-[42px] text-[#212121]">
                     <span className="font-bold text-[20px]">
-                      {product.offPrice.toLocaleString("fa-IR")}
-                    </span>
-                    <span className="text-[12px]">تومان</span>
-                  </div>
-                  {/* off price */}
-                  <div className="absolute bottom-[12px] left-[5px] px-4 gap-x-1 text-[#919ebc]">
-                    <span className="font-bold text-[17px] line-through">
                       {product.price.toLocaleString("fa-IR")}
                     </span>
                     <span className="text-[12px]">تومان</span>
                   </div>
-                </div>
+                )
               ) : (
-                <div className="flex items-center justify-end gap-x-1 pl-4 pb-[42px] text-[#212121]">
-                  <span className="font-bold text-[20px]">
-                    {product.price.toLocaleString("fa-IR")}
-                  </span>
-                  <span className="text-[12px]">تومان</span>
+                <div className="flex items-center justify-end gap-x-1  px-4 pb-[42px] text-[#212121]">
+                  <span className="w-full h-[1px] bg-[#ced0d0]"></span>
+                  <span className="text-[16px]"> ناموجود</span>
+                  <span className="w-[50px] h-[1px] bg-[#ced0d0]"></span>
                 </div>
               )}
+
+              {}
             </Link>
           );
         })}

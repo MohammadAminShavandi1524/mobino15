@@ -34,12 +34,10 @@ const RegisterForm = () => {
   });
 
   const registerOnSubmit = (values: z.infer<typeof registerSchema>) => {
-    
     register.mutate(values);
   };
 
   const trpc = useTRPC();
-  
 
   const register = useMutation(
     trpc.auth.register.mutationOptions({
@@ -76,13 +74,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input className="w-[380px] h-[60px] text-base" {...field} />
               </FormControl>
-              {/* <FormDescription
-                className={cn("hidden", showPreview && "block")}
-              >
-                <span>فروشگاه شما در دسترس خواهد بود در</span>
-                <span className="font-semibold">{username}</span>
-                <span>.shop.com</span>
-              </FormDescription> */}
+
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}

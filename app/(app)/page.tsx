@@ -13,12 +13,13 @@ import { Category } from "@/payload-types";
 export default async function Home() {
   // SERVER
 
-  // const queryClient = getQueryClient();
-  // const categories = await queryClient.fetchQuery(
-  //   trpc.categories.getMany.queryOptions()
-  // );
+  const queryClient = getQueryClient();
+  const products = await queryClient.fetchQuery(
+    trpc.products.getMany.queryOptions({})
+  );
+  console.log("🚀 ~ Home ~ products:", products.docs)
 
-  // console.log("🚀 ~ Home ~ categories:", categories);
+    
 
   // CLIENT
 
@@ -27,14 +28,14 @@ export default async function Home() {
 
   // console.log("🚀 ~ Home ~ data:", data?.user)
 
-  const queryClient = getQueryClient();
-  const categories = await queryClient.fetchQuery(
-    trpc.categories.getMany.queryOptions()
-  );
+  // const queryClient = getQueryClient();
+  // const categories = await queryClient.fetchQuery(
+  //   trpc.categories.getMany.queryOptions()
+  // );
 
   return (
     <div className=" w90 flex flex-col gap-y-6 text-3xl bg-primaryBackground  min-h-[1000px] ">
-      {categories.docs.map((category) => {
+      {/* {categories.docs.map((category) => {
         return (
           <div key={category.id}>
             <div className="flex items-center   ">
@@ -61,7 +62,7 @@ export default async function Home() {
             </div>
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 }
