@@ -1,34 +1,56 @@
+"use client";
+
 import BreadCrump from "@/components/mycomponents/BreadCrump";
+import Orderbar from "@/components/mycomponents/Orderbar";
+import ProductFilters from "@/components/mycomponents/ProductFilters";
+import ProductList from "@/components/mycomponents/ProductList";
+import { useProductFilters } from "@/hooks/useProductFilter";
 import { Category } from "@/payload-types";
-import { getQueryClient, trpc } from "@/trpc/server";
-import Link from "next/link";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 
-interface SubCategoryProps {
-  params: Promise<{
-    category: string;
-    subcategory: string;
-  }>;
-}
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
-const Subcategory = async ({ params }: SubCategoryProps) => {
-  const { category, subcategory } = await params;
+const Subcategory = () => {
 
-  const queryClient = getQueryClient();
-  const categories = await queryClient.fetchQuery(
-    trpc.categories.getMany.queryOptions()
+  
+
+  const [isFiltersOpened, setIsFiltersOpened] = useState(true);
+  const [filters, setFilters] = useProductFilters();
+
+  const { category, subcategory } = useParams();
+  const trpc = useTRPC();
+
+  const _categories = useQuery(trpc.categories.getMany.queryOptions());
+  const categories = _categories.data;
+
+  const _products = useQuery(
+    trpc.products.getMany.queryOptions({
+      ...filters,
+    })
   );
 
-  const selectedCategoryData = categories.docs.find((doc) => {
+  const __products = _products.data;
+
+  const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
     return findedCategory;
   });
 
-  const selectedSubCategoryData = (
-    selectedCategoryData?.subcategories?.docs as Category[]
-  ).find((sub) => {
-    const findedSubCategory = sub.name === subcategory;
-    return findedSubCategory;
-  });
+  const selectedSubCategoryData =
+    selectedCategoryData &&
+    (selectedCategoryData?.subcategories?.docs as Category[]).find((sub) => {
+      const findedSubCategory = sub.name === subcategory;
+      return findedSubCategory;
+    });
+
+  // محصولات فیلتر شده بر اساس کتگوری
+  const products =
+    __products &&
+    __products?.docs.filter((product) => {
+      return product.subCategory === selectedSubCategoryData?.id;
+    });
 
   return (
     <div className="w90 flex flex-col ">
@@ -41,6 +63,53 @@ const Subcategory = async ({ params }: SubCategoryProps) => {
       />
 
       {/* product and product filters */}
+
+      {isFiltersOpened ? (
+        <div className="relative flex px-[10px] mt-8 gap-x-8">
+          {/* filter*/}
+          <ProductFilters
+            activePage="category"
+            isFiltersOpened={isFiltersOpened}
+            setIsFiltersOpened={setIsFiltersOpened}
+          />
+
+          {/*orderbar and products list  */}
+          <div className="flex flex-col h-[3000px] w-full   ">
+            {/* order bar */}
+            <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
+              products={products}
+            />
+
+            {/* products list */}
+
+            <ProductList
+              products={products}
+              isFiltersOpened={isFiltersOpened}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-y-5 w-full px-[10px] mt-8">
+          {/* filters and orderbar */}
+          <div className="flex gap-x-5">
+            <ProductFilters
+              activePage="category"
+              isFiltersOpened={isFiltersOpened}
+              setIsFiltersOpened={setIsFiltersOpened}
+            />
+            <Orderbar
+              sorts={filters.sort}
+              setFilters={setFilters}
+              products={products}
+            />
+          </div>
+          {/* product list */}
+
+          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
+        </div>
+      )}
     </div>
   );
 };

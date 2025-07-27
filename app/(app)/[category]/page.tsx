@@ -4,15 +4,12 @@ import BreadCrump from "@/components/mycomponents/BreadCrump";
 import ProductList from "@/components/mycomponents/ProductList";
 import ProductListSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListSkeleton";
 import { Category } from "@/payload-types";
-import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
-import { ArrowDownWideNarrow } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useState } from "react";
-import { convertToPersianNumber } from "@/lib/utils";
 import Orderbar from "@/components/mycomponents/Orderbar";
 import { useParams } from "next/navigation";
 import { useTRPC } from "@/trpc/client";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import ProductFilters from "@/components/mycomponents/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
 
@@ -47,7 +44,7 @@ const CategoryPage = ({}: CategoryProps) => {
       return product.category === selectedCategoryData?.id;
     });
 
-  // ? subcategory sorted by order
+  // ? subcategory sorted by order **For Categories Tags**
 
   selectedCategoryData &&
     (selectedCategoryData?.subcategories?.docs as Category[]).sort(
@@ -106,12 +103,11 @@ const CategoryPage = ({}: CategoryProps) => {
             />
 
             {/* products list */}
-            <Suspense fallback={<ProductListSkeleton />}>
-              <ProductList
-                products={products}
-                isFiltersOpened={isFiltersOpened}
-              />
-            </Suspense>
+
+            <ProductList
+              products={products}
+              isFiltersOpened={isFiltersOpened}
+            />
           </div>
         </div>
       ) : (

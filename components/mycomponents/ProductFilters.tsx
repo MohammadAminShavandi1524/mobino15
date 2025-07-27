@@ -12,7 +12,7 @@ import BrandFilter from "./BrandFilter";
 interface ProductFiltersProps {
   isFiltersOpened: boolean;
   setIsFiltersOpened: Dispatch<SetStateAction<boolean>>;
-  activePage: "category" | "all";
+  activePage: "category" | "all" | "SubCategory";
 }
 
 const ProductFilters = ({

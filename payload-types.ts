@@ -408,6 +408,37 @@ export interface Product {
             blockName?: string | null;
             blockType: 'laptop';
           }
+        | {
+            brand: 'apple' | 'samsung' | 'xiaomi' | 'huawei' | 'lenovo' | 'microsoft';
+            model: string;
+            /**
+             * دسته‌بندی تبلت
+             */
+            classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
+            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
+            storage: '32gb' | '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
+            os: 'ipados' | 'android' | 'windows';
+            batteryCapacity: number;
+            mainCameraResolution?: number | null;
+            frontCameraResolution?: number | null;
+            chipset: string;
+            cpuCores: '2' | '4' | '6' | '8' | '10';
+            gpu: string;
+            simSupport?: ('none' | '1' | '2') | null;
+            dimensions: string;
+            weight: number;
+            isRegistered?: boolean | null;
+            displayType: 'ips' | 'tft' | 'oled' | 'amoled';
+            displaySize: string;
+            displayResolution: string;
+            refreshRate?: number | null;
+            network: 'wifi' | '4g' | '5g';
+            waterResistant?: boolean | null;
+            accessories?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'tablet';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -631,6 +662,35 @@ export interface ProductsSelect<T extends boolean = true> {
                   };
               DisplaySize?: T;
               screenResolution?: T;
+              accessories?: T;
+              id?: T;
+              blockName?: T;
+            };
+        tablet?:
+          | T
+          | {
+              brand?: T;
+              model?: T;
+              classification?: T;
+              ram?: T;
+              storage?: T;
+              os?: T;
+              batteryCapacity?: T;
+              mainCameraResolution?: T;
+              frontCameraResolution?: T;
+              chipset?: T;
+              cpuCores?: T;
+              gpu?: T;
+              simSupport?: T;
+              dimensions?: T;
+              weight?: T;
+              isRegistered?: T;
+              displayType?: T;
+              displaySize?: T;
+              displayResolution?: T;
+              refreshRate?: T;
+              network?: T;
+              waterResistant?: T;
               accessories?: T;
               id?: T;
               blockName?: T;

@@ -77,12 +77,8 @@ const Products = ({}: ProductsProps) => {
             />
           </div>
           {/* product list */}
-          <Suspense fallback={<ProductListSkeleton />}>
-            <ProductList
-              isFiltersOpened={isFiltersOpened}
-              products={products}
-            />
-          </Suspense>
+
+          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
         </div>
       )}
     </div>

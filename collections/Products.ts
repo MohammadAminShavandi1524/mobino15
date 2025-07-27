@@ -1,26 +1,7 @@
-import { Tenant } from "@/payload-types";
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "products",
-
-  // hooks: {
-  //   beforeChange: [
-  //     async ({ data, req, operation }) => {
-  //       if (operation === "create" && !data.seller) {
-  //         const tenantObj = req?.user?.tenants?.[0]?.tenant;
-
-  //         if (typeof tenantObj === "object" && tenantObj !== null && "id" in tenantObj) {
-  //           data.seller = tenantObj.id;
-  //         } else if (typeof tenantObj === "string") {
-  //           data.seller = tenantObj; // اگر فقط id باشه
-  //         }
-  //       }
-
-  //       return data;
-  //     },
-  //   ],
-  // },
 
   fields: [
     //**        آدرس محصول         */
@@ -174,14 +155,6 @@ export const Products: CollectionConfig = {
       max: 5,
       min: 3,
     },
-
-    // //**         seller         **//
-    // {
-    //   name: "seller",
-    //   type: "relationship",
-    //   relationTo: "tenants",
-    //   required: true,
-    // },
 
     //**         معرفی محصول یا توضیحی راجع به محصول          **//
     {
@@ -721,23 +694,245 @@ export const Products: CollectionConfig = {
             },
           ],
         },
+
+        {
+          slug: "tablet",
+          fields: [
+            //**        برند           **//
+            {
+              name: "brand",
+              label: "Brand",
+              type: "select",
+              options: [
+                { label: "Apple", value: "apple" },
+                { label: "Samsung", value: "samsung" },
+                { label: "Xiaomi", value: "xiaomi" },
+                { label: "Huawei", value: "huawei" },
+                { label: "Lenovo", value: "lenovo" },
+                { label: "Microsoft", value: "microsoft" },
+              ],
+              required: true,
+            },
+
+            //**          مدل تبلت        **//
+            {
+              name: "model",
+              label: "Model",
+              type: "text",
+              required: true,
+            },
+
+            //**          دسته‌بندی        **//
+            {
+              name: "classification",
+              type: "select",
+              options: [
+                { label: "اقتصادی", value: "Economic" },
+                { label: "پرچم‌دار", value: "FlagBearer" },
+                { label: "میان‌رده", value: "MidRange" },
+              ],
+              admin: { description: "دسته‌بندی تبلت" },
+            },
+
+            //**         رم         **//
+            {
+              name: "ram",
+              label: "RAM",
+              type: "select",
+              options: [
+                { label: "3 GB", value: "3gb" },
+                { label: "4 GB", value: "4gb" },
+                { label: "6 GB", value: "6gb" },
+                { label: "8 GB", value: "8gb" },
+                { label: "12 GB", value: "12gb" },
+                { label: "16 GB", value: "16gb" },
+              ],
+              required: true,
+            },
+
+            //**         حافظه         **//
+            {
+              name: "storage",
+              label: "Storage",
+              type: "select",
+              options: [
+                { label: "32 GB", value: "32gb" },
+                { label: "64 GB", value: "64gb" },
+                { label: "128 GB", value: "128gb" },
+                { label: "256 GB", value: "256gb" },
+                { label: "512 GB", value: "512gb" },
+                { label: "1 TB", value: "1tb" },
+              ],
+              required: true,
+            },
+
+            //**         سیستم عامل         **//
+            {
+              name: "os",
+              label: "Operating System",
+              type: "select",
+              options: [
+                { label: "iPadOS", value: "ipados" },
+                { label: "Android", value: "android" },
+                { label: "Windows", value: "windows" },
+              ],
+              required: true,
+            },
+
+            //**         ظرفیت باتری         **//
+            {
+              name: "batteryCapacity",
+              label: "Battery (mAh)",
+              type: "number",
+              required: true,
+            },
+
+            //**         دوربین اصلی         **//
+            {
+              name: "mainCameraResolution",
+              label: "Main Camera (MP)",
+              type: "number",
+            },
+
+            //**         دوربین جلو         **//
+            {
+              name: "frontCameraResolution",
+              label: "Front Camera (MP)",
+              type: "number",
+            },
+
+            //**         چیپست پردازنده         **//
+            {
+              name: "chipset",
+              label: "Chipset (CPU)",
+              type: "text",
+              required: true,
+            },
+
+            //**        تعداد هسته پردازنده         **//
+            {
+              name: "cpuCores",
+              label: "CPU Cores",
+              type: "select",
+              options: [
+                { label: "2", value: "2" },
+                { label: "4", value: "4" },
+                { label: "6", value: "6" },
+                { label: "8", value: "8" },
+                { label: "10", value: "10" },
+              ],
+              required: true,
+            },
+
+            //**         GPU         **//
+            {
+              name: "gpu",
+              label: "GPU",
+              type: "text",
+              required: true,
+            },
+
+            //**         پشتیبانی از سیم‌کارت         **//
+            {
+              name: "simSupport",
+              label: "SIM Support",
+              type: "select",
+              options: [
+                { label: "ندارد", value: "none" },
+                { label: "تک سیم‌کارت", value: "1" },
+                { label: "دو سیم‌کارت", value: "2" },
+              ],
+            },
+
+            //**         ابعاد         **//
+            {
+              name: "dimensions",
+              label: "Dimensions (mm)",
+              type: "text",
+              required: true,
+            },
+
+            //**         وزن         **//
+            {
+              name: "weight",
+              label: "Weight (grams)",
+              type: "number",
+              required: true,
+            },
+
+            //**         رجیستر شده         **//
+            {
+              name: "isRegistered",
+              label: "Registered",
+              type: "checkbox",
+            },
+
+            //**         نوع نمایشگر         **//
+            {
+              name: "displayType",
+              label: "Display Type",
+              type: "select",
+              options: [
+                { label: "IPS LCD", value: "ips" },
+                { label: "TFT", value: "tft" },
+                { label: "OLED", value: "oled" },
+                { label: "AMOLED", value: "amoled" },
+              ],
+              required: true,
+            },
+
+            //**         سایز نمایشگر         **//
+            {
+              name: "displaySize",
+              label: "Display Size (inches)",
+              type: "text",
+              required: true,
+            },
+
+            //**         وضوح نمایشگر         **//
+            {
+              name: "displayResolution",
+              label: "Resolution",
+              type: "text",
+              required: true,
+            },
+
+            //**         نرخ تازه‌سازی نمایشگر         **//
+            {
+              name: "refreshRate",
+              label: "Refresh Rate (Hz)",
+              type: "number",
+            },
+
+            //**         شبکه ارتباطی         **//
+            {
+              name: "network",
+              label: "Internet Network",
+              type: "select",
+              options: [
+                { label: "WiFi Only", value: "wifi" },
+                { label: "4G", value: "4g" },
+                { label: "5G", value: "5g" },
+              ],
+              required: true,
+            },
+
+            //**         مقاومت در برابر آب         **//
+            {
+              name: "waterResistant",
+              label: "Water Resistant",
+              type: "checkbox",
+            },
+
+            //**         اقلام همراه         **//
+            {
+              name: "accessories",
+              label: "Accessories in Box",
+              type: "text",
+            },
+          ],
+        },
       ],
     },
-
-    //**                  **//
-
-    // {
-    //   name: "refundPolicy",
-    //   type: "select",
-    //   options: [
-    //     "30-روزه",
-    //     "14-روزه",
-    //     "7-روزه",
-    //     "3-روزه",
-    //     "1-روزه",
-    //     "بدون بازپرداخت",
-    //   ],
-    //   defaultValue: "7-روزه",
-    // },
   ],
 };

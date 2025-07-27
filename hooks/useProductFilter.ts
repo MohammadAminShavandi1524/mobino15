@@ -129,40 +129,52 @@ export const GroupedColors = [
 
 export const AllBrandOptions = [
   // ? Common
-  { label: "اپل", value: "apple", category: ["mobile", "laptop"] },
+  { label: "اپل", value: "apple", category: ["mobile", "laptop", "tablet"] },
+  { label: "سامسونگ", value: "samsung", category: ["mobile", "tablet"] },
+  { label: "شیائومی", value: "xiaomi", category: ["mobile", "tablet"] },
+  { label: "هواوی", value: "huawei", category: ["mobile", "tablet"] },
+  { label: "لنوو", value: "lenovo", category: ["laptop", "tablet"] },
+
   // * mobile
-  { label: "سامسونگ", value: "samsung", category: ["mobile"] },
-  { label: "شیائومی", value: "xiaomi", category: ["mobile"] },
-  { label: "هواوی", value: "huawei", category: ["mobile"] },
+
   { label: "نوکیا", value: "nokia", category: ["mobile"] },
   { label: "سونی", value: "sony", category: ["mobile"] },
+
   // * laptop
+
   { label: "ایسوس", value: "asus", category: ["laptop"] },
   { label: "اچ پی", value: "hp", category: ["laptop"] },
-  { label: "لنوو", value: "lenovo", category: ["laptop"] },
   { label: "ام اس آی", value: "msi", category: ["laptop"] },
   { label: "دل", value: "dell", category: ["laptop"] },
   { label: "ایسر", value: "acer", category: ["laptop"] },
+
+  // * tablet
+
+  { label: "Microsoft", value: "microsoft", category: ["tablet"] },
 ];
 
 export const Brands = [
   // ? Common
   "apple",
-
-  // * mobile
   "samsung",
   "xiaomi",
   "huawei",
+  "lenovo",
+
+  // * mobile
   "nokia",
   "sony",
 
   // * laptop
   "asus",
   "hp",
-  "lenovo",
   "msi",
   "dell",
   "acer",
+
+  // * tablet
+
+  "microsoft",
 ];
 
 export const params = {

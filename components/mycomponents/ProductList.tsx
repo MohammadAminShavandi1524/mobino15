@@ -205,12 +205,9 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               ((product.price - product.offPrice) / product.price) * 100
             );
 
-
-            console.log(product);
-
           return (
             <Link
-              href={""}
+             href={`/products/${product?.label}`}
               className="relative w-full h-[495px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
               key={product.id}
             >
