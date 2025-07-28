@@ -316,6 +316,7 @@ export const Products: CollectionConfig = {
                 { label: "1 هسته ", value: "1" },
                 { label: "2 هسته ", value: "2" },
                 { label: "4 هسته ", value: "4" },
+                { label: "6 هسته ", value: "6" },
                 { label: "8 هسته ", value: "8" },
                 { label: "9 هسته ", value: "9" },
                 { label: "10 هسته ", value: "10" },

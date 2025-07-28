@@ -17,7 +17,7 @@ export default async function Home() {
   const products = await queryClient.fetchQuery(
     trpc.products.getMany.queryOptions({})
   );
-  console.log("🚀 ~ Home ~ products:", products.docs)
+
 
     
 

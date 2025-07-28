@@ -100,7 +100,7 @@ const BreadCrump = ({
         <span>/</span>
         <Link
           className={cn("text-black")}
-          href={`/products/${productData?.label}`}
+          href={`/products/${productData?.order}_${productData?.label}`}
         >
           {productData?.label}
         </Link>

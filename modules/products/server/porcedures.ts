@@ -117,9 +117,6 @@ export const productsRouter = createTRPCRouter({
       // ** مرتب سازی ها
 
       data.docs.sort((a: Product, b: Product) => {
-        const availabilityDiff = Number(b.available) - Number(a.available);
-        if (availabilityDiff !== 0) return availabilityDiff;
-
         if (input.sort) {
           switch (input.sort) {
             case "MostPopular":

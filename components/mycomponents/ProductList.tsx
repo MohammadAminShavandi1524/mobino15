@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, convertToPersianNumber } from "@/lib/utils";
+import { cn, convertToPersianNumber, getColorHex } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
@@ -9,11 +9,20 @@ import { PaginatedDocs } from "payload";
 import { Dispatch, SetStateAction } from "react";
 
 interface ProductListProps {
-  products: Product[] | undefined;
+  products: Product[] | null;
   isFiltersOpened: boolean;
 }
 
 const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
+  const availableProducts = products?.filter((p) => p.available) ?? [];
+  const uniqueAvailableProducts = Array.from(
+    new Map(availableProducts.map((p) => [p.name, p])).values()
+  );
+
+  const unavailableProducts = products?.filter((p) => !p.available) ?? [];
+
+  const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
+
   return (
     <div
       className={cn(
@@ -21,180 +30,8 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
         !isFiltersOpened && "grid-cols-6"
       )}
     >
-      {products &&
-        products.map((product) => {
-          let selectedColor = "#ddd";
-
-          switch (product.color) {
-            case "TitaniumBlack":
-              selectedColor = "#383838";
-              break;
-
-            case "Black":
-              selectedColor = "#1a1a1a";
-              break;
-
-            case "Silver":
-              selectedColor = "#cfcfcf";
-              break;
-
-            case "Purple":
-              selectedColor = "#b030b0";
-              break;
-
-            case "yellow":
-              selectedColor = "#ffee59";
-              break;
-
-            case "DarkBlue":
-              selectedColor = "#253873";
-              break;
-
-            case "Lemon":
-              selectedColor = "#f6f436";
-              break;
-
-            case "TitaniumSilver":
-              selectedColor = "#dacccc";
-              break;
-
-            case "DarkGray":
-              selectedColor = "#1f1d1f";
-              break;
-
-            case "NaturalTitanium":
-              selectedColor = "#d7d6d6";
-              break;
-
-            case "Golden":
-              selectedColor = "#d4a54c";
-              break;
-
-            case "TitaniumGray":
-              selectedColor = "#64635f";
-              break;
-
-            case "TitaniumIceBlue":
-              selectedColor = "#bddafc";
-              break;
-
-            case "Gray":
-              selectedColor = "#8f8f8f";
-              break;
-
-            case "NavyBlue":
-              selectedColor = "#00009c";
-              break;
-
-            case "Brick":
-              selectedColor = "#c47020";
-              break;
-
-            case "TitaniumDesert":
-              selectedColor = "#e6c794";
-              break;
-
-            case "TitaniumPurple":
-              selectedColor = "#a98ead";
-              break;
-
-            case "JetBlackTitanium":
-              selectedColor = "#1b1b1a";
-              break;
-
-            case "LightGreen":
-              selectedColor = "#7fff00";
-              break;
-
-            case "Turquoise":
-              selectedColor = "#00ffff";
-              break;
-
-            case "LightGray":
-              selectedColor = "#cecece";
-              break;
-
-            case "LightBlue":
-              selectedColor = "#74c1f6";
-              break;
-
-            case "Pink":
-              selectedColor = "#e05ce0";
-              break;
-
-            case "TitaniumWhite":
-              selectedColor = "#f9f6f6";
-              break;
-
-            case "Green":
-              selectedColor = "#22a148";
-              break;
-
-            case "Cream":
-              selectedColor = "#938f7a";
-              break;
-
-            case "Blue":
-              selectedColor = "#006cf0";
-              break;
-
-            case "White":
-              selectedColor = "#ffffff";
-              break;
-
-            case "Red":
-              selectedColor = "#e03131";
-              break;
-
-            case "Orange":
-              selectedColor = "#ffa600";
-              break;
-
-            case "graphite":
-              selectedColor = "#3C3C3C";
-              break;
-
-            case "oceanBlue":
-              selectedColor = "#0077BE";
-              break;
-
-            case "roseGold":
-              selectedColor = "#B76E79";
-              break;
-
-            case "oliveGreen":
-              selectedColor = "#708238";
-              break;
-
-            case "copper":
-              selectedColor = "#B87333";
-              break;
-
-            case "bronze":
-              selectedColor = "#CD7F32";
-              break;
-
-            case "charcoalGray":
-              selectedColor = "#36454F";
-              break;
-
-            case "skyBlue":
-              selectedColor = "#87CEEB";
-              break;
-
-            case "lilac":
-              selectedColor = "#C8A2C8";
-              break;
-
-            case "mintGreen":
-              selectedColor = "#98FF98";
-              break;
-
-            default:
-              selectedColor = "#fff";
-              break;
-          }
-
+      {finalProducts &&
+        finalProducts.map((product: Product, index) => {
           const mainImage = product.images?.find((image) => {
             return image.isMain;
           });
@@ -205,11 +42,17 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               ((product.price - product.offPrice) / product.price) * 100
             );
 
+          const duplicateAvailableProducts = products?.filter(
+            (p) => p.name === product.name && p.available
+          );
+
+          console.log(duplicateAvailableProducts);
+
           return (
             <Link
-             href={`/products/${product?.label}`}
+              href={`/products/${product.order}_${product.label}`}
               className="relative w-full h-[495px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
-              key={product.id}
+              key={index}
             >
               {/* بخش نشون دادن تخفیف  */}
               {product.available && product.offPrice && (
@@ -224,20 +67,50 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               )}
 
               {/* دایره رنگ ها  */}
-              <div
-                className={cn(
-                  "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full",
-                  [
-                    "Silver",
-                    "TitaniumSilver",
-                    "NaturalTitanium",
-                    "LightGray",
-                    "TitaniumWhite",
-                    "White",
-                  ].includes(selectedColor) && "border border-[#e0e0e2]"
-                )}
-                style={{ backgroundColor: selectedColor }}
-              ></div>
+
+              {product.available ? (
+                <div className="flex flex-col gap-y-1.5 absolute top-[71px] right-[20px]">
+                  {duplicateAvailableProducts &&
+                    duplicateAvailableProducts.slice(0, 4).map((p) => {
+                      return (
+                        <div
+                          className={cn(
+                            "w-[10px] h-[10px] rounded-full",
+                            [
+                              "Silver",
+                              "TitaniumSilver",
+                              "NaturalTitanium",
+                              "LightGray",
+                              "TitaniumWhite",
+                              "White",
+                            ].includes(getColorHex(p.color)) &&
+                              "border border-[#e0e0e2]"
+                          )}
+                          style={{
+                            backgroundColor: getColorHex(p.color),
+                          }}
+                        ></div>
+                      );
+                    })}
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full",
+                    [
+                      "Silver",
+                      "TitaniumSilver",
+                      "NaturalTitanium",
+                      "LightGray",
+                      "TitaniumWhite",
+                      "White",
+                    ].includes(getColorHex(product.color)) &&
+                      "border border-[#e0e0e2]"
+                  )}
+                  style={{ backgroundColor: getColorHex(product.color) }}
+                ></div>
+              )}
+
               {/* تصویر */}
               <div className="w-full flex items-center justify-center mt-5 mb-5">
                 {mainImage?.url && (
