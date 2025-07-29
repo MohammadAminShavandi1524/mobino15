@@ -135,9 +135,17 @@ export const productsRouter = createTRPCRouter({
             }
 
             case "BiggestDiscount": {
-              const discountA = (a.price ?? 0) - (a.offPrice ?? a.price ?? 0);
-              const discountB = (b.price ?? 0) - (b.offPrice ?? b.price ?? 0);
-              return discountB - discountA;
+              const percentA =
+                a.price && a.offPrice
+                  ? ((a.price - a.offPrice) / a.price) * 100
+                  : 0;
+
+              const percentB =
+                b.price && b.offPrice
+                  ? ((b.price - b.offPrice) / b.price) * 100
+                  : 0;
+
+              return percentB - percentA;
             }
 
             default:

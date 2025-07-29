@@ -46,8 +46,6 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
             (p) => p.name === product.name && p.available
           );
 
-         
-
           return (
             <Link
               href={`/products/${product.order}_${product.label}`}
@@ -71,9 +69,10 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               {product.available ? (
                 <div className="flex flex-col gap-y-1.5 absolute top-[71px] right-[20px]">
                   {duplicateAvailableProducts &&
-                    duplicateAvailableProducts.slice(0, 4).map((p) => {
+                    duplicateAvailableProducts.slice(0, 4).map((p, index) => {
                       return (
                         <div
+                          key={index}
                           className={cn(
                             "w-[10px] h-[10px] rounded-full",
                             [

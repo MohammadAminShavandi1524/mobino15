@@ -373,7 +373,7 @@ export interface Product {
               | 'apple_m2'
               | 'apple_m3'
               | 'other';
-            CPUProcessorGeneration: '10' | '11' | '12' | '13' | '14';
+            CPUProcessorGeneration: '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14';
             gpuInfo: {
               series:
                 | 'nvidia_mx'

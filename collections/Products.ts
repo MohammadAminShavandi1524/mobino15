@@ -612,7 +612,7 @@ export const Products: CollectionConfig = {
             {
               name: "CPUProcessorGeneration",
               type: "select",
-              options: ["10", "11", "12", "13", "14"],
+              options: ["7", "8", "9", "10", "11", "12", "13", "14"],
               required: true,
             },
 

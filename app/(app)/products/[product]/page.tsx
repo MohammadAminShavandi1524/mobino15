@@ -1,5 +1,7 @@
 "use client";
 
+import LaptopMainSpec from "@/components/mycomponents/(productMainSpec)/LaptopMainSpec";
+import MobileMainSpec from "@/components/mycomponents/(productMainSpec)/MobileMainSpec";
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import ProductAndQty from "@/components/mycomponents/ProductAndQty";
 import TomanLogo from "@/components/mycomponents/TomanLogo";
@@ -25,26 +27,6 @@ import {
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-
-const laptopCpuOptions = [
-  { label: "Intel Core i3", value: "intel_i3" },
-  { label: "Intel Core i5", value: "intel_i5" },
-  { label: "Intel Core i7", value: "intel_i7" },
-  { label: "Intel Core i9", value: "intel_i9" },
-  { label: "Intel Pentium", value: "intel_pentium" },
-  { label: "Intel Celeron", value: "intel_celeron" },
-  { label: "Intel Xeon", value: "intel_xeon" },
-  { label: "AMD Ryzen 3", value: "amd_ryzen3" },
-  { label: "AMD Ryzen 5", value: "amd_ryzen5" },
-  { label: "AMD Ryzen 7", value: "amd_ryzen7" },
-  { label: "AMD Ryzen 9", value: "amd_ryzen9" },
-  { label: "AMD Athlon", value: "amd_athlon" },
-  { label: "AMD FX", value: "amd_fx" },
-  { label: "Apple M1", value: "apple_m1" },
-  { label: "Apple M2", value: "apple_m2" },
-  { label: "Apple M3", value: "apple_m3" },
-  { label: "Other", value: "other" },
-];
 
 const ProductPage = () => {
   const { product } = useParams();
@@ -125,12 +107,6 @@ const ProductPage = () => {
   });
 
   // *
-
-  const getCpuLabel = (value: string | undefined) => {
-    return (
-      laptopCpuOptions.find((item) => item.value === value)?.label ?? "نامشخص"
-    );
-  };
 
   // * نا موجود
 
@@ -440,136 +416,11 @@ const ProductPage = () => {
                 <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
                   {/* mobile */}
 
-                  {singleProduct.productType?.[0].blockType === "mobile" && (
-                    <>
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-                        <span className="text-[#385086] font-light ml-3">
-                          نوع پردازنده - CPU :
-                        </span>
-                        <span>
-                          {singleProduct.productType?.[0].chipset?.replace(
-                            /(\d+)\s*nm/i,
-                            "$1 نانومتری"
-                          )}
-                        </span>
-                      </div>
+                  <MobileMainSpec product={singleProduct} />
 
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          حافظه داخلی :
-                        </span>
-                        <span>
-                          {singleProduct.productType?.[0].storage
-                            ?.replace(/gb/i, " گیگابایت")
-                            ?.replace(/tb/i, " ترابایت")}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          حافظه RAM :
-                        </span>
-                        <span>
-                          {singleProduct.productType?.[0].ram.replace(
-                            "gb",
-                            " گیگابایت"
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سایز صفحه نمایش :
-                        </span>
-                        <span className="ml-1">
-                          {singleProduct.productType?.[0].displaySize}
-                        </span>
-                        <span>اینچ</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px]  pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          رزولوشن دوربین اصلی :
-                        </span>
-                        <span className="ml-1">
-                          {singleProduct.productType?.[0].mainCameraResolution}
-                        </span>
-                        <span>مگاپیکسل</span>
-                      </div>
-                    </>
-                  )}
                   {/* laptop */}
 
-                  {singleProduct.productType?.[0].blockType === "laptop" && (
-                    <>
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-                        <span className="text-[#385086] font-light ml-3">
-                          نوع کاربری :
-                        </span>
-                        <span>{singleProduct.productType?.[0].usage}</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سایز صفحه نمایش :
-                        </span>
-                        <span className="ml-1">
-                          {singleProduct.productType?.[0].DisplaySize}
-                        </span>
-                        <span>اینچ</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سری پردازنده مرکزی :
-                        </span>
-                        <span>
-                          {getCpuLabel(
-                            singleProduct.productType?.[0].cpuSeries
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          ظرفیت حافظه RAM :
-                        </span>
-                        <span className="ml-1">
-                          {singleProduct.productType?.[0].ram.replace(
-                            "gb",
-                            " گیگابایت"
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px]  pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          ظرفیت حافظه داخلی :
-                        </span>
-
-                        <div className="flex items-center gap-x-4">
-                          {singleProduct.productType?.[0].storages.map(
-                            (storage, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="flex items-center gap-x-1"
-                                >
-                                  <span>
-                                    {storage.capacity
-                                      ?.replace(/gb/i, " گیگابایت")
-                                      ?.replace(/tb/i, " ترابایت")}
-                                  </span>
-
-                                  <span>{storage.type}</span>
-                                </div>
-                              );
-                            }
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <LaptopMainSpec product={singleProduct} />
                 </div>
               </div>
             </div>
@@ -800,141 +651,11 @@ const ProductPage = () => {
                 <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
                   {/* mobile */}
 
-                  {MPSelectedProduct.productType?.[0].blockType ===
-                    "mobile" && (
-                    <>
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-                        <span className="text-[#385086] font-light ml-3">
-                          نوع پردازنده - CPU :
-                        </span>
-                        <span>
-                          {MPSelectedProduct.productType?.[0].chipset?.replace(
-                            /(\d+)\s*nm/i,
-                            "$1 نانومتری"
-                          )}
-                        </span>
-                      </div>
+                  <MobileMainSpec product={MPSelectedProduct} />
 
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          حافظه داخلی :
-                        </span>
-                        <span>
-                          {MPSelectedProduct.productType?.[0].storage
-                            ?.replace(/gb/i, " گیگابایت")
-                            ?.replace(/tb/i, " ترابایت")}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          حافظه RAM :
-                        </span>
-                        <span>
-                          {MPSelectedProduct.productType?.[0].ram.replace(
-                            "gb",
-                            " گیگابایت"
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سایز صفحه نمایش :
-                        </span>
-                        <span className="ml-1">
-                          {MPSelectedProduct.productType?.[0].displaySize}
-                        </span>
-                        <span>اینچ</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px]  pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          رزولوشن دوربین اصلی :
-                        </span>
-                        <span className="ml-1">
-                          {
-                            MPSelectedProduct.productType?.[0]
-                              .mainCameraResolution
-                          }
-                        </span>
-                        <span>مگاپیکسل</span>
-                      </div>
-                    </>
-                  )}
                   {/* laptop */}
 
-                  {MPSelectedProduct.productType?.[0].blockType ===
-                    "laptop" && (
-                    <>
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-                        <span className="text-[#385086] font-light ml-3">
-                          نوع کاربری :
-                        </span>
-                        <span>{MPSelectedProduct.productType?.[0].usage}</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سایز صفحه نمایش :
-                        </span>
-                        <span className="ml-1">
-                          {MPSelectedProduct.productType?.[0].DisplaySize}
-                        </span>
-                        <span>اینچ</span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          سری پردازنده مرکزی :
-                        </span>
-                        <span>
-                          {getCpuLabel(
-                            MPSelectedProduct.productType?.[0].cpuSeries
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          ظرفیت حافظه RAM :
-                        </span>
-                        <span className="ml-1">
-                          {MPSelectedProduct.productType?.[0].ram.replace(
-                            "gb",
-                            " گیگابایت"
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center  text-[14px]  pt-[16px]">
-                        <span className="text-[#385086] font-light ml-3">
-                          ظرفیت حافظه داخلی :
-                        </span>
-
-                        <div className="flex items-center gap-x-4">
-                          {MPSelectedProduct.productType?.[0].storages.map(
-                            (storage, index) => {
-                              return (
-                                <div
-                                  key={index}
-                                  className="flex items-center gap-x-1"
-                                >
-                                  <span>
-                                    {storage.capacity
-                                      ?.replace(/gb/i, " گیگابایت")
-                                      ?.replace(/tb/i, " ترابایت")}
-                                  </span>
-
-                                  <span>{storage.type}</span>
-                                </div>
-                              );
-                            }
-                          )}
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <LaptopMainSpec product={MPSelectedProduct} />
                 </div>
               </div>
             </div>
@@ -1040,17 +761,11 @@ const ProductPage = () => {
             </div>
 
             {/* price info and quantity */}
-
-           
-
-             {MPProductShowcase ? (
+            {MPProductShowcase ? (
               <ProductAndQty product={MPProductShowcase} />
             ) : (
               <ProductAndQty product={MPSelectedProduct} />
-            )} 
-
-
-           
+            )}
 
             {/* add to cart button */}
             <div
