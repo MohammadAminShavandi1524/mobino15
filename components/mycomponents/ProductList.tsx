@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, convertToPersianNumber, getColorHex } from "@/lib/utils";
+import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
@@ -46,7 +46,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
             (p) => p.name === product.name && p.available
           );
 
-          console.log(duplicateAvailableProducts);
+         
 
           return (
             <Link
@@ -83,11 +83,11 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
                               "LightGray",
                               "TitaniumWhite",
                               "White",
-                            ].includes(getColorHex(p.color)) &&
+                            ].includes(getColorInfo(p.color).hex) &&
                               "border border-[#e0e0e2]"
                           )}
                           style={{
-                            backgroundColor: getColorHex(p.color),
+                            backgroundColor: getColorInfo(p.color).hex,
                           }}
                         ></div>
                       );
@@ -104,10 +104,10 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
                       "LightGray",
                       "TitaniumWhite",
                       "White",
-                    ].includes(getColorHex(product.color)) &&
+                    ].includes(getColorInfo(product.color).hex) &&
                       "border border-[#e0e0e2]"
                   )}
-                  style={{ backgroundColor: getColorHex(product.color) }}
+                  style={{ backgroundColor: getColorInfo(product.color).hex }}
                 ></div>
               )}
 
