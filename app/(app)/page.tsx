@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getQueryClient, trpc } from "@/trpc/server";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
@@ -83,7 +85,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="flex flex-col min-h-[1000px] ">
+    <div className="flex flex-col min-h-[1000px] overflow-x-hidden">
       {/* image carousel */}
       <Skeleton width={1920} height={430} />
 
@@ -123,10 +125,6 @@ export default async function Home() {
           <CarouselPrevious className="top-[63px]" />
           <CarouselNext className="top-[63px]" />
         </Carousel>
-
-        <div className="relative w-full h-100 border border-blue-400 mt-50">
-          <div className="absolute top-[calc(100%+1px)] right-0 w-50 h-100 border border-red-600"></div>
-        </div>
       </div>
     </div>
   );

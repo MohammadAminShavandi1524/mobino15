@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import AllProductsPage from "@/components/mycomponents/AllProductsPage";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";

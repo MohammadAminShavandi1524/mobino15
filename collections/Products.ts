@@ -709,10 +709,8 @@ export const Products: CollectionConfig = {
               options: [
                 { label: "Apple", value: "apple" },
                 { label: "Samsung", value: "samsung" },
-                { label: "Xiaomi", value: "xiaomi" },
-                { label: "Huawei", value: "huawei" },
-                { label: "Lenovo", value: "lenovo" },
                 { label: "Microsoft", value: "microsoft" },
+                { label: "Xiaomi", value: "xiaomi" },
               ],
               required: true,
             },
