@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Skeleton from "./Skleton";
 
-
 const HeaderSkeleton = () => {
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
   const pathname = usePathname();
@@ -13,7 +12,7 @@ const HeaderSkeleton = () => {
   }
 
   return (
-    <header className="mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
+    <header className=" bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
       {/* banners */}
       {isBannerDisplayed && <Skeleton height={60} width={1920} />}
 

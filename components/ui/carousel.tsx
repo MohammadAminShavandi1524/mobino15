@@ -4,7 +4,7 @@ import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -55,7 +55,10 @@ function Carousel({
     {
       ...opts,
       axis: orientation === "horizontal" ? "x" : "y",
-      direction:"rtl"
+      direction: "rtl",
+      align: "start",
+      slidesToScroll: 1,
+      containScroll: "trimSnaps",
     },
     plugins
   );
@@ -172,9 +175,6 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-
-
-
 function CarouselPrevious({
   className,
   variant = "outline",
@@ -189,9 +189,9 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-9 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.1)]  pl-0.5",
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
+          ? "top-1/2 -right-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -199,8 +199,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
-      <span className="sr-only">Previous slide</span>
+      <ChevronRight className="size-6" />
     </Button>
   );
 }
@@ -219,9 +218,9 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-9 rounded-full shadow-[0_1px_4px_rgba(0,0,0,0.1)]  pr-0.5",
         orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
+          ? "top-1/2 -left-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -229,15 +228,10 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
-      <span className="sr-only">Next slide</span>
+      <ChevronLeft className="size-6" />
     </Button>
   );
 }
-
-
-
-
 
 export {
   type CarouselApi,

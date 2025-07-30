@@ -24,9 +24,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  
-  const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
+    // *prefetch example
+  // const queryClient = getQueryClient();
+  // void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
   return (
     <html dir="rtl" lang="en" suppressHydrationWarning>

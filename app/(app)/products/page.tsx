@@ -27,7 +27,7 @@ const Products = ({}: ProductsProps) => {
   const products = productsData?.docs;
 
   return (
-    <div className="w90 flex flex-col">
+    <div className="w90 flex flex-col mt-4">
       {/* bread crump and categories tags */}
       <div className="flex flex-col px-[10px] gap-y-4">
         {/* bread crump */}

@@ -74,7 +74,7 @@ const Header = () => {
   return (
     <header
       ref={headerRef}
-      className="relative mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]"
+      className="relative  bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]"
     >
       {/* sidebar */}
 

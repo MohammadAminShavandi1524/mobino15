@@ -16,7 +16,6 @@ import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import {
   BadgeCheck,
-  Box,
   Check,
   Package,
   Settings,
@@ -305,10 +304,7 @@ const ProductPage = () => {
             <ProductAndQty product={singleProduct} />
 
             {/* add to cart button */}
-            <div
-              className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white
-            cursor-pointer"
-            >
+            <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer">
               <div className="text-[18px]">افزودن به سبد خرید</div>
               <div className="absolute left-[16px]">
                 <ShoppingCart size={20} />

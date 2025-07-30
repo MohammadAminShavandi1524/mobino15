@@ -49,7 +49,7 @@ const Subcategory = () => {
     });
 
   return (
-    <div className="w90 flex flex-col ">
+    <div className="w90 flex flex-col mt-4">
       {/* bread crump */}
       <BreadCrump
         activePage="subcategory"

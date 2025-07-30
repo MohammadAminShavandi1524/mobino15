@@ -18,12 +18,13 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
   const unavailableProducts = products?.filter((p) => !p.available) ?? [];
 
   const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
-  
+
   return (
     <div
       className={cn(
-        "grid grid-cols-5 gap-x-3 gap-y-3",
-        !isFiltersOpened && "grid-cols-6"
+        "grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 gap-y-3 ",
+        !isFiltersOpened &&
+          "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 "
       )}
     >
       {finalProducts &&
