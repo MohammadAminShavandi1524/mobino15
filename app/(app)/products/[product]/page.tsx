@@ -118,7 +118,7 @@ const ProductPage = () => {
     matchedProductByOrder[0].available === false
   )
     return (
-      <div className="w90 flex flex-col">
+      <div className="w90 flex flex-col mt-4">
         <div className="px-[10px]">ناموجود</div>
       </div>
     );
@@ -131,7 +131,7 @@ const ProductPage = () => {
       : "#000";
 
     return (
-      <div className="w90 flex flex-col max-w-[1600px] px-[10px]">
+      <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -327,7 +327,7 @@ const ProductPage = () => {
     selectedSubCategory
   ) {
     return (
-      <div className="w90 flex flex-col max-w-[1600px] px-[10px]">
+      <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -569,13 +569,13 @@ const ProductPage = () => {
   // *Loading
 
   return (
-    <div className="w90 flex flex-col max-w-[1600px] px-[10px]">
+    <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
       {/* bread crump */}
       <div className="mb-5">
         <BreadCrump
           activePage="product"
-          categoriesLoading={categoriesLoading}
-          productsLoading={productsLoading}
+          
+         
           className="px-1"
         />
       </div>

@@ -1,10 +1,11 @@
+import { useQueryStates } from "nuqs";
 import {
+  createLoader,
   parseAsArrayOf,
   parseAsBoolean,
   parseAsString,
   parseAsStringLiteral,
-  useQueryStates,
-} from "nuqs";
+} from "nuqs/server";
 
 // * products collection colors (all colors)
 
@@ -205,3 +206,5 @@ export const params = {
 export const useProductFilters = () => {
   return useQueryStates(params);
 };
+
+export const LoadProductFilters = createLoader(params);

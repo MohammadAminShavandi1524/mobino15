@@ -1,114 +1,34 @@
-"use client";
+import SubCategoryPage from "@/components/mycomponents/SubCategoryPage";
+import { LoadProductFilters } from "@/hooks/useProductFilter";
+import { HydrateClient, prefetch, trpc } from "@/trpc/server";
+import type { SearchParams } from "nuqs";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-import BreadCrump from "@/components/mycomponents/BreadCrump";
-import Orderbar from "@/components/mycomponents/Orderbar";
-import ProductFilters from "@/components/mycomponents/ProductFilters";
-import ProductList from "@/components/mycomponents/ProductList";
-import { useProductFilters } from "@/hooks/useProductFilter";
-import { Category } from "@/payload-types";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+interface SubCategory_PageProps {
+  serachParams: Promise<SearchParams>;
+  params: Promise<{
+    category: string;
+    subcategory: string;
+  }>;
+}
 
-import { useParams } from "next/navigation";
-import { useState } from "react";
+const SubCategory_Page = async ({ serachParams, params }: SubCategory_PageProps) => {
+  const { category, subcategory } = await params;
 
-const Subcategory = () => {
-  const [isFiltersOpened, setIsFiltersOpened] = useState(true);
-  const [filters, setFilters] = useProductFilters();
+  const filters = await LoadProductFilters(serachParams);
 
-  const { category, subcategory } = useParams();
-  const trpc = useTRPC();
-
-  const { data: categories, isLoading: categoriesLoading } = useQuery(
-    trpc.categories.getMany.queryOptions()
-  );
-
-  const { data: productsData, isLoading: productsLoading } = useQuery(
-    trpc.products.getMany.queryOptions({
-      ...filters,
-    })
-  );
-
-  const selectedCategoryData = categories?.docs.find((doc) => {
-    const findedCategory = doc.name === category;
-    return findedCategory;
-  });
-
-  const selectedSubCategoryData =
-    selectedCategoryData &&
-    (selectedCategoryData?.subcategories?.docs as Category[]).find((sub) => {
-      const findedSubCategory = sub.name === subcategory;
-      return findedSubCategory;
-    });
-
-  // محصولات فیلتر شده بر اساس کتگوری
-  const products =
-    productsData &&
-    productsData?.docs.filter((product) => {
-      return product.subCategory === selectedSubCategoryData?.id;
-    });
+  prefetch(trpc.products.getMany.queryOptions({ ...filters }));
+  prefetch(trpc.categories.getMany.queryOptions());
 
   return (
-    <div className="w90 flex flex-col mt-4">
-      {/* bread crump */}
-      <BreadCrump
-        activePage="subcategory"
-        selectedCategoryData={selectedCategoryData}
-        selectedSubCategoryData={selectedSubCategoryData}
-        categoriesLoading={categoriesLoading}
-        productsLoading={productsLoading}
-        className="px-[10px]"
-      />
-
-      {/* product and product filters */}
-
-      {isFiltersOpened ? (
-        <div className="relative flex px-[10px] mt-8 gap-x-8">
-          {/* filter*/}
-          <ProductFilters
-            activePage="SubCategory"
-            isFiltersOpened={isFiltersOpened}
-            setIsFiltersOpened={setIsFiltersOpened}
-          />
-
-          {/*orderbar and products list  */}
-          <div className="flex flex-col h-[3000px] w-full   ">
-            {/* order bar */}
-            <Orderbar
-              sorts={filters.sort}
-              setFilters={setFilters}
-              products={products}
-            />
-
-            {/* products list */}
-
-            <ProductList
-              products={products}
-              isFiltersOpened={isFiltersOpened}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-y-5 w-full px-[10px] mt-8">
-          {/* filters and orderbar */}
-          <div className="flex gap-x-5">
-            <ProductFilters
-              activePage="SubCategory"
-              isFiltersOpened={isFiltersOpened}
-              setIsFiltersOpened={setIsFiltersOpened}
-            />
-            <Orderbar
-              sorts={filters.sort}
-              setFilters={setFilters}
-              products={products}
-            />
-          </div>
-          {/* product list */}
-
-          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
-        </div>
-      )}
-    </div>
+    <HydrateClient>
+      <ErrorBoundary fallback={<div>subCategory error boundary!!!!</div>}>
+        <Suspense fallback={<>subCategory loading</>}>
+          <SubCategoryPage category={category} subcategory={subcategory} />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrateClient>
   );
 };
-export default Subcategory;
+export default SubCategory_Page;

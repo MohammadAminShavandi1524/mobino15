@@ -31,22 +31,6 @@ import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import HeaderSkeleton from "./(skeletonComponets)/HeaderSkeleton";
 
 const Header = () => {
-  // ? header height for navbarsidebar margin top
-
-  const headerRef = useRef<HTMLElement>(null);
-  const [headerHeight, setHeaderHeight] = useState<number>(0);
-
-  useLayoutEffect(() => {
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
-  }, []);
-
-  // ?
-
-  const trpc = useTRPC();
-  const { isLoading, data } = useQuery(trpc.auth.session.queryOptions());
-
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
@@ -63,23 +47,18 @@ const Header = () => {
     };
   }, [isSideBarOpen]);
 
+  const trpc = useTRPC();
+  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
+
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
   }
 
-  if (isLoading) {
-    return <HeaderSkeleton />;
-  }
-
   return (
-    <header
-      ref={headerRef}
-      className="relative  bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]"
-    >
+    <header className="relative bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
       {/* sidebar */}
 
       <NavbarSidebar
-        headerHeight={headerHeight}
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}

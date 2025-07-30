@@ -7,11 +7,14 @@ import Header from "@/components/mycomponents/Header";
 import Footer from "@/components/mycomponents/Footer";
 
 import { TRPCReactProvider } from "@/trpc/client";
-import { getQueryClient, trpc } from "@/trpc/server";
+import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import HeaderSkeleton from "@/components/mycomponents/(skeletonComponets)/HeaderSkeleton";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -23,8 +26,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-    // *prefetch example
+  
+  prefetch(trpc.auth.session.queryOptions());
+  prefetch(trpc.categories.getMany.queryOptions());
+  // *prefetch example
   // const queryClient = getQueryClient();
   // void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
 
@@ -34,7 +39,13 @@ export default async function RootLayout({
         <NuqsAdapter>
           <TRPCReactProvider>
             <ThemeProvider enableSystem>
-              <Header />
+              <HydrateClient>
+                <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
+                  <Suspense fallback={<HeaderSkeleton />}>
+                    <Header />
+                  </Suspense>
+                </ErrorBoundary>
+              </HydrateClient>
 
               <div className={cn("w-full bg-[#fcfeff]")}>
                 <Toaster />

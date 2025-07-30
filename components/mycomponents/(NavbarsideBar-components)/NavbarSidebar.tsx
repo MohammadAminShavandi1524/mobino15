@@ -7,21 +7,21 @@ import { motion } from "framer-motion";
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import { useTRPC } from "@/trpc/client";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import {  useSuspenseQuery } from "@tanstack/react-query";
 
 interface NavbarSidebarProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isBannerDisplayed: boolean;
-  headerHeight: number;
+ 
 }
 
 const NavbarSidebar = ({
   isOpen,
   setIsOpen,
   isBannerDisplayed,
-  headerHeight,
 }: NavbarSidebarProps) => {
+
   const [isAllPHovered, setIsAllPHovered] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
@@ -30,7 +30,7 @@ const NavbarSidebar = ({
   );
 
   const trpc = useTRPC();
-  const { data } = useQuery(trpc.categories.getMany.queryOptions());
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
   const selectedCategory = data?.docs.find((doc: Category) => {
     const findedDoc = doc === activeCategory;
@@ -48,12 +48,7 @@ const NavbarSidebar = ({
 
   if (isOpen) {
     return (
-      <div
-        className={cn(
-          "fixed z-50 right-0 top-0  flex w-full  bg-zinc-900/50 h-screen  border-t border-[#d7dee0]"
-        )}
-        style={{ marginTop: headerHeight || "205px" }}
-      >
+      <div className="absolute right-0 top-[calc(100%+1px)] z-50 flex w-full  bg-zinc-900/50 h-screen  border-t border-[#d7dee0]">
         {/* categories */}
         <ul className="min-w-[280px] bg-white text-custom-primary pt-4 px-4 flex flex-col ">
           {/* تمام محصولات  */}

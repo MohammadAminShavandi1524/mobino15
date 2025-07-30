@@ -123,6 +123,10 @@ export default async function Home() {
           <CarouselPrevious className="top-[63px]" />
           <CarouselNext className="top-[63px]" />
         </Carousel>
+
+        <div className="relative w-full h-100 border border-blue-400 mt-50">
+          <div className="absolute top-[calc(100%+1px)] right-0 w-50 h-100 border border-red-600"></div>
+        </div>
       </div>
     </div>
   );
