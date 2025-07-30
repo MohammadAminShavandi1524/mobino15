@@ -13,25 +13,21 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const Subcategory = () => {
-
-  
-
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
   const { category, subcategory } = useParams();
   const trpc = useTRPC();
 
-  const _categories = useQuery(trpc.categories.getMany.queryOptions());
-  const categories = _categories.data;
+  const { data: categories, isLoading: categoriesLoading } = useQuery(
+    trpc.categories.getMany.queryOptions()
+  );
 
-  const _products = useQuery(
+  const { data: productsData, isLoading: productsLoading } = useQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
   );
-
-  const __products = _products.data;
 
   const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
@@ -47,8 +43,8 @@ const Subcategory = () => {
 
   // محصولات فیلتر شده بر اساس کتگوری
   const products =
-    __products &&
-    __products?.docs.filter((product) => {
+    productsData &&
+    productsData?.docs.filter((product) => {
       return product.subCategory === selectedSubCategoryData?.id;
     });
 
@@ -59,6 +55,8 @@ const Subcategory = () => {
         activePage="subcategory"
         selectedCategoryData={selectedCategoryData}
         selectedSubCategoryData={selectedSubCategoryData}
+        categoriesLoading={categoriesLoading}
+        productsLoading={productsLoading}
         className="px-[10px]"
       />
 
@@ -68,7 +66,7 @@ const Subcategory = () => {
         <div className="relative flex px-[10px] mt-8 gap-x-8">
           {/* filter*/}
           <ProductFilters
-            activePage="category"
+            activePage="SubCategory"
             isFiltersOpened={isFiltersOpened}
             setIsFiltersOpened={setIsFiltersOpened}
           />
@@ -95,7 +93,7 @@ const Subcategory = () => {
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
-              activePage="category"
+              activePage="SubCategory"
               isFiltersOpened={isFiltersOpened}
               setIsFiltersOpened={setIsFiltersOpened}
             />

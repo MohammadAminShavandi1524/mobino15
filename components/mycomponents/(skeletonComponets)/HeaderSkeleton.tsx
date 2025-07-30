@@ -13,7 +13,7 @@ const HeaderSkeleton = () => {
   }
 
   return (
-    <header className="mb-10 bg-background flex flex-col w-full mx-auto ">
+    <header className="mb-4 bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
       {/* banners */}
       {isBannerDisplayed && <Skeleton height={60} width={1920} />}
 

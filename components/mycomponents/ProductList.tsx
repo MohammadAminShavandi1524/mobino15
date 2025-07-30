@@ -1,15 +1,11 @@
-"use client";
-
 import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { PaginatedDocs } from "payload";
-import { Dispatch, SetStateAction } from "react";
 
 interface ProductListProps {
-  products: Product[] | null;
+  products: Product[] | undefined | null;
   isFiltersOpened: boolean;
 }
 
@@ -22,7 +18,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
   const unavailableProducts = products?.filter((p) => !p.available) ?? [];
 
   const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
-
+  
   return (
     <div
       className={cn(

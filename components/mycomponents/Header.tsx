@@ -27,7 +27,8 @@ import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
 import { useTRPC } from "@/trpc/client";
-import {  useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import HeaderSkeleton from "./(skeletonComponets)/HeaderSkeleton";
 
 const Header = () => {
   // ? header height for navbarsidebar margin top
@@ -41,12 +42,10 @@ const Header = () => {
     }
   }, []);
 
- 
-
   // ?
 
   const trpc = useTRPC();
-  const { data } = useQuery(trpc.auth.session.queryOptions());
+  const { isLoading, data } = useQuery(trpc.auth.session.queryOptions());
 
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
@@ -66,6 +65,10 @@ const Header = () => {
 
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
+  }
+
+  if (isLoading) {
+    return <HeaderSkeleton />;
   }
 
   return (

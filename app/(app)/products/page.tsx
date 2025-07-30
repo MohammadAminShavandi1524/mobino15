@@ -3,11 +3,9 @@
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import Orderbar from "@/components/mycomponents/Orderbar";
 import ProductList from "@/components/mycomponents/ProductList";
-import ProductListSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListSkeleton";
-import ProductsFilter from "@/components/mycomponents/ProductFilters";
 import { useTRPC } from "@/trpc/client";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import ProductFilters from "@/components/mycomponents/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
 
@@ -18,13 +16,15 @@ const Products = ({}: ProductsProps) => {
   const [filters, setFilters] = useProductFilters();
 
   const trpc = useTRPC();
-  const _products = useQuery(
+ 
+
+  const { data: productsData, isLoading: productsLoading } = useQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
   );
-  const __products = _products.data;
-  const products = __products?.docs;
+
+  const products = productsData?.docs;
 
   return (
     <div className="w90 flex flex-col">

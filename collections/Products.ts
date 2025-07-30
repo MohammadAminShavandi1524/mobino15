@@ -153,7 +153,7 @@ export const Products: CollectionConfig = {
       type: "number",
       required: true,
       max: 5,
-      min: 3,
+      min: 1,
     },
 
     //**         معرفی محصول یا توضیحی راجع به محصول          **//
@@ -194,6 +194,7 @@ export const Products: CollectionConfig = {
                 { label: "Huawei", value: "huawei" },
                 { label: "Nokia", value: "nokia" },
                 { label: "Sony", value: "sony" },
+                { label: "Realme", value: "realme" },
               ],
               required: true,
             },
@@ -227,6 +228,7 @@ export const Products: CollectionConfig = {
               label: "RAM",
               type: "select",
               options: [
+                { label: "3 GB", value: "3gb" },
                 { label: "4 GB", value: "4gb" },
                 { label: "6 GB", value: "6gb" },
                 { label: "8 GB", value: "8gb" },

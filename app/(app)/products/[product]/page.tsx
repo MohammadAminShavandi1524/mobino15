@@ -34,10 +34,14 @@ const ProductPage = () => {
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
   const trpc = useTRPC();
-  const { data: productsData } = useQuery(
+
+  const { data: productsData, isLoading: productsLoading } = useQuery(
     trpc.products.getMany.queryOptions({})
   );
-  const { data: categories } = useQuery(trpc.categories.getMany.queryOptions());
+
+  const { data: categories, isLoading: categoriesLoading } = useQuery(
+    trpc.categories.getMany.queryOptions()
+  );
 
   const matchedProductByOrder =
     productsData?.docs.filter((p) => p.order === Number(orderParam)) || [];
@@ -123,223 +127,6 @@ const ProductPage = () => {
   // * single products
 
   if (singleProduct && selectedCategory && selectedSubCategory) {
-    const { hex, label } = getColorInfo(singleProduct.color);
-
-    // let selectedColor = "#ddd";
-    // let selectedColorLabel = "نامشخص";
-
-    // switch (singleProduct.color) {
-    //   case "TitaniumBlack":
-    //     selectedColor = "#383838";
-    //     selectedColorLabel = "مشکی تیتانیومی";
-    //     break;
-
-    //   case "Black":
-    //     selectedColor = "#1a1a1a";
-    //     selectedColorLabel = "مشکی";
-    //     break;
-
-    //   case "Silver":
-    //     selectedColor = "#cfcfcf";
-    //     selectedColorLabel = "نقره‌ای";
-    //     break;
-
-    //   case "Purple":
-    //     selectedColor = "#b030b0";
-    //     selectedColorLabel = "بنفش";
-    //     break;
-
-    //   case "yellow":
-    //     selectedColor = "#ffee59";
-    //     selectedColorLabel = "زرد";
-    //     break;
-
-    //   case "DarkBlue":
-    //     selectedColor = "#253873";
-    //     selectedColorLabel = "آبی تیره";
-    //     break;
-
-    //   case "Lemon":
-    //     selectedColor = "#f6f436";
-    //     selectedColorLabel = "لیمویی";
-    //     break;
-
-    //   case "TitaniumSilver":
-    //     selectedColor = "#dacccc";
-    //     selectedColorLabel = "نقره‌ای تیتانیومی";
-    //     break;
-
-    //   case "DarkGray":
-    //     selectedColor = "#1f1d1f";
-    //     selectedColorLabel = "خاکستری تیره";
-    //     break;
-
-    //   case "NaturalTitanium":
-    //     selectedColor = "#d7d6d6";
-    //     selectedColorLabel = "تیتانیوم طبیعی";
-    //     break;
-
-    //   case "Golden":
-    //     selectedColor = "#d4a54c";
-    //     selectedColorLabel = "طلایی";
-    //     break;
-
-    //   case "TitaniumGray":
-    //     selectedColor = "#64635f";
-    //     selectedColorLabel = "خاکستری تیتانیومی";
-    //     break;
-
-    //   case "TitaniumIceBlue":
-    //     selectedColor = "#bddafc";
-    //     selectedColorLabel = "آبی یخی تیتانیومی";
-    //     break;
-
-    //   case "Gray":
-    //     selectedColor = "#8f8f8f";
-    //     selectedColorLabel = "خاکستری";
-    //     break;
-
-    //   case "NavyBlue":
-    //     selectedColor = "#00009c";
-    //     selectedColorLabel = "آبی نفتی";
-    //     break;
-
-    //   case "Brick":
-    //     selectedColor = "#c47020";
-    //     selectedColorLabel = "آجری";
-    //     break;
-
-    //   case "TitaniumDesert":
-    //     selectedColor = "#e6c794";
-    //     selectedColorLabel = "بژ تیتانیومی";
-    //     break;
-
-    //   case "TitaniumPurple":
-    //     selectedColor = "#a98ead";
-    //     selectedColorLabel = "بنفش تیتانیومی";
-    //     break;
-
-    //   case "JetBlackTitanium":
-    //     selectedColor = "#1b1b1a";
-    //     selectedColorLabel = "مشکی جت تیتانیومی";
-    //     break;
-
-    //   case "LightGreen":
-    //     selectedColor = "#7fff00";
-    //     selectedColorLabel = "سبز روشن";
-    //     break;
-
-    //   case "Turquoise":
-    //     selectedColor = "#00ffff";
-    //     selectedColorLabel = "فیروزه‌ای";
-    //     break;
-
-    //   case "LightGray":
-    //     selectedColor = "#cecece";
-    //     selectedColorLabel = "خاکستری روشن";
-    //     break;
-
-    //   case "LightBlue":
-    //     selectedColor = "#74c1f6";
-    //     selectedColorLabel = "آبی روشن";
-    //     break;
-
-    //   case "Pink":
-    //     selectedColor = "#e05ce0";
-    //     selectedColorLabel = "صورتی";
-    //     break;
-
-    //   case "TitaniumWhite":
-    //     selectedColor = "#f9f6f6";
-    //     selectedColorLabel = "سفید تیتانیومی";
-    //     break;
-
-    //   case "Green":
-    //     selectedColor = "#22a148";
-    //     selectedColorLabel = "سبز";
-    //     break;
-
-    //   case "Cream":
-    //     selectedColor = "#938f7a";
-    //     selectedColorLabel = "کرم";
-    //     break;
-
-    //   case "Blue":
-    //     selectedColor = "#006cf0";
-    //     selectedColorLabel = "آبی";
-    //     break;
-
-    //   case "White":
-    //     selectedColor = "#ffffff";
-    //     selectedColorLabel = "سفید";
-    //     break;
-
-    //   case "Red":
-    //     selectedColor = "#e03131";
-    //     selectedColorLabel = "قرمز";
-    //     break;
-
-    //   case "Orange":
-    //     selectedColor = "#ffa600";
-    //     selectedColorLabel = "نارنجی";
-    //     break;
-
-    //   case "graphite":
-    //     selectedColor = "#3C3C3C";
-    //     selectedColorLabel = "گرافیتی";
-    //     break;
-
-    //   case "oceanBlue":
-    //     selectedColor = "#0077BE";
-    //     selectedColorLabel = "آبی اقیانوسی";
-    //     break;
-
-    //   case "roseGold":
-    //     selectedColor = "#B76E79";
-    //     selectedColorLabel = "رز گلد";
-    //     break;
-
-    //   case "oliveGreen":
-    //     selectedColor = "#708238";
-    //     selectedColorLabel = "سبز زیتونی";
-    //     break;
-
-    //   case "copper":
-    //     selectedColor = "#B87333";
-    //     selectedColorLabel = "مسی";
-    //     break;
-
-    //   case "bronze":
-    //     selectedColor = "#CD7F32";
-    //     selectedColorLabel = "برنزی";
-    //     break;
-
-    //   case "charcoalGray":
-    //     selectedColor = "#36454F";
-    //     selectedColorLabel = "ذغالی";
-    //     break;
-
-    //   case "skyBlue":
-    //     selectedColor = "#87CEEB";
-    //     selectedColorLabel = "آبی آسمانی";
-    //     break;
-
-    //   case "lilac":
-    //     selectedColor = "#C8A2C8";
-    //     selectedColorLabel = "یاسی";
-    //     break;
-
-    //   case "mintGreen":
-    //     selectedColor = "#98FF98";
-    //     selectedColorLabel = "سبز نعنایی";
-    //     break;
-
-    //   default:
-    //     selectedColor = "#fff";
-    //     selectedColorLabel = "نامشخص";
-    //     break;
-    // }
-
     const checkColor = isDarkColor(getColorInfo(singleProduct.color).hex)
       ? "#fff"
       : "#000";
@@ -784,9 +571,18 @@ const ProductPage = () => {
   }
 
   // *Loading
+
   return (
-    <div className="w90 flex flex-col">
-      <div className="px-[10px]">loading</div>
+    <div className="w90 flex flex-col max-w-[1600px] px-[10px]">
+      {/* bread crump */}
+      <div className="mb-5">
+        <BreadCrump
+          activePage="product"
+          categoriesLoading={categoriesLoading}
+          productsLoading={productsLoading}
+          className="px-1"
+        />
+      </div>
     </div>
   );
 };

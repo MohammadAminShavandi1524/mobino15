@@ -22,15 +22,15 @@ const CategoryPage = ({}: CategoryProps) => {
   const { category } = useParams();
   const trpc = useTRPC();
 
-  const _categories = useQuery(trpc.categories.getMany.queryOptions());
-  const categories = _categories.data;
+  const { data: categories, isLoading: categoriesLoading } = useQuery(
+    trpc.categories.getMany.queryOptions()
+  );
 
-  const _products = useQuery(
+  const { data: productsData, isLoading: productsLoading } = useQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
   );
-  const __products = _products.data;
 
   const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
@@ -39,8 +39,8 @@ const CategoryPage = ({}: CategoryProps) => {
 
   // محصولات فیلتر شده بر اساس کتگوری
   const products =
-    __products &&
-    __products?.docs.filter((product) => {
+    productsData &&
+    productsData?.docs.filter((product) => {
       return product.category === selectedCategoryData?.id;
     });
 
@@ -61,6 +61,8 @@ const CategoryPage = ({}: CategoryProps) => {
         <BreadCrump
           activePage="category"
           selectedCategoryData={selectedCategoryData}
+          categoriesLoading={categoriesLoading}
+          productsLoading={productsLoading}
         />
         {/* categories tags */}
         <div className="flex items-center gap-x-4 ">

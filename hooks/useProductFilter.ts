@@ -139,6 +139,7 @@ export const AllBrandOptions = [
 
   { label: "نوکیا", value: "nokia", category: ["mobile"] },
   { label: "سونی", value: "sony", category: ["mobile"] },
+  { label: "ریلمی", value: "realme", category: ["mobile"] },
 
   // * laptop
 

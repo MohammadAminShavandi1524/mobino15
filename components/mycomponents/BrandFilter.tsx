@@ -38,6 +38,8 @@ const BrandFilter = ({
     return option.category.includes(categoryName);
   });
 
+  console.log(activePage);
+
   if (activePage === "SubCategory") return <></>;
 
   if (isFilterOpen)
