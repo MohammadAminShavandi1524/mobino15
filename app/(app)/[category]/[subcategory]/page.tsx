@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import SubCategoryPage from "@/components/mycomponents/SubCategoryPage";
+import SubCategoryPage from "@/components/mycomponents/(pages)/SubCategoryPage";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
@@ -15,7 +15,10 @@ interface SubCategory_PageProps {
   }>;
 }
 
-const SubCategory_Page = async ({ serachParams, params }: SubCategory_PageProps) => {
+const SubCategory_Page = async ({
+  serachParams,
+  params,
+}: SubCategory_PageProps) => {
   const { category, subcategory } = await params;
 
   const filters = await LoadProductFilters(serachParams);

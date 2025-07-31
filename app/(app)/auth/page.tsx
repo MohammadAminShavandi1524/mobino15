@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import AuthPage from "@/components/mycomponents/AuthPage";
+import AuthPage from "@/components/mycomponents/(pages)/AuthPage";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";

@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import AllProductsPage from "@/components/mycomponents/AllProductsPage";
+import AllProductsPage from "@/components/mycomponents/(pages)/AllProductsPage";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
@@ -9,7 +9,6 @@ import { ErrorBoundary } from "react-error-boundary";
 
 interface Products_PageProps {
   serachParams: Promise<SearchParams>;
-
 }
 
 const Products_Page = async ({ serachParams }: Products_PageProps) => {
@@ -28,4 +27,3 @@ const Products_Page = async ({ serachParams }: Products_PageProps) => {
   );
 };
 export default Products_Page;
-

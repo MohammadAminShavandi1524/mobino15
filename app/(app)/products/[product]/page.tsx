@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import ProductPage from "@/components/mycomponents/ProductPage";
+import ProductPage from "@/components/mycomponents/(pages)/ProductPage";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";

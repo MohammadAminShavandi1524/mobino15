@@ -5,12 +5,12 @@ import ProductList from "@/components/mycomponents/ProductList";
 
 import { Category } from "@/payload-types";
 import Link from "next/link";
-import {  useState } from "react";
+import { useState } from "react";
 import Orderbar from "@/components/mycomponents/Orderbar";
 
 import { useTRPC } from "@/trpc/client";
-import {  useSuspenseQuery } from "@tanstack/react-query";
-import ProductFilters from "@/components/mycomponents/ProductFilters";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import ProductFilters from "@/components/mycomponents/(product_filters)/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
 
 interface CategoryPageProps {
@@ -62,14 +62,12 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
         <BreadCrump
           activePage="category"
           selectedCategoryData={selectedCategoryData}
-         
-         
         />
         {/* categories tags */}
         <div className="flex items-center gap-x-4 ">
           {selectedCategoryData &&
             (selectedCategoryData?.subcategories?.docs as Category[]).map(
-              (sub,index) => {
+              (sub, index) => {
                 return (
                   <Link
                     href={`/${selectedCategoryData.name}/${sub.name}`}

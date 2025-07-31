@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
-import TomanLogo from "./TomanLogo";
+import TomanLogo from "../TomanLogo";
 import { formatWithThousandSeparator } from "@/lib/utils";
 import { useProductFilters } from "@/hooks/useProductFilter";
 

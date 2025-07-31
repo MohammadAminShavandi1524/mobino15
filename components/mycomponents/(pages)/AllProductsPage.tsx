@@ -2,71 +2,43 @@
 
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import Orderbar from "@/components/mycomponents/Orderbar";
-import ProductFilters from "@/components/mycomponents/ProductFilters";
 import ProductList from "@/components/mycomponents/ProductList";
-import { useProductFilters } from "@/hooks/useProductFilter";
-import { Category } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
-
-import { useParams } from "next/navigation";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import ProductFilters from "@/components/mycomponents/(product_filters)/ProductFilters";
+import { useProductFilters } from "@/hooks/useProductFilter";
 
-interface SubCategoryPageProps {
-  category: string;
-  subcategory: string;
-}
+interface AllProductsPageProps {}
 
-const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
+const AllProductsPage = ({}: AllProductsPageProps) => {
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
   const trpc = useTRPC();
 
-  const { data: categories } = useQuery(trpc.categories.getMany.queryOptions());
-
-  const { data: productsData } = useQuery(
+  const { data: productsData } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
     })
   );
 
-  const selectedCategoryData = categories?.docs.find((doc) => {
-    const findedCategory = doc.name === category;
-    return findedCategory;
-  });
-
-  const selectedSubCategoryData =
-    selectedCategoryData &&
-    (selectedCategoryData?.subcategories?.docs as Category[]).find((sub) => {
-      const findedSubCategory = sub.name === subcategory;
-      return findedSubCategory;
-    });
-
-  // محصولات فیلتر شده بر اساس کتگوری
-  const products =
-    productsData &&
-    productsData?.docs.filter((product) => {
-      return product.subCategory === selectedSubCategoryData?.id;
-    });
+  const products = productsData?.docs;
 
   return (
     <div className="w90 flex flex-col mt-4">
-      {/* bread crump */}
-      <BreadCrump
-        activePage="subcategory"
-        selectedCategoryData={selectedCategoryData}
-        selectedSubCategoryData={selectedSubCategoryData}
-        className="px-[10px]"
-      />
+      {/* bread crump and categories tags */}
+      <div className="flex flex-col px-[10px] gap-y-4">
+        {/* bread crump */}
+        <BreadCrump activePage="all" />
+      </div>
 
       {/* product and product filters */}
-
       {isFiltersOpened ? (
         <div className="relative flex px-[10px] mt-8 gap-x-8">
           {/* filter*/}
           <ProductFilters
-            activePage="SubCategory"
+            activePage="all"
             isFiltersOpened={isFiltersOpened}
             setIsFiltersOpened={setIsFiltersOpened}
           />
@@ -93,7 +65,7 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
-              activePage="SubCategory"
+              activePage="all"
               isFiltersOpened={isFiltersOpened}
               setIsFiltersOpened={setIsFiltersOpened}
             />
@@ -111,4 +83,4 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
     </div>
   );
 };
-export default SubCategoryPage;
+export default AllProductsPage;

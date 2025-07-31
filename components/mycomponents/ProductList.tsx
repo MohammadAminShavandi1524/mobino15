@@ -1,4 +1,4 @@
-import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
+import { cn, convertToPersianNumber, getColorInfo, shuffle } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
@@ -18,6 +18,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
   const unavailableProducts = products?.filter((p) => !p.available) ?? [];
 
   const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
+ 
 
   return (
     <div
@@ -46,7 +47,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
           return (
             <Link
               href={`/products/${product.order}_${product.label}`}
-              className="relative w-full h-[495px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
+              className="relative w-full min-h-[480px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
               key={index}
             >
               {/* بخش نشون دادن تخفیف  */}
@@ -223,8 +224,6 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
                   <span className="w-[50px] h-[1px] bg-[#ced0d0]"></span>
                 </div>
               )}
-
-              {}
             </Link>
           );
         })}

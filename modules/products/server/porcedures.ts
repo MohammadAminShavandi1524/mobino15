@@ -3,6 +3,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
 import z from "zod";
 import { PaginatedDocs, Where } from "payload";
+import { shuffle } from "@/lib/utils";
 
 export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
@@ -105,7 +106,6 @@ export const productsRouter = createTRPCRouter({
 
       const data: PaginatedDocs<Product> = await ctx.db.find({
         collection: "products",
-        sort: "order",
         depth: 1,
         pagination: true,
         where,

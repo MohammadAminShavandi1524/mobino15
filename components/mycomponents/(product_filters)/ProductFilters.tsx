@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import Pricefilter from "./Pricefilter";
 import { useProductFilters } from "@/hooks/useProductFilter";
 import AppliedFilters from "./AppliedFilters";
-import AvailableProductsFilter from "@/components/mycomponents/AvailableProductsFilter";
+import AvailableProductsFilter from "@/components/mycomponents/(product_filters)/AvailableProductsFilter";
 import ColorFilter from "./ColorFilter";
 import BrandFilter from "./BrandFilter";
 

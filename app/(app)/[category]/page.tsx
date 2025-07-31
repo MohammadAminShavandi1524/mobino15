@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import CategoryPage from "@/components/mycomponents/CategoryPage";
+import CategoryPage from "@/components/mycomponents/(pages)/CategoryPage";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
@@ -33,4 +33,3 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
   );
 };
 export default Category_Page;
-

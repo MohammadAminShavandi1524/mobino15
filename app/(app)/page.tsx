@@ -1,86 +1,42 @@
 export const dynamic = "force-dynamic";
 
-import { getQueryClient, trpc } from "@/trpc/server";
+import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { Category } from "@/payload-types";
 import Skeleton from "@/components/mycomponents/(skeletonComponets)/Skleton";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import CatCarousel from "@/components/mycomponents/(carousels)/CatCarousel";
+import { ErrorBoundary } from "react-error-boundary";
+import { Suspense } from "react";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import Afino from "@/components/mycomponents/(carousels)/Afino";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default async function Home() {
-  // SERVER
+  prefetch(trpc.products.getMany.queryOptions({}));
 
-  const queryClient = getQueryClient();
-  const products = await queryClient.fetchQuery(
-    trpc.products.getMany.queryOptions({})
-  );
-
-  // CLIENT
-
-  // const trpc = useTRPC();
-  // const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
-
-  // console.log("🚀 ~ Home ~ data:", data?.user)
-
-  // const queryClient = getQueryClient();
-  // const categories = await queryClient.fetchQuery(
-  //   trpc.categories.getMany.queryOptions()
-  // );
-
-  const categoriesCarouselOptions = [
+  const MobileOptions = [
     {
-      img: "/categoriesCarousel/iphoneCat.webp",
-      label: "گوشی آیفون",
-      href: "/mobile/iPhone",
-    },
-    {
-      img: "/categoriesCarousel/macbookCat.webp",
-      label: "مک بوک",
-      href: "/laptop/appleLaptop",
-    },
-    {
-      img: "/categoriesCarousel/tabletCat.jpg",
-      label: "تبلت",
-      href: "/tablet",
-    },
-    {
-      img: "/categoriesCarousel/headphonesCat.jpg",
-      label: "هدفون",
-      href: "/Headphones",
-    },
-    {
-      img: "/categoriesCarousel/samsungPhoneCat.webp",
+      img: "https://www.technolife.com/image/static_phone_samsung_new.png",
       label: "گوشی سامسونگ",
       href: "/mobile/samsungPhone",
     },
     {
-      img: "/categoriesCarousel/monitorCat.webp",
-      label: "مانیتور",
-      href: "/Monitor",
+      img: "https://www.technolife.com/image/static_phone_iphone_new.png",
+      label: "گوشی آیفون",
+      href: "/mobile/iPhone",
     },
     {
-      img: "/categoriesCarousel/smartWatchCat.webp",
-      label: "ساعت هوشمند",
-      href: "/SmartWatch",
-    },
-    {
-      img: "/categoriesCarousel/laptopCat.png",
-      label: "لپ تاپ",
-      href: "/laptop",
-    },
-    {
-      img: "/categoriesCarousel/xiaomiPhoneCat.png",
+      img: "https://www.technolife.com/image/static_phone_xiaomi_new.png",
       label: "گوشی شیائومی",
       href: "/mobile/XiaomiPhone",
+    },
+    {
+      img: "https://www.technolife.com/image/static_phone_honor_new.png",
+      label: "گوشی آنر",
+      href: "/mobile/HonerPhone",
     },
   ];
 
@@ -91,40 +47,48 @@ export default async function Home() {
 
       <div className="w90 flex flex-col mt-13 px-12">
         {/* categories carousel */}
-        <Carousel className="">
-          <CarouselContent className="px-4">
-            {categoriesCarouselOptions.map((option, index) => {
+        <CatCarousel />
+
+        {/* afino - discountedProducts */}
+        <HydrateClient>
+          <ErrorBoundary fallback={<div>afino error boundary!!!!</div>}>
+            <Suspense fallback={<>afino loading</>}>
+              <Afino />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
+
+        {/* mobile subCategories */}
+
+        <div className="flex flex-col  justify-center items-center w-full my-14 ">
+          <div className="text-[26px] font-medium text-black mb-8">
+            برترین های موبایل
+          </div>
+          <ul className="flex items-center gap-x-14">
+            {MobileOptions.map((option, index) => {
               return (
-                <CarouselItem
-                  key={index}
-                  className="flex justify-center basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6  2xl:basis-1/7 3xl:basis-1/8 px-2"
-                >
+                <li>
                   <Link
-                    className="flex flex-col items-center gap-y-5 pt-1"
+                    className="flex flex-col items-center gap-y-3 cursor-pointer"
                     href={option.href}
                   >
-                    <div className="flex justify-center items-center size-32 border border-[#14a0de]   hover:border-3  rounded-full">
-                      <div className="size-28 overflow-hidden rounded-full">
-                        <div className="flex justify-center items-center size-[112px] border-1 border-[#c7cbdb] rounded-full">
-                          <Image
-                            className={cn("overflow-hidden")}
-                            src={option.img}
-                            alt={option.label}
-                            width={78}
-                            height={78}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-[#1b3570]">{option.label}</div>
+                    <Image
+                      className={cn("")}
+                      src={option.img}
+                      alt={option.label}
+                      width={200}
+                      height={200}
+                    />
+                    <span className="text-[18px]">{option.label}</span>
                   </Link>
-                </CarouselItem>
+                </li>
               );
             })}
-          </CarouselContent>
-          <CarouselPrevious className="top-[63px]" />
-          <CarouselNext className="top-[63px]" />
-        </Carousel>
+          </ul>
+        </div>
+
+            
+
       </div>
     </div>
   );

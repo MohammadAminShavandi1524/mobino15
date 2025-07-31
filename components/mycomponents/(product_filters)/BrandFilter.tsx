@@ -4,15 +4,15 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
-import TomanLogo from "./TomanLogo";
+import TomanLogo from "../TomanLogo";
 import {
   capitalizeFirstLetter,
   formatWithThousandSeparator,
 } from "@/lib/utils";
 import { AllBrandOptions } from "@/hooks/useProductFilter";
 import { ParserBuilder, SetValues } from "nuqs";
-import { ScrollArea } from "../ui/scroll-area";
-import { Checkbox } from "../ui/checkbox";
+import { ScrollArea } from "../../ui/scroll-area";
+import { Checkbox } from "../../ui/checkbox";
 import { usePathname } from "next/navigation";
 
 interface BrandFilterProps {
