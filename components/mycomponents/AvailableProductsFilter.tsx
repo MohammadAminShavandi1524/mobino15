@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-
+import { motion } from "framer-motion";
 interface AvailableProductsFilterProps {
   available: boolean | null;
   onAvailableChange: (value: boolean) => void;
@@ -29,12 +29,18 @@ const AvailableProductsFilter = ({
           available && "bg-[#223c78] border-[#223c78]"
         )}
       >
-        <div
+        <motion.div
           className={cn(
             "absolute top-[3px] left-[3px] w-[12px] h-[12px] rounded-full border border-[#666666]",
             available && "bg-[#ffffff] border-0 left-[19px]"
           )}
-        ></div>
+          layout
+          transition={{
+            type: "spring",
+            visualDuration: 0.2,
+            bounce: 0.2,
+          }}
+        ></motion.div>
       </div>
     </div>
   );
