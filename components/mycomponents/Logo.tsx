@@ -20,18 +20,14 @@ const Logo = ({
 }: LogoProps) => {
   const { resolvedTheme } = useTheme();
 
-  const [mounted, setMounted] = useState(false);
+  
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <Skeleton width={145} height={45} />; // قبل از mount هیچ چیزی رندر نمی‌کنیم
+  
 
   return (
     <Link href="/" className="flex items-center  gap-x-2">
       <Image
-        src={resolvedTheme === "dark" ? "/logo.png" : "/yellow_logo.png"}
+        src="/yellow_logo.png"
         alt="logo"
         width={logoImage_width || 44}
         height={logoImage_height || 44}

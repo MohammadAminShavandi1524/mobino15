@@ -13,11 +13,12 @@ const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
+  const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
+  
 
-  if (data?.user) {
-    redirect("/");
-  }
+  // if (user) {
+  //   redirect("/");
+  // }
 
   return (
     <div className="flex w-full h-screen bg-white">
@@ -61,10 +62,10 @@ const AuthPage = () => {
 
         {isSignIn ? (
           // ? Sign In
-          <LoginForm />
+          <LoginForm  />
         ) : (
           // ? Sign Up
-          <RegisterForm />
+          <RegisterForm  user={user}/>
         )}
       </section>
       {/* empty part */}

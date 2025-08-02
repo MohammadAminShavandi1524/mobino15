@@ -39,7 +39,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                 <Link href={`/products/${product.order}_${product.label}`}>
                   {discountPercent && discountPercent > 8 && (
                     <div className="w-full absolute -top-10 px-10 pb-2 ">
-                      <div className="text-[14px] font-bold text-[#e6123d]">
+                      <div className="text-[14px] text-center font-bold text-[#e6123d]">
                         پیشنهاد شگفت انگیز
                       </div>
                       <div className="mt-2 h-[4px] bg-[#e6123d] rounded-sm"></div>

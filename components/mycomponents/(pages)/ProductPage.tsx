@@ -1,13 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import LaptopMainSpec from "@/components/mycomponents/(productMainSpec)/LaptopMainSpec";
 import MobileMainSpec from "@/components/mycomponents/(productMainSpec)/MobileMainSpec";
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import ProductAndQty from "@/components/mycomponents/ProductAndQty";
 import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
-import { Category, Product, Tenant } from "@/payload-types";
+import { Category, Product, Tenant, User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
-import {  useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   BadgeCheck,
   Check,
@@ -16,10 +18,18 @@ import {
   ShoppingCart,
   Star,
   Store,
+  Truck,
 } from "lucide-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+
 import { useState } from "react";
+
+const AddToCartButton = dynamic(
+  () => import("../AddToCartButton").then((mod) => mod.default),
+  {
+    ssr: false,
+  }
+);
 
 interface ProductPageProps {
   product: string;
@@ -30,6 +40,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
   const trpc = useTRPC();
+
+  const user: User | null = useSuspenseQuery(trpc.auth.session.queryOptions())
+    .data.user;
+
+  console.log(user?.username);
 
   const { data: productsData } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({})
@@ -100,7 +115,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const [MPProductShowcase, setMPProductsShowcase] = useState<
     Product | undefined
   >();
-  console.log("🚀 ~ ProductPage ~ MPProductShowcase:", MPProductShowcase);
 
   const matchedAvailableProducts = matchedProducts.filter((p) => {
     return p.available;
@@ -269,7 +283,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
                 <div className="flex items-center">
                   <span className="text-[#385086] w-5 h-5 flex justify-center items-center">
-                    <Package size={16} />
+                    <Truck  size={16} />
                   </span>
                   <span className="text-[#385086] mr-4 ">
                     {typeof singleProduct.tenant === "object" &&
@@ -301,12 +315,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
             <ProductAndQty product={singleProduct} />
 
             {/* add to cart button */}
-            <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer">
-              <div className="text-[18px]">افزودن به سبد خرید</div>
-              <div className="absolute left-[16px]">
-                <ShoppingCart size={20} />
-              </div>
-            </div>
+
+            {user ? (
+              <AddToCartButton productId={singleProduct.id}  userName={user.username} />
+            ) : (
+              <AddToCartButton productId={singleProduct.id} />
+            )}
           </div>
         </div>
         {/*  */}
@@ -506,7 +520,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
                 <div className="flex items-center">
                   <span className="text-[#385086] w-5 h-5 flex justify-center items-center">
-                    <Package size={16} />
+                    <Truck size={16} />
                   </span>
                   <span className="text-[#385086] mr-4 ">
                     {MPProductShowcase
@@ -548,15 +562,24 @@ const ProductPage = ({ product }: ProductPageProps) => {
             )}
 
             {/* add to cart button */}
-            <div
-              className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white
-            cursor-pointer"
-            >
-              <div className="text-[18px]">افزودن به سبد خرید</div>
-              <div className="absolute left-[16px]">
-                <ShoppingCart size={20} />
-              </div>
-            </div>
+
+            {MPProductShowcase ? (
+              user ? (
+                <AddToCartButton
+                  productId={MPProductShowcase.id}
+                  userName={user.username}
+                />
+              ) : (
+                <AddToCartButton productId={MPProductShowcase.id} />
+              )
+            ) : user ? (
+              <AddToCartButton
+                productId={MPSelectedProduct.id}
+                 userName={user.username}
+              />
+            ) : (
+              <AddToCartButton productId={MPSelectedProduct.id} />
+            )}
           </div>
         </div>
       </div>

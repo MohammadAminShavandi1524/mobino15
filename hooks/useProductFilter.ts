@@ -133,16 +133,14 @@ export const AllBrandOptions = [
   { label: "اپل", value: "apple", category: ["mobile", "laptop", "tablet"] },
   { label: "سامسونگ", value: "samsung", category: ["mobile", "tablet"] },
   { label: "شیائومی", value: "xiaomi", category: ["mobile", "tablet"] },
-  { label: "هواوی", value: "huawei", category: ["mobile", "tablet"] },
-  
+
   // * mobile
-  
-  { label: "نوکیا", value: "nokia", category: ["mobile"] },
-  { label: "سونی", value: "sony", category: ["mobile"] },
+
+  { label: "آنر", value: "honor", category: ["mobile"] },
   { label: "ریلمی", value: "realme", category: ["mobile"] },
-  
+
   // * laptop
-  
+
   { label: "لنوو", value: "lenovo", category: ["laptop"] },
   { label: "ایسوس", value: "asus", category: ["laptop"] },
   { label: "اچ پی", value: "hp", category: ["laptop"] },
@@ -160,12 +158,12 @@ export const Brands = [
   "apple",
   "samsung",
   "xiaomi",
-  "huawei",
-  
+
   // * mobile
-  "nokia",
-  "sony",
-  
+
+  "realme",
+  "honor",
+
   // * laptop
   "lenovo",
   "asus",

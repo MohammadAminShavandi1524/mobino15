@@ -38,7 +38,7 @@ export default async function RootLayout({
       <body className="font-IRANYekanX flex flex-col items-center w-full transition-all">
         <NuqsAdapter>
           <TRPCReactProvider>
-            <ThemeProvider enableSystem>
+           
               <HydrateClient>
                 <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
                   <Suspense fallback={<HeaderSkeleton />}>
@@ -53,7 +53,7 @@ export default async function RootLayout({
               </div>
 
               <Footer />
-            </ThemeProvider>
+           
           </TRPCReactProvider>
         </NuqsAdapter>
       </body>

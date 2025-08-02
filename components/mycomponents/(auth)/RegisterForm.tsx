@@ -12,6 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { registerSchema } from "@/modules/auth/schemas";
+import { migrateGuestCartToUser } from "@/modules/checkout/hooks/useCart";
+import { User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -20,7 +22,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  user: User | null;
+}
+
+const RegisterForm = ({ user }: RegisterFormProps) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -47,7 +53,9 @@ const RegisterForm = () => {
       },
 
       onSuccess: () => {
-        // await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        if (user) {
+          migrateGuestCartToUser(user?.username);
+        }
         router.push("/");
       },
     })
@@ -87,7 +95,6 @@ const RegisterForm = () => {
               <FormLabel className="mr-[10px] text-[12px] flex gap-x-1">
                 <span>نام فروشگاه</span>
                 {/* <span>(اسمی که نمایش داده میشود)</span> */}
-              
               </FormLabel>
               <FormControl>
                 <Input className="w-[380px] h-[60px] text-base" {...field} />

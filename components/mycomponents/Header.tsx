@@ -49,6 +49,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
+  console.log("🚀 ~ Header ~ data:", data.user?.username)
 
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
@@ -100,37 +101,21 @@ const Header = () => {
             <Button asChild variant={"default"}>
               <Link href="/admin">پنل ادمین</Link>
             </Button>
-            {/* dark/light mode button */}
-            <ThemeButton />
+
             {/* login/signup button */}
 
-            {data?.user ? (
-              <Link
-                onClick={() => {
-                  setIsSideBarOpen(false);
-                }}
-                href="/admin"
-                className="min-w-[140px] px-4 py-2 border border-custom-primary rounded-lg text-[15px]
-                flex items-center justify-center"
-              >
-                پنل کاربری
-              </Link>
-            ) : (
-              <Link
-                onClick={() => {
-                  setIsSideBarOpen(false);
-                }}
-                prefetch
-                href="/auth"
-                className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
+            <Link
+              onClick={() => {
+                setIsSideBarOpen(false);
+              }}
+              prefetch
+              href="/auth"
+              className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
               "
-              >
-                <span className="pl-4 border-l border-custom-primary">
-                  ورود
-                </span>
-                <span className="pr-4">ثبت نام</span>
-              </Link>
-            )}
+            >
+              <span className="pl-4 border-l border-custom-primary">ورود</span>
+              <span className="pr-4">ثبت نام</span>
+            </Link>
 
             {/* cart button */}
             <Link

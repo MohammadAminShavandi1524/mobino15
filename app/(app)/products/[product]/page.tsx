@@ -21,6 +21,7 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
 
   prefetch(trpc.products.getMany.queryOptions({ ...filters }));
   prefetch(trpc.categories.getMany.queryOptions());
+  prefetch(trpc.auth.session.queryOptions())
 
   return (
     <HydrateClient>

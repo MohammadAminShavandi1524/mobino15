@@ -88,6 +88,8 @@ export const authRouter = createTRPCRouter({
         },
       });
 
+      
+
       await ctx.db.create({
         collection: "users",
         data: {
@@ -153,6 +155,8 @@ export const authRouter = createTRPCRouter({
       prefix: ctx.db.config.cookiePrefix,
       value: data.token,
     });
+
+
 
     return data;
   }),

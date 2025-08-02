@@ -12,10 +12,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { loginSchema } from "@/modules/auth/schemas";
+import { migrateGuestCartToUser } from "@/modules/checkout/hooks/useCart";
+import { User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation,  } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,13 +35,13 @@ const LoginForm = () => {
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "shavandi1524@gmail.com",
+      password: "v;>P1524LC^w^P_",
     },
   });
 
   const trpc = useTRPC();
- 
+  const queryClient = useQueryClient();
 
   const login = useMutation(
     trpc.auth.login.mutationOptions({
@@ -42,15 +49,25 @@ const LoginForm = () => {
         toast.error("ایمیل یا رمز عبور اشتباه است");
       },
 
-      onSuccess: () => {
-        // await queryClient.invalidateQueries(trpc.auth.session.queryFilter())
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryOptions());
+
+        const session = await queryClient.fetchQuery(
+          trpc.auth.session.queryOptions()
+        );
+
+        const username = session?.user?.username;
+
+        if (username) {
+          migrateGuestCartToUser(username);
+        }
+
         router.push("/");
       },
     })
   );
 
   const loginOnSubmit = (values: z.infer<typeof loginSchema>) => {
-  
     login.mutate(values);
   };
 

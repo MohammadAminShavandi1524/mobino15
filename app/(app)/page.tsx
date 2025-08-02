@@ -1,18 +1,18 @@
 export const dynamic = "force-dynamic";
 
 import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
-import { Category } from "@/payload-types";
+
 import Skeleton from "@/components/mycomponents/(skeletonComponets)/Skleton";
 import CatCarousel from "@/components/mycomponents/(carousels)/CatCarousel";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import Afino from "@/components/mycomponents/(carousels)/Afino";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import FlagBearerMobiles from "@/components/mycomponents/LandingPageComps/FlagBearerMobiles";
 
 export default async function Home() {
   prefetch(trpc.products.getMany.queryOptions({}));
@@ -67,7 +67,7 @@ export default async function Home() {
           <ul className="flex items-center gap-x-14">
             {MobileOptions.map((option, index) => {
               return (
-                <li>
+                <li key={index}>
                   <Link
                     className="flex flex-col items-center gap-y-3 cursor-pointer"
                     href={option.href}
@@ -87,8 +87,16 @@ export default async function Home() {
           </ul>
         </div>
 
-            
-
+        {/* flagBearerMobiles */}
+        <HydrateClient>
+          <ErrorBoundary
+            fallback={<div>flagBearerMobiles error boundary!!!!</div>}
+          >
+            <Suspense fallback={<>flagBearerMobiles loading</>}>
+              <FlagBearerMobiles />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
       </div>
     </div>
   );
