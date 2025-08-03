@@ -10,19 +10,11 @@ import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
 import { Category, Product, Tenant, User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  BadgeCheck,
-  Check,
-  Package,
-  Settings,
-  ShoppingCart,
-  Star,
-  Store,
-  Truck,
-} from "lucide-react";
+import { BadgeCheck, Check, Settings, Star, Store, Truck } from "lucide-react";
 import Image from "next/image";
 
 import { useState } from "react";
+import AddToCartBtnModal from "../AddToCartBtnModal";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -36,6 +28,8 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ product }: ProductPageProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const param = decodeURIComponent(product as string).split("_")[1];
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
@@ -143,6 +137,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
     return (
       <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+        {/* modal */}
+        <AddToCartBtnModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          product={singleProduct}
+        />
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -283,7 +283,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
                 <div className="flex items-center">
                   <span className="text-[#385086] w-5 h-5 flex justify-center items-center">
-                    <Truck  size={16} />
+                    <Truck size={16} />
                   </span>
                   <span className="text-[#385086] mr-4 ">
                     {typeof singleProduct.tenant === "object" &&
@@ -317,9 +317,18 @@ const ProductPage = ({ product }: ProductPageProps) => {
             {/* add to cart button */}
 
             {user ? (
-              <AddToCartButton productId={singleProduct.id}  userName={user.username} />
+              <AddToCartButton
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                productId={singleProduct.id}
+                userName={user.username}
+              />
             ) : (
-              <AddToCartButton productId={singleProduct.id} />
+              <AddToCartButton
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                productId={singleProduct.id}
+              />
             )}
           </div>
         </div>
@@ -339,6 +348,21 @@ const ProductPage = ({ product }: ProductPageProps) => {
   ) {
     return (
       <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+        {/* modal */}
+        {MPProductShowcase ? (
+          <AddToCartBtnModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            product={MPProductShowcase}
+          />
+        ) : (
+          <AddToCartBtnModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            product={MPSelectedProduct}
+          />
+        )}
+
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -568,17 +592,29 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 <AddToCartButton
                   productId={MPProductShowcase.id}
                   userName={user.username}
+                  isModalOpen={isModalOpen}
+                  setIsModalOpen={setIsModalOpen}
                 />
               ) : (
-                <AddToCartButton productId={MPProductShowcase.id} />
+                <AddToCartButton
+                  productId={MPProductShowcase.id}
+                  isModalOpen={isModalOpen}
+                  setIsModalOpen={setIsModalOpen}
+                />
               )
             ) : user ? (
               <AddToCartButton
                 productId={MPSelectedProduct.id}
-                 userName={user.username}
+                userName={user.username}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
               />
             ) : (
-              <AddToCartButton productId={MPSelectedProduct.id} />
+              <AddToCartButton
+                productId={MPSelectedProduct.id}
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              />
             )}
           </div>
         </div>

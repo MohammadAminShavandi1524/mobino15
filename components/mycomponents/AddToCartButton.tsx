@@ -1,33 +1,32 @@
+"use client";
+
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import { ChevronLeft, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 
 interface AddToCartButtonProps {
   userName?: string;
   productId: string;
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddToCartButton = ({ productId, userName }: AddToCartButtonProps) => {
-  const {
-    addProduct,
-    clearAllCarts,
-    clearCart,
-    isProductInCart,
-    productIds,
-    removeProduct,
-    toggleProduct,
-    totalItems,
-    userCarts,
-    decreaseProductCount,
-    increaseProductCount,
-    getCartByUser,
-  } = useCart(userName);
-
-  
+const AddToCartButton = ({
+  productId,
+  userName,
+  isModalOpen,
+  setIsModalOpen,
+}: AddToCartButtonProps) => {
+  const { addProduct, isProductInCart, removeProduct } = useCart(userName);
 
   return (
     <>
+     
+
+      
+
       {isProductInCart(productId) ? (
         <div className="flex justify-center items-center px-2 text-custom-primary">
           <button
@@ -50,10 +49,8 @@ const AddToCartButton = ({ productId, userName }: AddToCartButtonProps) => {
         <>
           <button
             onClick={() => {
+              setIsModalOpen(true);
               addProduct(productId);
-              toast.success("این کالا به سبد خرید اصافه شد", {
-                position: "top-right",
-              });
             }}
             className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer"
           >

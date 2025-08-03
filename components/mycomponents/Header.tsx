@@ -156,7 +156,7 @@ const Header = () => {
             >
               <ShoppingCart size={24} />
               {/* cart item count */}
-              <div className="absolute bottom-[2px] right-[2px]  size-4  flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full">
+              <div className={cn("absolute bottom-[2px] right-[2px]  size-4 flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full", cartItemCount === 0 && "pb-[4px]" )}>
                 {convertToPersianNumber(cartItemCount)}
               </div>
             </Link>
