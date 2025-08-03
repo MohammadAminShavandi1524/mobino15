@@ -13,7 +13,7 @@ import ThemeButton from "./(theme)/ThemeButton";
 import { useTheme } from "next-themes";
 import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, convertToPersianNumber } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import {
   ReactElement,
@@ -29,6 +29,7 @@ import { Button } from "../ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import HeaderSkeleton from "./(skeletonComponets)/HeaderSkeleton";
+import { useCart } from "@/modules/checkout/hooks/useCart";
 
 const Header = () => {
   const pathname = usePathname();
@@ -48,8 +49,35 @@ const Header = () => {
   }, [isSideBarOpen]);
 
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.auth.session.queryOptions());
-  console.log("🚀 ~ Header ~ data:", data.user?.username)
+  const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
+  console.log("🚀 ~ Header ~ data:", user?.username);
+
+  // *** cart item count ***
+
+  const { data: productsData } = useSuspenseQuery(
+    trpc.products.getMany.queryOptions({})
+  );
+
+  const { getCartByUser } = useCart(user?.username);
+
+  const userProductIds: { productId: string; count: number }[] =
+    getCartByUser();
+
+  const availableProductIds = new Set(
+    productsData.docs
+      .filter((product) => product.available && product.quantity > 0)
+      .map((product) => product.id)
+  );
+
+  const cartItemCount =
+    userProductIds?.reduce((acc, curr) => {
+      if (availableProductIds.has(curr.productId)) {
+        return acc + curr.count;
+      }
+      return acc;
+    }, 0) ?? 0;
+
+  // ************************************************************************
 
   if (pathname === "/auth") {
     return <div className="hidden"></div>;
@@ -122,11 +150,15 @@ const Header = () => {
               onClick={() => {
                 setIsSideBarOpen(false);
               }}
-              className="flex items-center justify-center text-primary w-10 h-10 border border-border
+              className="relative flex items-center justify-center text-primary w-10 h-10 border border-border
               rounded-md"
               href="/cart"
             >
               <ShoppingCart size={24} />
+              {/* cart item count */}
+              <div className="absolute bottom-[2px] right-[2px]  size-4  flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full">
+                {convertToPersianNumber(cartItemCount)}
+              </div>
             </Link>
           </section>
         </div>

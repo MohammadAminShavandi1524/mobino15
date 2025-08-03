@@ -5,7 +5,7 @@ import "../../Webfonts/fontiran.css";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/mycomponents/Header";
 import Footer from "@/components/mycomponents/Footer";
-
+import { Bounce, ToastContainer } from "react-toastify";
 import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 
@@ -26,9 +26,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   prefetch(trpc.auth.session.queryOptions());
   prefetch(trpc.categories.getMany.queryOptions());
+  prefetch(trpc.products.getMany.queryOptions({}))
+
+
   // *prefetch example
   // const queryClient = getQueryClient();
   // void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
@@ -38,22 +40,21 @@ export default async function RootLayout({
       <body className="font-IRANYekanX flex flex-col items-center w-full transition-all">
         <NuqsAdapter>
           <TRPCReactProvider>
-           
-              <HydrateClient>
-                <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
-                  <Suspense fallback={<HeaderSkeleton />}>
-                    <Header />
-                  </Suspense>
-                </ErrorBoundary>
-              </HydrateClient>
+            <HydrateClient>
+              <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
+                <Suspense fallback={<HeaderSkeleton />}>
+                  <Header />
+                </Suspense>
+              </ErrorBoundary>
+            </HydrateClient>
 
-              <div className={cn("w-full bg-[#fcfeff]")}>
-                <Toaster />
-                {children}
-              </div>
+            <div className={cn("w-full bg-[#fcfeff]")}>
+              
+              <Toaster />
+              {children}
+            </div>
 
-              <Footer />
-           
+            <Footer />
           </TRPCReactProvider>
         </NuqsAdapter>
       </body>

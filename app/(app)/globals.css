@@ -158,7 +158,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
- 
+  .addToCartToast {
+    font-family:"IRANYekanX";
+    color: red;
+  }
 }
 
 /* *input این واسه خنثی کردن اثر مرورگر بر روی * */

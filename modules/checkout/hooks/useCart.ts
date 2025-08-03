@@ -19,27 +19,25 @@ export const migrateGuestCartToUser = (userName: string) => {
   const mergedMap = new Map<string, number>();
 
   guestCart.forEach(({ productId, count }) => {
-    mergedMap.set(productId, (mergedMap.get(productId) || 0) + count);
+    mergedMap.set(productId, Math.max(mergedMap.get(productId) || 0, count));
   });
 
   userCart.forEach(({ productId, count }) => {
-    mergedMap.set(productId, (mergedMap.get(productId) || 0) + count);
+    mergedMap.set(productId, Math.max(mergedMap.get(productId) || 0, count));
   });
 
-  // پاک‌سازی سبد مهمان
   store.clearCart(guestId);
   store.removeCartByUser(guestId);
 
-  // افزودن نهایی به سبد کاربر
   mergedMap.forEach((count, productId) => {
-    for (let i = 0; i < count; i++) {
-      store.addProduct(userName, productId);
-    }
+    if (!productId || !count || count <= 0) return;
+    store.addProductWithCount(userName, productId, count);
   });
 };
 
 export const useCart = (userName?: string) => {
   const finalUserName = userName || getGuestId();
+  console.log("🚀 ~ useCart ~ userName:", finalUserName);
 
   const {
     userCarts,
@@ -89,7 +87,7 @@ export const useCart = (userName?: string) => {
     isProductInCart,
     totalItems,
     userCarts,
-    getCartByUser,
+    getCartByUser: () => getCartByUser(finalUserName),
     removeCartByUser,
   };
 };

@@ -12,9 +12,11 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   BadgeCheck,
+  BadgePercent,
   Check,
   ChevronLeft,
   Copy,
+  Divide,
   Minus,
   Percent,
   Plus,
@@ -52,8 +54,9 @@ const CartPage = () => {
     getCartByUser,
   } = useCart(user?.username);
 
-  const userProductIds: { productId: string; count: number }[] | null =
-    user && getCartByUser(user?.username);
+  const userProductIds: { productId: string; count: number }[] =getCartByUser();
+    
+  console.log(userCarts);
 
   const userCartProducts = productsData.docs.filter((product) =>
     userProductIds?.some((p) => p.productId === product.id)
@@ -68,8 +71,92 @@ const CartPage = () => {
       ?.count as number;
   };
 
+  // *** قیمت کالا ها
+  const userAvailableCartProducts = productsData.docs.filter(
+    (product) =>
+      product.quantity > 0 &&
+      product.available &&
+      userProductIds?.some((p) => p.productId === product.id)
+  );
+
+  const productPrices = userAvailableCartProducts.reduce((acc, curr) => {
+    const count =
+      userProductIds?.find((p) => p.productId === curr.id)?.count ?? 0;
+    return acc + curr.price * count;
+  }, 0);
+
+  const productOffPrices = userAvailableCartProducts.reduce((acc, curr) => {
+    const count =
+      userProductIds?.find((p) => p.productId === curr.id)?.count ?? 0;
+
+    if (curr.offPrice) {
+      return acc + (curr.offPrice ?? 0) * count;
+    } else {
+      return acc + curr.price * count;
+    }
+  }, 0);
+
+  const ProfitFromPurchase = productPrices - productOffPrices;
+  const ProfitFromPurchaseDiscount = Math.ceil(
+    ((productPrices - productOffPrices) / productPrices) * 100
+  );
+  //  const discountPercent =
+  //             product.offPrice &&
+  //             Math.ceil(
+  //               ((product.price - product.offPrice) / product.price) * 100
+  //             );
+
+  // *** تعداد ایتم های سبد خرید
+
+  const availableProductIds = new Set(
+    productsData.docs
+      .filter((product) => product.available && product.quantity > 0)
+      .map((product) => product.id)
+  );
+
+  const cartItemCount =
+    userProductIds?.reduce((acc, curr) => {
+      if (availableProductIds.has(curr.productId)) {
+        return acc + curr.count;
+      }
+      return acc;
+    }, 0) ?? 0;
+
+  // **************************************************************
+
+  if (userCartProductsLength === 0)
+    return (
+      <div className="relative w90 flex flex-col mb-6  3xl:px-24">
+        <div className="text-xl my-3 px-4">سبد خرید</div>
+        <div className="flex flex-col items-center  w-full min-h-[540px] rounded-xl p-10 pt-0 border border-[#d3d8e4]">
+          <Image
+            className="rounded-xl"
+            src="/empty-cart.png"
+            alt="empty_cart"
+            width={500}
+            height={500}
+          />
+          <div className="text-xl text-[#333333] font-semibold">
+            سبد خرید شما خالیه!
+          </div>
+          <div className="text-lg text-[#666666] mt-4 mb-6">
+            برای مشاهده تخفیف‌های امروز، روی لینک زیر کلیک کنید.
+          </div>
+          <Link className="flex items-center gap-x-1 text-[#223c78]" href={""}>
+            <span>
+              <BadgePercent color="#14a0de" />
+            </span>
+            <span>بیشترین تخفیف های امروز</span>
+            <span>
+              <ChevronLeft size={22} />
+            </span>
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
-    <div className="relative w90 grid grid-cols-20 min-h-200  gap-x-[50px] pt-4 mt-4">
+    <div className="relative w90 grid grid-cols-20 min-h-200  gap-x-[50px] pt-4 mt-4 3xl:px-24">
       <div className=" flex flex-col  col-span-15">
         <div className="flex justify-between items-center px-4">
           <div className="flex items-center gap-x-3">
@@ -84,7 +171,10 @@ const CartPage = () => {
             )}
           </div>
 
-          <button className="flex items-center gap-x-1.25 text-[14px] cursor-pointer">
+          <button
+            onClick={() => clearCart()}
+            className="flex items-center gap-x-1.25 text-[14px] cursor-pointer"
+          >
             <div>حذف کل سبد خرید</div>
             <div>
               <Trash size={20} />
@@ -92,7 +182,7 @@ const CartPage = () => {
           </button>
         </div>
         {/* content */}
-        <div className="flex flex-col min-h-200 mt-5 ">
+        <div className="flex flex-col min-h-200 mt-4 ">
           {userCartProducts.map((product, index) => {
             const mainImage = product?.images?.find((img) => img.isMain);
 
@@ -270,7 +360,7 @@ const CartPage = () => {
                             <button
                               onClick={() => increaseProductCount(product.id)}
                               disabled={
-                                productCount(product) === product.quantity
+                                productCount(product) >= product.quantity
                               }
                               className="flex justify-center items-center size-9 rounded-sm border border-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] disabled:opacity-50
                               cursor-pointer disabled:border disabled:border-[#f6f6f6] disabled:text-[#d0d0d0] disabled:cursor-default"
@@ -324,7 +414,7 @@ const CartPage = () => {
                         {/* color and count control */}
                         <div className="flex items-center justify-between mt-3">
                           {/* color */}
-                          <div className="flex justify-between items-center  p-[3px] border border-[#1b3570] rounded-[5px] cursor-pointer">
+                          <div className="flex justify-between items-center  p-[3px] border border-[#1b3570] rounded-[5px] ">
                             <div
                               className="size-4 flex items-center justify-center border border-[#d7dee0] 
                                 rounded-[6px]"
@@ -343,7 +433,7 @@ const CartPage = () => {
                             <button
                               onClick={() => increaseProductCount(product.id)}
                               disabled={
-                                productCount(product) === product.quantity
+                                productCount(product) >= product.quantity
                               }
                               className="flex justify-center items-center size-9 rounded-sm border border-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] disabled:opacity-50
                               cursor-pointer disabled:border disabled:border-[#f6f6f6] disabled:text-[#d0d0d0] disabled:cursor-default"
@@ -391,7 +481,59 @@ const CartPage = () => {
       </div>
       {/* صورتحساب */}
       <div className="sticky top-5 col-span-5 flex flex-col min-w-[400px] self-baseline">
-        صورتحساب
+        <div className=" mr-3 text-xl font-medium">صورتحساب</div>
+        <div className="flex flex-col p-8 pb-6 mt-5 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-lg">
+          <div className="flex justify-between items-center my-3">
+            <div className="flex items-center gap-x-1 text-[12px]">
+              <span>قیمت کالاها</span>
+              <span>{`(${convertToPersianNumber(cartItemCount)})`}</span>
+            </div>
+            <div className="flex items-center gap-x-0.5">
+              <span className="text-[18px]">
+                {productPrices.toLocaleString("fa-IR")}
+              </span>
+              <span>
+                <TomanLogo />
+              </span>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center my-3">
+            <div className="text-[14px]">جمع سبد خرید</div>
+            <div className="flex items-center gap-x-0.5">
+              <span className="">
+                {productOffPrices > 0
+                  ? productOffPrices.toLocaleString("fa-IR")
+                  : productPrices.toLocaleString("fa-IR")}
+              </span>
+              <span>
+                <TomanLogo />
+              </span>
+            </div>
+          </div>
+
+          {ProfitFromPurchase > 0 && (
+            <div className="flex justify-between items-center my-3 text-[#2e7b32] text-[14px]">
+              <div>
+                <span>سود شما از خرید</span>
+              </div>
+              <div className="flex items-center gap-x-0.5">
+                <span className="ml-1">{`(${convertToPersianNumber(ProfitFromPurchaseDiscount)}%)`}</span>
+                <span>{ProfitFromPurchase.toLocaleString("fa-IR")}</span>
+                <span>
+                  <TomanLogo />
+                </span>
+              </div>
+            </div>
+          )}
+
+          <button
+            disabled={false}
+            className="flex justify-center items-center h-13 w-full bg-custom-primary text-white text-xl rounded-lg cursor-pointer mt-4"
+          >
+            ادامه خرید
+          </button>
+        </div>
       </div>
     </div>
   );

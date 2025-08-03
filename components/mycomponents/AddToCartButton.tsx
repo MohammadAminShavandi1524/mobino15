@@ -1,6 +1,7 @@
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import { ChevronLeft, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 interface AddToCartButtonProps {
   userName?: string;
@@ -23,7 +24,7 @@ const AddToCartButton = ({ productId, userName }: AddToCartButtonProps) => {
     getCartByUser,
   } = useCart(userName);
 
-  console.log(userCarts);
+  
 
   return (
     <>
@@ -46,15 +47,22 @@ const AddToCartButton = ({ productId, userName }: AddToCartButtonProps) => {
           </Link>
         </div>
       ) : (
-        <button
-          onClick={() => addProduct(productId)}
-          className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer"
-        >
-          <div className="text-[18px]">افزودن به سبد خرید</div>
-          <div className="absolute left-[16px]">
-            <ShoppingCart size={20} />
-          </div>
-        </button>
+        <>
+          <button
+            onClick={() => {
+              addProduct(productId);
+              toast.success("این کالا به سبد خرید اصافه شد", {
+                position: "top-right",
+              });
+            }}
+            className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer"
+          >
+            <div className="text-[18px]">افزودن به سبد خرید</div>
+            <div className="absolute left-[16px]">
+              <ShoppingCart size={20} />
+            </div>
+          </button>
+        </>
       )}
     </>
   );

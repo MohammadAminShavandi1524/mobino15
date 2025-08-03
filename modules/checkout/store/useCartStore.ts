@@ -11,7 +11,11 @@ interface CartState {
   increaseProductCount: (userName: string, productId: string) => void;
   decreaseProductCount: (userName: string, productId: string) => void;
   removeProduct: (userName: string, productId: string) => void;
-
+  addProductWithCount: (
+    userName: string,
+    productId: string,
+    count: number
+  ) => void;
   clearCart: (userName: string) => void;
   clearAllCarts: () => void;
   getCartByUser: (userName: string) => { productId: string; count: number }[];
@@ -29,7 +33,7 @@ export const useCartStore = create<CartState>()(
           const exists = userCart.productIds.find(
             (p) => p.productId === productId
           );
-          if (exists) return {}; 
+          if (exists) return {};
 
           return {
             userCarts: {
@@ -114,6 +118,31 @@ export const useCartStore = create<CartState>()(
           delete newUserCarts[userName];
           return { userCarts: newUserCarts };
         }),
+
+      addProductWithCount: (userName, productId, count) => {
+        set((state) => {
+          const userCart = state.userCarts[userName] || { productIds: [] };
+
+          const updatedProducts = userCart.productIds.some(
+            (item) => item.productId === productId
+          )
+            ? userCart.productIds.map((item) =>
+                item.productId === productId
+                  ? { ...item, count } 
+                  : item
+              )
+            : [...userCart.productIds, { productId, count }];
+
+          return {
+            userCarts: {
+              ...state.userCarts,
+              [userName]: {
+                productIds: updatedProducts,
+              },
+            },
+          };
+        });
+      },
     }),
     {
       name: "mobinoCart",
