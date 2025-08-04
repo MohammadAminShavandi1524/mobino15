@@ -15,6 +15,7 @@ import Image from "next/image";
 
 import { useState } from "react";
 import AddToCartBtnModal from "../AddToCartBtnModal";
+import TabletMainSpec from "../(productMainSpec)/TabletMainSpec";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -218,6 +219,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   {/* laptop */}
 
                   <LaptopMainSpec product={singleProduct} />
+
+                  {/* tablet */}
+
+                  <TabletMainSpec product={singleProduct} />
                 </div>
               </div>
             </div>
@@ -262,7 +267,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
             </div>
           </div>
-          <div className="sticky top-0 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
+          <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
             <div className="pr-2 pb-2 font-medium">فروشنده</div>
 
@@ -474,6 +479,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   {/* laptop */}
 
                   <LaptopMainSpec product={MPSelectedProduct} />
+
+                  {/* tablet */}
+
+                  <TabletMainSpec product={MPSelectedProduct} />
                 </div>
               </div>
             </div>
@@ -518,7 +527,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
             </div>
           </div>
-          <div className="sticky top-0 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
+          <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
             <div className="pr-2 pb-2 font-medium">فروشنده</div>
 

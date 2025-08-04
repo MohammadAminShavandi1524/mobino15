@@ -19,6 +19,8 @@ type CarouselProps = {
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
+  autoplay?: boolean;
+  interval?: number;
 };
 
 type CarouselContextProps = {
@@ -47,6 +49,8 @@ function Carousel({
   opts,
   setApi,
   plugins,
+  autoplay,
+  interval,
   className,
   children,
   ...props
@@ -107,6 +111,20 @@ function Carousel({
       api?.off("select", onSelect);
     };
   }, [api, onSelect]);
+
+  React.useEffect(() => {
+    if (!api || !autoplay) return;
+
+    const timer = setInterval(() => {
+      if (api.canScrollNext()) {
+        api.scrollNext();
+      } else {
+        api.scrollTo(0); 
+      }
+    }, interval || 3000); 
+
+    return () => clearInterval(timer); 
+  }, [api, autoplay, interval]);
 
   return (
     <CarouselContext.Provider
@@ -176,7 +194,6 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CarouselPrevious({
- 
   className,
   variant = "outline",
   size = "icon",

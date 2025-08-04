@@ -287,13 +287,13 @@ export interface Product {
   productType?:
     | (
         | {
-            brand: 'apple' | 'samsung' | 'xiaomi' | 'huawei' | 'nokia' | 'sony';
+            brand: 'apple' | 'samsung' | 'xiaomi' | 'honor' | 'realme';
             model: string;
             /**
              * دسته بندی گوشی
              */
             classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
-            ram: '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
+            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
             storage: '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
             /**
              * سیستم عامل
@@ -409,20 +409,20 @@ export interface Product {
             blockType: 'laptop';
           }
         | {
-            brand: 'apple' | 'samsung' | 'xiaomi' | 'huawei' | 'lenovo' | 'microsoft';
+            brand: 'apple' | 'samsung' | 'microsoft' | 'xiaomi';
             model: string;
             /**
              * دسته‌بندی تبلت
              */
             classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
-            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
-            storage: '32gb' | '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
+            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb' | '32gb' | '64gb' | '128gb';
+            storage: '32gb' | '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb';
             os: 'ipados' | 'android' | 'windows';
             batteryCapacity: number;
             mainCameraResolution?: number | null;
             frontCameraResolution?: number | null;
             chipset: string;
-            cpuCores: '2' | '4' | '6' | '8' | '10';
+            cpuCores: '2' | '4' | '6' | '8' | '10' | '12' | '14';
             gpu: string;
             simSupport?: ('none' | '1' | '2') | null;
             dimensions: string;

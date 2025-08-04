@@ -156,7 +156,7 @@ const CartPage = () => {
     );
 
   return (
-    <div className="relative w90 grid grid-cols-20 min-h-200  gap-x-[50px] pt-4 mt-4 3xl:px-24">
+    <div className="relative w90 grid grid-cols-20   gap-x-[50px] pt-4 mt-4 3xl:px-24">
       <div className=" flex flex-col  col-span-15">
         <div className="flex justify-between items-center px-4">
           <div className="flex items-center gap-x-3">
@@ -182,7 +182,7 @@ const CartPage = () => {
           </button>
         </div>
         {/* content */}
-        <div className="flex flex-col min-h-200 mt-4 ">
+        <div className="flex flex-col  mt-4 ">
           {userCartProducts.map((product, index) => {
             const mainImage = product?.images?.find((img) => img.isMain);
 
@@ -196,7 +196,7 @@ const CartPage = () => {
               <div
                 key={index}
                 className={cn(
-                  "relative flex flex-col p-10 pt-6 mb-6  rounded-xl border border-[#d3d8e4]",
+                  "relative flex flex-col p-10 pt-6   rounded-xl border border-[#d3d8e4]",
                   product.quantity === 0 && "bg-[#f6f6f6]"
                 )}
               >

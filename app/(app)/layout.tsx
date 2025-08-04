@@ -15,6 +15,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import HeaderSkeleton from "@/components/mycomponents/(skeletonComponets)/HeaderSkeleton";
+import { ScrollToTop } from "@/components/mycomponents/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "mobino15",
@@ -51,6 +52,7 @@ export default async function RootLayout({
             <div className={cn("w-full bg-[#fcfeff]")}>
               
               <Toaster />
+               <ScrollToTop />
               {children}
             </div>
 
