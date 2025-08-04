@@ -17,7 +17,7 @@ interface ProductsCarouselProps {
 
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   return (
-    <Carousel className="">
+    <Carousel autoplay interval={7000} className="">
       <CarouselContent className="pt-4 px-4">
         {products &&
           products.map((product, index) => {

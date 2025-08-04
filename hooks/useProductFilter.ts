@@ -130,9 +130,24 @@ export const GroupedColors = [
 
 export const AllBrandOptions = [
   // ? Common
-  { label: "اپل", value: "apple", category: ["mobile", "laptop", "tablet"] },
-  { label: "سامسونگ", value: "samsung", category: ["mobile", "tablet"] },
-  { label: "شیائومی", value: "xiaomi", category: ["mobile", "tablet"] },
+  {
+    label: "اپل",
+    value: "apple",
+    category: ["mobile", "laptop", "tablet", "SmartWatch"],
+  },
+  {
+    label: "سامسونگ",
+    value: "samsung",
+    category: ["mobile", "tablet", "SmartWatch", "Monitor"],
+  },
+  {
+    label: "شیائومی",
+    value: "xiaomi",
+    category: ["mobile", "tablet", "SmartWatch"],
+  },
+  { label: "دل", value: "dell", category: ["laptop", "Monitor"] },
+  { label: "ایسوس", value: "asus", category: ["laptop", "Monitor"] },
+  { label: "ایسر", value: "acer", category: ["laptop", "Monitor"] },
 
   // * mobile
 
@@ -142,19 +157,30 @@ export const AllBrandOptions = [
   // * laptop
 
   { label: "لنوو", value: "lenovo", category: ["laptop"] },
-  { label: "ایسوس", value: "asus", category: ["laptop"] },
   { label: "اچ پی", value: "hp", category: ["laptop"] },
   { label: "ام اس آی", value: "msi", category: ["laptop"] },
-  { label: "دل", value: "dell", category: ["laptop"] },
-  { label: "ایسر", value: "acer", category: ["laptop"] },
 
   // * tablet
 
   { label: "Microsoft", value: "microsoft", category: ["tablet"] },
+
+  // * Headphones
+
+  { label: "Beats", value: "beats", category: ["Headphones"] },
+  { label: "Razer", value: "razer", category: ["Headphones"] },
+  { label: "Anker", value: "anker", category: ["Headphones"] },
+  { label: "TSCO", value: "tsco", category: ["Headphones"] },
+
+  // *SmartWatch
+
+  // *Monitor
+
+  { label: "LG", value: "lg", category: ["Monitor"] },
 ];
 
 export const Brands = [
   // ? Common
+
   "apple",
   "samsung",
   "xiaomi",
@@ -165,6 +191,7 @@ export const Brands = [
   "honor",
 
   // * laptop
+
   "lenovo",
   "asus",
   "hp",
@@ -175,6 +202,15 @@ export const Brands = [
   // * tablet
 
   "microsoft",
+
+  // * headphones
+
+  "beats",
+  "razer",
+  "anker",
+  "tsco",
+
+  // *Monitor
 ];
 
 export const params = {

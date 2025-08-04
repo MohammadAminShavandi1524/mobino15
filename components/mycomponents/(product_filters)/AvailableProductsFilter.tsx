@@ -13,6 +13,7 @@ const AvailableProductsFilter = ({
   onAvailableChange,
 }: AvailableProductsFilterProps) => {
   const handleAvailableChange = () => {
+   
     if (available === null) onAvailableChange(true);
     else onAvailableChange(!available);
   };

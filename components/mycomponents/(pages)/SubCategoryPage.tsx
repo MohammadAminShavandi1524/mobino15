@@ -72,7 +72,7 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
           />
 
           {/*orderbar and products list  */}
-          <div className="flex flex-col h-[3000px] w-full   ">
+          <div className="flex flex-col  w-full   ">
             {/* order bar */}
             <Orderbar
               sorts={filters.sort}

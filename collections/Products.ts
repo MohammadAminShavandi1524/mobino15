@@ -937,6 +937,385 @@ export const Products: CollectionConfig = {
             },
           ],
         },
+
+        {
+          slug: "headphone",
+          fields: [
+            //** برند هدفون **//
+            {
+              name: "brand",
+              label: "Brand",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Beats", value: "beats" },
+                { label: "Razer", value: "razer" },
+                { label: "Anker", value: "anker" },
+                { label: "TSCO", value: "tsco" },
+              ],
+            },
+
+            //** قابلیت حذف نویز **//
+            {
+              name: "noiseCancelling",
+              label: "Noise Cancelling",
+              type: "checkbox",
+              admin: {
+                description: "آیا هدفون دارای قابلیت حذف نویز فعال است؟",
+              },
+            },
+
+            //** نسخه بلوتوث **//
+            {
+              name: "bluetoothVersion",
+              label: "Bluetooth Version",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Bluetooth 4.0", value: "4.0" },
+                { label: "Bluetooth 4.1", value: "4.1" },
+                { label: "Bluetooth 4.2", value: "4.2" },
+                { label: "Bluetooth 5.0", value: "5.0" },
+                { label: "Bluetooth 5.1", value: "5.1" },
+                { label: "Bluetooth 5.2", value: "5.2" },
+                { label: "Bluetooth 5.3", value: "5.3" },
+              ],
+            },
+
+            //** بازدهی باتری **//
+            {
+              name: "batteryLife",
+              label: "Battery Life (hours)",
+              type: "number",
+              required: true,
+              admin: {
+                description:
+                  "مدت زمان بازدهی باتری با استفاده معمول (بر حسب ساعت)",
+              },
+            },
+
+            //** زمان شارژ شدن **//
+            {
+              name: "chargingTime",
+              label: "Charging Time (hours)",
+              type: "number",
+              required: true,
+            },
+
+            //** نوع اتصال **//
+            {
+              name: "connectionType",
+              label: "Connection Type",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Wired", value: "wired" },
+                { label: "Wireless", value: "wireless" },
+                { label: "Both (Wired + Wireless)", value: "both" },
+              ],
+            },
+
+            //** وزن هدفون **//
+            {
+              name: "weight",
+              label: "Weight (grams)",
+              type: "number",
+              required: true,
+            },
+
+            //** ابعاد هدفون **//
+            {
+              name: "dimensions",
+              label: "Dimensions (mm)",
+              type: "text",
+              required: true,
+            },
+          ],
+        },
+
+        {
+          slug: "smartwatch",
+          fields: [
+            //** برند ساعت هوشمند **//
+            {
+              name: "brand",
+              label: "Brand",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Apple Watch", value: "apple" },
+                { label: "Samsung", value: "samsung" },
+                { label: "Xiaomi", value: "xiaomi" },
+              ],
+            },
+
+            //** سازگاری با سیستم‌عامل‌ها و نسخه‌ها **//
+            {
+              name: "compatibility",
+              label: "OS Compatibility",
+              type: "select",
+              hasMany: true,
+              required: true,
+              options: [
+                { label: "Android 6.0 یا بالاتر", value: "android_6_up" },
+                { label: "Android 8.0 یا بالاتر", value: "android_8_up" },
+                { label: "Android 10.0 یا بالاتر", value: "android_10_up" },
+                { label: "Android 11.0 یا بالاتر", value: "android_11_up" },
+                { label: "Android 12.0 یا بالاتر", value: "android_12_up" },
+                { label: "iOS 12.0 یا بالاتر", value: "ios_12_up" },
+                { label: "iOS 11.0 یا بالاتر", value: "ios_11_up" },
+                { label: "iOS 13.0 یا بالاتر", value: "ios_13_up" },
+                { label: "iOS 18.0 یا بالاتر", value: "ios_18_up" },
+                { label: "HarmonyOS", value: "harmony" },
+              ],
+              admin: {
+                description: "سازگاری با نسخه‌های خاص سیستم‌عامل‌ها",
+              },
+            },
+
+            //** ظرفیت باتری (میلی‌آمپر ساعت) **//
+            {
+              name: "batteryCapacity",
+              label: "Battery Capacity (mAh)",
+              type: "number",
+              required: true,
+            },
+
+            //** پشتیبانی از زبان فارسی در اعلان و پیام **//
+            {
+              name: "persianLanguageSupport",
+              label: "Persian Language Support in Notifications",
+              type: "checkbox",
+            },
+
+            //** قابلیت مکالمه **//
+            {
+              name: "callSupport",
+              label: "Call Support",
+              type: "checkbox",
+            },
+
+            //** سنسورها **//
+            {
+              name: "sensors",
+              label: "Sensors",
+              type: "array",
+              required: true,
+              fields: [
+                {
+                  name: "sensor",
+                  label: "Sensor",
+                  type: "text",
+                  required: true,
+                },
+              ],
+              admin: {
+                description: "مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...",
+              },
+            },
+
+            //** ابعاد ساعت **//
+            {
+              name: "dimensions",
+              label: "Dimensions (mm)",
+              type: "text",
+              required: true,
+            },
+
+            //** وزن ساعت **//
+            {
+              name: "weight",
+              label: "Weight (grams)",
+              type: "number",
+              required: true,
+            },
+
+            //** جنس بند ساعت **//
+            {
+              name: "strapMaterial",
+              label: "Strap Material",
+              type: "select",
+              required: true,
+              options: [
+                { label: "سیلیکونی", value: "silicone" },
+                { label: "فلزی", value: "metal" },
+                { label: "چرم", value: "leather" },
+                { label: "نایلون", value: "nylon" },
+                { label: "ترکیبی", value: "mixed" },
+              ],
+            },
+
+            //** فرم صفحه نمایش **//
+            {
+              name: "displayShape",
+              label: "Display Shape",
+              type: "select",
+              required: true,
+              options: [
+                { label: "گرد", value: "round" },
+                { label: "مستطیلی", value: "rectangular" },
+                { label: "مربعی", value: "square" },
+              ],
+            },
+
+            //** نسخه بلوتوث **//
+            {
+              name: "bluetoothVersion",
+              label: "Bluetooth Version",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Bluetooth 4.0", value: "4.0" },
+                { label: "Bluetooth 4.1", value: "4.1" },
+                { label: "Bluetooth 4.2", value: "4.2" },
+                { label: "Bluetooth 5.0", value: "5.0" },
+                { label: "Bluetooth 5.1", value: "5.1" },
+                { label: "Bluetooth 5.2", value: "5.2" },
+                { label: "Bluetooth 5.3", value: "5.3" },
+              ],
+            },
+
+            //** زمان شارژ شدن **//
+            {
+              name: "chargingTime",
+              label: "Charging Time (hours)",
+              type: "number",
+              required: true,
+            },
+
+            //** بازدهی باتری **//
+            {
+              name: "batteryLife",
+              label: "Battery Life (hours)",
+              type: "number",
+              required: true,
+            },
+          ],
+        },
+
+        {
+          slug: "monitor",
+          fields: [
+            // *برند مانیتور
+            {
+              name: "brand",
+              label: "Brand",
+              type: "select",
+              required: true,
+              options: [
+                { label: "Asus", value: "asus" },
+                { label: "Samsung", value: "samsung" },
+                { label: "Dell", value: "dell" },
+                { label: "LG", value: "lg" },
+                { label: "Acer", value: "acer" },
+              ],
+            },
+
+            // *ابعاد نمایشگر
+            {
+              name: "displaySize",
+              label: "Display Size (inches)",
+              type: "number",
+              required: true,
+            },
+
+            //* نوع پنل
+            {
+              name: "panelType",
+              label: "Panel Type",
+              type: "select",
+              required: true,
+              options: [
+                { label: "IPS", value: "ips" },
+                { label: "TN", value: "tn" },
+                { label: "VA", value: "va" },
+                { label: "OLED", value: "oled" },
+                { label: "Mini-LED", value: "mini_led" },
+              ],
+            },
+
+            //* نوع صفحه‌نمایش
+            {
+              name: "screenType",
+              label: "Screen Type",
+              type: "select",
+              required: true,
+              options: [
+                { label: "تخت", value: "flat" },
+                { label: "خمیده", value: "curved" },
+              ],
+            },
+
+            //* رزولوشن صفحه نمایش
+            {
+              name: "resolution",
+              label: "Resolution",
+              type: "select",
+              required: true,
+              options: [
+                { label: "1920×1080 (Full HD)", value: "1080p" },
+                { label: "2560×1440 (QHD)", value: "1440p" },
+                { label: "3840×2160 (4K UHD)", value: "4k" },
+                { label: "5120×2880 (5K)", value: "5k" },
+                { label: "7680×4320 (8K)", value: "8k" },
+              ],
+            },
+
+            //* مناسب برای
+            {
+              name: "usageType",
+              label: "Usage Type",
+              type: "select",
+              hasMany: true,
+              required: true,
+              options: [
+                { label: "صنعتی", value: "industrial" },
+                { label: "ترید", value: "trading" },
+                { label: "اداری", value: "office" },
+                { label: "گیمینگ", value: "gaming" },
+                { label: "طراحی", value: "design" },
+              ],
+            },
+
+            //* تعداد رنگ قابل نمایش
+            {
+              name: "colorCount",
+              label: "Number of Displayable Colors",
+              type: "text",
+              required: true,
+              admin: {
+                description: "مثلاً: 16.7 میلیون رنگ",
+              },
+            },
+
+            //* زمان پاسخ‌دهی
+            {
+              name: "responseTime",
+              label: "Response Time (ms)",
+              type: "number",
+              required: true,
+            },
+
+            // *اقلام همراه
+            {
+              name: "accessories",
+              label: "Included Accessories",
+              type: "array",
+              required: false,
+              fields: [
+                {
+                  name: "item",
+                  label: "Item",
+                  type: "text",
+                },
+              ],
+              admin: {
+                description:
+                  "مثلاً کابل برق، کابل HDMI، دفترچه راهنما، پایه قابل تنظیم و ...",
+              },
+            },
+          ],
+        },
       ],
     },
   ],

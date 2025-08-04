@@ -79,6 +79,7 @@ const BrandFilter = ({
                     <Checkbox
                       checked={isSelected}
                       onCheckedChange={(checked) => {
+                        
                         if (!brands)
                           return setFilters({ brand: [brand.value] });
 

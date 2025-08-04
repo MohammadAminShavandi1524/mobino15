@@ -59,8 +59,8 @@ const categoriesCarouselOptions = [
 
 const CatCarousel = () => {
   return (
-    <Carousel className="">
-      <CarouselContent className="px-4">
+    <Carousel autoplay interval={7000} className="">
+      <CarouselContent className="px-4 ml-0">
         {categoriesCarouselOptions.map((option, index) => {
           return (
             <CarouselItem
@@ -92,8 +92,8 @@ const CatCarousel = () => {
           );
         })}
       </CarouselContent>
-      <CarouselPrevious className="top-[63px]" />
-      <CarouselNext className="top-[63px]" />
+      <CarouselPrevious className="top-[63px] -right-10" />
+      <CarouselNext className="top-[63px] -left-12" />
     </Carousel>
   );
 };

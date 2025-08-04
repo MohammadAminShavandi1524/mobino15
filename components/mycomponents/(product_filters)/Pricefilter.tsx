@@ -1,12 +1,11 @@
 "use client";
 
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
 import TomanLogo from "../TomanLogo";
 import { formatWithThousandSeparator } from "@/lib/utils";
-import { useProductFilters } from "@/hooks/useProductFilter";
 
 interface PricefilterProps {
   minPrice: string | null;
@@ -25,28 +24,51 @@ const Pricefilter = ({
 }: PricefilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
+  const [localMinPrice, setLocalMinPrice] = useState(minPrice || "");
+  const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice || "");
 
-    onMinPriceChange(numericValue);
+  // Sync with props
+  useEffect(() => {
+    setLocalMinPrice(minPrice || "");
+  }, [minPrice]);
+
+  useEffect(() => {
+    setLocalMaxPrice(maxPrice || "");
+  }, [maxPrice]);
+
+  const handleLocalMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const numericValue = e.target.value.replace(/\D/g, "");
+    setLocalMinPrice(numericValue);
   };
-  const handleMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
 
-    onMaxPriceChange(numericValue);
+  const handleLocalMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const numericValue = e.target.value.replace(/\D/g, "");
+    setLocalMaxPrice(numericValue);
+  };
+
+  const handleMinBlur = () => {
+    if (localMinPrice !== minPrice) {
+      onMinPriceChange(localMinPrice);
+    }
+  };
+
+  const handleMaxBlur = () => {
+    if (localMaxPrice !== maxPrice) {
+      onMaxPriceChange(localMaxPrice);
+    }
   };
 
   if (isFilterOpen)
     return (
       <div className="cursor-pointer border-b border-b-[#ced0d0]">
         <div
-          onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className=" flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
+          onClick={() => setIsFilterOpen(false)}
+          className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
         >
           <div className="relative">
-            <div> محدوده قیمت</div>
+            <div>محدوده قیمت</div>
             {isPriceFilterActive && (
-              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]" />
             )}
           </div>
 
@@ -63,25 +85,26 @@ const Pricefilter = ({
           <div className="flex items-center gap-x-1">
             <span className="text-[#81858b] text-[18px]">از</span>
             <input
-              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none  focus:ring-0 caret-custom-primary placeholder-[#3f4064]"
+              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none focus:ring-0 caret-custom-primary placeholder-[#3f4064]"
               dir="ltr"
               type="text"
-              value={minPrice ? formatWithThousandSeparator(minPrice) : ""}
-              onChange={handleMinPriceChange}
+              value={formatWithThousandSeparator(localMinPrice)}
+              onChange={handleLocalMinPriceChange}
+              onBlur={handleMinBlur}
               onFocus={(e) => e.target.select()}
             />
-
             <TomanLogo />
           </div>
           <div className="flex items-center gap-x-1">
             <span className="text-[#81858b] text-[18px]">تا</span>
             <input
-              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none  focus:ring-0 caret-custom-primary placeholder-[#3f4064] "
+              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none focus:ring-0 caret-custom-primary placeholder-[#3f4064]"
               dir="ltr"
               placeholder="∞"
               type="text"
-              value={maxPrice ? formatWithThousandSeparator(maxPrice) : ""}
-              onChange={handleMaxPriceChange}
+              value={formatWithThousandSeparator(localMaxPrice)}
+              onChange={handleLocalMaxPriceChange}
+              onBlur={handleMaxBlur}
               onFocus={(e) => e.target.select()}
             />
             <TomanLogo />
@@ -92,13 +115,13 @@ const Pricefilter = ({
 
   return (
     <div
-      onClick={() => setIsFilterOpen(!isFilterOpen)}
+      onClick={() => setIsFilterOpen(true)}
       className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333] cursor-pointer"
     >
       <div className="relative">
-        <div> محدوده قیمت</div>
+        <div>محدوده قیمت</div>
         {isPriceFilterActive && (
-          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]" />
         )}
       </div>
       <motion.div
@@ -111,4 +134,5 @@ const Pricefilter = ({
     </div>
   );
 };
+
 export default Pricefilter;

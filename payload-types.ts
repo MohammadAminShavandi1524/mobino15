@@ -439,6 +439,88 @@ export interface Product {
             blockName?: string | null;
             blockType: 'tablet';
           }
+        | {
+            brand: 'beats' | 'razer' | 'anker' | 'tsco';
+            /**
+             * آیا هدفون دارای قابلیت حذف نویز فعال است؟
+             */
+            noiseCancelling?: boolean | null;
+            bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
+            /**
+             * مدت زمان بازدهی باتری با استفاده معمول (بر حسب ساعت)
+             */
+            batteryLife: number;
+            chargingTime: number;
+            connectionType: 'wired' | 'wireless' | 'both';
+            weight: number;
+            dimensions: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'headphone';
+          }
+        | {
+            brand: 'apple' | 'samsung' | 'xiaomi';
+            /**
+             * سازگاری با نسخه‌های خاص سیستم‌عامل‌ها
+             */
+            compatibility: (
+              | 'android_6_up'
+              | 'android_8_up'
+              | 'android_10_up'
+              | 'android_11_up'
+              | 'android_12_up'
+              | 'ios_12_up'
+              | 'ios_11_up'
+              | 'ios_13_up'
+              | 'ios_18_up'
+              | 'harmony'
+            )[];
+            batteryCapacity: number;
+            persianLanguageSupport?: boolean | null;
+            callSupport?: boolean | null;
+            /**
+             * مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...
+             */
+            sensors: {
+              sensor: string;
+              id?: string | null;
+            }[];
+            dimensions: string;
+            weight: number;
+            strapMaterial: 'silicone' | 'metal' | 'leather' | 'nylon' | 'mixed';
+            displayShape: 'round' | 'rectangular' | 'square';
+            bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
+            chargingTime: number;
+            batteryLife: number;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'smartwatch';
+          }
+        | {
+            brand: 'asus' | 'samsung' | 'dell' | 'lg' | 'acer';
+            displaySize: number;
+            panelType: 'ips' | 'tn' | 'va' | 'oled' | 'mini_led';
+            screenType: 'flat' | 'curved';
+            resolution: '1080p' | '1440p' | '4k' | '5k' | '8k';
+            usageType: ('industrial' | 'trading' | 'office' | 'gaming' | 'design')[];
+            /**
+             * مثلاً: 16.7 میلیون رنگ
+             */
+            colorCount: string;
+            responseTime: number;
+            /**
+             * مثلاً کابل برق، کابل HDMI، دفترچه راهنما، پایه قابل تنظیم و ...
+             */
+            accessories?:
+              | {
+                  item?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'monitor';
+          }
       )[]
     | null;
   updatedAt: string;
@@ -692,6 +774,64 @@ export interface ProductsSelect<T extends boolean = true> {
               network?: T;
               waterResistant?: T;
               accessories?: T;
+              id?: T;
+              blockName?: T;
+            };
+        headphone?:
+          | T
+          | {
+              brand?: T;
+              noiseCancelling?: T;
+              bluetoothVersion?: T;
+              batteryLife?: T;
+              chargingTime?: T;
+              connectionType?: T;
+              weight?: T;
+              dimensions?: T;
+              id?: T;
+              blockName?: T;
+            };
+        smartwatch?:
+          | T
+          | {
+              brand?: T;
+              compatibility?: T;
+              batteryCapacity?: T;
+              persianLanguageSupport?: T;
+              callSupport?: T;
+              sensors?:
+                | T
+                | {
+                    sensor?: T;
+                    id?: T;
+                  };
+              dimensions?: T;
+              weight?: T;
+              strapMaterial?: T;
+              displayShape?: T;
+              bluetoothVersion?: T;
+              chargingTime?: T;
+              batteryLife?: T;
+              id?: T;
+              blockName?: T;
+            };
+        monitor?:
+          | T
+          | {
+              brand?: T;
+              displaySize?: T;
+              panelType?: T;
+              screenType?: T;
+              resolution?: T;
+              usageType?: T;
+              colorCount?: T;
+              responseTime?: T;
+              accessories?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

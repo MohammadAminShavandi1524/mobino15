@@ -1,6 +1,11 @@
 import { useCartStore } from "../store/useCartStore";
 
 export const getGuestId = (): string => {
+  if (typeof window === "undefined") {
+    // اگر در سرور اجرا شد، مقدار پیش‌فرض برمی‌گردونه
+    return "guest_ssr";
+  }
+
   const existing = localStorage.getItem("guest_id");
   if (existing) return existing;
 

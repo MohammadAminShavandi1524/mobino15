@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import CategoryPage from "@/components/mycomponents/(pages)/CategoryPage";
+import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
@@ -27,6 +28,8 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
       <ErrorBoundary fallback={<div>category error boundary!!!!</div>}>
         <Suspense fallback={<>category loading</>}>
           <CategoryPage category={category} />
+          <ScrollToTopOnUrlChange />
+
         </Suspense>
       </ErrorBoundary>
     </HydrateClient>

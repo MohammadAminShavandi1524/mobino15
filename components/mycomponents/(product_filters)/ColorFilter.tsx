@@ -227,6 +227,7 @@ const ColorFilter = ({
             const isSelected = colors?.includes(colorGroup.name);
 
             const handleColorChange = () => {
+            
               setFilters((prev) => {
                 const prevColors = prev.color || [];
                 return {

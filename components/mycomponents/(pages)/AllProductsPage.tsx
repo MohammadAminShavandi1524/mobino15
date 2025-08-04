@@ -14,7 +14,7 @@ interface AllProductsPageProps {}
 const AllProductsPage = ({}: AllProductsPageProps) => {
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
-
+  
   const trpc = useTRPC();
 
   const { data: productsData } = useSuspenseQuery(
@@ -44,7 +44,7 @@ const AllProductsPage = ({}: AllProductsPageProps) => {
           />
 
           {/*orderbar and products list  */}
-          <div className="flex flex-col h-[3000px] w-full   ">
+          <div className="flex flex-col  w-full   ">
             {/* order bar */}
             <Orderbar
               sorts={filters.sort}

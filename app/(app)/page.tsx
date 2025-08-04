@@ -11,39 +11,43 @@ import { Suspense } from "react";
 import Link from "next/link";
 import Afino from "@/components/mycomponents/(carousels)/Afino";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn, convertToPersianNumber } from "@/lib/utils";
 import FlagBearerMobiles from "@/components/mycomponents/LandingPageComps/FlagBearerMobiles";
+import MainCarousel from "@/components/mycomponents/(carousels)/MainCarousel";
+import LaptopHighlights from "@/components/mycomponents/(CatHighlights)/LaptopHighlights";
+import MobileHighlights from "@/components/mycomponents/(CatHighlights)/MobileHighlights";
+import LaptopCarousel from "@/components/mycomponents/(carousels)/LaptopCarousel";
+import MobilePriceTags from "@/components/mycomponents/(CatPriceTag)/MobilePriceTags";
+import LaptopPriceTags from "@/components/mycomponents/(CatPriceTag)/LaptopPriceTags";
 
 export default async function Home() {
   prefetch(trpc.products.getMany.queryOptions({}));
 
-  const MobileOptions = [
+  const mobilePricedBasedOptions = [
     {
-      img: "https://www.technolife.com/image/static_phone_samsung_new.png",
-      label: "گوشی سامسونگ",
-      href: "/mobile/samsungPhone",
+      priceTag: 15,
     },
     {
-      img: "https://www.technolife.com/image/static_phone_iphone_new.png",
-      label: "گوشی آیفون",
-      href: "/mobile/iPhone",
+      priceTag: 30,
     },
     {
-      img: "https://www.technolife.com/image/static_phone_xiaomi_new.png",
-      label: "گوشی شیائومی",
-      href: "/mobile/XiaomiPhone",
+      priceTag: 50,
     },
     {
-      img: "https://www.technolife.com/image/static_phone_honor_new.png",
-      label: "گوشی آنر",
-      href: "/mobile/HonerPhone",
+      priceTag: 75,
+    },
+    {
+      priceTag: 100,
+    },
+    {
+      priceTag: 150,
     },
   ];
 
   return (
-    <div className="flex flex-col min-h-[1000px] overflow-x-hidden">
+    <div className="flex flex-col  overflow-x-hidden">
       {/* image carousel */}
-      <Skeleton width={1920} height={430} />
+      <MainCarousel />
 
       <div className="w90 flex flex-col mt-13 px-12">
         {/* categories carousel */}
@@ -60,32 +64,7 @@ export default async function Home() {
 
         {/* mobile subCategories */}
 
-        <div className="flex flex-col  justify-center items-center w-full my-14 ">
-          <div className="text-[26px] font-medium text-black mb-8">
-            برترین های موبایل
-          </div>
-          <ul className="flex items-center gap-x-14">
-            {MobileOptions.map((option, index) => {
-              return (
-                <li key={index}>
-                  <Link
-                    className="flex flex-col items-center gap-y-3 cursor-pointer"
-                    href={option.href}
-                  >
-                    <Image
-                      className={cn("")}
-                      src={option.img}
-                      alt={option.label}
-                      width={200}
-                      height={200}
-                    />
-                    <span className="text-[18px]">{option.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <MobileHighlights />
 
         {/* flagBearerMobiles */}
         <HydrateClient>
@@ -97,6 +76,28 @@ export default async function Home() {
             </Suspense>
           </ErrorBoundary>
         </HydrateClient>
+
+        {/* laptop subCategories */}
+
+        <LaptopHighlights />
+
+        {/* laptop carousel */}
+        <HydrateClient>
+          <ErrorBoundary
+            fallback={<div>LaptopCarousel error boundary!!!!</div>}
+          >
+            <Suspense fallback={<>LaptopCarousel loading</>}>
+              <LaptopCarousel />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
+
+        <div className="grid grid-cols-2 items-center w-full gap-x-13 my-14">
+          {/* گوشی بر اساس قیمت  */}
+          <MobilePriceTags />
+          {/* لپ تاپ بر اساس قیمت  */}
+          <LaptopPriceTags />
+        </div>
       </div>
     </div>
   );

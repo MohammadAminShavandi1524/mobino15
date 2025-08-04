@@ -18,20 +18,20 @@ const AppliedFilters = () => {
     PurpleGroup: "بنفش",
   };
 
-  const brandLabels: Record<string, string> = {
-    apple: "اپل",
-    samsung: "سامسونگ",
-    xiaomi: "شیائومی",
-    huawei: "هواوی",
-    nokia: "نوکیا",
-    sony: "سونی",
-    asus: "ایسوس",
-    hp: "اچ‌پی",
-    lenovo: "لنوو",
-    msi: "ام‌اس‌آی",
-    dell: "دل",
-    acer: "ایسر",
-  };
+  // const brandLabels: Record<string, string> = {
+  //   apple: "اپل",
+  //   samsung: "سامسونگ",
+  //   xiaomi: "شیائومی",
+  //   huawei: "هواوی",
+  //   nokia: "نوکیا",
+  //   sony: "سونی",
+  //   asus: "ایسوس",
+  //   hp: "اچ‌پی",
+  //   lenovo: "لنوو",
+  //   msi: "ام‌اس‌آی",
+  //   dell: "دل",
+  //   acer: "ایسر",
+  // };
 
   const appliedFilters: {
     label: string;
@@ -73,7 +73,7 @@ const AppliedFilters = () => {
   if (filters.brand && filters.brand.length > 0) {
     filters.brand.forEach((brand) => {
       appliedFilters.push({
-        label: `برند: ${brandLabels[brand] || brand}`,
+        label: `برند: ${brand}`,
         key: "brand",
         value: brand,
       });
@@ -82,7 +82,7 @@ const AppliedFilters = () => {
 
   return (
     <div className="flex flex-wrap gap-2 py-2 max-w-full">
-      {appliedFilters.map((filter , index) => (
+      {appliedFilters.map((filter, index) => (
         <div
           key={index}
           className="flex items-center  gap-x-1 bg-[#223c78] text-[12px] text-[white] px-2 py-1 rounded-md
