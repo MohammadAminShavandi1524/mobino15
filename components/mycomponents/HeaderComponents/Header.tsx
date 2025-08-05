@@ -28,6 +28,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import SearchBar from "./SearchBar";
 import CartBtn from "./CartBtn";
+import MobileSideBar from "./MobileSideBar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Category } from "@/payload-types";
 
 const AuthBtn = dynamic(
   () => import("../(auth)/AuthBtn").then((mod) => mod.default),
@@ -75,6 +78,8 @@ const Header = () => {
     trpc.products.getMany.queryOptions({})
   );
 
+  
+
   const { getCartByUser } = useCart(user?.username);
 
   const userProductIds: { productId: string; count: number }[] =
@@ -101,150 +106,157 @@ const Header = () => {
   }
 
   return (
-    <header className="relative bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
-      {/*pc sidebar shown in more than 1024 devices */}
-      <NavbarSidebar
-        isOpen={isSideBarOpen}
-        setIsOpen={setIsSideBarOpen}
-        isBannerDisplayed={isBannerDisplayed}
-      />
+    <header className="relative bg-background flex flex-col w-full max-h-full mx-auto border-b border-b-[#d7dee0]">
+        {/* banners */}
+        <Image
+          className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
+          src="/banner.png"
+          alt="top banner"
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+        />
+      <SidebarProvider>
 
-      {/*mobile sidebar */}
-
-      {/* banners */}
-      <Image
-        className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
-        src="/banner.png"
-        alt="top banner"
-        width={0}
-        height={0}
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-      />
-
-      <div className="  max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
-        {/* pc  */}
-        {/* fixed part shown in more than 1024 devices*/}
-        <div className="flex items-center justify-between mx-auto w-[90%] pb-6 max-lg:hidden">
-          {/* logo and searchbar */}
-          <section className="flex items-center gap-x-6">
-            {/* logo */}
-            <Logo />
-            {/* searchbar */}
-            <SearchBar />
-          </section>
-          {/* auth and cart button  */}
-          <section className="flex items-center gap-x-6">
-            {/* login/signup button */}
-
-            <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
-
-            {/* cart button */}
-            <CartBtn
-              cartItemCount={cartItemCount}
-              setIsSideBarOpen={setIsSideBarOpen}
-            />
-          </section>
+        {/*mobile sidebar */}
+        <div >
+          <MobileSideBar />
         </div>
+        {/*pc sidebar shown in more than 1024 devices */}
+        <NavbarSidebar
+         
+          isOpen={isSideBarOpen}
+          setIsOpen={setIsSideBarOpen}
+          isBannerDisplayed={isBannerDisplayed}
+        />
 
-        {/*navbar shown in more than 1024 devices */}
-        <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3 max-lg:hidden">
-          {/* Product categories */}
-          <motion.button
-            key="modal"
-            onClick={() => {
-              setIsSideBarOpen(!isSideBarOpen);
-            }}
-            className={cn(
-              "p-2.5 flex items-center gap-x-2 cursor-pointer rounded-md hover:bg-[#f1f8ff] hover:text-primary ",
-              isSideBarOpen && "bg-[#f1f8ff] text-primary"
-            )}
-          >
-            <span>
-              <Menu />
-            </span>
-            <span>دسته بندی محصولات</span>
-          </motion.button>
-          {/* optional pages */}
-          <div className="flex items-center gap-x-4 mx-2">
-            <Link
-              href="/off"
-              className={cn(
-                "p-2.5 flex items-center gap-x-2",
-                pathname === "/off" && "border-b-destructive border"
-              )}
-            >
-              <span>
-                <CirclePercent />
-              </span>
-              <span>شگفت انگیز ها</span>
-            </Link>
-            <Link
-              href="/aboutUs"
-              className={cn(
-                "p-2.5 flex items-center gap-x-2",
-                pathname === "/aboutUs" && "border-b-destructive border-2"
-              )}
-            >
-              <span>
-                <Info />
-              </span>
-              <span>درباره ما</span>
-            </Link>
-            <Link
-              href="/InstallmentPurchase"
-              className="p-2.5 flex items-center gap-x-2"
-            >
-              <span>
-                <Wallet />
-              </span>
-              <span>خرید اقساطی</span>
-            </Link>
-          </div>
-          {/* seller login */}
-          <Link href="" className="p-2.5 text-custom-primary">
-            فروشنده شو
-          </Link>
-        </nav>
+        <div className="  max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
+          {/* pc  */}
+          {/* fixed part shown in more than 1024 devices*/}
+          <div className="flex items-center justify-between mx-auto w-[90%] pb-6 max-lg:hidden">
+            {/* logo and searchbar */}
+            <section className="flex items-center gap-x-6">
+              {/* logo */}
+              <Logo />
 
-        {/* mobile and tablet */}
-        {/*  */}
-        <div className="flex items-center justify-between lg:hidden">
-          <div className="cursor-pointer">
-            <Menu size={28} />
-          </div>
-          <div>
-            <Logo
-              logoImage_height={32}
-              logoImage_width={32}
-              text_className="text-[24px]"
-            />
-          </div>
-          <div className="flex items-center gap-x-3">
-            <div>
+              {/* searchbar */}
+              <SearchBar />
+            </section>
+            {/* auth and cart button  */}
+            <section className="flex items-center gap-x-6">
+              {/* login/signup button */}
+
+              <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
+
+              {/* cart button */}
               <CartBtn
                 cartItemCount={cartItemCount}
                 setIsSideBarOpen={setIsSideBarOpen}
               />
-            </div>
-            <div>
-              <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
-            </div>
+            </section>
           </div>
-        </div>
-        <div className="flex justify-between items-center gap-x-4 sm:gap-x-20 mt-5  lg:hidden">
-          {/* searchbar */}
-          <div className="w-full">
-            <SearchBar />
-          </div>
-          {/* seller login */}
-          <div className="hidden sm:block min-w-[100px] text-center py-2 text-[12px] sm:text-[14px] sm:text-base">
-            <Link href="" className="text-custom-primary">
+
+          {/*navbar shown in more than 1024 devices */}
+          <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3 max-lg:hidden">
+            {/* Product categories */}
+            <motion.button
+              key="modal"
+              onClick={() => {
+                setIsSideBarOpen(!isSideBarOpen);
+              }}
+              className={cn(
+                "p-2.5 flex items-center gap-x-2 cursor-pointer rounded-md hover:bg-[#f1f8ff] hover:text-primary ",
+                isSideBarOpen && "bg-[#f1f8ff] text-primary"
+              )}
+            >
+              <span>
+                <Menu />
+              </span>
+              <span>دسته بندی محصولات</span>
+            </motion.button>
+            {/* optional pages */}
+            <div className="flex items-center gap-x-4 mx-2">
+              <Link
+                href="/off"
+                className={cn(
+                  "p-2.5 flex items-center gap-x-2",
+                  pathname === "/off" && "border-b-destructive border"
+                )}
+              >
+                <span>
+                  <CirclePercent />
+                </span>
+                <span>شگفت انگیز ها</span>
+              </Link>
+              <Link
+                href="/aboutUs"
+                className={cn(
+                  "p-2.5 flex items-center gap-x-2",
+                  pathname === "/aboutUs" && "border-b-destructive border-2"
+                )}
+              >
+                <span>
+                  <Info />
+                </span>
+                <span>درباره ما</span>
+              </Link>
+              <Link
+                href="/InstallmentPurchase"
+                className="p-2.5 flex items-center gap-x-2"
+              >
+                <span>
+                  <Wallet />
+                </span>
+                <span>خرید اقساطی</span>
+              </Link>
+            </div>
+            {/* seller login */}
+            <Link href="" className="p-2.5 text-custom-primary">
               فروشنده شو
             </Link>
+          </nav>
+
+          {/* ******************************************************************************** */}
+
+          {/* mobile and tablet */}
+
+          <div className="flex items-center justify-between lg:hidden">
+            <SidebarTrigger className="size-8 p-1 " />
+
+            <div>
+              <Logo
+                logoImage_height={32}
+                logoImage_width={32}
+                text_className="text-[24px]"
+              />
+            </div>
+            <div className="flex items-center gap-x-3">
+              <div>
+                <CartBtn
+                  cartItemCount={cartItemCount}
+                  setIsSideBarOpen={setIsSideBarOpen}
+                />
+              </div>
+              <div>
+                <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between items-center gap-x-4 sm:gap-x-20 mt-5  lg:hidden">
+            {/* searchbar */}
+            <div className="w-full">
+              <SearchBar />
+            </div>
+            {/* seller login */}
+            <div className="hidden sm:block min-w-[100px] text-center py-2 text-[12px] sm:text-[14px] sm:text-base">
+              <Link href="" className="text-custom-primary">
+                فروشنده شو
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </SidebarProvider>
     </header>
   );
 };

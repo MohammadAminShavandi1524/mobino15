@@ -7,13 +7,12 @@ import { motion } from "framer-motion";
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import { useTRPC } from "@/trpc/client";
-import {  useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 interface NavbarSidebarProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isBannerDisplayed: boolean;
- 
 }
 
 const NavbarSidebar = ({
@@ -21,7 +20,6 @@ const NavbarSidebar = ({
   setIsOpen,
   isBannerDisplayed,
 }: NavbarSidebarProps) => {
-
   const [isAllPHovered, setIsAllPHovered] = useState(false);
 
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
@@ -32,7 +30,7 @@ const NavbarSidebar = ({
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
-  const selectedCategory = data?.docs.find((doc: Category) => {
+  const selectedCategory = data.docs.find((doc: Category) => {
     const findedDoc = doc === activeCategory;
     return findedDoc;
   });
