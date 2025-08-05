@@ -48,7 +48,7 @@ const NavbarSidebar = ({
 
   if (isOpen) {
     return (
-      <div className="absolute right-0 top-[calc(100%+1px)] z-50 flex w-full  bg-zinc-900/50 h-screen  border-t border-[#d7dee0]">
+      <div className="absolute right-0 top-[calc(100%+1px)] z-50 flex w-full  bg-zinc-900/50 h-screen border-t border-[#d7dee0] max-lg:hidden">
         {/* categories */}
         <ul className="min-w-[280px] bg-white text-custom-primary pt-4 px-4 flex flex-col ">
           {/* تمام محصولات  */}

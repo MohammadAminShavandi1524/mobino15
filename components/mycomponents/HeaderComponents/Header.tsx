@@ -1,35 +1,52 @@
 "use client";
+import dynamic from "next/dynamic";
 import {
   CirclePercent,
   Info,
   Menu,
   Search,
   ShoppingCart,
+  Store,
   Wallet,
 } from "lucide-react";
 
 import Link from "next/link";
-import ThemeButton from "./(theme)/ThemeButton";
+import ThemeButton from "../(theme)/ThemeButton";
 import { useTheme } from "next-themes";
 import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
 import { cn, convertToPersianNumber } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import {
-  ReactElement,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import NavbarSidebar from "./(NavbarsideBar-components)/NavbarSidebar";
+import { useEffect, useState } from "react";
+import NavbarSidebar from "./NavbarSidebar";
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 import { useTRPC } from "@/trpc/client";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import HeaderSkeleton from "./(skeletonComponets)/HeaderSkeleton";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
 import { useCart } from "@/modules/checkout/hooks/useCart";
+import SearchBar from "./SearchBar";
+import CartBtn from "./CartBtn";
+
+const AuthBtn = dynamic(
+  () => import("../(auth)/AuthBtn").then((mod) => mod.default),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="min-w-[140px] h-10 px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
+            flex justify-center items-center "
+      >
+        <div className=" flex  justify-center items-center gap-x-1  w-full text-center">
+          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.2s]"></div>
+          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    ),
+  }
+);
 
 const Header = () => {
   const pathname = usePathname();
@@ -85,17 +102,18 @@ const Header = () => {
 
   return (
     <header className="relative bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
-      {/* sidebar */}
-
+      {/*pc sidebar shown in more than 1024 devices */}
       <NavbarSidebar
         isOpen={isSideBarOpen}
         setIsOpen={setIsSideBarOpen}
         isBannerDisplayed={isBannerDisplayed}
       />
 
+      {/*mobile sidebar */}
+
       {/* banners */}
       <Image
-        className={cn("", isBannerDisplayed && "block")}
+        className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
         src="/banner.png"
         alt="top banner"
         width={0}
@@ -104,66 +122,33 @@ const Header = () => {
         style={{ width: "100%", height: "auto" }}
       />
 
-      <div className="pt-4 max-w-[1920px] w-full mx-auto  px-6">
-        {/* fixed part */}
-        <div className="flex items-center justify-between mx-auto w-[90%] pb-6">
+      <div className="  max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
+        {/* pc  */}
+        {/* fixed part shown in more than 1024 devices*/}
+        <div className="flex items-center justify-between mx-auto w-[90%] pb-6 max-lg:hidden">
           {/* logo and searchbar */}
           <section className="flex items-center gap-x-6">
             {/* logo */}
             <Logo />
             {/* searchbar */}
-            <div className=" flex gap-x-4 w-[600px] rounded-xl bg-[#f0f0f0] px-4 py-3">
-              <span className="text-3xl text-gray-400">
-                <Search />
-              </span>
-              <input
-                placeholder="محصول، برند یا دسته مورد نظرتان را جستجو کنید"
-                className="bg-[#f0f0f0] w-full text-sm"
-                type="text"
-              />
-            </div>
+            <SearchBar />
           </section>
           {/* auth and cart button  */}
           <section className="flex items-center gap-x-6">
-            {/* experimental admin panel button  */}
-            <Button asChild variant={"default"}>
-              <Link href="/admin">پنل ادمین</Link>
-            </Button>
-
             {/* login/signup button */}
 
-            <Link
-              onClick={() => {
-                setIsSideBarOpen(false);
-              }}
-              prefetch
-              href="/auth"
-              className="px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
-              "
-            >
-              <span className="pl-4 border-l border-custom-primary">ورود</span>
-              <span className="pr-4">ثبت نام</span>
-            </Link>
+            <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
 
             {/* cart button */}
-            <Link
-              onClick={() => {
-                setIsSideBarOpen(false);
-              }}
-              className="relative flex items-center justify-center text-primary w-10 h-10 border border-border
-              rounded-md"
-              href="/cart"
-            >
-              <ShoppingCart size={24} />
-              {/* cart item count */}
-              <div className={cn("absolute bottom-[2px] right-[2px]  size-4 flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full", cartItemCount === 0 && "pb-[4px]" )}>
-                {convertToPersianNumber(cartItemCount)}
-              </div>
-            </Link>
+            <CartBtn
+              cartItemCount={cartItemCount}
+              setIsSideBarOpen={setIsSideBarOpen}
+            />
           </section>
         </div>
-        {/* navbar */}
-        <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3">
+
+        {/*navbar shown in more than 1024 devices */}
+        <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3 max-lg:hidden">
           {/* Product categories */}
           <motion.button
             key="modal"
@@ -221,6 +206,44 @@ const Header = () => {
             فروشنده شو
           </Link>
         </nav>
+
+        {/* mobile and tablet */}
+        {/*  */}
+        <div className="flex items-center justify-between lg:hidden">
+          <div className="cursor-pointer">
+            <Menu size={28} />
+          </div>
+          <div>
+            <Logo
+              logoImage_height={32}
+              logoImage_width={32}
+              text_className="text-[24px]"
+            />
+          </div>
+          <div className="flex items-center gap-x-3">
+            <div>
+              <CartBtn
+                cartItemCount={cartItemCount}
+                setIsSideBarOpen={setIsSideBarOpen}
+              />
+            </div>
+            <div>
+              <AuthBtn user={user} setIsSideBarOpen={setIsSideBarOpen} />
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-between items-center gap-x-4 sm:gap-x-20 mt-5  lg:hidden">
+          {/* searchbar */}
+          <div className="w-full">
+            <SearchBar />
+          </div>
+          {/* seller login */}
+          <div className="hidden sm:block min-w-[100px] text-center py-2 text-[12px] sm:text-[14px] sm:text-base">
+            <Link href="" className="text-custom-primary">
+              فروشنده شو
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );

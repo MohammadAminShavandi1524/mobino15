@@ -12,7 +12,7 @@ import Link from "next/link";
 import Afino from "@/components/mycomponents/(carousels)/Afino";
 import Image from "next/image";
 import { cn, convertToPersianNumber } from "@/lib/utils";
-import FlagBearerMobiles from "@/components/mycomponents/LandingPageComps/FlagBearerMobiles";
+import FlagBearerMobiles from "@/components/mycomponents/(carousels)/FlagBearerMobiles";
 import MainCarousel from "@/components/mycomponents/(carousels)/MainCarousel";
 import LaptopHighlights from "@/components/mycomponents/(CatHighlights)/LaptopHighlights";
 import MobileHighlights from "@/components/mycomponents/(CatHighlights)/MobileHighlights";
@@ -23,26 +23,6 @@ import LaptopPriceTags from "@/components/mycomponents/(CatPriceTag)/LaptopPrice
 export default async function Home() {
   prefetch(trpc.products.getMany.queryOptions({}));
 
-  const mobilePricedBasedOptions = [
-    {
-      priceTag: 15,
-    },
-    {
-      priceTag: 30,
-    },
-    {
-      priceTag: 50,
-    },
-    {
-      priceTag: 75,
-    },
-    {
-      priceTag: 100,
-    },
-    {
-      priceTag: 150,
-    },
-  ];
 
   return (
     <div className="flex flex-col  overflow-x-hidden">

@@ -115,8 +115,8 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
             );
           })}
       </CarouselContent>
-      <CarouselPrevious className="top-[185px] right-[18px] size-10 [&>*]:size-8" />
-      <CarouselNext className="top-[185px] left-[18px] size-10 [&>*]:size-8" />
+      <CarouselPrevious className="top-[185px] right-[18px] size-10 [&>*]:size-8  max-md:hidden " />
+      <CarouselNext className="top-[185px] left-[18px] size-10 [&>*]:size-8  max-md:hidden " />
     </Carousel>
   );
 };

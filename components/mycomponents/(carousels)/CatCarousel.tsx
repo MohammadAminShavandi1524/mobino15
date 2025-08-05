@@ -92,8 +92,8 @@ const CatCarousel = () => {
           );
         })}
       </CarouselContent>
-      <CarouselPrevious className="top-[63px] -right-10" />
-      <CarouselNext className="top-[63px] -left-12" />
+      <CarouselPrevious className="top-[63px] -right-10 max-md:hidden" />
+      <CarouselNext className="top-[63px] -left-12 max-md:hidden" />
     </Carousel>
   );
 };

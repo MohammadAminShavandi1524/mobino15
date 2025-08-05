@@ -4,7 +4,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import ProductsCarousel from "../(carousels)/ProductsCarousel";
+import ProductsCarousel from "./ProductsCarousel";
 
 const FlagBearerMobiles = () => {
   const trpc = useTRPC();
@@ -28,7 +28,7 @@ const FlagBearerMobiles = () => {
 
   return (
     <div
-      className="mt-13 w-full flex flex-col min-h-120 p-3 pb-6 border border-custom-primary
+      className="mt-13 w-full flex flex-col min-h-120 p-3 pb-6 border border-[#919ebc]
             rounded-2xl"
     >
       <div className="flex justify-between items-center  w-full  px-6 pt-3  rounded-md">

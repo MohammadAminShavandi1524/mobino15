@@ -19,7 +19,7 @@ const LaptopCarousel = () => {
 
   return (
     <div
-      className="mt-13 w-full flex flex-col min-h-120 p-3 pb-6 border border-custom-primary
+      className="mt-13 w-full flex flex-col min-h-120 p-3 pb-6 border border-[#919ebc]
             rounded-2xl"
     >
       <div className="flex justify-between items-center  w-full  px-6 pt-3  rounded-md">

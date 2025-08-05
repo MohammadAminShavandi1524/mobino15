@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "../../Webfonts/fontiran.css";
 import { ThemeProvider } from "next-themes";
-import Header from "@/components/mycomponents/Header";
+import Header from "@/components/mycomponents/HeaderComponents/Header";
 import Footer from "@/components/mycomponents/Footer";
 import { Bounce, ToastContainer } from "react-toastify";
 import { TRPCReactProvider } from "@/trpc/client";
@@ -29,8 +29,7 @@ export default async function RootLayout({
 }>) {
   prefetch(trpc.auth.session.queryOptions());
   prefetch(trpc.categories.getMany.queryOptions());
-  prefetch(trpc.products.getMany.queryOptions({}))
-
+  prefetch(trpc.products.getMany.queryOptions({}));
 
   // *prefetch example
   // const queryClient = getQueryClient();
@@ -50,9 +49,8 @@ export default async function RootLayout({
             </HydrateClient>
 
             <div className={cn("w-full bg-[#fcfeff]")}>
-              
               <Toaster />
-               <ScrollToTop />
+              <ScrollToTop />
               {children}
             </div>
 

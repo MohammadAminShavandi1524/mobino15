@@ -64,8 +64,8 @@ const MainCarousel = () => {
         })}
       </CarouselContent>
 
-      <CarouselPrevious className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[40px] size-10 [&>*]:size-7" />
-      <CarouselNext className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[90px] size-10 [&>*]:size-7" />
+      <CarouselPrevious className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[40px] size-10 [&>*]:size-7 max-md:hidden" />
+      <CarouselNext className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[90px] size-10 [&>*]:size-7 max-md:hidden" />
     </Carousel>
   );
 };
