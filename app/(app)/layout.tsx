@@ -5,7 +5,7 @@ import "../../Webfonts/fontiran.css";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/mycomponents/HeaderComponents/Header";
 import Footer from "@/components/mycomponents/Footer";
-import { Bounce, ToastContainer } from "react-toastify";
+
 import { TRPCReactProvider } from "@/trpc/client";
 import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 

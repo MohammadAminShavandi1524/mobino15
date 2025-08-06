@@ -1,18 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
-import {
-  CirclePercent,
-  Info,
-  Menu,
-  Search,
-  ShoppingCart,
-  Store,
-  Wallet,
-} from "lucide-react";
+import { CirclePercent, Info, Menu, ShoppingCart, Wallet } from "lucide-react";
 
 import Link from "next/link";
-import ThemeButton from "../(theme)/ThemeButton";
-import { useTheme } from "next-themes";
 import Logo from "@/components/mycomponents/Logo";
 import Image from "next/image";
 import { cn, convertToPersianNumber } from "@/lib/utils";
@@ -20,17 +10,16 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import NavbarSidebar from "./NavbarSidebar";
 import { motion } from "framer-motion";
-import { Button } from "../../ui/button";
 
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import SearchBar from "./SearchBar";
-import CartBtn from "./CartBtn";
+
 import MobileSideBar from "./MobileSideBar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Category } from "@/payload-types";
+import LoadingDots from "../LoadingDots";
 
 const AuthBtn = dynamic(
   () => import("../(auth)/AuthBtn").then((mod) => mod.default),
@@ -38,18 +27,34 @@ const AuthBtn = dynamic(
     ssr: false,
     loading: () => (
       <div
-        className="min-w-[140px] h-10 px-4 py-2 border  border-custom-primary rounded-lg text-[15px]
+        className=" min-w-[60px] lg:min-w-[140px] h-8 sm:h-10 px-2.5 py-1.25 sm:px-4 sm:py-2 border  border-custom-primary rounded-lg text-[15px]
             flex justify-center items-center "
       >
-        <div className=" flex  justify-center items-center gap-x-1  w-full text-center">
-          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.2s]"></div>
-          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-          <div className="h-2 w-2 bg-custom-primary rounded-full animate-bounce"></div>
-        </div>
+        <LoadingDots size={2.5}/>
       </div>
     ),
   }
 );
+
+const CartBtn = dynamic(() => import("./CartBtn").then((mod) => mod.default), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="relative flex items-center justify-center text-primary size-8 sm:size-10 border border-border
+              rounded-md"
+    >
+      <ShoppingCart size={24} />
+      {/* cart item count */}
+      <div
+        className={cn(
+          "absolute -bottom-[3px] -right-[4px] sm:-bottom-[3px] sm:-right-[3px]  size-4 sm:size-5 flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full pb-[4px]"
+        )}
+      >
+        {convertToPersianNumber(0)}
+      </div>
+    </div>
+  ),
+});
 
 const Header = () => {
   const pathname = usePathname();
@@ -77,8 +82,8 @@ const Header = () => {
   const { data: productsData } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({})
   );
-
-  
+  const categories = useSuspenseQuery(trpc.categories.getMany.queryOptions())
+    .data.docs;
 
   const { getCartByUser } = useCart(user?.username);
 
@@ -107,25 +112,23 @@ const Header = () => {
 
   return (
     <header className="relative bg-background flex flex-col w-full max-h-full mx-auto border-b border-b-[#d7dee0]">
-        {/* banners */}
-        <Image
-          className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
-          src="/banner.png"
-          alt="top banner"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-        />
+      {/* banners */}
+      <Image
+        className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
+        src="/banner.png"
+        alt="top banner"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+      />
       <SidebarProvider>
-
         {/*mobile sidebar */}
-        <div >
-          <MobileSideBar />
+        <div>
+          <MobileSideBar categories={categories} />
         </div>
         {/*pc sidebar shown in more than 1024 devices */}
         <NavbarSidebar
-         
           isOpen={isSideBarOpen}
           setIsOpen={setIsSideBarOpen}
           isBannerDisplayed={isBannerDisplayed}

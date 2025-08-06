@@ -26,7 +26,7 @@ const SearchBar = () => {
 
   return (
     <div className="flex gap-x-4 w-full  lg:w-[400px] xl:w-[600px] rounded-md bg-[#f0f0f0] h-10 md:h-12 lg:h-14  px-4 py-3">
-      <span className="text-xl sm:text-3xl text-gray-400">
+      <span className="text-xl sm:text-3xl text-gray-400 flex items-center justify-center">
         <Search />
       </span>
       <input

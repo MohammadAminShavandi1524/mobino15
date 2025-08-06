@@ -23,10 +23,6 @@ const AddToCartButton = ({
 
   return (
     <>
-     
-
-      
-
       {isProductInCart(productId) ? (
         <div className="flex justify-center items-center px-2 text-custom-primary">
           <button

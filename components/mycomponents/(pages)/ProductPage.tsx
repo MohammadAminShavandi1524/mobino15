@@ -16,11 +16,17 @@ import Image from "next/image";
 import { useState } from "react";
 import AddToCartBtnModal from "../AddToCartBtnModal";
 import TabletMainSpec from "../(productMainSpec)/TabletMainSpec";
+import LoadingDots from "../LoadingDots";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
   {
     ssr: false,
+    loading: () => (
+      <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer">
+        <LoadingDots />
+      </div>
+    ),
   }
 );
 
