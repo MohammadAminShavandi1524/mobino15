@@ -4,19 +4,19 @@ import { useCart } from "@/modules/checkout/hooks/useCart";
 import { ChevronLeft, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
-import { toast } from "sonner";
+
 
 interface AddToCartButtonProps {
   userName?: string;
   productId: string;
-  isModalOpen: boolean;
+  
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddToCartButton = ({
   productId,
   userName,
-  isModalOpen,
+
   setIsModalOpen,
 }: AddToCartButtonProps) => {
   const { addProduct, isProductInCart, removeProduct } = useCart(userName);

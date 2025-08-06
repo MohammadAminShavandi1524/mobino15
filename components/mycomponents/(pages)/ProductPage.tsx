@@ -2,29 +2,35 @@
 
 import dynamic from "next/dynamic";
 
+import { Category, Product, User } from "@/payload-types";
+
+import { useState } from "react";
+import Image from "next/image";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Check } from "lucide-react";
+
+import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
+
 import LaptopMainSpec from "@/components/mycomponents/(productMainSpec)/LaptopMainSpec";
 import MobileMainSpec from "@/components/mycomponents/(productMainSpec)/MobileMainSpec";
 import BreadCrump from "@/components/mycomponents/BreadCrump";
-import ProductAndQty from "@/components/mycomponents/ProductAndQty";
-import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
-import { Category, Product, Tenant, User } from "@/payload-types";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { BadgeCheck, Check, Settings, Star, Store, Truck } from "lucide-react";
-import Image from "next/image";
-
-import { useState } from "react";
 import AddToCartBtnModal from "../AddToCartBtnModal";
 import TabletMainSpec from "../(productMainSpec)/TabletMainSpec";
 import LoadingDots from "../LoadingDots";
+import ProductAndQty from "../(ProductPageComps)/ProductAndQty";
+import SellerInfo from "../(ProductPageComps)/SellerInfo";
+import ProductRating from "../(ProductPageComps)/ProductRating";
+import ProductFaTitle from "../(ProductPageComps)/ProductFaTitle";
+import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
   {
     ssr: false,
     loading: () => (
-      <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary text-white cursor-pointer">
-        <LoadingDots />
+      <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary cursor-pointer">
+        <LoadingDots dotClassName="bg-white" />
       </div>
     ),
   }
@@ -127,7 +133,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   if (
     matchedProductByOrder.length > 0 &&
-    matchedProductByOrder[0].available === false
+    (matchedProductByOrder[0].available === false ||
+      matchedProductByOrder[0].quantity === 0)
   )
     return (
       <div className="w90 flex flex-col mt-4">
@@ -150,6 +157,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           setIsModalOpen={setIsModalOpen}
           product={singleProduct}
         />
+
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -162,27 +170,17 @@ const ProductPage = ({ product }: ProductPageProps) => {
         </div>
 
         {/*  */}
-        <div className="flex  gap-x-[50px] relative bg-[#fcfeff]">
+        <div className="flex gap-x-[50px] relative bg-[#fcfeff]">
           <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
             <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
               {/* product fa title */}
-              <div className="text-black text-[20px]/[40px] font-medium mb-4">
-                {singleProduct.label}
-              </div>
+              <ProductFaTitle label={singleProduct.label} />
               {/* product en title */}
-              <div className="text-[#385086] text-[14px] mb-4">
-                {singleProduct.name}
-              </div>
+              <ProductEnTitle name={singleProduct.name} />
 
               <div className="self-baseline mb-10">
                 {/* product rating */}
-                <div className="flex items-center self-baseline gap-x-0.5 pl-6  pb-4 border-b border-b-[#d3d8e4] mb-4">
-                  <div className="ml-0.5">امتیاز کاربران :</div>
-                  <div className="pb-0.5">
-                    <Star color="#f1c21b" size={16} />
-                  </div>
-                  <div className=" text-[14px]">{singleProduct.rating}</div>
-                </div>
+                <ProductRating rating={singleProduct.rating} />
 
                 {/* product color */}
                 <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
@@ -273,54 +271,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
             </div>
           </div>
+
+          {/*  */}
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
-            <div className="pr-2 pb-2 font-medium">فروشنده</div>
-
-            <div className="flex flex-col gap-x-3 w-full text-[14px] bg-[#f3f8fd] py-3 px-4 rounded-lg">
-              <div className="pb-3 border-b border-b-white">
-                <div className="flex items-center pb-2">
-                  <span className="text-[#385086]">
-                    <Store size={20} />
-                  </span>
-
-                  <span className="mr-4">
-                    {typeof singleProduct.tenant === "object" &&
-                    singleProduct.tenant !== null
-                      ? (singleProduct.tenant as Tenant).name
-                      : "موبینو"}
-                  </span>
-                </div>
-
-                <div className="flex items-center">
-                  <span className="text-[#385086] w-5 h-5 flex justify-center items-center">
-                    <Truck size={16} />
-                  </span>
-                  <span className="text-[#385086] mr-4 ">
-                    {typeof singleProduct.tenant === "object" &&
-                    singleProduct.tenant !== null &&
-                    (singleProduct.tenant as Tenant).name !== "موبینو"
-                      ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
-                      : " موجود در انبار موبینو(ارسال فوری)"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center border-b border-b-white py-3">
-                <span className="text-[#385086]">
-                  <Settings size={20} />
-                </span>
-                <span className="mr-4">ارزیابی عملکرد :</span>
-                <span className="text-[#142d67] mr-3">عالی</span>
-              </div>
-
-              <div className="flex items-center pt-3 pb-1">
-                <span className="text-[#385086]">
-                  <BadgeCheck size={20} />
-                </span>
-                <span className="mr-4">18 ماه گارانتی شرکتی</span>
-              </div>
-            </div>
+            <SellerInfo product={singleProduct} productType="single" />
 
             {/* price info and quantity */}
             <ProductAndQty product={singleProduct} />
@@ -329,14 +284,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
             {user ? (
               <AddToCartButton
-                isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 productId={singleProduct.id}
                 userName={user.username}
               />
             ) : (
               <AddToCartButton
-                isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 productId={singleProduct.id}
               />
@@ -390,23 +343,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
           <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
             <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
               {/* product fa title */}
-              <div className="text-black text-[20px]/[40px] font-medium mb-4">
-                {MPSelectedProduct.label}
-              </div>
+              <ProductFaTitle label={MPSelectedProduct.label} />
               {/* product en title */}
-              <div className="text-[#385086] text-[14px] mb-4">
-                {MPSelectedProduct.name}
-              </div>
+              <ProductEnTitle name={MPSelectedProduct.name} />
 
               <div className="self-baseline mb-10">
                 {/* product rating */}
-                <div className="flex items-center max-w-fit self-baseline gap-x-0.5 pl-6  pb-4 border-b border-b-[#d3d8e4] mb-4">
-                  <div className="ml-0.5">امتیاز کاربران :</div>
-                  <div className="pb-0.5">
-                    <Star color="#f1c21b" size={16} />
-                  </div>
-                  <div className=" text-[14px]">{MPSelectedProduct.rating}</div>
-                </div>
+                <ProductRating rating={MPSelectedProduct.rating} />
 
                 {/* product color */}
                 <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
@@ -535,70 +478,14 @@ const ProductPage = ({ product }: ProductPageProps) => {
           </div>
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
-            <div className="pr-2 pb-2 font-medium">فروشنده</div>
-
-            <div className="flex flex-col gap-x-3 w-full text-[14px] bg-[#f3f8fd] py-3 px-4 rounded-lg">
-              <div className="pb-3 border-b border-b-white">
-                <div className="flex items-center pb-2">
-                  <span className="text-[#385086]">
-                    <Store size={20} />
-                  </span>
-
-                  <span className="mr-4">
-                    {MPProductShowcase
-                      ? typeof MPProductShowcase.tenant === "object" &&
-                        MPProductShowcase.tenant !== null
-                        ? (MPProductShowcase.tenant as Tenant).name
-                        : "موبینو"
-                      : typeof MPSelectedProduct.tenant === "object" &&
-                          MPSelectedProduct.tenant !== null
-                        ? (MPSelectedProduct.tenant as Tenant).name
-                        : "موبینو"}
-                  </span>
-                </div>
-
-                <div className="flex items-center">
-                  <span className="text-[#385086] w-5 h-5 flex justify-center items-center">
-                    <Truck size={16} />
-                  </span>
-                  <span className="text-[#385086] mr-4 ">
-                    {MPProductShowcase
-                      ? typeof MPProductShowcase.tenant === "object" &&
-                        MPProductShowcase.tenant !== null &&
-                        (MPProductShowcase.tenant as Tenant).name !== "موبینو"
-                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
-                        : " موجود در انبار موبینو(ارسال فوری)"
-                      : typeof MPSelectedProduct.tenant === "object" &&
-                          MPSelectedProduct.tenant !== null &&
-                          (MPSelectedProduct.tenant as Tenant).name !== "موبینو"
-                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
-                        : " موجود در انبار موبینو(ارسال فوری)"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center border-b border-b-white py-3">
-                <span className="text-[#385086]">
-                  <Settings size={20} />
-                </span>
-                <span className="mr-4">ارزیابی عملکرد :</span>
-                <span className="text-[#142d67] mr-3">عالی</span>
-              </div>
-
-              <div className="flex items-center pt-3 pb-1">
-                <span className="text-[#385086]">
-                  <BadgeCheck size={20} />
-                </span>
-                <span className="mr-4">18 ماه گارانتی شرکتی</span>
-              </div>
-            </div>
+            <SellerInfo
+              product={MPSelectedProduct}
+              productType="multiple"
+              MPProductShowcase={MPProductShowcase}
+            />
 
             {/* price info and quantity */}
-            {MPProductShowcase ? (
-              <ProductAndQty product={MPProductShowcase} />
-            ) : (
-              <ProductAndQty product={MPSelectedProduct} />
-            )}
+            <ProductAndQty product={MPProductShowcase || MPSelectedProduct} />
 
             {/* add to cart button */}
 
@@ -607,13 +494,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 <AddToCartButton
                   productId={MPProductShowcase.id}
                   userName={user.username}
-                  isModalOpen={isModalOpen}
                   setIsModalOpen={setIsModalOpen}
                 />
               ) : (
                 <AddToCartButton
                   productId={MPProductShowcase.id}
-                  isModalOpen={isModalOpen}
                   setIsModalOpen={setIsModalOpen}
                 />
               )
@@ -621,13 +506,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
               <AddToCartButton
                 productId={MPSelectedProduct.id}
                 userName={user.username}
-                isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
               />
             ) : (
               <AddToCartButton
                 productId={MPSelectedProduct.id}
-                isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
               />
             )}

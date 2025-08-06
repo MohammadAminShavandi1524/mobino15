@@ -5,13 +5,16 @@ import { usePathname } from "next/navigation";
 
 export const ScrollToTop = () => {
   const pathname = usePathname();
-  const hasScrolledRef = useRef(false);
+  const previousPathRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!hasScrolledRef.current) {
+    if (
+      previousPathRef.current !== null &&
+      previousPathRef.current !== pathname
+    ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
-      hasScrolledRef.current = true;
     }
+    previousPathRef.current = pathname;
   }, [pathname]);
 
   return null;

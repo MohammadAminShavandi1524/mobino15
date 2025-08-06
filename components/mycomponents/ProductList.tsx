@@ -18,7 +18,6 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
   const unavailableProducts = products?.filter((p) => !p.available) ?? [];
 
   const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
- 
 
   return (
     <div
@@ -179,7 +178,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
 
               {/* price - offPrice - decount percent */}
 
-              {product.available ? (
+              {product.available && product.quantity > 0 ? (
                 product.offPrice ? (
                   <div className="relative flex items-center justify-between px-4 pb-[42px]">
                     {/* discount percent */}

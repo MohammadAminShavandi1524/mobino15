@@ -1,7 +1,8 @@
 import { Product } from "@/payload-types";
-import TomanLogo from "./TomanLogo";
+
 import { Box } from "lucide-react";
 import { cn, convertToPersianNumber } from "@/lib/utils";
+import TomanLogo from "../TomanLogo";
 
 interface ProductAndQtyProps {
   product: Product;

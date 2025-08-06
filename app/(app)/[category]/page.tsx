@@ -29,7 +29,6 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
         <Suspense fallback={<>category loading</>}>
           <CategoryPage category={category} />
           <ScrollToTopOnUrlChange />
-
         </Suspense>
       </ErrorBoundary>
     </HydrateClient>

@@ -100,11 +100,7 @@ const CartPage = () => {
   const ProfitFromPurchaseDiscount = Math.ceil(
     ((productPrices - productOffPrices) / productPrices) * 100
   );
-  //  const discountPercent =
-  //             product.offPrice &&
-  //             Math.ceil(
-  //               ((product.price - product.offPrice) / product.price) * 100
-  //             );
+ 
 
   // *** تعداد ایتم های سبد خرید
 
