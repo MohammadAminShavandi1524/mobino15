@@ -4,7 +4,7 @@ interface LaptopMainSpecProps {
   product: Product;
 }
 
-const laptopCpuOptions = [
+export const laptopCpuOptions = [
   { label: "Intel Core i3", value: "intel_i3" },
   { label: "Intel Core i5", value: "intel_i5" },
   { label: "Intel Core i7", value: "intel_i7" },
@@ -21,6 +21,23 @@ const laptopCpuOptions = [
   { label: "Apple M1", value: "apple_m1" },
   { label: "Apple M2", value: "apple_m2" },
   { label: "Apple M3", value: "apple_m3" },
+  { label: "Other", value: "other" },
+];
+
+export const laptopGpuOptions = [
+  { label: "NVIDIA GeForce MX", value: "nvidia_mx" },
+  { label: "NVIDIA GeForce GTX", value: "nvidia_gtx" },
+  { label: "NVIDIA GeForce RTX", value: "nvidia_rtx" },
+  { label: "NVIDIA Quadro", value: "nvidia_quadro" },
+  { label: "AMD Radeon RX", value: "amd_rx" },
+  { label: "AMD Radeon Vega", value: "amd_vega" },
+  { label: "AMD Radeon Pro", value: "amd_pro" },
+  { label: "Intel Iris Xe", value: "intel_iris_xe" },
+  { label: "Intel UHD", value: "intel_uhd" },
+  {
+    label: "Apple M1/M2/M3 GPU",
+    value: "apple_m_series_gpu",
+  },
   { label: "Other", value: "other" },
 ];
 

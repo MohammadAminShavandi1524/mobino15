@@ -1,5 +1,6 @@
 "use client";
 
+import { convertToPersianNumber } from "@/lib/utils";
 import { Product, Tenant } from "@/payload-types";
 import { BadgeCheck, Settings, Store, Truck } from "lucide-react";
 
@@ -58,7 +59,7 @@ const SellerInfo = ({
             <span className="text-[#385086]">
               <BadgeCheck size={20} />
             </span>
-            <span className="mr-4">18 ماه گارانتی شرکتی</span>
+             <span className="mr-4">{convertToPersianNumber(18)} ماه گارانتی شرکتی</span>
           </div>
         </div>
       </>

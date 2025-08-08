@@ -2,15 +2,20 @@
 
 import dynamic from "next/dynamic";
 
-import { Category, Product, User } from "@/payload-types";
+import { Category, Product, Tenant, User } from "@/payload-types";
 
 import { useState } from "react";
 import Image from "next/image";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Check } from "lucide-react";
+import { BadgeCheck, Check, Store, Truck } from "lucide-react";
 
-import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
+import {
+  cn,
+  convertToPersianNumber,
+  getColorInfo,
+  isDarkColor,
+} from "@/lib/utils";
 
 import LaptopMainSpec from "@/components/mycomponents/(productMainSpec)/LaptopMainSpec";
 import MobileMainSpec from "@/components/mycomponents/(productMainSpec)/MobileMainSpec";
@@ -26,6 +31,9 @@ import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
 import Link from "next/link";
 import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
 import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
+import AllSpecCard from "../productAllSpec/AllSpecCard";
+import AllMobileSpec from "../productAllSpec/AllMobileSpec";
+import AllLaptopSpec from "../productAllSpec/AllLaptopSpec";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -99,7 +107,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
         return false;
       }
     );
-  
 
   // * single product
 
@@ -306,6 +313,129 @@ const ProductPage = ({ product }: ProductPageProps) => {
           subCategory={selectedSubCategory}
           product={matchedProductByOrder[0]}
         />
+        {/* all spec and reviews */}
+        <div className="relative flex flex-col my-10">
+          {/* header */}
+          <div className="sticky top-0 z-6 flex items-center  px-11 py-4 gap-x-10 text-[14px] bg-[#f3f8fd] border-b border-b-[#919ebc] text-[#919ebc]">
+            <div>مشخصات فنی</div>
+            <div>معرفی محصول</div>
+            <div>نظرات کاربران</div>
+          </div>
+          <div className="relative flex gap-x-[50px] mt-8">
+            <div className="flex flex-col w-full  min-h-500">
+              {/* all spec */}
+              <div className="flex flex-col gap-y-5 pt-4">
+                <div className="flex items-center gap-x-3 mr-5">
+                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
+                  <span className="text-xl font-medium">مشخصات فنی</span>
+                </div>
+                {/*All spec cards */}
+                <div className="flex flex-col gap-y-2.5 ">
+                  <AllMobileSpec product={singleProduct} />
+                  <AllLaptopSpec product={singleProduct} />
+                </div>
+              </div>
+            </div>
+            {/* aside */}
+            <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
+              {/* image title and color */}
+              <div className="flex gap-x-5 mt-3">
+                <div className="flex justify-center items-center self-baseline min-w-[100px]">
+                  {SPMainImage && (
+                    <Image
+                      className={cn("")}
+                      src={SPImageShowcase ? SPImageShowcase : SPMainImage.url}
+                      alt={`${singleProduct.name}`}
+                      width={100}
+                      height={100}
+                    />
+                  )}
+                </div>
+                {/* title and color */}
+                <div className="flex flex-col">
+                  {/* title */}
+                  <ProductFaTitle
+                    className="productlist-title text-[14px]/[20px] text-[#212121] font-normal"
+                    label={singleProduct.label}
+                  />
+
+                  {/* product color */}
+                  <div
+                    className="flex justify-between items-center  self-baseline  
+                   rounded-[6px] "
+                  >
+                    <div
+                      className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
+                      rounded-full"
+                      style={{
+                        backgroundColor: getColorInfo(singleProduct.color).hex,
+                      }}
+                    ></div>
+                    <span className="text-[12px] font-medium text-[#333333] ml-3 mr-2">
+                      {getColorInfo(singleProduct.color).label}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* seller info */}
+
+              <div className="flex flex-col gap-x-3  mt-8 mr-3 bg-transparent ">
+                <div className="pb-3 border-b border-b-[#d3d8e4]">
+                  <div className="flex items-center pb-2">
+                    <span className="">
+                      <Store color="#3b5388" size={20} />
+                    </span>
+
+                    <span className="mr-4 text-[14px]">
+                      {typeof singleProduct.tenant === "object" &&
+                      singleProduct.tenant !== null
+                        ? (singleProduct.tenant as Tenant).name
+                        : "موبینو"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <span className=" w-5 h-5 flex justify-center items-center">
+                      <Truck color="#3b5388" size={16} />
+                    </span>
+                    <span className="text-[#385086] mr-4 text-[14px]">
+                      {typeof singleProduct.tenant === "object" &&
+                      singleProduct.tenant !== null &&
+                      (singleProduct.tenant as Tenant).name !== "موبینو"
+                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
+                        : " موجود در انبار موبینو(ارسال فوری)"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center pt-3 pb-1">
+                  <span className="">
+                    <BadgeCheck color="#3b5388" size={20} />
+                  </span>
+                  <span className="mr-4 text-[14px]">
+                    {convertToPersianNumber(18)} ماه گارانتی شرکتی
+                  </span>
+                </div>
+              </div>
+
+              {/* price and qty */}
+              <ProductAndQty product={singleProduct} />
+              {/* add to cart button */}
+              {user ? (
+                <AddToCartButton
+                  setIsModalOpen={setIsModalOpen}
+                  productId={singleProduct.id}
+                  userName={user.username}
+                />
+              ) : (
+                <AddToCartButton
+                  setIsModalOpen={setIsModalOpen}
+                  productId={singleProduct.id}
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

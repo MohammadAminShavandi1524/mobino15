@@ -54,8 +54,9 @@ const CartPage = () => {
     getCartByUser,
   } = useCart(user?.username);
 
-  const userProductIds: { productId: string; count: number }[] =getCartByUser();
-    
+  const userProductIds: { productId: string; count: number }[] =
+    getCartByUser();
+
   // console.log(userCarts);
 
   const userCartProducts = productsData.docs.filter((product) =>
@@ -100,7 +101,6 @@ const CartPage = () => {
   const ProfitFromPurchaseDiscount = Math.ceil(
     ((productPrices - productOffPrices) / productPrices) * 100
   );
- 
 
   // *** تعداد ایتم های سبد خرید
 
@@ -229,7 +229,9 @@ const CartPage = () => {
                         <span>
                           <BadgeCheck color="#385086" />
                         </span>
-                        <span className="pb-0.5">18 ماه گارانتی شرکتی</span>
+                        <span className="pb-0.5">
+                          {convertToPersianNumber(18)} ماه گارانتی شرکتی
+                        </span>
                       </div>
                       {/* ارسال */}
                       {product.quantity !== 0 && (

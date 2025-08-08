@@ -1,5 +1,12 @@
+import { AllBrandOptions } from "@/hooks/useProductFilter";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+const phoneTypeOptions = [
+  { label: "اقتصادی", value: "Economic" },
+  { label: "پرچم‌دار", value: "FlagBearer" },
+  { label: "میان‌رده", value: "MidRange" },
+];
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -106,3 +113,19 @@ export function getColorInfo(color: string | undefined): ColorInfo {
 
   return colorMap[color ?? ""] || { hex: "#fff", label: "نامشخص" };
 }
+
+
+export const getBrandLabelFa = (value: string): string => {
+  const brand = AllBrandOptions.find((b) => b.value === value);
+  return brand ? brand.label : value; // اگه پیدا نشد همون value رو برمیگردونه
+};
+
+
+
+
+export const getClassification = (value: string): string => {
+  const type = phoneTypeOptions.find((t) => t.value === value);
+  return type ? type.label : value;
+};
+
+
