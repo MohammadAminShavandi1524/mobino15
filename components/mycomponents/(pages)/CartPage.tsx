@@ -56,7 +56,7 @@ const CartPage = () => {
 
   const userProductIds: { productId: string; count: number }[] =getCartByUser();
     
-  console.log(userCarts);
+  // console.log(userCarts);
 
   const userCartProducts = productsData.docs.filter((product) =>
     userProductIds?.some((p) => p.productId === product.id)

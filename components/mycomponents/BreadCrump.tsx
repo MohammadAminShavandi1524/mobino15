@@ -7,8 +7,7 @@ interface BreadCrumpProps {
   selectedCategoryData?: Category;
   selectedSubCategoryData?: Category;
   productData?: Product;
-  
- 
+
   activePage: "category" | "subcategory" | "product" | "all";
   className?: string;
 }
@@ -18,15 +17,10 @@ const BreadCrump = ({
   selectedCategoryData,
   selectedSubCategoryData,
   productData,
- 
+
   activePage,
   className,
 }: BreadCrumpProps) => {
-
-
- 
-  
-
   if (activePage === "all")
     return (
       <div

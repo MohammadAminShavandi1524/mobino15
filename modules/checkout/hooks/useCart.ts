@@ -42,7 +42,7 @@ export const migrateGuestCartToUser = (userName: string) => {
 
 export const useCart = (userName?: string) => {
   const finalUserName = userName || getGuestId();
-  console.log("🚀 ~ useCart ~ userName:", finalUserName);
+  
 
   const {
     userCarts,

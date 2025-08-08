@@ -23,6 +23,9 @@ import SellerInfo from "../(ProductPageComps)/SellerInfo";
 import ProductRating from "../(ProductPageComps)/ProductRating";
 import ProductFaTitle from "../(ProductPageComps)/ProductFaTitle";
 import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
+import Link from "next/link";
+import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
+import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -50,8 +53,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   const user: User | null = useSuspenseQuery(trpc.auth.session.queryOptions())
     .data.user;
-
-  console.log(user?.username);
 
   const { data: productsData } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({})
@@ -98,6 +99,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         return false;
       }
     );
+  
 
   // * single product
 
@@ -296,8 +298,14 @@ const ProductPage = ({ product }: ProductPageProps) => {
             )}
           </div>
         </div>
-        {/*  */}
-        <div></div>
+        {/* ServiceHighlights */}
+        <ServiceHighlights />
+        {/* similar products carousel */}
+        <SimilarProductsCarousel
+          category={selectedCategory}
+          subCategory={selectedSubCategory}
+          product={matchedProductByOrder[0]}
+        />
       </div>
     );
   }
@@ -516,6 +524,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
             )}
           </div>
         </div>
+
+        {/* ServiceHighlights */}
+        <ServiceHighlights />
+        {/* similar products carousel */}
+        <SimilarProductsCarousel
+          category={selectedCategory}
+          subCategory={selectedSubCategory}
+          product={matchedProductByOrder[0]}
+        />
       </div>
     );
   }

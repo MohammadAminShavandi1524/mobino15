@@ -177,7 +177,10 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
                   </CollapsibleTrigger>
                 </SidebarGroupLabel>
 
-                <CollapsibleContent className="mr-[11.5px] border-r-[1.5px] border-r-[#d3d8e4]">
+                <CollapsibleContent
+                  className="mr-[11.5px] border-r-[1.5px] border-r-[#d3d8e4]"
+                  // style={{borderRightColor : cat.logoColor || "#d3d8e4"}}
+                >
                   {(selectedCategory(cat)?.subcategories?.docs as Category[])
                     ?.sort(
                       (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)

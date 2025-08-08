@@ -75,7 +75,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  console.log("🚀 ~ Header ~ data:", user?.username);
+  // console.log("🚀 ~ Header ~ data:", user?.username);
 
   // *** cart item count ***
 
