@@ -17,11 +17,9 @@ import {
   isDarkColor,
 } from "@/lib/utils";
 
-import LaptopMainSpec from "@/components/mycomponents/(productMainSpec)/LaptopMainSpec";
-import MobileMainSpec from "@/components/mycomponents/(productMainSpec)/MobileMainSpec";
+
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import AddToCartBtnModal from "../AddToCartBtnModal";
-import TabletMainSpec from "../(productMainSpec)/TabletMainSpec";
 import LoadingDots from "../LoadingDots";
 import ProductAndQty from "../(ProductPageComps)/ProductAndQty";
 import SellerInfo from "../(ProductPageComps)/SellerInfo";
@@ -31,10 +29,10 @@ import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
 import Link from "next/link";
 import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
 import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
-import AllSpecCard from "../productAllSpec/AllSpecCard";
 import AllMobileSpec from "../productAllSpec/AllMobileSpec";
 import AllLaptopSpec from "../productAllSpec/AllLaptopSpec";
 import AllTabletSpec from "../productAllSpec/AllTabletSpec";
+import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -52,7 +50,7 @@ interface ProductPageProps {
   product: string;
 }
 
-const ProductPage = ({ product }: ProductPageProps) => {
+const ProductPage = ({ product  }: ProductPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const param = decodeURIComponent(product as string).split("_")[1];
@@ -74,13 +72,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   const matchedProductByOrder =
     productsData?.docs.filter((p) => p.order === Number(orderParam)) || [];
-    
+
   const dkp = matchedProductByOrder[0].address.replace(/\D/g, "");
-  
 
   const matchedProducts =
-    productsData?.docs.filter((p) => p.address.replace(/\D/g, "") === dkp) || [];
-  console.log("🚀 ~ ProductPage ~ matchedProducts:", matchedProducts);
+    productsData?.docs.filter((p) => p.address.replace(/\D/g, "") === dkp) ||
+    [];
+  // console.log("🚀 ~ ProductPage ~ matchedProducts:", matchedProducts);
 
   // *** single product ***
   const singleProduct: Product | null =
@@ -142,6 +140,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
     return p.available;
   });
 
+  console.log(singleProduct?.productType?.[0]);
   // *
 
   // * نا موجود
@@ -231,17 +230,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   ویژگی های اصلی
                 </div>
                 <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
-                  {/* mobile */}
-
-                  <MobileMainSpec product={singleProduct} />
-
-                  {/* laptop */}
-
-                  <LaptopMainSpec product={singleProduct} />
-
-                  {/* tablet */}
-
-                  <TabletMainSpec product={singleProduct} />
+                  <ProductMainSpec product={singleProduct} />
                 </div>
               </div>
             </div>
@@ -455,6 +444,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
     selectedCategory &&
     selectedSubCategory
   ) {
+    const TheProduct = MPProductShowcase ?? MPSelectedProduct;
     return (
       <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
         {/* modal */}
@@ -566,17 +556,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   ویژگی های اصلی
                 </div>
                 <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
-                  {/* mobile */}
-
-                  <MobileMainSpec product={MPSelectedProduct} />
-
-                  {/* laptop */}
-
-                  <LaptopMainSpec product={MPSelectedProduct} />
-
-                  {/* tablet */}
-
-                  <TabletMainSpec product={MPSelectedProduct} />
+                  <ProductMainSpec product={MPSelectedProduct} />
                 </div>
               </div>
             </div>

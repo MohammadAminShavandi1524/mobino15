@@ -1,4 +1,6 @@
 import { Product } from "@/payload-types";
+import MainSpecCard from "./MainSpecCard";
+import { convertToPersianNumber } from "@/lib/utils";
 
 interface LaptopMainSpecProps {
   product: Product;
@@ -42,65 +44,47 @@ export const laptopGpuOptions = [
 ];
 
 const LaptopMainSpec = ({ product }: LaptopMainSpecProps) => {
-  
-  const getCpuLabel = (value: string | undefined) => {
-    return (
-      laptopCpuOptions.find((item) => item.value === value)?.label ?? "نامشخص"
-    );
-  };
   if (product.productType?.[0].blockType === "laptop") {
+    const spec = product.productType?.[0];
+    const getStorage = (
+      storages: {
+        type: "ssd" | "hdd";
+        capacity: "64gb" | "128gb" | "256gb" | "512gb" | "1tb" | "2tb" | "4tb";
+        id?: string | null;
+      }[]
+    ) => {
+      return storages.map((storage) => {
+        return (
+          convertToPersianNumber(
+            storage.capacity
+              ?.replace(/gb/i, " گیگابایت")
+              ?.replace(/tb/i, " ترابایت")
+          ) +
+          " " +
+          storage.type
+        );
+      });
+    };
     return (
       <>
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-          <span className="text-[#385086] font-light ml-3">نوع کاربری :</span>
-          <span>{product.productType?.[0].usage}</span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            سایز صفحه نمایش :
-          </span>
-          <span className="ml-1">{product.productType?.[0].DisplaySize}</span>
-          <span>اینچ</span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            سری پردازنده مرکزی :
-          </span>
-          <span>{getCpuLabel(product.productType?.[0].cpuSeries)}</span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            ظرفیت حافظه RAM :
-          </span>
-          <span className="ml-1">
-            {product.productType?.[0].ram.replace("gb", " گیگابایت")}
-          </span>
-        </div>
-
-        <div className="flex items-center  text-[14px]  pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            ظرفیت حافظه داخلی :
-          </span>
-
-          <div className="flex items-center gap-x-4">
-            {product.productType?.[0].storages.map((storage, index) => {
-              return (
-                <div key={index} className="flex items-center gap-x-1">
-                  <span>
-                    {storage.capacity
-                      ?.replace(/gb/i, " گیگابایت")
-                      ?.replace(/tb/i, " ترابایت")}
-                  </span>
-
-                  <span>{storage.type}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <MainSpecCard title="نوع کاربری" value={spec.usage} firstChild />
+        <MainSpecCard
+          title="سایز صفحه نمایش"
+          value={`${spec.DisplaySize} اینچ`}
+        />
+        <MainSpecCard
+          title="نسل پردازنده"
+          value={convertToPersianNumber(spec.CPUProcessorGeneration)}
+        />
+        <MainSpecCard
+          title="حافظه RAM"
+          value={spec.ram.replace("gb", " گیگابایت")}
+        />
+        <MainSpecCard
+          title="ظرفیت حافظه داخلی"
+          value={getStorage(spec.storages).join("، ")}
+          lastChild
+        />
       </>
     );
   }

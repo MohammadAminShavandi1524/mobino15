@@ -5,11 +5,10 @@ import { ChevronLeft, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 
-
 interface AddToCartButtonProps {
   userName?: string;
   productId: string;
-  
+
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 

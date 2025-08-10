@@ -1,4 +1,5 @@
 import { Product } from "@/payload-types";
+import MainSpecCard from "./MainSpecCard";
 
 interface MobileMainSpecProps {
   product: Product;
@@ -6,51 +7,33 @@ interface MobileMainSpecProps {
 
 const MobileMainSpec = ({ product }: MobileMainSpecProps) => {
   if (product.productType?.[0].blockType === "mobile") {
+    const spec = product.productType?.[0];
     return (
       <>
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] ">
-          <span className="text-[#385086] font-light ml-3">
-            نوع پردازنده - CPU :
-          </span>
-          <span>
-            {product.productType?.[0].chipset?.replace(
-              /(\d+)\s*nm/i,
-              "$1 نانومتری"
-            )}
-          </span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">حافظه داخلی :</span>
-          <span>
-            {product.productType?.[0].storage
-              ?.replace(/gb/i, " گیگابایت")
-              ?.replace(/tb/i, " ترابایت")}
-          </span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">حافظه RAM :</span>
-          <span>{product.productType?.[0].ram.replace("gb", " گیگابایت")}</span>
-        </div>
-
-        <div className="flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pb-[14px] pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            سایز صفحه نمایش :
-          </span>
-          <span className="ml-1">{product.productType?.[0].displaySize}</span>
-          <span>اینچ</span>
-        </div>
-
-        <div className="flex items-center  text-[14px]  pt-[16px]">
-          <span className="text-[#385086] font-light ml-3">
-            رزولوشن دوربین اصلی :
-          </span>
-          <span className="ml-1">
-            {product.productType?.[0].mainCameraResolution}
-          </span>
-          <span>مگاپیکسل</span>
-        </div>
+        <MainSpecCard
+          title="نوع پردازنده - CPU"
+          value={spec.chipset?.replace(/(\d+)\s*nm/i, "$1 نانومتری")}
+          firstChild
+        />
+        <MainSpecCard
+          title="حافظه داخلی"
+          value={spec.storage
+            ?.replace(/gb/i, " گیگابایت")
+            ?.replace(/tb/i, " ترابایت")}
+        />
+        <MainSpecCard
+          title="حافظه RAM"
+          value={spec.ram.replace("gb", " گیگابایت")}
+        />
+        <MainSpecCard
+          title="سایز صفحه نمایش"
+          value={`${spec.displaySize} اینچ`}
+        />
+        <MainSpecCard
+          title="وضوح دوربین اصلی"
+          value={`${spec.mainCameraResolution} مگاپیکسل`}
+          lastChild
+        />
       </>
     );
   }

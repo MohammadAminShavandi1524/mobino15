@@ -424,7 +424,7 @@ export interface Product {
             chipset: string;
             cpuCores: '2' | '4' | '6' | '8' | '10' | '12' | '14';
             gpu: string;
-            simSupport?: ('none' | '1' | '2') | null;
+            simSupport: 'none' | '1' | '2';
             dimensions: string;
             weight: number;
             isRegistered?: boolean | null;
