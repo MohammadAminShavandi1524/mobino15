@@ -17,7 +17,6 @@ import {
   isDarkColor,
 } from "@/lib/utils";
 
-
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import AddToCartBtnModal from "../AddToCartBtnModal";
 import LoadingDots from "../LoadingDots";
@@ -33,6 +32,7 @@ import AllMobileSpec from "../productAllSpec/AllMobileSpec";
 import AllLaptopSpec from "../productAllSpec/AllLaptopSpec";
 import AllTabletSpec from "../productAllSpec/AllTabletSpec";
 import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
+import AllProductSpecs from "../productAllSpec/AllProductSpecs";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -50,7 +50,7 @@ interface ProductPageProps {
   product: string;
 }
 
-const ProductPage = ({ product  }: ProductPageProps) => {
+const ProductPage = ({ product }: ProductPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const param = decodeURIComponent(product as string).split("_")[1];
@@ -308,6 +308,7 @@ const ProductPage = ({ product  }: ProductPageProps) => {
           subCategory={selectedSubCategory}
           product={matchedProductByOrder[0]}
         />
+
         {/* all spec and reviews */}
         <div className="relative flex flex-col my-10">
           {/* header */}
@@ -326,9 +327,7 @@ const ProductPage = ({ product  }: ProductPageProps) => {
                 </div>
                 {/*All spec cards */}
                 <div className="flex flex-col gap-y-2.5 ">
-                  <AllMobileSpec product={singleProduct} />
-                  <AllLaptopSpec product={singleProduct} />
-                  <AllTabletSpec product={singleProduct} />
+                  <AllProductSpecs product={singleProduct} />
                 </div>
               </div>
             </div>
@@ -448,19 +447,12 @@ const ProductPage = ({ product  }: ProductPageProps) => {
     return (
       <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
         {/* modal */}
-        {MPProductShowcase ? (
-          <AddToCartBtnModal
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            product={MPProductShowcase}
-          />
-        ) : (
-          <AddToCartBtnModal
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            product={MPSelectedProduct}
-          />
-        )}
+
+        <AddToCartBtnModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          product={TheProduct}
+        />
 
         {/* bread crump */}
         <div className="mb-5">
@@ -490,18 +482,13 @@ const ProductPage = ({ product  }: ProductPageProps) => {
                 <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
                   <div className="flex items-center gap-x-2 ">
                     <span>رنگ :</span>
-                    <span>
-                      {MPProductShowcase
-                        ? getColorInfo(MPProductShowcase.color).label
-                        : getColorInfo(MPSelectedProduct.color).label}
-                    </span>
+                    <span>{getColorInfo(TheProduct.color).label}</span>
                   </div>
 
                   <div className="flex flex-row-reverse gap-x-3 items-center">
                     {matchedAvailableProducts.map((p, index) => {
-                      const isSelected = MPProductShowcase
-                        ? p.color === MPProductShowcase.color
-                        : p.color === MPSelectedProduct.color;
+                      const isSelected = p.color === TheProduct.color;
+
                       const checkColor = isDarkColor(getColorInfo(p.color).hex)
                         ? "#fff"
                         : "#000";
@@ -514,7 +501,7 @@ const ProductPage = ({ product  }: ProductPageProps) => {
                         >
                           <div
                             className={cn(
-                              "flex justify-between items-center self-baseline p-[4px] border border-[#d7dee0]       rounded-[6px] ",
+                              "flex justify-between items-center self-baseline p-[4px] border border-[#d7dee0]  rounded-[6px] ",
                               isSelected && "border-[#1b3570]"
                             )}
                           >
@@ -610,35 +597,14 @@ const ProductPage = ({ product  }: ProductPageProps) => {
             />
 
             {/* price info and quantity */}
-            <ProductAndQty product={MPProductShowcase || MPSelectedProduct} />
+            <ProductAndQty product={TheProduct} />
 
             {/* add to cart button */}
-
-            {MPProductShowcase ? (
-              user ? (
-                <AddToCartButton
-                  productId={MPProductShowcase.id}
-                  userName={user.username}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              ) : (
-                <AddToCartButton
-                  productId={MPProductShowcase.id}
-                  setIsModalOpen={setIsModalOpen}
-                />
-              )
-            ) : user ? (
-              <AddToCartButton
-                productId={MPSelectedProduct.id}
-                userName={user.username}
-                setIsModalOpen={setIsModalOpen}
-              />
-            ) : (
-              <AddToCartButton
-                productId={MPSelectedProduct.id}
-                setIsModalOpen={setIsModalOpen}
-              />
-            )}
+            <AddToCartButton
+              productId={TheProduct.id}
+              setIsModalOpen={setIsModalOpen}
+              userName={user?.username}
+            />
           </div>
         </div>
 
@@ -650,6 +616,129 @@ const ProductPage = ({ product  }: ProductPageProps) => {
           subCategory={selectedSubCategory}
           product={matchedProductByOrder[0]}
         />
+
+        {/* all spec and reviews */}
+        <div className="relative flex flex-col my-10">
+          {/* header */}
+          <div className="sticky top-0 z-6 flex items-center  px-11 py-4 gap-x-10 text-[14px] bg-[#f3f8fd] border-b border-b-[#919ebc] text-[#919ebc]">
+            <div>مشخصات فنی</div>
+            <div>معرفی محصول</div>
+            <div>نظرات کاربران</div>
+          </div>
+          <div className="relative flex gap-x-[50px] mt-8">
+            <div className="flex flex-col w-full  min-h-500">
+              {/* all spec */}
+              <div className="flex flex-col gap-y-5 pt-4">
+                <div className="flex items-center gap-x-3 mr-5">
+                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
+                  <span className="text-xl font-medium">مشخصات فنی</span>
+                </div>
+                {/*All spec cards */}
+                <div className="flex flex-col gap-y-2.5 ">
+                  <AllProductSpecs product={TheProduct} />
+                </div>
+              </div>
+            </div>
+            {/* aside */}
+            <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
+              {/* image title and color */}
+              <div className="flex gap-x-5 mt-3">
+                <div className="flex justify-center items-center self-baseline min-w-[100px]">
+                  {MPMainImage && (
+                    <Image
+                      className={cn("")}
+                      src={MPImageShowcase ? MPImageShowcase : MPMainImage.url}
+                      alt={`${TheProduct.name}`}
+                      width={100}
+                      height={100}
+                    />
+                  )}
+                </div>
+                {/* title and color */}
+                <div className="flex flex-col">
+                  {/* title */}
+                  <ProductFaTitle
+                    className="productlist-title text-[14px]/[20px] text-[#212121] font-normal"
+                    label={TheProduct.label}
+                  />
+
+                  {/* product color */}
+                  <div
+                    className="flex justify-between items-center  self-baseline  
+                   rounded-[6px] "
+                  >
+                    <div
+                      className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
+                      rounded-full"
+                      style={{
+                        backgroundColor: getColorInfo(TheProduct.color).hex,
+                      }}
+                    ></div>
+                    <span className="text-[12px] font-medium text-[#333333] ml-3 mr-2">
+                      {getColorInfo(TheProduct.color).label}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              {/* seller info */}
+
+              <div className="flex flex-col gap-x-3  mt-8 mr-3 bg-transparent ">
+                <div className="pb-3 border-b border-b-[#d3d8e4]">
+                  <div className="flex items-center pb-2">
+                    <span className="">
+                      <Store color="#3b5388" size={20} />
+                    </span>
+
+                    <span className="mr-4 text-[14px]">
+                      {typeof TheProduct.tenant === "object" &&
+                      TheProduct.tenant !== null
+                        ? (TheProduct.tenant as Tenant).name
+                        : "موبینو"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center">
+                    <span className=" w-5 h-5 flex justify-center items-center">
+                      <Truck color="#3b5388" size={16} />
+                    </span>
+                    <span className="text-[#385086] mr-4 text-[14px]">
+                      {typeof TheProduct.tenant === "object" &&
+                      TheProduct.tenant !== null &&
+                      (TheProduct.tenant as Tenant).name !== "موبینو"
+                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
+                        : " موجود در انبار موبینو(ارسال فوری)"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center pt-3 pb-1">
+                  <span className="">
+                    <BadgeCheck color="#3b5388" size={20} />
+                  </span>
+                  <span className="mr-4 text-[14px]">
+                    {convertToPersianNumber(18)} ماه گارانتی شرکتی
+                  </span>
+                </div>
+              </div>
+
+              {/* price and qty */}
+              <ProductAndQty product={TheProduct} />
+              {/* add to cart button */}
+              {user ? (
+                <AddToCartButton
+                  setIsModalOpen={setIsModalOpen}
+                  productId={TheProduct.id}
+                  userName={user.username}
+                />
+              ) : (
+                <AddToCartButton
+                  setIsModalOpen={setIsModalOpen}
+                  productId={TheProduct.id}
+                />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
