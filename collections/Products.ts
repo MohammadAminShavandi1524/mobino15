@@ -847,6 +847,7 @@ export const Products: CollectionConfig = {
                 { label: "تک سیم‌کارت", value: "1" },
                 { label: "دو سیم‌کارت", value: "2" },
               ],
+              required: true,
             },
 
             //**         ابعاد         **//

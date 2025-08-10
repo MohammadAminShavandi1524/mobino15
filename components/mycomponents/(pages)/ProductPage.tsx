@@ -34,6 +34,7 @@ import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarous
 import AllSpecCard from "../productAllSpec/AllSpecCard";
 import AllMobileSpec from "../productAllSpec/AllMobileSpec";
 import AllLaptopSpec from "../productAllSpec/AllLaptopSpec";
+import AllTabletSpec from "../productAllSpec/AllTabletSpec";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -55,6 +56,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const param = decodeURIComponent(product as string).split("_")[1];
+
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
   const trpc = useTRPC();
@@ -72,9 +74,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   const matchedProductByOrder =
     productsData?.docs.filter((p) => p.order === Number(orderParam)) || [];
+    
+  const dkp = matchedProductByOrder[0].address.replace(/\D/g, "");
+  
 
   const matchedProducts =
-    productsData?.docs.filter((p) => p.label === param) || [];
+    productsData?.docs.filter((p) => p.address.replace(/\D/g, "") === dkp) || [];
+  console.log("🚀 ~ ProductPage ~ matchedProducts:", matchedProducts);
 
   // *** single product ***
   const singleProduct: Product | null =
@@ -333,6 +339,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 <div className="flex flex-col gap-y-2.5 ">
                   <AllMobileSpec product={singleProduct} />
                   <AllLaptopSpec product={singleProduct} />
+                  <AllTabletSpec product={singleProduct} />
                 </div>
               </div>
             </div>

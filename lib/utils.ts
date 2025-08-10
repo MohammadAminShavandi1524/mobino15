@@ -94,7 +94,7 @@ export function getColorInfo(color: string | undefined): ColorInfo {
     Pink: { hex: "#e05ce0", label: "صورتی" },
     TitaniumWhite: { hex: "#f9f6f6", label: "سفید تیتانیومی" },
     Green: { hex: "#22a148", label: "سبز" },
-    Cream: { hex: "#938f7a", label: "کرم" },
+    Cream: { hex: "#ffecca", label: "کرم" },
     Blue: { hex: "#006cf0", label: "آبی" },
     White: { hex: "#ffffff", label: "سفید" },
     Red: { hex: "#e03131", label: "قرمز" },

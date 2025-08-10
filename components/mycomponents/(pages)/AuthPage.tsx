@@ -70,7 +70,7 @@ const AuthPage = () => {
       </section>
       {/* empty part */}
       <section className=" flex-1 h-full bg-[#253a56]">
-        <ThemeButton />
+        
       </section>
     </div>
   );

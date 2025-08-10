@@ -109,7 +109,7 @@ export const productsRouter = createTRPCRouter({
         depth: 1,
         pagination: true,
         where,
-        limit: 100,
+        limit: 1000,
       });
       // deley
       // await new Promise((resolve) => setTimeout(resolve, 2000));
