@@ -557,7 +557,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   <div>
                     <Image
                       className={cn("")}
-                      src={MPImageShowcase ? MPImageShowcase : MPMainImage.url}
+                      src={MPImageShowcase ?? MPMainImage.url}
                       alt={`${MPSelectedProduct.name}`}
                       width={400}
                       height={400}
@@ -647,7 +647,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   {MPMainImage && (
                     <Image
                       className={cn("")}
-                      src={MPImageShowcase ? MPImageShowcase : MPMainImage.url}
+                      src={MPImageShowcase ?? MPMainImage.url}
                       alt={`${TheProduct.name}`}
                       width={100}
                       height={100}
@@ -664,7 +664,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
                   {/* product color */}
                   <div
-                    className="flex justify-between items-center  self-baseline  
+                    className="flex justify-between items-center self-baseline  
                    rounded-[6px] "
                   >
                     <div

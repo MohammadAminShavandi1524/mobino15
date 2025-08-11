@@ -481,10 +481,18 @@ export interface Product {
             /**
              * مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...
              */
-            sensors: {
-              sensor: string;
-              id?: string | null;
-            }[];
+            sensors: (
+              | 'gps'
+              | 'accelerometer'
+              | 'heart_rate_monitor'
+              | 'spo2'
+              | 'gyroscope'
+              | 'barometer'
+              | 'compass'
+              | 'ambient_light'
+              | 'temperature'
+              | 'ecg'
+            )[];
             dimensions: string;
             weight: number;
             strapMaterial: 'silicone' | 'metal' | 'leather' | 'nylon' | 'mixed';
@@ -799,12 +807,7 @@ export interface ProductsSelect<T extends boolean = true> {
               batteryCapacity?: T;
               persianLanguageSupport?: T;
               callSupport?: T;
-              sensors?:
-                | T
-                | {
-                    sensor?: T;
-                    id?: T;
-                  };
+              sensors?: T;
               dimensions?: T;
               weight?: T;
               strapMaterial?: T;

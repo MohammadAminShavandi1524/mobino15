@@ -1100,15 +1100,29 @@ export const Products: CollectionConfig = {
             {
               name: "sensors",
               label: "Sensors",
-              type: "array",
+              type: "select",
+              hasMany: true,
               required: true,
-              fields: [
+              options: [
+                { label: "GPS", value: "gps" },
+                { label: "Accelerometer (شتاب‌سنج)", value: "accelerometer" },
                 {
-                  name: "sensor",
-                  label: "Sensor",
-                  type: "text",
-                  required: true,
+                  label: "Heart Rate Monitor (ضربان قلب)",
+                  value: "heart_rate_monitor",
                 },
+                { label: "SpO2 (اشباع اکسیژن خون)", value: "spo2" },
+                { label: "Gyroscope (ژیروسکوپ)", value: "gyroscope" },
+                { label: "Barometer (فشارسنج)", value: "barometer" },
+                { label: "Compass (قطب‌نما)", value: "compass" },
+                {
+                  label: "Ambient Light Sensor (حسگر نور محیط)",
+                  value: "ambient_light",
+                },
+                {
+                  label: "Temperature Sensor (حسگر دما)",
+                  value: "temperature",
+                },
+                { label: "ECG (الکتروکاردیوگرام)", value: "ecg" },
               ],
               admin: {
                 description: "مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...",
@@ -1212,6 +1226,22 @@ export const Products: CollectionConfig = {
               ],
             },
 
+            //* مناسب برای
+            {
+              name: "usageType",
+              label: "Usage Type",
+              type: "select",
+              hasMany: true,
+              required: true,
+              options: [
+                { label: "صنعتی", value: "industrial" },
+                { label: "ترید", value: "trading" },
+                { label: "اداری", value: "office" },
+                { label: "گیمینگ", value: "gaming" },
+                { label: "طراحی", value: "design" },
+              ],
+            },
+
             // *ابعاد نمایشگر
             {
               name: "displaySize",
@@ -1259,22 +1289,6 @@ export const Products: CollectionConfig = {
                 { label: "3840×2160 (4K UHD)", value: "4k" },
                 { label: "5120×2880 (5K)", value: "5k" },
                 { label: "7680×4320 (8K)", value: "8k" },
-              ],
-            },
-
-            //* مناسب برای
-            {
-              name: "usageType",
-              label: "Usage Type",
-              type: "select",
-              hasMany: true,
-              required: true,
-              options: [
-                { label: "صنعتی", value: "industrial" },
-                { label: "ترید", value: "trading" },
-                { label: "اداری", value: "office" },
-                { label: "گیمینگ", value: "gaming" },
-                { label: "طراحی", value: "design" },
               ],
             },
 

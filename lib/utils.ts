@@ -8,6 +8,42 @@ const phoneTypeOptions = [
   { label: "میان‌رده", value: "MidRange" },
 ];
 
+const strapMaterials = [
+  { label: "سیلیکونی", value: "silicone" },
+  { label: "فلزی", value: "metal" },
+  { label: "چرم", value: "leather" },
+  { label: "نایلون", value: "nylon" },
+  { label: "ترکیبی", value: "mixed" },
+];
+
+const compatibilityOptions = [
+  { label: "اندروید 6.0 یا بالاتر", value: "android_6_up" },
+  { label: "اندروید 8.0 یا بالاتر", value: "android_8_up" },
+  { label: "اندروید 10.0 یا بالاتر", value: "android_10_up" },
+  { label: "اندروید 11.0 یا بالاتر", value: "android_11_up" },
+  { label: "اندروید 12.0 یا بالاتر", value: "android_12_up" },
+  { label: "iOS 12.0 یا بالاتر", value: "ios_12_up" },
+  { label: "iOS 11.0 یا بالاتر", value: "ios_11_up" },
+  { label: "iOS 13.0 یا بالاتر", value: "ios_13_up" },
+  { label: "iOS 18.0 یا بالاتر", value: "ios_18_up" },
+  { label: "HarmonyOS", value: "harmony" },
+];
+
+
+const sensors = [
+  { label: "جی‌پی‌اس (GPS)", value: "gps" },
+  { label: "شتاب‌سنج", value: "accelerometer" },
+  { label: "حسگر ضربان قلب", value: "heart_rate_monitor" },
+  { label: "حسگر اکسیژن خون (SpO2)", value: "spo2" },
+  { label: "ژیروسکوپ", value: "gyroscope" },
+  { label: "فشارسنج", value: "barometer" },
+  { label: "قطب‌نما", value: "compass" },
+  { label: "حسگر نور محیط", value: "ambient_light" },
+  { label: "حسگر دما", value: "temperature" },
+  { label: "الکتروکاردیوگرام (ECG)", value: "ecg" },
+];
+
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -114,18 +150,27 @@ export function getColorInfo(color: string | undefined): ColorInfo {
   return colorMap[color ?? ""] || { hex: "#fff", label: "نامشخص" };
 }
 
-
 export const getBrandLabelFa = (value: string): string => {
   const brand = AllBrandOptions.find((b) => b.value === value);
   return brand ? brand.label : value; // اگه پیدا نشد همون value رو برمیگردونه
 };
-
-
-
 
 export const getClassification = (value: string): string => {
   const type = phoneTypeOptions.find((t) => t.value === value);
   return type ? type.label : value;
 };
 
+export const getStrapMaterial = (value: string): string => {
+  const strapMaterial = strapMaterials.find((m) => m.value === value);
+  return strapMaterial ? strapMaterial.label : value;
+};
 
+export function getCompatibilityLabels(values: string[]): string[] {
+  return values.map(
+    (v) => compatibilityOptions.find((opt) => opt.value === v)?.label || v
+  );
+}
+
+export const getSensors = (values: string[]): string[] => {
+  return values.map((v) => sensors.find((opt) => opt.value === v)?.label || v);
+};
