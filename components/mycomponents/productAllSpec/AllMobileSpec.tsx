@@ -14,12 +14,9 @@ interface AllMobileSpecProps {
 }
 
 const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
-
   if (product.productType?.[0].blockType === "mobile") {
-
     const spec = product.productType?.[0];
 
-    
     const getSpecNetwork = (network: string) => {
       const numberpart = network.split("")[0];
       const letterpart = network.split("")[1];
@@ -37,8 +34,11 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
           title="دسته بندی"
           value={getClassification(spec.classification as string)}
         />
-        <AllSpecCard title="سیستم عامل" value={spec.os === "android" ? "اندروید" : spec.os} />
-       
+        <AllSpecCard
+          title="سیستم عامل"
+          value={spec.os === "android" ? "اندروید" : spec.os}
+        />
+
         <AllSpecCard title="نوع صفحه نمایش" value={spec.displayType} />
         <AllSpecCard
           title="سایز صفحه نمایش"
@@ -95,7 +95,7 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
         />
         <AllSpecCard title="ابعاد" value={`${spec.dimensions} میلی متر`} />
         <AllSpecCard title="وزن" value={`${spec.weight} گرم`} />
-        
+
         <AllSpecCard title="اقلام همراه" value={spec.accessories || "ندارد"} />
       </>
     );

@@ -16,6 +16,14 @@ const strapMaterials = [
   { label: "ترکیبی", value: "mixed" },
 ];
 
+const MonitorUsages = [
+  { label: "صنعتی", value: "industrial" },
+  { label: "ترید", value: "trading" },
+  { label: "اداری", value: "office" },
+  { label: "گیمینگ", value: "gaming" },
+  { label: "طراحی", value: "design" },
+];
+
 const compatibilityOptions = [
   { label: "اندروید 6.0 یا بالاتر", value: "android_6_up" },
   { label: "اندروید 8.0 یا بالاتر", value: "android_8_up" },
@@ -29,7 +37,6 @@ const compatibilityOptions = [
   { label: "HarmonyOS", value: "harmony" },
 ];
 
-
 const sensors = [
   { label: "جی‌پی‌اس (GPS)", value: "gps" },
   { label: "شتاب‌سنج", value: "accelerometer" },
@@ -42,7 +49,6 @@ const sensors = [
   { label: "حسگر دما", value: "temperature" },
   { label: "الکتروکاردیوگرام (ECG)", value: "ecg" },
 ];
-
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -174,3 +180,29 @@ export function getCompatibilityLabels(values: string[]): string[] {
 export const getSensors = (values: string[]): string[] => {
   return values.map((v) => sensors.find((opt) => opt.value === v)?.label || v);
 };
+
+export const getMonitorUsage = (values: string[]): string => {
+  return values
+    .map((v) => MonitorUsages.find((opt) => opt.value === v)?.label || v)
+    .join(" , ");
+};
+
+export function getResolutionInfo(value: string) {
+  const options = [
+    { label: "1920×1080 (Full HD)", value: "1080p" },
+    { label: "2560×1440 (QHD)", value: "1440p" },
+    { label: "3840×2160 (4K UHD)", value: "4k" },
+    { label: "5120×2880 (5K)", value: "5k" },
+    { label: "7680×4320 (8K)", value: "8k" },
+  ];
+  const found = options.find((opt) => opt.value === value);
+  if (!found) return null;
+
+  const match = found.label.match(/^(.+?) \((.+)\)$/);
+  if (!match) return null;
+
+  return {
+    resolution: match[1], // مثل "1920×1080"
+    quality: match[2], // مثل "Full HD"
+  };
+}
