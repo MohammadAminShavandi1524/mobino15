@@ -37,9 +37,8 @@ import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
 import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
 
 import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
-import AllProductSpecs from "../productAllSpec/AllProductSpecs";
-import Divider from "../(ProductPageComps)/Divider";
-import { StaticRating } from "../StaticRating";
+import AllSpecAndReviews from "../(ProductPageComps)/AllSpecAndReviews";
+import ReviewModal from "../(ProductPageComps)/reviewModal";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -57,18 +56,9 @@ interface ProductPageProps {
   product: string;
 }
 
-const reviewsSortOptions = [
-  { label: "جدیدترین", value: "Newest" },
-  { label: "قدیمی‌ترین", value: "Oldest" },
-  { label: "بیشترین امتیاز", value: "HighestRating" },
-  { label: "کمترین امتیاز", value: "LowestRating" },
-];
-
 const ProductPage = ({ product }: ProductPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [reviewOrderBar, setReviewOrderBar] = useState("Newest");
-
-  const param = decodeURIComponent(product as string).split("_")[1];
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(true);
 
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
@@ -93,7 +83,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const matchedProducts =
     productsData?.docs.filter((p) => p.address.replace(/\D/g, "") === dkp) ||
     [];
-  // console.log("🚀 ~ ProductPage ~ matchedProducts:", matchedProducts);
 
   // *** single product ***
   const singleProduct: Product | null =
@@ -155,9 +144,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
     return p.available;
   });
 
-  console.log(singleProduct?.productType?.[0]);
   // *
-
+ 
   // * نا موجود
 
   if (
@@ -186,7 +174,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
           setIsModalOpen={setIsModalOpen}
           product={singleProduct}
         />
-
+        {/* review modal */}
+        <ReviewModal
+          type="single"
+          product={singleProduct}
+          isReviewModalOpen={isReviewModalOpen}
+          setIsReviewModalOpen={setIsReviewModalOpen}
+          userId={user?.id}
+          SPMainImage={SPMainImage}
+        />
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -318,140 +314,16 @@ const ProductPage = ({ product }: ProductPageProps) => {
         />
 
         {/* all spec and reviews */}
-        <div className="relative flex flex-col my-10">
-          {/* header */}
-          <div className="sticky top-0 z-6 flex items-center  px-11 py-4 gap-x-10 text-[14px] bg-[#f3f8fd] border-b border-b-[#919ebc] text-[#919ebc]">
-            <div>معرفی محصول</div>
-            <div>مشخصات فنی</div>
-            <div>نظرات کاربران</div>
-          </div>
-          <div className="relative flex gap-x-[50px] mt-8">
-            <div className="flex flex-col w-full  min-h-500">
-              {/* product introduction */}
-              <div className="flex flex-col gap-y-5 pt-4 ">
-                <div className="flex items-center gap-x-3 mr-5">
-                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
-                  <span className="text-xl font-medium">معرفی محصول</span>
-                </div>
-                <p className="text-justify text-[16px]/[32px] text-[#23254e] px-10.5">
-                  {convertToPersianNumber(singleProduct.introduction)}
-                </p>
-              </div>
-              {/* divider */}
-              <Divider />
 
-              {/* all spec */}
-              <div className="flex flex-col gap-y-5 pt-4">
-                <div className="flex items-center gap-x-3 mr-5">
-                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
-                  <span className="text-xl font-medium">مشخصات فنی</span>
-                </div>
-                {/*All spec cards */}
-                <div className="flex flex-col gap-y-2.5 ">
-                  <AllProductSpecs product={singleProduct} />
-                </div>
-              </div>
-
-              {/* divider */}
-              <Divider />
-
-              {/* reviews */}
-              <div></div>
-            </div>
-            {/* aside */}
-            <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
-              {/* image title and color */}
-              <div className="flex gap-x-5 mt-3">
-                <div className="flex justify-center items-center self-baseline min-w-[100px]">
-                  {SPMainImage && (
-                    <Image
-                      className={cn("")}
-                      src={SPImageShowcase ? SPImageShowcase : SPMainImage.url}
-                      alt={`${singleProduct.name}`}
-                      width={100}
-                      height={100}
-                    />
-                  )}
-                </div>
-                {/* title and color */}
-                <div className="flex flex-col">
-                  {/* title */}
-                  <ProductFaTitle
-                    className="productlist-title text-[14px]/[20px] text-[#212121] font-normal"
-                    label={singleProduct.label}
-                  />
-
-                  {/* product color */}
-                  <div
-                    className="flex justify-between items-center  self-baseline  
-                   rounded-[6px] "
-                  >
-                    <div
-                      className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
-                      rounded-full"
-                      style={{
-                        backgroundColor: getColorInfo(singleProduct.color).hex,
-                      }}
-                    ></div>
-                    <span className="text-[12px] font-medium text-[#333333] ml-3 mr-2">
-                      {getColorInfo(singleProduct.color).label}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {/* seller info */}
-
-              <div className="flex flex-col gap-x-3  mt-8 mr-3 bg-transparent ">
-                <div className="pb-3 border-b border-b-[#d3d8e4]">
-                  <div className="flex items-center pb-2">
-                    <span className="">
-                      <Store color="#3b5388" size={20} />
-                    </span>
-
-                    <span className="mr-4 text-[14px]">
-                      {typeof singleProduct.tenant === "object" &&
-                      singleProduct.tenant !== null
-                        ? (singleProduct.tenant as Tenant).name
-                        : "موبینو"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center">
-                    <span className=" w-5 h-5 flex justify-center items-center">
-                      <Truck color="#3b5388" size={16} />
-                    </span>
-                    <span className="text-[#385086] mr-4 text-[14px]">
-                      {typeof singleProduct.tenant === "object" &&
-                      singleProduct.tenant !== null &&
-                      (singleProduct.tenant as Tenant).name !== "موبینو"
-                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
-                        : " موجود در انبار موبینو(ارسال فوری)"}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center pt-3 pb-1">
-                  <span className="">
-                    <BadgeCheck color="#3b5388" size={20} />
-                  </span>
-                  <span className="mr-4 text-[14px]">
-                    {convertToPersianNumber(18)} ماه گارانتی شرکتی
-                  </span>
-                </div>
-              </div>
-
-              {/* price and qty */}
-              <ProductAndQty product={singleProduct} />
-              {/* add to cart button */}
-
-              <AddToCartButton
-                setIsModalOpen={setIsModalOpen}
-                productId={singleProduct.id}
-                userName={user?.username}
-              />
-            </div>
-          </div>
-        </div>
+        <AllSpecAndReviews
+          type="single"
+          product={singleProduct}
+          setIsModalOpen={setIsModalOpen}
+          setIsReviewModalOpen={setIsReviewModalOpen}
+          userName={user?.username}
+          SPImageShowcase={SPImageShowcase}
+          SPMainImage={SPMainImage}
+        />
       </div>
     );
   }
@@ -475,6 +347,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
           product={TheProduct}
         />
 
+        {/* review modal */}
+        <ReviewModal
+          type="multiple"
+          product={TheProduct}
+          isReviewModalOpen={isReviewModalOpen}
+          setIsReviewModalOpen={setIsReviewModalOpen}
+          userId={user?.id}
+          MPMainImage={MPMainImage}
+        />
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -639,248 +520,16 @@ const ProductPage = ({ product }: ProductPageProps) => {
         />
 
         {/* all spec and reviews */}
-        <div className="relative flex flex-col my-10">
-          {/* header */}
-          <div className="sticky top-0 z-6 flex items-center  px-11 py-4 gap-x-10 text-[14px] bg-[#f3f8fd] border-b border-b-[#919ebc] text-[#919ebc]">
-            <div>مشخصات فنی</div>
-            <div>معرفی محصول</div>
-            <div>نظرات کاربران</div>
-          </div>
-          <div className="relative flex gap-x-[50px] mt-8">
-            <div className="flex flex-col w-full  min-h-500">
-              {/* product introduction */}
-              <div className="flex flex-col gap-y-5 pt-4 ">
-                <div className="flex items-center gap-x-3 mr-5">
-                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
-                  <span className="text-xl font-medium">معرفی محصول</span>
-                </div>
-                <p className="text-justify text-[16px]/[32px] text-[#23254e] px-10.5">
-                  {convertToPersianNumber(TheProduct.introduction)}
-                </p>
-              </div>
-              {/* divider */}
-              <Divider />
 
-              {/* all spec */}
-              <div className="flex flex-col gap-y-5 pt-4">
-                <div className="flex items-center gap-x-3 mr-5">
-                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
-                  <span className="text-xl font-medium">مشخصات فنی</span>
-                </div>
-                {/*All spec cards */}
-                <div className="flex flex-col gap-y-2.5 ">
-                  <AllProductSpecs product={TheProduct} />
-                </div>
-              </div>
-
-              {/* divider */}
-              <Divider />
-
-              {/* reviews */}
-              <div className="relative flex gap-x-10 min-h-250">
-                <div className="flex flex-col w-full">
-                  {/* reviews header */}
-                  <div className="flex items-center gap-x-3 mr-5 mb-5">
-                    <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
-                    <span className="text-xl font-medium">نظرات کاربران</span>
-                  </div>
-                  {/* reviews orderbar */}
-                  <div className="flex items-center gap-x-4 bg-[#f1f8ff] w-full p-[14px] text-[12px]">
-                    <div className="flex items-center gap-x-2 text-[#333333]">
-                      <span>
-                        <ArrowDownWideNarrow size={18} color="#333333" />
-                      </span>
-                      <span className="font-medium">ترتیب :</span>
-                    </div>
-                    {reviewsSortOptions.map((option, index) => {
-                      return (
-                        <div
-                          onClick={() => setReviewOrderBar(option.value)}
-                          className={cn(
-                            "text-[#919ebc] cursor-pointer",
-                            option.value === reviewOrderBar && "text-[#0079b1]"
-                          )}
-                          key={index}
-                        >
-                          {option.label}
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* content */}
-                  <div></div>
-                </div>
-
-                {/* reviews aside */}
-                <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] self-baseline pt-10 ">
-                  <div className="flex justify-between gap-x-6 mb-10">
-                    <div className="">
-                      <div className="flex justify-between items-center gap-x-1.5">
-                        <div className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"></div>
-                        <div className="text-[#919ebc]">
-                          {convertToPersianNumber(5)}
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center gap-x-1.5">
-                        <div className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"></div>
-                        <div className="text-[#919ebc]">
-                          {convertToPersianNumber(4)}
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center gap-x-1.5">
-                        <div className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"></div>
-                        <div className="text-[#919ebc]">
-                          {convertToPersianNumber(3)}
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center gap-x-1.5">
-                        <div className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"></div>
-                        <div className="text-[#919ebc]">
-                          {convertToPersianNumber(2)}
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center gap-x-1.5">
-                        <div className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"></div>
-                        <div className="text-[#919ebc]">
-                          {convertToPersianNumber(1)}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end ">
-                      {/* reviews averege */}
-                      <div className="text-[40px]/[40px] font-extrabold text-[#385086] mb-3">
-                        {convertToPersianNumber(TheProduct.rating)}
-                      </div>
-                      {/* reviews count */}
-                      <div className="flex items-center gap-x-1 mb-3">
-                        <span>{convertToPersianNumber(60)}</span>
-                        <span>نظر</span>
-                      </div>
-                      {/* reviews star averege  */}
-                      <div>
-                        <StaticRating size={18} value={3.3} />
-                      </div>
-                    </div>
-                  </div>
-                  {/* add review */}
-                  <div className="flex flex-col w-full rounded-2xl p-6 min-h-[140px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)] gap-y-3">
-                    <div className="flex items-center gap-x-2 px-2">
-                      <Image
-                        src="/productpage/comment.gif"
-                        alt="comment"
-                        width={20}
-                        height={20}
-                        unoptimized
-                      />
-                      <span className="text-[14px] font-medium">
-                        نظر خود را در مورد این محصول بنویسید ...
-                      </span>
-                    </div>
-                    <button className="flex items-center justify-center gap-x-1 bg-custom-primary text-white h-13 w-full rounded-lg cursor-pointer">
-                      <span>افزودن نظر</span>
-                      <span>
-                        <Plus size={20} />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* aside */}
-            <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
-              {/* image title and color */}
-              <div className="flex gap-x-5 mt-3">
-                <div className="flex justify-center items-center self-baseline min-w-[100px]">
-                  {MPMainImage && (
-                    <Image
-                      className={cn("")}
-                      src={MPImageShowcase ?? MPMainImage.url}
-                      alt={`${TheProduct.name}`}
-                      width={100}
-                      height={100}
-                    />
-                  )}
-                </div>
-                {/* title and color */}
-                <div className="flex flex-col">
-                  {/* title */}
-                  <ProductFaTitle
-                    className="productlist-title text-[14px]/[20px] text-[#212121] font-normal"
-                    label={TheProduct.label}
-                  />
-
-                  {/* product color */}
-                  <div
-                    className="flex justify-between items-center self-baseline  
-                   rounded-[6px] "
-                  >
-                    <div
-                      className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
-                      rounded-full"
-                      style={{
-                        backgroundColor: getColorInfo(TheProduct.color).hex,
-                      }}
-                    ></div>
-                    <span className="text-[12px] font-medium text-[#333333] ml-3 mr-2">
-                      {getColorInfo(TheProduct.color).label}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {/* seller info */}
-
-              <div className="flex flex-col gap-x-3  mt-8 mr-3 bg-transparent ">
-                <div className="pb-3 border-b border-b-[#d3d8e4]">
-                  <div className="flex items-center pb-2">
-                    <span className="">
-                      <Store color="#3b5388" size={20} />
-                    </span>
-
-                    <span className="mr-4 text-[14px]">
-                      {typeof TheProduct.tenant === "object" &&
-                      TheProduct.tenant !== null
-                        ? (TheProduct.tenant as Tenant).name
-                        : "موبینو"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center">
-                    <span className=" w-5 h-5 flex justify-center items-center">
-                      <Truck color="#3b5388" size={16} />
-                    </span>
-                    <span className="text-[#385086] mr-4 text-[14px]">
-                      {typeof TheProduct.tenant === "object" &&
-                      TheProduct.tenant !== null &&
-                      (TheProduct.tenant as Tenant).name !== "موبینو"
-                        ? "موجود در انبار فروشنده(ارسال از 1 روز کاری بعد)"
-                        : " موجود در انبار موبینو(ارسال فوری)"}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center pt-3 pb-1">
-                  <span className="">
-                    <BadgeCheck color="#3b5388" size={20} />
-                  </span>
-                  <span className="mr-4 text-[14px]">
-                    {convertToPersianNumber(18)} ماه گارانتی شرکتی
-                  </span>
-                </div>
-              </div>
-
-              {/* price and qty */}
-              <ProductAndQty product={TheProduct} />
-              {/* add to cart button */}
-
-              <AddToCartButton
-                productId={TheProduct.id}
-                setIsModalOpen={setIsModalOpen}
-                userName={user?.username}
-              />
-            </div>
-          </div>
-        </div>
+        <AllSpecAndReviews
+          type="single"
+          product={TheProduct}
+          setIsModalOpen={setIsModalOpen}
+          setIsReviewModalOpen={setIsReviewModalOpen}
+          userName={user?.username}
+          MPImageShowcase={MPImageShowcase}
+          MPMainImage={MPMainImage}
+        />
       </div>
     );
   }
