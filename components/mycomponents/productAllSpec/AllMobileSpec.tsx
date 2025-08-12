@@ -18,14 +18,12 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
     const spec = product.productType?.[0];
 
     const getSpecNetwork = (network: string) => {
-      const numberpart = network.split("")[0];
-      const letterpart = network.split("")[1];
+      const [numberpart, letterpart] = network.split("");
       return (
-        convertToPersianNumber(numberpart) +
-        " " +
-        capitalizeFirstLetter(letterpart)
+        convertToPersianNumber(numberpart) + capitalizeFirstLetter(letterpart)
       );
     };
+
     return (
       <>
         <AllSpecCard title="برند" value={getBrandLabelFa(spec.brand)} />
@@ -42,7 +40,7 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
         <AllSpecCard title="نوع صفحه نمایش" value={spec.displayType} />
         <AllSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.displaySize} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <AllSpecCard
           title="وضوح نمایش"
@@ -93,8 +91,14 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
           title="ضد آب"
           value={spec.waterResistant ? "هست" : "نیست"}
         />
-        <AllSpecCard title="ابعاد" value={`${spec.dimensions} میلی متر`} />
-        <AllSpecCard title="وزن" value={`${spec.weight} گرم`} />
+         <AllSpecCard
+          title="ابعاد"
+          value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
+        />
+        <AllSpecCard
+          title="وزن"
+          value={`${convertToPersianNumber(spec.weight)} گرم`}
+        />
 
         <AllSpecCard title="اقلام همراه" value={spec.accessories || "ندارد"} />
       </>

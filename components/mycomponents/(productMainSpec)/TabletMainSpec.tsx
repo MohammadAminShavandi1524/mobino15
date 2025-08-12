@@ -1,5 +1,6 @@
 import { Product } from "@/payload-types";
 import MainSpecCard from "./MainSpecCard";
+import { convertToPersianNumber } from "@/lib/utils";
 
 interface TabletMainSpecProps {
   product: Product;
@@ -27,7 +28,7 @@ const TabletMainSpec = ({ product }: TabletMainSpecProps) => {
         />
         <MainSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.displaySize} اینچ`}
+           value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <MainSpecCard
           title="رزولوشن دوربین اصلی"

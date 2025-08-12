@@ -39,8 +39,14 @@ const AllHeadphoneSpec = ({ product }: AllHeadphoneSpecProps) => {
           title="زمان شارژ شدن"
           value={`${spec.chargingTime} ساعت`}
         />
-        <AllSpecCard title="ابعاد" value={`${spec.dimensions} میلی متر`} />
-        <AllSpecCard title="وزن" value={`${spec.weight} گرم`} />
+        <AllSpecCard
+          title="ابعاد"
+          value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
+        />
+       <AllSpecCard
+          title="وزن"
+          value={`${convertToPersianNumber(spec.weight)} گرم`}
+        />
       </>
     );
   }

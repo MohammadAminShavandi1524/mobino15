@@ -27,7 +27,7 @@ const AllMonitorSpec = ({ product }: AllMonitorSpecProps) => {
         />
         <AllSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.displaySize} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <AllSpecCard
           title="نوع پنل"
@@ -39,7 +39,7 @@ const AllMonitorSpec = ({ product }: AllMonitorSpecProps) => {
         />
         <AllSpecCard
           title="رزولوشن"
-          value={`${getResolutionInfo(spec.resolution)?.resolution as string} پیکسل`}
+          value={`${convertToPersianNumber(getResolutionInfo(spec.resolution)?.resolution as string)} پیکسل`}
         />
         <AllSpecCard
           title="وضوح تصویر"
@@ -51,13 +51,13 @@ const AllMonitorSpec = ({ product }: AllMonitorSpecProps) => {
         />
         <AllSpecCard
           title="زمان پاسخ‌گویی"
-          value={`${convertToPersianNumber(spec.responseTime / 100)} میلی ثانیه`}
+          value={`${convertToPersianNumber(spec.responseTime)} میلی ثانیه`}
         />
         <AllSpecCard
           title="اقلام همراه"
           value={
             spec.accessories && spec.accessories.length > 0
-              ? spec.accessories.map((acc) => acc.item).join(" , ")
+              ? spec.accessories.join(" , ")
               : "ندارد"
           }
         />

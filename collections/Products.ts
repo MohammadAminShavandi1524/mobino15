@@ -659,6 +659,7 @@ export const Products: CollectionConfig = {
             {
               name: "DisplaySize",
               label: "Display Size (inches)",
+              required: true,
               type: "number",
             },
 
@@ -1272,8 +1273,8 @@ export const Products: CollectionConfig = {
               type: "select",
               required: true,
               options: [
-                { label: "تخت", value: "flat" },
-                { label: "خمیده", value: "curved" },
+                { label: "flat", value: "flat" },
+                { label: "curved", value: "curved" },
               ],
             },
 
@@ -1296,10 +1297,18 @@ export const Products: CollectionConfig = {
             {
               name: "colorCount",
               label: "Number of Displayable Colors",
-              type: "text",
+              type: "select",
               required: true,
+              options: [
+                { label: "16.7 میلیون رنگ", value: "16.7 میلیون رنگ" },
+                { label: "1.07 میلیارد رنگ", value: "1.07 میلیارد رنگ" },
+                { label: "256 هزار رنگ", value: "256 هزار رنگ" },
+                { label: "1 میلیارد رنگ", value: "1 میلیارد رنگ" },
+              ],
+
               admin: {
-                description: "مثلاً: 16.7 میلیون رنگ",
+                description:
+                  "تعداد رنگ‌های قابل نمایش توسط مانیتور، مثلاً 16.7 میلیون رنگ",
               },
             },
 
@@ -1315,19 +1324,22 @@ export const Products: CollectionConfig = {
             {
               name: "accessories",
               label: "Included Accessories",
-              type: "array",
+              type: "select",
+              hasMany: true,
               required: false,
-              fields: [
-                {
-                  name: "item",
-                  label: "Item",
-                  type: "text",
-                },
+              options: [
+                { label: "کابل برق", value: "کابل برق" },
+                { label: "کابل HDMI", value: "کابل HDMI" },
+                { label: "دفترچه راهنما", value: "دفترچه راهنما" },
+                { label: "پایه قابل تنظیم", value: "پایه قابل تنظیم" },
+                { label: "کابل DisplayPort", value: "کابل DisplayPort" },
+                { label: "کابل VGA", value: "کابل VGA" },
+                { label: "کابل USB", value: "کابل USB" },
+                { label: "آداپتور برق", value: "آداپتور برق" },
+                { label: "کابل DVI", value: "کابل DVI" },
+                { label: "محافظ صفحه", value: "محافظ صفحه" },
+                { label: "خروجی هدفون", value: "خروجی هدفون" },
               ],
-              admin: {
-                description:
-                  "مثلاً کابل برق، کابل HDMI، دفترچه راهنما، پایه قابل تنظیم و ...",
-              },
             },
           ],
         },

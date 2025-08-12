@@ -42,7 +42,7 @@ const AllTabletSpec = ({ product }: AllTabletSpecProps) => {
 
         <AllSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.displaySize} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <AllSpecCard
           title="وضوح نمایش"
@@ -106,8 +106,14 @@ const AllTabletSpec = ({ product }: AllTabletSpecProps) => {
           title="ضد آب"
           value={spec.waterResistant ? "هست" : "نیست"}
         />
-        <AllSpecCard title="ابعاد" value={`${spec.dimensions} میلی متر`} />
-        <AllSpecCard title="وزن" value={`${spec.weight} گرم`} />
+        <AllSpecCard
+          title="ابعاد"
+          value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
+        />
+        <AllSpecCard
+          title="وزن"
+          value={`${convertToPersianNumber(spec.weight)} گرم`}
+        />
 
         <AllSpecCard title="اقلام همراه" value={spec.accessories || "ندارد"} />
       </>

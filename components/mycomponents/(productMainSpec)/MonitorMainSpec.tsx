@@ -23,11 +23,11 @@ const MonitorMainSpec = ({ product }: MonitorMainSpecProps) => {
         />
         <MainSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.displaySize} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <MainSpecCard
           title="رزولوشن"
-          value={`${getResolutionInfo(spec.resolution)?.resolution as string} پیکسل`}
+          value={`${convertToPersianNumber(getResolutionInfo(spec.resolution)?.resolution as string)} پیکسل`}
         />
         <MainSpecCard
           title="نوع پنل"
@@ -39,7 +39,7 @@ const MonitorMainSpec = ({ product }: MonitorMainSpecProps) => {
         />
         <MainSpecCard
           title="زمان پاسخ‌گویی"
-          value={`${convertToPersianNumber(spec.responseTime / 100)} میلی ثانیه`}
+          value={`${convertToPersianNumber(spec.responseTime)} میلی ثانیه`}
           lastChild
         />
       </>

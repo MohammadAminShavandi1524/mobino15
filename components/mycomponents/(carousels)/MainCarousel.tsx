@@ -16,6 +16,11 @@ const MainCarousel = () => {
       href: "/mobile/iPhone",
     },
     {
+      img: "/mainCarousel/xia15.webp",
+      alt: "xia15",
+      href: "",
+    },
+    {
       img: "/mainCarousel/laptop.webp",
       alt: "laptop",
       href: "/laptop",

@@ -389,7 +389,7 @@ export interface Product {
                 | 'other';
               model: string;
             };
-            DisplaySize?: number | null;
+            DisplaySize: number;
             screenResolution:
               | 'hd1366x768'
               | 'fullHd1920x1080'
@@ -506,24 +506,30 @@ export interface Product {
           }
         | {
             brand: 'asus' | 'samsung' | 'dell' | 'lg' | 'acer';
+            usageType: ('industrial' | 'trading' | 'office' | 'gaming' | 'design')[];
             displaySize: number;
             panelType: 'ips' | 'tn' | 'va' | 'oled' | 'mini_led';
             screenType: 'flat' | 'curved';
             resolution: '1080p' | '1440p' | '4k' | '5k' | '8k';
-            usageType: ('industrial' | 'trading' | 'office' | 'gaming' | 'design')[];
             /**
-             * مثلاً: 16.7 میلیون رنگ
+             * تعداد رنگ‌های قابل نمایش توسط مانیتور، مثلاً 16.7 میلیون رنگ
              */
-            colorCount: string;
+            colorCount: '16.7 میلیون رنگ' | '1.07 میلیارد رنگ' | '256 هزار رنگ' | '1 میلیارد رنگ';
             responseTime: number;
-            /**
-             * مثلاً کابل برق، کابل HDMI، دفترچه راهنما، پایه قابل تنظیم و ...
-             */
             accessories?:
-              | {
-                  item?: string | null;
-                  id?: string | null;
-                }[]
+              | (
+                  | 'کابل برق'
+                  | 'کابل HDMI'
+                  | 'دفترچه راهنما'
+                  | 'پایه قابل تنظیم'
+                  | 'کابل DisplayPort'
+                  | 'کابل VGA'
+                  | 'کابل USB'
+                  | 'آداپتور برق'
+                  | 'کابل DVI'
+                  | 'محافظ صفحه'
+                  | 'خروجی هدفون'
+                )[]
               | null;
             id?: string | null;
             blockName?: string | null;
@@ -822,19 +828,14 @@ export interface ProductsSelect<T extends boolean = true> {
           | T
           | {
               brand?: T;
+              usageType?: T;
               displaySize?: T;
               panelType?: T;
               screenType?: T;
               resolution?: T;
-              usageType?: T;
               colorCount?: T;
               responseTime?: T;
-              accessories?:
-                | T
-                | {
-                    item?: T;
-                    id?: T;
-                  };
+              accessories?: T;
               id?: T;
               blockName?: T;
             };

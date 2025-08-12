@@ -80,7 +80,7 @@ const AllLaptopSpec = ({ product }: AllLaptopSpecProps) => {
         <AllSpecCard title="مدل گرافیک" value={spec.gpuInfo.model} />
         <AllSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.DisplaySize} اینچ`}
+           value={`${convertToPersianNumber(spec.DisplaySize)} اینچ`}
         />
         <AllSpecCard
           title="رزولوشن نمایشگر"

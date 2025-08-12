@@ -70,7 +70,7 @@ const LaptopMainSpec = ({ product }: LaptopMainSpecProps) => {
         <MainSpecCard title="نوع کاربری" value={spec.usage} firstChild />
         <MainSpecCard
           title="سایز صفحه نمایش"
-          value={`${spec.DisplaySize} اینچ`}
+          value={`${convertToPersianNumber(spec.DisplaySize)} اینچ`}
         />
         <MainSpecCard
           title="نسل پردازنده"
