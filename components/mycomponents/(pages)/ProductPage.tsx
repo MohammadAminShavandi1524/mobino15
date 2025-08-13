@@ -7,7 +7,7 @@ import { Category, Product, Tenant, User } from "@/payload-types";
 import { useState } from "react";
 import Image from "next/image";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import {
   ArrowDownWideNarrow,
   BadgeCheck,
@@ -58,7 +58,7 @@ interface ProductPageProps {
 
 const ProductPage = ({ product }: ProductPageProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(true);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
 
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
@@ -73,6 +73,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   const { data: categories } = useSuspenseQuery(
     trpc.categories.getMany.queryOptions()
+  );
+
+  const { data: productReviews } = useQuery(
+    trpc.reviews.getOne.queryOptions({ product: product })
   );
 
   const matchedProductByOrder =
@@ -145,7 +149,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   });
 
   // *
- 
+
   // * نا موجود
 
   if (
@@ -205,7 +209,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
               <div className="self-baseline mb-10">
                 {/* product rating */}
-                <ProductRating rating={singleProduct.rating} />
+                <ProductRating
+                  productReviews={productReviews}
+                  rating={singleProduct.rating}
+                />
 
                 {/* product color */}
                 <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
@@ -316,8 +323,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
         {/* all spec and reviews */}
 
         <AllSpecAndReviews
+        
           type="single"
           product={singleProduct}
+          productReviews={productReviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userName={user?.username}
@@ -378,7 +387,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
               <div className="self-baseline mb-10">
                 {/* product rating */}
-                <ProductRating rating={MPSelectedProduct.rating} />
+                <ProductRating
+                  productReviews={productReviews}
+                  rating={MPSelectedProduct.rating}
+                />
 
                 {/* product color */}
                 <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
@@ -524,6 +536,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         <AllSpecAndReviews
           type="single"
           product={TheProduct}
+          productReviews={productReviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userName={user?.username}

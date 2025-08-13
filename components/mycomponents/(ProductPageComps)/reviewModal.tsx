@@ -24,6 +24,8 @@ import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Rating, RatingButton } from "@/components/ui/rating";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface ReviewModalProps {
   type: "single" | "multiple";
@@ -45,6 +47,14 @@ interface ReviewModalProps {
   } | null;
 }
 
+const formSchema = z.object({
+  rating: z
+    .number("یک عدد بین ۱ تا ۵ انتخاب کن")
+    .min(1, "حداقل امتیاز ۱ است")
+    .max(5, "حداکثر امتیاز ۵ است"),
+  description: z.string().min(1, "توضیحات نمی‌تواند خالی باشد"),
+});
+
 const ReviewModal = ({
   isReviewModalOpen,
   setIsReviewModalOpen,
@@ -54,30 +64,26 @@ const ReviewModal = ({
   MPMainImage,
   SPMainImage,
 }: ReviewModalProps) => {
-  const [ratingValue, setRatingValue] = useState<number>(0);
-  console.log("🚀 ~ ReviewModal ~ ratingValue:", ratingValue)
+  // const [ratingValue, setRatingValue] = useState<number>(0);
+  // console.log("🚀 ~ ReviewModal ~ ratingValue:", ratingValue);
 
   const mainImage = type === "multiple" ? MPMainImage : SPMainImage;
 
   const trpc = useTRPC();
+  const router = useRouter();
 
-  // const { data: reviews } = useSuspenseQuery(
-  //   trpc.reviews.getMany.queryOptions()
-  // );
-  // console.log("🚀 ~ ReviewModal ~ reviews:", reviews);
-
-  const form = useForm<z.infer<typeof addReviewSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({
     mode: "all", // this will show the form errors immediently
-    resolver: zodResolver(addReviewSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: { description: "فعلا که از گوشی راضی هستم" },
   });
 
-  const addreviewOnSubmit = (values: z.infer<typeof addReviewSchema>) => {
+  const addreviewOnSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     addReview.mutate({
       productId: product.id,
       description: values.description,
-      rating: ratingValue,
+      rating: values.rating,
       userId: userId ?? "6884d171a767a882d176be72", // mobino id for guests
     });
   };
@@ -85,11 +91,12 @@ const ReviewModal = ({
   const addReview = useMutation(
     trpc.reviews.create.mutationOptions({
       onError: (error) => {
-        console.log(error.message);
+        toast.error(error.message);
       },
 
       onSuccess: () => {
-        console.log("review added");
+        setIsReviewModalOpen(false);
+        router.refresh()
       },
     })
   );
@@ -148,30 +155,40 @@ const ReviewModal = ({
                 >
                   {/* rating */}
 
-                  <div className="flex flex-col items-center gap-y-4 w-full mb-4">
-                    <div className=" text-center text-[14px] ">
-                      به این کالا امتیاز دهید :)
-                    </div>
-                    <div style={{ direction: "rtl" }}>
-                      <Rating
-                        value={ratingValue}
-                        onValueChange={(value) => setRatingValue(value)}
-                      >
-                        {Array.from({ length: 5 }).map((_, index) => (
-                          <RatingButton
-                            className="text-[#f1c21b]"
-                            key={index}
-                          />
-                        ))}
-                      </Rating>
-                    </div>
-                  </div>
+                  <FormField
+                    name="rating"
+                    control={form.control}
+                    render={({ field }) => (
+                      <FormItem className="w-full mb-4 flex flex-col items-center gap-y-4">
+                        <FormLabel className="text-center text-[14px]">
+                          به این کالا امتیاز دهید :)
+                        </FormLabel>
+                        <FormControl>
+                          <div style={{ direction: "rtl" }}>
+                            <Rating
+                              value={field.value}
+                              onValueChange={field.onChange}
+                            >
+                              {Array.from({ length: 5 }).map((_, index) => (
+                                <RatingButton
+                                  className="text-[#f1c21b]"
+                                  key={index}
+                                />
+                              ))}
+                            </Rating>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
                   {/* description */}
 
                   <div className="mb-10">
                     <FormField
                       name="description"
+                      control={form.control}
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="mr-[10px] text-[12px]">
@@ -191,9 +208,7 @@ const ReviewModal = ({
 
                   {/* add review button */}
                   <button
-                    
-                    onClick={() => console.log("dasdsa")}
-                    disabled={addReview.isPending || ratingValue < 1}
+                    disabled={addReview.isPending}
                     type="submit"
                     className="flex items-center justify-center h-13 w-full bg-custom-primary text-white cursor-pointer rounded-lg text-lg disabled:opacity-90 disabled:cursor-pointer "
                   >

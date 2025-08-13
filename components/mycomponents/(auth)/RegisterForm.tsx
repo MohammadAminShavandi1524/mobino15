@@ -57,6 +57,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
           migrateGuestCartToUser(user?.username);
         }
         router.push("/");
+        
       },
     })
   );

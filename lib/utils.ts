@@ -1,6 +1,7 @@
 import { AllBrandOptions } from "@/hooks/useProductFilter";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import jalaali from "jalaali-js";
 
 const phoneTypeOptions = [
   { label: "اقتصادی", value: "Economic" },
@@ -206,3 +207,18 @@ export function getResolutionInfo(value: string) {
     quality: match[2], // مثل "Full HD"
   };
 }
+
+
+
+
+export function toJalali(dateString: string): string {
+  const date = new Date(dateString);
+  const { jy, jm, jd } = jalaali.toJalaali(date);
+
+  // تبدیل اعداد به فارسی
+  const toPersianDigits = (num: number) =>
+    num.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[+d]);
+
+  return `${toPersianDigits(jy)}/${toPersianDigits(jm).padStart(2, "۰")}/${toPersianDigits(jd).padStart(2, "۰")}`;
+}
+

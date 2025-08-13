@@ -6,39 +6,54 @@ import { TRPCError } from "@trpc/server";
 import { addReviewSchema, updateReviewSchema } from "../schemas";
 
 export const reviewsRouter = createTRPCRouter({
-  getMany: baseProcedure
-    // .input(
-    //   z.object({
-    //     productId: z.string(),
-    //   })
-    // )
+  getOne: baseProcedure
+    .input(z.object({ product: z.string() })) // رشته product که از URL میاد
     .query(async ({ ctx, input }) => {
-      // const product = await ctx.db.findByID({
-      //   collection: "products",
-      //   id: input.productId,
-      // });
+      // استخراج orderParam از پارام
+      const orderParam = decodeURIComponent(input.product).split("_")[0];
 
-      // if (!product) {
-      //   throw new TRPCError({
-      //     code: "NOT_FOUND",
-      //     message: "product not found",
-      //   });
-      // }
-
-      const reviewsData = await ctx.db.find({
-        collection: "reviews",
-        // where: {
-        //   product: {
-        //     equals: product.id,
-        //   },
-        // },
+      // پیدا کردن محصولاتی که order برابر هست
+      const matchedProductsByOrder = await ctx.db.find({
+        collection: "products",
+        where: {
+          order: { equals: Number(orderParam) },
+        },
       });
+      // console.log("🚀 ~ matchedProductsByOrder:", matchedProductsByOrder);
 
-      if (!reviewsData) {
-        return null;
+      if (!matchedProductsByOrder || matchedProductsByOrder.totalDocs === 0) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "products not found",
+        });
       }
 
-      return reviewsData.docs;
+      // استخراج dkp از اولین محصول
+      const dkp = matchedProductsByOrder.docs[0].address.replace(/\D/g, "");
+
+      // پیدا کردن تمام محصولاتی که dkp برابر دارن
+      const matchedProductsByDkp = await ctx.db.find({
+        collection: "products",
+        where: {
+          address: {
+            like: dkp, // فقط عدد dkP را جستجو می‌کنیم
+          },
+        },
+      });
+      console.log("🚀 ~ matchedProductsByDkp:", matchedProductsByDkp)
+
+      const productIds = matchedProductsByDkp.docs.map((p) => p.id);
+      // console.log("🚀 ~ productIds:", productIds.length)
+
+      // پیدا کردن review ها برای محصولات پیدا شده
+      const reviewsData = await ctx.db.find({
+        collection: "reviews",
+        where: {
+          product: { in: productIds },
+        },
+      });
+
+      return reviewsData?.docs || [];
     }),
 
   create: baseProcedure
@@ -67,28 +82,28 @@ export const reviewsRouter = createTRPCRouter({
         });
       }
 
-      const existsingReviewsData = await ctx.db.find({
-        collection: "reviews",
-        where: {
-          and: [
-            {
-              product: {
-                equals: product.id,
-              },
-            },
-            {
-              user: { equals: user.id },
-            },
-          ],
-        },
-      });
+      // const existsingReviewsData = await ctx.db.find({
+      //   collection: "reviews",
+      //   where: {
+      //     and: [
+      //       {
+      //         product: {
+      //           equals: product.id,
+      //         },
+      //       },
+      //       {
+      //         user: { equals: user.id },
+      //       },
+      //     ],
+      //   },
+      // });
 
-      if (existsingReviewsData.totalDocs > 0) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "you have already reviwed this product",
-        });
-      }
+      // if (existsingReviewsData.totalDocs > 0) {
+      //   throw new TRPCError({
+      //     code: "BAD_REQUEST",
+      //     message: "شما قبلا در مورد این محصول نظر داده اید",
+      //   });
+      // }
 
       const review = await ctx.db.create({
         collection: "reviews",
