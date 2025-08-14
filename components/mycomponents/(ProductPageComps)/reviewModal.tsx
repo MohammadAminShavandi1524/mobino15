@@ -28,23 +28,10 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 interface ReviewModalProps {
-  type: "single" | "multiple";
   isReviewModalOpen: boolean;
   setIsReviewModalOpen: Dispatch<SetStateAction<boolean>>;
   product: Product;
   userId?: string;
-
-  MPMainImage?: {
-    url: string;
-    isMain?: boolean | null;
-    id?: string | null;
-  } | null;
-
-  SPMainImage?: {
-    url: string;
-    isMain?: boolean | null;
-    id?: string | null;
-  } | null;
 }
 
 const formSchema = z.object({
@@ -60,14 +47,12 @@ const ReviewModal = ({
   setIsReviewModalOpen,
   product,
   userId,
-  type,
-  MPMainImage,
-  SPMainImage,
 }: ReviewModalProps) => {
-  // const [ratingValue, setRatingValue] = useState<number>(0);
-  // console.log("🚀 ~ ReviewModal ~ ratingValue:", ratingValue);
-
-  const mainImage = type === "multiple" ? MPMainImage : SPMainImage;
+  const mainImage =
+    product &&
+    product.images?.find((image) => {
+      return image.isMain;
+    })?.url;
 
   const trpc = useTRPC();
   const router = useRouter();
@@ -96,7 +81,7 @@ const ReviewModal = ({
 
       onSuccess: () => {
         setIsReviewModalOpen(false);
-        router.refresh()
+        router.refresh();
       },
     })
   );
@@ -133,7 +118,7 @@ const ReviewModal = ({
                   {mainImage && (
                     <Image
                       className={cn("")}
-                      src={mainImage.url}
+                      src={mainImage}
                       alt={product.name}
                       width={80}
                       height={80}

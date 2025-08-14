@@ -31,26 +31,11 @@ import { Progress } from "@/components/ui/progress";
 import { Link, Element } from "react-scroll";
 
 interface AllSpecAndReviewsProps {
-  type: "single" | "multiple";
   product: Product;
   userName?: string;
   productReviews: Review[] | null | undefined;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsReviewModalOpen: Dispatch<SetStateAction<boolean>>;
-
-  MPMainImage?: {
-    url: string;
-    isMain?: boolean | null;
-    id?: string | null;
-  } | null;
-  MPImageShowcase?: string;
-  SPMainImage?: {
-    url: string;
-    isMain?: boolean | null;
-    id?: string | null;
-  } | null;
-
-  SPImageShowcase?: string;
 }
 const reviewsSortOptions = [
   { label: "جدیدترین", value: "Newest" },
@@ -59,15 +44,10 @@ const reviewsSortOptions = [
   { label: "کمترین امتیاز", value: "LowestRating" },
 ];
 const AllSpecAndReviews = ({
-  type,
   product,
   userName,
   setIsModalOpen,
   setIsReviewModalOpen,
-  MPMainImage,
-  MPImageShowcase,
-  SPImageShowcase,
-  SPMainImage,
   productReviews,
 }: AllSpecAndReviewsProps) => {
   const [reviewOrderBar, setReviewOrderBar] = useState("Newest");
@@ -122,6 +102,13 @@ const AllSpecAndReviews = ({
         break;
     }
   }
+
+  const mainImageUrl =
+    product &&
+    product.images?.find((image) => {
+      return image.isMain;
+    })?.url;
+ 
 
   return (
     <div className="relative flex flex-col my-10">
@@ -372,28 +359,18 @@ const AllSpecAndReviews = ({
 
         {/* aside */}
         <div className="sticky top-20 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
-          {/* image title and color */}
+          {/* image,title and color */}
           <div className="flex gap-x-5 mt-3">
             <div className="flex justify-center items-center self-baseline min-w-[100px]">
-              {type === "multiple"
-                ? MPMainImage && (
-                    <Image
-                      className={cn("")}
-                      src={MPImageShowcase ?? MPMainImage.url}
-                      alt={`${product.name}`}
-                      width={100}
-                      height={100}
-                    />
-                  )
-                : SPMainImage && (
-                    <Image
-                      className={cn("")}
-                      src={SPImageShowcase ? SPImageShowcase : SPMainImage.url}
-                      alt={`${product.name}`}
-                      width={100}
-                      height={100}
-                    />
-                  )}
+              {mainImageUrl && (
+                <Image
+                  className={cn("")}
+                  src={mainImageUrl}
+                  alt={product.name}
+                  width={100}
+                  height={100}
+                />
+              )}
             </div>
             {/* title and color */}
             <div className="flex flex-col">

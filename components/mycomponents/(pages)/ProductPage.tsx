@@ -8,21 +8,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTRPC } from "@/trpc/client";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import {
-  ArrowDownWideNarrow,
-  BadgeCheck,
-  Check,
-  Plus,
-  Store,
-  Truck,
-} from "lucide-react";
+import { Check } from "lucide-react";
 
-import {
-  cn,
-  convertToPersianNumber,
-  getColorInfo,
-  isDarkColor,
-} from "@/lib/utils";
+import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
 
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import AddToCartBtnModal from "../AddToCartBtnModal";
@@ -32,13 +20,14 @@ import SellerInfo from "../(ProductPageComps)/SellerInfo";
 import ProductRating from "../(ProductPageComps)/ProductRating";
 import ProductFaTitle from "../(ProductPageComps)/ProductFaTitle";
 import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
-import Link from "next/link";
+
 import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
 import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
 
 import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
 import AllSpecAndReviews from "../(ProductPageComps)/AllSpecAndReviews";
 import ReviewModal from "../(ProductPageComps)/reviewModal";
+import ImageShowcase from "../(ProductPageComps)/ImageShowcase";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -120,26 +109,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
       }
     );
 
-  // * single product
-
-  const SPMainImage =
-    singleProduct &&
-    singleProduct.images?.find((image) => {
-      return image.isMain;
-    });
-
-  const [SPImageShowcase, setSPImageShowcase] = useState(SPMainImage?.url);
-
-  // * multiple products
-
-  const MPMainImage =
-    MPSelectedProduct &&
-    MPSelectedProduct.images?.find((image) => {
-      return image.isMain;
-    });
-
-  const [MPImageShowcase, setMPImageShowcase] = useState(MPMainImage?.url);
-
   const [MPProductShowcase, setMPProductsShowcase] = useState<
     Product | undefined
   >();
@@ -180,12 +149,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
         />
         {/* review modal */}
         <ReviewModal
-          type="single"
           product={singleProduct}
           isReviewModalOpen={isReviewModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userId={user?.id}
-          SPMainImage={SPMainImage}
         />
         {/* bread crump */}
         <div className="mb-5">
@@ -253,45 +220,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
             </div>
 
-            <div className="relative flex flex-col justify-center gap-y-[70px] col-span-9  h-full pt-[38px] pr-[46px] pb-[42px] pl-[52px] rounded-l-xl">
-              {/* like and share */}
-              <div className="absolute"></div>
-              {/* main image */}
-              <div className="w-full flex items-center justify-center ">
-                {SPMainImage && (
-                  <div>
-                    <Image
-                      className={cn("")}
-                      src={SPImageShowcase ? SPImageShowcase : SPMainImage.url}
-                      alt={`${singleProduct.name}`}
-                      width={400}
-                      height={400}
-                    />
-                  </div>
-                )}
-              </div>
-              {/* othet image */}
-              <div className="w-full flex flex-row-reverse items-center justify-center gap-x-2">
-                {singleProduct.images &&
-                  singleProduct.images?.slice(0, 4).map((img, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="p-0.5 border  border-[#d7dee0] rounded-sm cursor-pointer"
-                        onClick={() => setSPImageShowcase(img.url)}
-                      >
-                        <Image
-                          className={cn("")}
-                          src={img.url}
-                          alt={`${singleProduct.name}`}
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
+            {/* ImageShowcase */}
+            <ImageShowcase product={singleProduct} />
           </div>
 
           {/*  */}
@@ -323,15 +253,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
         {/* all spec and reviews */}
 
         <AllSpecAndReviews
-        
-          type="single"
           product={singleProduct}
           productReviews={productReviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userName={user?.username}
-          SPImageShowcase={SPImageShowcase}
-          SPMainImage={SPMainImage}
         />
       </div>
     );
@@ -358,12 +284,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
         {/* review modal */}
         <ReviewModal
-          type="multiple"
           product={TheProduct}
           isReviewModalOpen={isReviewModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userId={user?.id}
-          MPMainImage={MPMainImage}
         />
         {/* bread crump */}
         <div className="mb-5">
@@ -451,7 +375,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
 
               {/* main specifictions */}
-
               <div className="flex flex-col gap-y-2.5 ">
                 <div className="text-[14px] font-medium pr-1.5">
                   ویژگی های اصلی
@@ -460,47 +383,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   <ProductMainSpec product={MPSelectedProduct} />
                 </div>
               </div>
-            </div>
 
-            <div className="relative flex flex-col justify-center gap-y-[70px] col-span-9  h-full pt-[38px] pr-[46px] pb-[42px] pl-[52px] rounded-l-xl">
-              {/* like and share */}
-              <div className="absolute"></div>
-              {/* main image */}
-              <div className="w-full flex items-center justify-center ">
-                {MPMainImage && (
-                  <div>
-                    <Image
-                      className={cn("")}
-                      src={MPImageShowcase ?? MPMainImage.url}
-                      alt={`${MPSelectedProduct.name}`}
-                      width={400}
-                      height={400}
-                    />
-                  </div>
-                )}
-              </div>
-              {/* othet image */}
-              <div className="w-full flex flex-row-reverse items-center justify-center gap-x-2">
-                {MPSelectedProduct.images &&
-                  MPSelectedProduct.images?.slice(0, 4).map((img, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="p-0.5 border  border-[#d7dee0] rounded-sm cursor-pointer"
-                        onClick={() => setMPImageShowcase(img.url)}
-                      >
-                        <Image
-                          className={cn("")}
-                          src={img.url}
-                          alt={`${MPSelectedProduct.name}`}
-                          width={80}
-                          height={80}
-                        />
-                      </div>
-                    );
-                  })}
-              </div>
             </div>
+            {/* ImageShowcase */}
+            <ImageShowcase product={MPSelectedProduct} />
           </div>
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
@@ -534,14 +420,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
         {/* all spec and reviews */}
 
         <AllSpecAndReviews
-          type="single"
           product={TheProduct}
           productReviews={productReviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userName={user?.username}
-          MPImageShowcase={MPImageShowcase}
-          MPMainImage={MPMainImage}
         />
       </div>
     );

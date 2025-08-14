@@ -121,7 +121,7 @@ const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
               </div>
 
               {/* title */}
-              <div className="productlist-title  px-6 text-justify text-[14px] text-[#212121] font-light mb-3">
+              <div className="productlist-title min-h-[63px] px-6 text-justify text-[14px] text-[#212121] font-light mb-3">
                 {product.label}
               </div>
 

@@ -7,19 +7,16 @@ import { addReviewSchema, updateReviewSchema } from "../schemas";
 
 export const reviewsRouter = createTRPCRouter({
   getOne: baseProcedure
-    .input(z.object({ product: z.string() })) // رشته product که از URL میاد
+    .input(z.object({ product: z.string() }))
     .query(async ({ ctx, input }) => {
-      // استخراج orderParam از پارام
       const orderParam = decodeURIComponent(input.product).split("_")[0];
 
-      // پیدا کردن محصولاتی که order برابر هست
       const matchedProductsByOrder = await ctx.db.find({
         collection: "products",
         where: {
           order: { equals: Number(orderParam) },
         },
       });
-      // console.log("🚀 ~ matchedProductsByOrder:", matchedProductsByOrder);
 
       if (!matchedProductsByOrder || matchedProductsByOrder.totalDocs === 0) {
         throw new TRPCError({
@@ -28,24 +25,19 @@ export const reviewsRouter = createTRPCRouter({
         });
       }
 
-      // استخراج dkp از اولین محصول
       const dkp = matchedProductsByOrder.docs[0].address.replace(/\D/g, "");
 
-      // پیدا کردن تمام محصولاتی که dkp برابر دارن
       const matchedProductsByDkp = await ctx.db.find({
         collection: "products",
         where: {
           address: {
-            like: dkp, // فقط عدد dkP را جستجو می‌کنیم
+            like: dkp,
           },
         },
       });
-      console.log("🚀 ~ matchedProductsByDkp:", matchedProductsByDkp)
 
       const productIds = matchedProductsByDkp.docs.map((p) => p.id);
-      // console.log("🚀 ~ productIds:", productIds.length)
 
-      // پیدا کردن review ها برای محصولات پیدا شده
       const reviewsData = await ctx.db.find({
         collection: "reviews",
         where: {
