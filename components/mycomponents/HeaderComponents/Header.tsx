@@ -141,7 +141,7 @@ const Header = () => {
             {/* logo and searchbar */}
             <section className="flex items-center gap-x-6">
               {/* logo */}
-              <Logo />
+              <Logo setIsSideBarOpen={setIsSideBarOpen}/>
 
               {/* searchbar */}
               <SearchBar />
@@ -229,6 +229,7 @@ const Header = () => {
 
             <div>
               <Logo
+              setIsSideBarOpen={setIsSideBarOpen}
                 logoImage_height={32}
                 logoImage_width={32}
                 text_className="text-[24px]"

@@ -29,13 +29,13 @@ const SimilarProductsCarousel = ({
       p.available && p.subCategory === subCategory.id && p.name !== product.name
     );
   });
-  // console.log("🚀 ~ SimilarProductsCarousel ~ products:", products)
+ 
   
 
   const uniqueAvailableProducts = Array.from(
     new Map(products.map((p) => [p.name, p])).values()
   );
-  // console.log("🚀 ~ SimilarProductsCarousel ~ uniqueAvailableProducts:", uniqueAvailableProducts)
+ 
 
  
 

@@ -19,10 +19,14 @@ import MobileHighlights from "@/components/mycomponents/(CatHighlights)/MobileHi
 import LaptopCarousel from "@/components/mycomponents/(carousels)/LaptopCarousel";
 import MobilePriceTags from "@/components/mycomponents/(CatPriceTag)/MobilePriceTags";
 import LaptopPriceTags from "@/components/mycomponents/(CatPriceTag)/LaptopPriceTags";
+import TabletHighlight from "@/components/mycomponents/(CatHighlights)/TabletHighlight";
+import TabletCarousel from "@/components/mycomponents/(carousels)/TabletCarousel";
 
 export default async function Home() {
-  prefetch(trpc.products.getMany.queryOptions({}));
-
+  prefetch(trpc.products.getAffinoCarousel.queryOptions());
+  prefetch(trpc.products.getMobileCarousel.queryOptions());
+  prefetch(trpc.products.getLaptopCarousel.queryOptions());
+  prefetch(trpc.products.getTabletCarousel.queryOptions());
 
   return (
     <div className="flex flex-col  overflow-x-hidden">
@@ -78,6 +82,21 @@ export default async function Home() {
           {/* لپ تاپ بر اساس قیمت  */}
           <LaptopPriceTags />
         </div>
+
+        {/* tablet subCategories */}
+
+        <TabletHighlight />
+
+        {/* tablet carousel */}
+        <HydrateClient>
+          <ErrorBoundary
+            fallback={<div>TabletCarousel error boundary!!!!</div>}
+          >
+            <Suspense fallback={<>TabletCarousel loading</>}>
+              <TabletCarousel />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
       </div>
     </div>
   );

@@ -164,4 +164,100 @@ export const productsRouter = createTRPCRouter({
         })),
       };
     }),
+
+  getAffinoCarousel: baseProcedure.query(async ({ ctx, input }) => {
+    const where: Where = {};
+    where.offPrice = {
+      greater_than: 0,
+    };
+    where.available = {
+      equals: true,
+    };
+
+    const data: PaginatedDocs<Product> = await ctx.db.find({
+      collection: "products",
+      depth: 1,
+      where,
+      limit: 50,
+    });
+
+    return {
+      ...data,
+      docs: data.docs.map((doc) => ({
+        ...doc,
+        tenant: doc.tenant as Tenant,
+      })),
+    };
+  }),
+  getMobileCarousel: baseProcedure.query(async ({ ctx, input }) => {
+    const where: Where = {};
+    where.category = {
+      equals: "686ff08bd6713d28c018821b",
+    };
+    where.available = {
+      equals: true,
+    };
+    where["productType.classification"] = { equals: "FlagBearer" };
+
+    const data: PaginatedDocs<Product> = await ctx.db.find({
+      collection: "products",
+      depth: 1,
+      where,
+      limit: 25,
+    });
+
+    return {
+      ...data,
+      docs: data.docs.map((doc) => ({
+        ...doc,
+        tenant: doc.tenant as Tenant,
+      })),
+    };
+  }),
+  getLaptopCarousel: baseProcedure.query(async ({ ctx, input }) => {
+    const where: Where = {};
+    where.category = {
+      equals: "68721e69c794390510ef3922",
+    };
+    where.available = {
+      equals: true,
+    };
+    const data: PaginatedDocs<Product> = await ctx.db.find({
+      collection: "products",
+      depth: 1,
+      where,
+      limit: 25,
+    });
+
+    return {
+      ...data,
+      docs: data.docs.map((doc) => ({
+        ...doc,
+        tenant: doc.tenant as Tenant,
+      })),
+    };
+  }),
+  getTabletCarousel: baseProcedure.query(async ({ ctx, input }) => {
+    const where: Where = {};
+    where.category = {
+      equals: "686ff0c7d6713d28c0188278",
+    };
+    where.available = {
+      equals: true,
+    };
+    const data: PaginatedDocs<Product> = await ctx.db.find({
+      collection: "products",
+      depth: 1,
+      where,
+      limit: 25,
+    });
+
+    return {
+      ...data,
+      docs: data.docs.map((doc) => ({
+        ...doc,
+        tenant: doc.tenant as Tenant,
+      })),
+    };
+  }),
 });

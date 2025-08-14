@@ -1,29 +1,36 @@
-import CatHighlights from "./CatHighlights";
+
+import CustomCatHighlight from "./CustomCatHighlight";
 
 const LaptopHighlights = () => {
   const LaptopOptions = [
     {
-      img: "https://www.technolife.com/image/static_laptop_asus_new.png",
+      img: "/catHighlight/asuslaptop.png",
       label: "ایسوس",
       href: "/laptop/asusLaptop",
     },
     {
-      img: "https://www.technolife.com/image/static_laptop_hp_new.png",
+      img: "/catHighlight/hplaptop.png",
       label: "اچ پی",
       href: "/laptop/HPLaptop",
     },
     {
-      img: "https://www.technolife.com/image/static_laptop_mac_new.png",
+      img: "/catHighlight/macbook.png",
       label: "مک بوک",
       href: "/laptop/appleLaptop",
     },
     {
-      img: "https://www.technolife.com/image/static_laptop_aser_new.png",
-      label: "ایسر",
-      href: "/laptop/AcerLaptop",
+      img: "/catHighlight/lenovolaptop.png",
+      label: "لنوو",
+      href: "/laptop/lenovoLaptop",
     },
   ];
 
-  return <CatHighlights label="لپ تاپ" options={LaptopOptions} />;
+  return (
+    <CustomCatHighlight
+      bgColor="#e7d8ee"
+      label="لپ تاپ"
+      options={LaptopOptions}
+    />
+  );
 };
 export default LaptopHighlights;

@@ -4,10 +4,11 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Skeleton from "./(skeletonComponets)/Skleton";
 
 interface LogoProps {
+  setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
   logoImage_width?: number;
   logoImage_height?: number;
   text_className?: string;
@@ -17,13 +18,8 @@ const Logo = ({
   logoImage_height,
   logoImage_width,
   text_className,
+  setIsSideBarOpen,
 }: LogoProps) => {
-  const { resolvedTheme } = useTheme();
-
-  
-
-  
-
   return (
     <Link href="/" className="flex items-center  gap-x-2">
       <Image

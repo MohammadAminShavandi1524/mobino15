@@ -18,16 +18,20 @@ import ProductsCarousel from "./ProductsCarousel";
 const Afino = () => {
   const trpc = useTRPC();
 
-  const { data: productsData } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({})
+  const _productsData = useSuspenseQuery(
+    trpc.products.getAffinoCarousel.queryOptions()
   );
 
-  const availableDiscountedProducts = productsData?.docs.filter((p) => {
-    return p.available && p.offPrice;
+  const productsData = _productsData.data.docs.filter((product) => {
+    if (!product.offPrice) return false;
+    const discountPercent = Math.ceil(
+      ((product.price - product.offPrice) / product.price) * 100
+    );
+    return discountPercent > 10;
   });
 
   const products = Array.from(
-    new Map(availableDiscountedProducts.map((p) => [p.name, p])).values()
+    new Map(productsData.map((p) => [p.name, p])).values()
   ).slice(0, 10);
 
   return (

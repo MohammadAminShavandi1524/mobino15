@@ -69,10 +69,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                     product.offPrice ? (
                       <div className="relative flex items-center justify-between px-4 pb-[42px]">
                         {/* discount percent */}
-                        <div
-                          className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 w-7 rounded-sm
-                  px-1"
-                        >
+                        <div className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 w-7 rounded-sm px-1">
                           <span>
                             <Percent strokeWidth={2.5} size={14} />
                           </span>

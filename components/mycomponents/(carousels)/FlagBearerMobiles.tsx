@@ -9,21 +9,12 @@ import ProductsCarousel from "./ProductsCarousel";
 const FlagBearerMobiles = () => {
   const trpc = useTRPC();
 
-  const { data: productsData } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({})
+  const productsData = useSuspenseQuery(
+    trpc.products.getMobileCarousel.queryOptions()
   );
 
-  const flagbearerAvailableProducts = productsData?.docs.filter((p) => {
-    return (
-      p.available &&
-      p.category === "686ff08bd6713d28c018821b" &&
-      p.productType?.[0].blockType === "mobile" &&
-      p.productType?.[0].classification === "FlagBearer"
-    );
-  });
-
   const products = Array.from(
-    new Map(flagbearerAvailableProducts.map((p) => [p.name, p])).values()
+    new Map(productsData.data.docs.map((p) => [p.name, p])).values()
   ).slice(0, 10);
 
   return (
