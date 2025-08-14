@@ -112,7 +112,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             <span className=" text-[14px]">درباره ما</span>
           </Link>
         </SidebarGroup>
-        <SidebarGroup className="border-b border-b-[#d3d8e4]">
+        {/* <SidebarGroup className="border-b border-b-[#d3d8e4]">
           <Link
             onClick={() => {
               toggleSidebar();
@@ -129,7 +129,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             />
             <span className=" text-[14px]">خرید اقساطی</span>
           </Link>
-        </SidebarGroup>
+        </SidebarGroup> */}
         {/* categories */}
 
         <SidebarGroup className="border-b border-b-[#d3d8e4]">

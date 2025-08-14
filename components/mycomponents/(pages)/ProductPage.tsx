@@ -189,7 +189,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   </div>
 
                   <div
-                    className="flex justify-between items-center self-baseline p-[4px] border border-[#1b3570]
+                    className="flex justify-between items-center self-baseline p-[4px] border border-[#14a0de]
                    rounded-[6px] cursor-pointer"
                   >
                     <div
@@ -224,7 +224,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
             <ImageShowcase product={singleProduct} />
           </div>
 
-          {/*  */}
+          {/* landing aside */}
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
             <SellerInfo product={singleProduct} productType="single" />
@@ -241,6 +241,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
             />
           </div>
         </div>
+
         {/* ServiceHighlights */}
         <ServiceHighlights />
         {/* similar products carousel */}
@@ -340,7 +341,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                           <div
                             className={cn(
                               "flex justify-between items-center self-baseline p-[4px] border border-[#d7dee0]  rounded-[6px] ",
-                              isSelected && "border-[#1b3570]"
+                              isSelected && "border-[#14a0de]"
                             )}
                           >
                             <div
@@ -383,11 +384,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   <ProductMainSpec product={MPSelectedProduct} />
                 </div>
               </div>
-
             </div>
             {/* ImageShowcase */}
             <ImageShowcase product={MPSelectedProduct} />
           </div>
+
+          {/* landing aside */}
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
             <SellerInfo

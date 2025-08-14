@@ -204,7 +204,7 @@ const Header = () => {
                 </span>
                 <span>درباره ما</span>
               </Link>
-              <Link
+              {/* <Link
                 href="/InstallmentPurchase"
                 className="p-2.5 flex items-center gap-x-2"
               >
@@ -212,7 +212,7 @@ const Header = () => {
                   <Wallet />
                 </span>
                 <span>خرید اقساطی</span>
-              </Link>
+              </Link> */}
             </div>
             {/* seller login */}
             <Link href="" className="p-2.5 text-custom-primary">

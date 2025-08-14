@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  cn,
-  convertToPersianNumber,
-  getColorInfo,
-  isDarkColor,
-} from "@/lib/utils";
+import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import { Product, Tenant, User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
@@ -13,7 +8,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   BadgeCheck,
   BadgePercent,
-  Check,
   ChevronLeft,
   Copy,
   Divide,
@@ -28,8 +22,17 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import TomanLogo from "../TomanLogo";
+import {
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+  Tooltip,
+} from "@/components/ui/tooltip";
+import { useState } from "react";
 
 const CartPage = () => {
+  const [isRemoveProductHovered, setIsRemoveProductHovered] = useState(false);
+
   const trpc = useTRPC();
 
   const user: User | null = useSuspenseQuery(trpc.auth.session.queryOptions())
@@ -40,15 +43,8 @@ const CartPage = () => {
   );
 
   const {
-    addProduct,
-    clearAllCarts,
     clearCart,
-    isProductInCart,
-    productIds,
     removeProduct,
-    toggleProduct,
-    totalItems,
-    userCarts,
     decreaseProductCount,
     increaseProductCount,
     getCartByUser,
@@ -197,12 +193,23 @@ const CartPage = () => {
                 )}
               >
                 {/* remove product */}
+
                 <button
+                  onMouseEnter={() => setIsRemoveProductHovered(true)}
+                  onMouseLeave={() => setIsRemoveProductHovered(false)}
                   onClick={() => removeProduct(product.id)}
                   className="absolute top-0 left-0 z-5 flex justify-center items-center size-9 p-1.5 m-2 cursor-pointer rounded-full bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
                 >
                   <Trash2 size={20} color="#ef4056" />
                 </button>
+
+                {/* remove product tooltip */}
+                {isRemoveProductHovered && (
+                  <div className="absolute flex items-center top-[55px] left-[8px] py-1.75 px-3.5 bg-white text-black shadow-[0px_2px_4px_rgba(0,0,0,0.2)] rounded-full text-sm">
+                    حذف
+                  </div>
+                )}
+
                 {/*  */}
                 <div className=" grid grid-cols-10 gap-x-10 ">
                   <div className="col-span-7 flex flex-col pt-4.5">
@@ -339,7 +346,7 @@ const CartPage = () => {
                         {/* color and count control */}
                         <div className="flex items-center justify-between mt-3">
                           {/* color */}
-                          <div className="flex justify-between items-center  p-[3px] border border-[#1b3570] rounded-[5px] ">
+                          <div className="flex justify-between items-center  p-[3px] border border-[#14a0de] rounded-[5px] ">
                             <div
                               className="size-5 flex items-center justify-center border border-[#d7dee0] 
                                 rounded-[6px]"
@@ -412,7 +419,7 @@ const CartPage = () => {
                         {/* color and count control */}
                         <div className="flex items-center justify-between mt-3">
                           {/* color */}
-                          <div className="flex justify-between items-center  p-[3px] border border-[#1b3570] rounded-[5px] ">
+                          <div className="flex justify-between items-center  p-[3px] border border-[#14a0de] rounded-[5px] ">
                             <div
                               className="size-4 flex items-center justify-center border border-[#d7dee0] 
                                 rounded-[6px]"
