@@ -8,7 +8,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Skeleton from "./(skeletonComponets)/Skleton";
 
 interface LogoProps {
-  setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
+  // setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
   logoImage_width?: number;
   logoImage_height?: number;
   text_className?: string;
@@ -18,7 +18,7 @@ const Logo = ({
   logoImage_height,
   logoImage_width,
   text_className,
-  setIsSideBarOpen,
+  
 }: LogoProps) => {
   return (
     <Link href="/" className="flex items-center  gap-x-2">

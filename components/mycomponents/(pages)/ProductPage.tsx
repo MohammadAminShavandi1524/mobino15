@@ -10,7 +10,12 @@ import { useTRPC } from "@/trpc/client";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 
-import { cn, getColorInfo, isDarkColor } from "@/lib/utils";
+import {
+  cn,
+  convertIdToCatOrSub,
+  getColorInfo,
+  isDarkColor,
+} from "@/lib/utils";
 
 import BreadCrump from "@/components/mycomponents/BreadCrump";
 import AddToCartBtnModal from "../AddToCartBtnModal";
@@ -46,6 +51,7 @@ interface ProductPageProps {
 }
 
 const ProductPage = ({ product }: ProductPageProps) => {
+  if (!product) return <div>param loading</div>;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
 
@@ -56,75 +62,32 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const user: User | null = useSuspenseQuery(trpc.auth.session.queryOptions())
     .data.user;
 
-  const { data: productsData } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({})
-  );
+  const matchedProductByDKP: Product[] = useSuspenseQuery(
+    trpc.products.getOneWithDKP.queryOptions({ order: orderParam })
+  ).data.docs;
 
-  const { data: categories } = useSuspenseQuery(
-    trpc.categories.getMany.queryOptions()
-  );
+  const matchedProductByOrder: Product = useSuspenseQuery(
+    trpc.products.getOneWithOrder.queryOptions({ order: orderParam })
+  ).data.docs[0];
 
   const { data: productReviews } = useQuery(
     trpc.reviews.getOne.queryOptions({ product: product })
   );
 
-  const matchedProductByOrder =
-    productsData?.docs.filter((p) => p.order === Number(orderParam)) || [];
-
-  const dkp = matchedProductByOrder[0].address.replace(/\D/g, "");
-
-  const matchedProducts =
-    productsData?.docs.filter((p) => p.address.replace(/\D/g, "") === dkp) ||
-    [];
-
-  // *** single product ***
-  const singleProduct: Product | null =
-    matchedProducts.length === 1 ? matchedProducts[0] : null;
-
-  // *** multiple product ***
-  const multipleProducts: Product[] | null =
-    matchedProducts.length > 1 ? matchedProducts : null;
-
-  const MPSelectedProduct = multipleProducts?.find((p) => {
-    return p.order === Number(orderParam);
-  });
-
-  const selectedCategory = categories?.docs.find((cat) => {
-    if (singleProduct) return cat.id === singleProduct.category;
-    if (multipleProducts) {
-      return cat.id === multipleProducts[0].category;
-    }
-    return false;
-  });
-
-  const selectedSubCategory =
-    selectedCategory &&
-    (selectedCategory?.subcategories?.docs as Category[]).find(
-      (sub: Category) => {
-        if (singleProduct) return sub.id === singleProduct.subCategory;
-        if (multipleProducts) {
-          return sub.id === multipleProducts[0].subCategory;
-        }
-        return false;
-      }
-    );
-
   const [MPProductShowcase, setMPProductsShowcase] = useState<
     Product | undefined
   >();
 
-  const matchedAvailableProducts = matchedProducts.filter((p) => {
+  const matchedAvailableProducts = matchedProductByDKP.filter((p) => {
     return p.available;
   });
-
-  // *
 
   // * نا موجود
 
   if (
-    matchedProductByOrder.length > 0 &&
-    (matchedProductByOrder[0].available === false ||
-      matchedProductByOrder[0].quantity === 0)
+    matchedProductByOrder &&
+    (matchedProductByOrder.available === false ||
+      matchedProductByOrder.quantity === 0)
   )
     return (
       <div className="w90 flex flex-col mt-4">
@@ -132,147 +95,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
       </div>
     );
 
-  // * single products
-
-  if (singleProduct && selectedCategory && selectedSubCategory) {
-    const checkColor = isDarkColor(getColorInfo(singleProduct.color).hex)
-      ? "#fff"
-      : "#000";
-
-    return (
-      <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
-        {/* modal */}
-        <AddToCartBtnModal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          product={singleProduct}
-        />
-        {/* review modal */}
-        <ReviewModal
-          product={singleProduct}
-          isReviewModalOpen={isReviewModalOpen}
-          setIsReviewModalOpen={setIsReviewModalOpen}
-          userId={user?.id}
-        />
-        {/* bread crump */}
-        <div className="mb-5">
-          <BreadCrump
-            activePage="product"
-            productData={singleProduct}
-            selectedCategoryData={selectedCategory}
-            selectedSubCategoryData={selectedSubCategory}
-            className="px-1"
-          />
-        </div>
-
-        {/*  */}
-        <div className="flex gap-x-[50px] relative bg-[#fcfeff]">
-          <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
-            <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
-              {/* product fa title */}
-              <ProductFaTitle label={singleProduct.label} />
-              {/* product en title */}
-              <ProductEnTitle name={singleProduct.name} />
-
-              <div className="self-baseline mb-10">
-                {/* product rating */}
-                <ProductRating
-                  productReviews={productReviews}
-                  rating={singleProduct.rating}
-                />
-
-                {/* product color */}
-                <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
-                  <div className="flex items-center gap-x-2 ">
-                    <span>رنگ :</span>
-                    <span>{getColorInfo(singleProduct.color).label}</span>
-                  </div>
-
-                  <div
-                    className="flex justify-between items-center self-baseline p-[4px] border border-[#14a0de]
-                   rounded-[6px] cursor-pointer"
-                  >
-                    <div
-                      className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
-                      rounded-[6px]"
-                      style={{
-                        backgroundColor: getColorInfo(singleProduct.color).hex,
-                      }}
-                    >
-                      <Check color={checkColor} size={12} strokeWidth={3} />
-                    </div>
-                    <span className="text-[14px] font-medium text-[#333333] ml-3 mr-2">
-                      {getColorInfo(singleProduct.color).label}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* main specifictions */}
-
-              <div className="flex flex-col gap-y-2.5 ">
-                <div className="text-[14px] font-medium pr-1.5">
-                  ویژگی های اصلی
-                </div>
-                <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
-                  <ProductMainSpec product={singleProduct} />
-                </div>
-              </div>
-            </div>
-
-            {/* ImageShowcase */}
-            <ImageShowcase product={singleProduct} />
-          </div>
-
-          {/* landing aside */}
-          <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
-            {/* seller info */}
-            <SellerInfo product={singleProduct} productType="single" />
-
-            {/* price info and quantity */}
-            <ProductAndQty product={singleProduct} />
-
-            {/* add to cart button */}
-
-            <AddToCartButton
-              setIsModalOpen={setIsModalOpen}
-              productId={singleProduct.id}
-              userName={user?.username}
-            />
-          </div>
-        </div>
-
-        {/* ServiceHighlights */}
-        <ServiceHighlights />
-        {/* similar products carousel */}
-        <SimilarProductsCarousel
-          category={selectedCategory}
-          subCategory={selectedSubCategory}
-          product={matchedProductByOrder[0]}
-        />
-
-        {/* all spec and reviews */}
-
-        <AllSpecAndReviews
-          product={singleProduct}
-          productReviews={productReviews}
-          setIsModalOpen={setIsModalOpen}
-          setIsReviewModalOpen={setIsReviewModalOpen}
-          userName={user?.username}
-        />
-      </div>
-    );
-  }
-
   // *multiple products
 
-  if (
-    multipleProducts &&
-    MPSelectedProduct &&
-    selectedCategory &&
-    selectedSubCategory
-  ) {
-    const TheProduct = MPProductShowcase ?? MPSelectedProduct;
+  if (matchedProductByDKP.length > 1) {
+    const TheProduct = MPProductShowcase ?? matchedProductByOrder;
     return (
       <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
         {/* modal */}
@@ -294,9 +120,17 @@ const ProductPage = ({ product }: ProductPageProps) => {
         <div className="mb-5">
           <BreadCrump
             activePage="product"
-            productData={MPSelectedProduct}
-            selectedCategoryData={selectedCategory}
-            selectedSubCategoryData={selectedSubCategory}
+            productData={matchedProductByOrder}
+            category={
+              convertIdToCatOrSub(
+                matchedProductByOrder?.category as string
+              ) as string
+            }
+            subCategory={
+              convertIdToCatOrSub(
+                matchedProductByOrder?.subCategory as string
+              ) as string
+            }
             className="px-1"
           />
         </div>
@@ -306,15 +140,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
           <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
             <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
               {/* product fa title */}
-              <ProductFaTitle label={MPSelectedProduct.label} />
+              <ProductFaTitle label={matchedProductByOrder.label} />
               {/* product en title */}
-              <ProductEnTitle name={MPSelectedProduct.name} />
+              <ProductEnTitle name={matchedProductByOrder.name} />
 
               <div className="self-baseline mb-10">
                 {/* product rating */}
                 <ProductRating
                   productReviews={productReviews}
-                  rating={MPSelectedProduct.rating}
+                  rating={matchedProductByOrder.rating}
                 />
 
                 {/* product color */}
@@ -381,19 +215,19 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   ویژگی های اصلی
                 </div>
                 <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
-                  <ProductMainSpec product={MPSelectedProduct} />
+                  <ProductMainSpec product={matchedProductByOrder} />
                 </div>
               </div>
             </div>
             {/* ImageShowcase */}
-            <ImageShowcase product={MPSelectedProduct} />
+            <ImageShowcase product={matchedProductByOrder} />
           </div>
 
           {/* landing aside */}
           <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
             {/* seller info */}
             <SellerInfo
-              product={MPSelectedProduct}
+              product={matchedProductByOrder}
               productType="multiple"
               MPProductShowcase={MPProductShowcase}
             />
@@ -413,11 +247,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         {/* ServiceHighlights */}
         <ServiceHighlights />
         {/* similar products carousel */}
-        <SimilarProductsCarousel
-          category={selectedCategory}
-          subCategory={selectedSubCategory}
-          product={matchedProductByOrder[0]}
-        />
+        <SimilarProductsCarousel product={matchedProductByOrder} />
 
         {/* all spec and reviews */}
 
@@ -432,16 +262,130 @@ const ProductPage = ({ product }: ProductPageProps) => {
     );
   }
 
-  // *Loading
+  // * single products
 
   return (
     <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+      {/* modal */}
+      <AddToCartBtnModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        product={matchedProductByOrder}
+      />
+      {/* review modal */}
+      <ReviewModal
+        product={matchedProductByOrder}
+        isReviewModalOpen={isReviewModalOpen}
+        setIsReviewModalOpen={setIsReviewModalOpen}
+        userId={user?.id}
+      />
       {/* bread crump */}
       <div className="mb-5">
-        <BreadCrump activePage="product" className="px-1" />
+        <BreadCrump
+          activePage="product"
+          productData={matchedProductByOrder}
+          category={
+            convertIdToCatOrSub(
+              matchedProductByOrder.category as string
+            ) as string
+          }
+          subCategory={
+            convertIdToCatOrSub(
+              matchedProductByOrder.subCategory as string
+            ) as string
+          }
+          className="px-1"
+        />
       </div>
+
+      {/*  */}
+      <div className="flex gap-x-[50px] relative bg-[#fcfeff]">
+        <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
+          <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
+            {/* product fa title */}
+            <ProductFaTitle label={matchedProductByOrder.label} />
+            {/* product en title */}
+            <ProductEnTitle name={matchedProductByOrder.name} />
+
+            <div className="self-baseline mb-10">
+              {/* product rating */}
+              <ProductRating
+                productReviews={productReviews}
+                rating={matchedProductByOrder.rating}
+              />
+
+              {/* product color */}
+              <div className="flex items-center gap-x-1 self-baseline  pl-6 pb-4 border-b border-b-[#d3d8e4]">
+                <span className="ml-0.5">رنگ :</span>
+                <span>{getColorInfo(matchedProductByOrder.color).label}</span>
+                <span
+                  style={{ backgroundColor: matchedProductByOrder.color }}
+                  className="size-4 rounded-full border border-[#d7dee0]"
+                ></span>
+              </div>
+            </div>
+
+            {/* main specifictions */}
+
+            <div className="flex flex-col gap-y-2.5 ">
+              <div className="text-[14px] font-medium pr-1.5">
+                ویژگی های اصلی
+              </div>
+              <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
+                <ProductMainSpec product={matchedProductByOrder} />
+              </div>
+            </div>
+          </div>
+
+          {/* ImageShowcase */}
+          <ImageShowcase product={matchedProductByOrder} />
+        </div>
+
+        {/* landing aside */}
+        <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
+          {/* seller info */}
+          <SellerInfo product={matchedProductByOrder} productType="single" />
+
+          {/* price info and quantity */}
+          <ProductAndQty product={matchedProductByOrder} />
+
+          {/* add to cart button */}
+
+          <AddToCartButton
+            setIsModalOpen={setIsModalOpen}
+            productId={matchedProductByOrder.id}
+            userName={user?.username}
+          />
+        </div>
+      </div>
+
+      {/* ServiceHighlights */}
+      <ServiceHighlights />
+      {/* similar products carousel */}
+      <SimilarProductsCarousel product={matchedProductByOrder} />
+
+      {/* all spec and reviews */}
+
+      <AllSpecAndReviews
+        product={matchedProductByOrder}
+        productReviews={productReviews}
+        setIsModalOpen={setIsModalOpen}
+        setIsReviewModalOpen={setIsReviewModalOpen}
+        userName={user?.username}
+      />
     </div>
   );
+
+  // // *Loading
+
+  // return (
+  //   <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+  //     {/* bread crump */}
+  //     <div className="mb-5">
+  //       <BreadCrump activePage="product" className="px-1" />
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default ProductPage;

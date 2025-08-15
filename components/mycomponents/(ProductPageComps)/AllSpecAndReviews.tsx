@@ -400,7 +400,7 @@ const AllSpecAndReviews = ({
           </div>
           {/* seller info */}
 
-          <div className="flex flex-col gap-x-3  mt-8 mr-3 bg-transparent ">
+          <div className="flex flex-col gap-x-3  mt-8 mr-4.5 bg-transparent ">
             <div className="pb-3 border-b border-b-[#d3d8e4]">
               <div className="flex items-center pb-2">
                 <span className="">

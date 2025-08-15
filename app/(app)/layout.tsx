@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   prefetch(trpc.auth.session.queryOptions());
   prefetch(trpc.categories.getMany.queryOptions());
-  prefetch(trpc.products.getMany.queryOptions({}));
+  
 
   // *prefetch example
   // const queryClient = getQueryClient();

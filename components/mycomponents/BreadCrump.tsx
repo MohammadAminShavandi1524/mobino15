@@ -1,21 +1,20 @@
-import { cn } from "@/lib/utils";
+import { cn, getPersianLabel } from "@/lib/utils";
 import { Category, Product } from "@/payload-types";
 import Link from "next/link";
 import Skeleton from "./(skeletonComponets)/Skleton";
 
 interface BreadCrumpProps {
-  selectedCategoryData?: Category;
-  selectedSubCategoryData?: Category;
+  category?: string;
+  subCategory?: string;
   productData?: Product;
-
   activePage: "category" | "subcategory" | "product" | "all";
   className?: string;
 }
 // products must be added later
 
 const BreadCrump = ({
-  selectedCategoryData,
-  selectedSubCategoryData,
+  category,
+  subCategory,
   productData,
 
   activePage,
@@ -49,11 +48,8 @@ const BreadCrump = ({
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link
-          className={cn("text-black")}
-          href={`/${selectedCategoryData?.name}`}
-        >
-          {selectedCategoryData?.label}
+        <Link className={cn("text-black")} href={`/${category}`}>
+          {getPersianLabel(category as string)}
         </Link>
       </div>
     );
@@ -67,15 +63,12 @@ const BreadCrump = ({
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("")} href={`/${selectedCategoryData?.name}`}>
-          {selectedCategoryData?.label}
+        <Link className={cn("")} href={`/${category}`}>
+          {getPersianLabel(category as string)}
         </Link>
         <span>/</span>
-        <Link
-          className={cn("text-black")}
-          href={`/${selectedCategoryData?.name}/${selectedSubCategoryData?.name}`}
-        >
-          {selectedSubCategoryData?.label}
+        <Link className={cn("text-black")} href={`/${category}/${subCategory}`}>
+          {getPersianLabel(subCategory as string)}
         </Link>
       </div>
     );
@@ -90,15 +83,15 @@ const BreadCrump = ({
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("")} href={`/${selectedCategoryData?.name}`}>
-          {selectedCategoryData?.label}
+        <Link className={cn("")} href={`/${category}`}>
+          {getPersianLabel(category as string)}
         </Link>
         <span>/</span>
         <Link
           className={cn("")}
-          href={`/${selectedCategoryData?.name}/${selectedSubCategoryData?.name}`}
+          href={`/${category}/${subCategory}`}
         >
-          {selectedSubCategoryData?.label}
+         {getPersianLabel(subCategory as string)}
         </Link>
         <span>/</span>
         <Link

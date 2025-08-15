@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import SubCategoryPage from "@/components/mycomponents/(pages)/SubCategoryPage";
 import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
+import { convertCatOrSubToId } from "@/lib/utils";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
 import { Suspense } from "react";
@@ -23,8 +24,13 @@ const SubCategory_Page = async ({
   const { category, subcategory } = await params;
 
   const filters = await LoadProductFilters(serachParams);
+  const id = convertCatOrSubToId(subcategory);
 
-  prefetch(trpc.products.getMany.queryOptions({ ...filters }));
+  if (!id) return <div>param loading</div>;
+  prefetch(
+    trpc.products.getSubCatProducts.queryOptions({ ...filters, Id: id })
+  );
+  prefetch(trpc.reviews.getSubReviews.queryOptions({ Id: id }));
   prefetch(trpc.categories.getMany.queryOptions());
 
   return (

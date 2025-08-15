@@ -19,7 +19,7 @@ const SellerInfo = ({
       <>
         <div className="pr-2 pb-2 font-medium">فروشنده</div>
 
-        <div className="flex flex-col gap-x-3 w-full text-[14px] bg-[#f3f8fd] py-3 px-4 rounded-lg">
+        <div className="flex flex-col gap-x-3 w-full text-[14px] bg-[#f3f8fd] py-3 px-4.5 rounded-lg">
           <div className="pb-3 border-b border-b-white">
             <div className="flex items-center pb-2">
               <span className="text-[#385086]">

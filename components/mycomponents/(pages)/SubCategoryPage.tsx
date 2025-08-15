@@ -7,10 +7,11 @@ import ProductList from "@/components/mycomponents/ProductList";
 import { useProductFilters } from "@/hooks/useProductFilter";
 import { Category } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { convertCatOrSubToId } from "@/lib/utils";
 
 interface SubCategoryPageProps {
   category: string;
@@ -21,15 +22,20 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
+  const id = convertCatOrSubToId(subcategory);
   const trpc = useTRPC();
 
-  const { data: categories } = useQuery(trpc.categories.getMany.queryOptions());
+  if (!id) return <div>param loading</div>; // loading for empty param
 
-  const { data: productsData } = useQuery(
-    trpc.products.getMany.queryOptions({
-      ...filters,
-    })
-  );
+  const subReviews = useSuspenseQuery(
+    trpc.reviews.getSubReviews.queryOptions({ Id: id })
+  ).data;
+
+  const products = useSuspenseQuery(
+    trpc.products.getSubCatProducts.queryOptions({ ...filters, Id: id })
+  ).data.docs;
+
+  const { data: categories } = useQuery(trpc.categories.getMany.queryOptions());
 
   const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
@@ -43,20 +49,13 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
       return findedSubCategory;
     });
 
-  // محصولات فیلتر شده بر اساس کتگوری
-  const products =
-    productsData &&
-    productsData?.docs.filter((product) => {
-      return product.subCategory === selectedSubCategoryData?.id;
-    });
-
   return (
     <div className="w90 flex flex-col mt-4">
       {/* bread crump */}
       <BreadCrump
         activePage="subcategory"
-        selectedCategoryData={selectedCategoryData}
-        selectedSubCategoryData={selectedSubCategoryData}
+        category={selectedCategoryData?.name}
+        subCategory={selectedSubCategoryData?.name}
         className="px-[10px]"
       />
 
@@ -84,6 +83,7 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
 
             <ProductList
               products={products}
+              reviews={subReviews}
               isFiltersOpened={isFiltersOpened}
             />
           </div>
@@ -105,7 +105,11 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
           </div>
           {/* product list */}
 
-          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
+          <ProductList
+            isFiltersOpened={isFiltersOpened}
+            products={products}
+            reviews={subReviews}
+          />
         </div>
       )}
     </div>

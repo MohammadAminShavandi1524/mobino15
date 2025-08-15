@@ -6,7 +6,6 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 const Cart_Page = async () => {
-  prefetch(trpc.products.getMany.queryOptions({}));
   prefetch(trpc.auth.session.queryOptions());
 
   return (

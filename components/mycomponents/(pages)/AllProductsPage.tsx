@@ -14,7 +14,7 @@ interface AllProductsPageProps {}
 const AllProductsPage = ({}: AllProductsPageProps) => {
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
-  
+
   const trpc = useTRPC();
 
   const { data: productsData } = useSuspenseQuery(
@@ -22,6 +22,7 @@ const AllProductsPage = ({}: AllProductsPageProps) => {
       ...filters,
     })
   );
+  const allReviews = useSuspenseQuery(trpc.reviews.getMany.queryOptions()).data;
 
   const products = productsData?.docs;
 
@@ -55,8 +56,9 @@ const AllProductsPage = ({}: AllProductsPageProps) => {
             {/* products list */}
 
             <ProductList
-              products={products}
               isFiltersOpened={isFiltersOpened}
+              products={products}
+              reviews={allReviews}
             />
           </div>
         </div>
@@ -77,7 +79,11 @@ const AllProductsPage = ({}: AllProductsPageProps) => {
           </div>
           {/* product list */}
 
-          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
+          <ProductList
+            isFiltersOpened={isFiltersOpened}
+            products={products}
+            reviews={allReviews}
+          />
         </div>
       )}
     </div>

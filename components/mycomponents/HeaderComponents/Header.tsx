@@ -12,7 +12,7 @@ import NavbarSidebar from "./NavbarSidebar";
 import { motion } from "framer-motion";
 
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import SearchBar from "./SearchBar";
@@ -30,7 +30,7 @@ const AuthBtn = dynamic(
         className=" min-w-[60px] lg:min-w-[140px] h-8 sm:h-10 px-2.5 py-1.25 sm:px-4 sm:py-2 border  border-custom-primary rounded-lg text-[15px]
             flex justify-center items-center "
       >
-        <LoadingDots size={2.5}/>
+        <LoadingDots size={2.5} />
       </div>
     ),
   }
@@ -79,9 +79,6 @@ const Header = () => {
 
   // *** cart item count ***
 
-  const { data: productsData } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({})
-  );
   const categories = useSuspenseQuery(trpc.categories.getMany.queryOptions())
     .data.docs;
 
@@ -89,10 +86,16 @@ const Header = () => {
 
   const userProductIds: { productId: string; count: number }[] =
     getCartByUser();
+  const productIds: string[] = [];
+  userProductIds.flatMap((o) => productIds.push(o.productId));
+
+  const userCartProducts = useQuery(
+    trpc.products.getCartProducts.queryOptions({ productIds: productIds })
+  ).data?.docs;
 
   const availableProductIds = new Set(
-    productsData.docs
-      .filter((product) => product.available && product.quantity > 0)
+    userCartProducts
+      ?.filter((product) => product.available && product.quantity > 0)
       .map((product) => product.id)
   );
 
@@ -141,7 +144,7 @@ const Header = () => {
             {/* logo and searchbar */}
             <section className="flex items-center gap-x-6">
               {/* logo */}
-              <Logo setIsSideBarOpen={setIsSideBarOpen}/>
+              <Logo />
 
               {/* searchbar */}
               <SearchBar />
@@ -229,7 +232,6 @@ const Header = () => {
 
             <div>
               <Logo
-              setIsSideBarOpen={setIsSideBarOpen}
                 logoImage_height={32}
                 logoImage_width={32}
                 text_className="text-[24px]"

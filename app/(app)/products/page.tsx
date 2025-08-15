@@ -16,13 +16,13 @@ const Products_Page = async ({ serachParams }: Products_PageProps) => {
   const filters = await LoadProductFilters(serachParams);
 
   prefetch(trpc.products.getMany.queryOptions({ ...filters }));
+  prefetch(trpc.reviews.getMany.queryOptions());
 
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
         <Suspense fallback={<>all products loading</>}>
           <ScrollToTopOnUrlChange />
-
           <AllProductsPage />
         </Suspense>
       </ErrorBoundary>

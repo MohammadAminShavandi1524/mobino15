@@ -12,6 +12,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import ProductFilters from "@/components/mycomponents/(product_filters)/ProductFilters";
 import { useProductFilters } from "@/hooks/useProductFilter";
+import { convertCatOrSubToId } from "@/lib/utils";
 
 interface CategoryPageProps {
   category: string;
@@ -21,29 +22,27 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
+  const id = convertCatOrSubToId(category);
   const trpc = useTRPC();
 
-  const { data: categories, isLoading: categoriesLoading } = useSuspenseQuery(
-    trpc.categories.getMany.queryOptions()
-  );
+  if (!id) return <div>param loading</div>; // loading for empty param
 
-  const { data: productsData, isLoading: productsLoading } = useSuspenseQuery(
-    trpc.products.getMany.queryOptions({
-      ...filters,
-    })
+  const catReviews = useSuspenseQuery(
+    trpc.reviews.getCatReviews.queryOptions({ Id: id })
+  ).data;
+
+  const products = useSuspenseQuery(
+    trpc.products.getCatProducts.queryOptions({ ...filters, Id: id })
+  ).data.docs;
+
+  const { data: categories } = useSuspenseQuery(
+    trpc.categories.getMany.queryOptions()
   );
 
   const selectedCategoryData = categories?.docs.find((doc) => {
     const findedCategory = doc.name === category;
     return findedCategory;
   });
-
-  // محصولات فیلتر شده بر اساس کتگوری
-  const products =
-    productsData &&
-    productsData?.docs.filter((product) => {
-      return product.category === selectedCategoryData?.id;
-    });
 
   // ? subcategory sorted by order **For Categories Tags**
 
@@ -61,7 +60,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
         {/* bread crump */}
         <BreadCrump
           activePage="category"
-          selectedCategoryData={selectedCategoryData}
+          category={selectedCategoryData?.name}
         />
         {/* categories tags */}
         <div className="flex items-center gap-x-4 ">
@@ -107,6 +106,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
 
             <ProductList
               products={products}
+              reviews={catReviews}
               isFiltersOpened={isFiltersOpened}
             />
           </div>
@@ -128,7 +128,11 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
           </div>
           {/* product list */}
 
-          <ProductList isFiltersOpened={isFiltersOpened} products={products} />
+          <ProductList
+            isFiltersOpened={isFiltersOpened}
+            products={products}
+            reviews={catReviews}
+          />
         </div>
       )}
     </div>

@@ -16,13 +16,12 @@ interface Category_PageProps {
 
 const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
   const { product } = await params;
+  if (!product) return <div>param loading</div>;
+  const orderParam = decodeURIComponent(product).split("_")[0];
 
-  const filters = await LoadProductFilters(serachParams);
-
-  prefetch(trpc.products.getMany.queryOptions({ ...filters }));
-  prefetch(trpc.categories.getMany.queryOptions());
-  prefetch(trpc.auth.session.queryOptions())
-  prefetch(trpc.reviews.getMany.queryOptions())
+  prefetch(trpc.products.getOneWithOrder.queryOptions({ order: orderParam }));
+  prefetch(trpc.products.getOneWithDKP.queryOptions({ order: orderParam }));
+  prefetch(trpc.auth.session.queryOptions());
 
   return (
     <HydrateClient>

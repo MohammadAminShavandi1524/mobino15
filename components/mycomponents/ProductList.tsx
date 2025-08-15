@@ -1,15 +1,16 @@
 import { cn, convertToPersianNumber, getColorInfo, shuffle } from "@/lib/utils";
-import { Product } from "@/payload-types";
+import { Product, Review } from "@/payload-types";
 import { Box, Gamepad2, Percent, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 interface ProductListProps {
   products: Product[] | undefined | null;
+  reviews: Review[] | undefined | null;
   isFiltersOpened: boolean;
 }
 
-const ProductList = ({ products, isFiltersOpened }: ProductListProps) => {
+const ProductList = ({ products, isFiltersOpened ,reviews }: ProductListProps) => {
   const availableProducts = products?.filter((p) => p.available) ?? [];
   const uniqueAvailableProducts = Array.from(
     new Map(availableProducts.map((p) => [p.name, p])).values()

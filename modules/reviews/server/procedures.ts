@@ -6,6 +6,91 @@ import { TRPCError } from "@trpc/server";
 import { addReviewSchema, updateReviewSchema } from "../schemas";
 
 export const reviewsRouter = createTRPCRouter({
+  getMany: baseProcedure.query(async ({ ctx, input }) => {
+    const reviewsData = await ctx.db.find({
+      collection: "reviews",
+      depth: 0,
+    });
+
+    return reviewsData?.docs || [];
+  }),
+
+  getCatReviews: baseProcedure
+    .input(
+      z.object({
+        Id: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const products = await ctx.db.find({
+        collection: "products",
+        depth: 0,
+        limit: 200,
+        where: {
+          category: {
+            equals: input.Id,
+          },
+        },
+      });
+
+      if (!products || products.totalDocs === 0) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "products not found",
+        });
+      }
+
+      const productIds = products.docs.map((p) => p.id);
+
+      const reviewsData = await ctx.db.find({
+        collection: "reviews",
+        depth: 0,
+        where: {
+          product: { in: productIds },
+        },
+      });
+
+      return reviewsData?.docs || [];
+    }),
+
+  getSubReviews: baseProcedure
+    .input(
+      z.object({
+        Id: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const products = await ctx.db.find({
+        collection: "products",
+        depth: 0,
+        limit: 200,
+        where: {
+          subCategory: {
+            equals: input.Id,
+          },
+        },
+      });
+
+      if (!products || products.totalDocs === 0) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "products not found",
+        });
+      }
+
+      const productIds = products.docs.map((p) => p.id);
+
+      const reviewsData = await ctx.db.find({
+        collection: "reviews",
+        depth: 0,
+        where: {
+          product: { in: productIds },
+        },
+      });
+
+      return reviewsData?.docs || [];
+    }),
+
   getOne: baseProcedure
     .input(z.object({ product: z.string() }))
     .query(async ({ ctx, input }) => {
