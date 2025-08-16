@@ -3,22 +3,22 @@ import CustomCatHighlight from "./CustomCatHighlight";
 const TabletHighlight = () => {
   const TabletOptions = [
     {
-      img: "/CatHighlight/appletablet.png",
+      img: "/catHighlight/appletablet.png",
       label: "اپل",
       href: "/tablet/AppleTablet",
     },
     {
-      img: "/CatHighlight/samsungtablet.png",
+      img: "/catHighlight/samsungtablet.png",
       label: "سامسونگ",
       href: "/tablet/SamsungTablet",
     },
     {
-      img: "/CatHighlight/microsofttablet.webp",
+      img: "/catHighlight/microsofttablet.webp",
       label: "مایکروسافت",
       href: "/tablet/MicrosoftTablet",
     },
     {
-      img: "/CatHighlight/xiaomitablet.png",
+      img: "/catHighlight/xiaomitablet.png",
       label: "شیائومی",
       href: "/tablet/XiaomiTablet",
     },

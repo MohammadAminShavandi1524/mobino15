@@ -10,7 +10,36 @@ interface ProductListProps {
   isFiltersOpened: boolean;
 }
 
-const ProductList = ({ products, isFiltersOpened ,reviews }: ProductListProps) => {
+const ProductList = ({
+  products,
+  isFiltersOpened,
+  reviews,
+}: ProductListProps) => {
+  const getProductRating = (product: Product) => {
+    const dkp = product.address.split("dkp-")[1].replace(/\D/g, "");
+    const Ids: string[] = [];
+    products
+      ?.filter((p) => {
+        const productDkp = p.address.split("dkp-")[1].replace(/\D/g, "");
+        return productDkp === dkp;
+      })
+      .flatMap((p) => Ids.push(p.id));
+
+    const productReviews = reviews?.filter((review) =>
+      Ids.includes(review.product as string)
+    );
+
+    const ratings: number[] = [];
+    productReviews?.forEach((review) => {
+      ratings.push(review.rating);
+    });
+
+    const totalRating = ratings.reduce((acc, curr) => acc + curr, 0);
+    const averageRating = Math.round((totalRating / ratings.length) * 10) / 10;
+
+    return averageRating;
+  };
+
   const availableProducts = products?.filter((p) => p.available) ?? [];
   const uniqueAvailableProducts = Array.from(
     new Map(availableProducts.map((p) => [p.name, p])).values()
@@ -30,6 +59,8 @@ const ProductList = ({ products, isFiltersOpened ,reviews }: ProductListProps) =
     >
       {finalProducts &&
         finalProducts.map((product: Product, index) => {
+          const averageRating = getProductRating(product);
+
           const mainImage = product.images?.find((image) => {
             return image.isMain;
           });
@@ -42,6 +73,51 @@ const ProductList = ({ products, isFiltersOpened ,reviews }: ProductListProps) =
 
           const duplicateAvailableProducts = products?.filter(
             (p) => p.name === product.name && p.available
+          );
+
+          const hasRating = !Number.isNaN(averageRating);
+          const isGamingLaptop =
+            product.productType?.[0].blockType === "laptop" &&
+            product.productType?.[0].usage === "گیمینگ";
+          const hasLowStock =
+            product.quantity === 1 ||
+            (product.quantity === 2 && product.available);
+
+          const laptopGamingTag = product.productType?.[0].blockType ===
+            "laptop" &&
+            product.productType?.[0].usage === "گیمینگ" && (
+              <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
+                <Gamepad2 size={16} color="#004c72" />
+                <span className="text-[12px] text-[#81858b]">
+                  {product.productType?.[0].usage}
+                </span>
+              </div>
+            );
+
+          const MonitorGamingTag = product.productType?.[0].blockType ===
+            "monitor" &&
+            product.productType?.[0].usageType.includes("gaming") && (
+              <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
+                <Gamepad2 size={16} color="#004c72" />
+                <span className="text-[12px] text-[#81858b]">گیمینگ</span>
+              </div>
+            );
+
+          const LowStockTag = (
+            <div className="flex items-center gap-x-0.5 text-[#e6123d] text-[10px]">
+              <Box size={16} />
+              <span>{convertToPersianNumber(product.quantity)}</span>
+              <span>عدد در انبار باقی مانده</span>
+            </div>
+          );
+
+          const RatingTag = (
+            <div className="flex items-center gap-x-0.5">
+              <Star color="#f1c21b" size={16} />
+              <span className="text-[#666666] text-[10px]">
+                {convertToPersianNumber(averageRating)}
+              </span>
+            </div>
           );
 
           return (
@@ -128,53 +204,36 @@ const ProductList = ({ products, isFiltersOpened ,reviews }: ProductListProps) =
 
               {/* rating and quntity */}
 
-              <div className="flex items-center justify-between px-6 mb-6">
-                {/* quntity if x is 1 or 2*/}
-                {product.quantity === 1 || product.quantity === 2 ? (
-                  product.available ? (
-                    <div
-                      className={cn(
-                        "flex items-center gap-x-0.5  text-[#e6123d] text-[10px]"
-                      )}
-                    >
-                      <span>
-                        <Box size={16} />
-                      </span>
-                      <span>{convertToPersianNumber(product.quantity)}</span>
-                      <span>عدد در انبار باقی مانده</span>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )
-                ) : (
+              <div
+                className={cn(
+                  "flex items-center justify-between mb-6 min-h-4",
+                  hasRating ? "px-6" : "pr-5.5 pl-5.5"
+                )}
+              >
+                {hasRating ? (
                   <>
-                    {product.productType?.[0].blockType === "laptop" &&
-                    product.productType?.[0].usage === "گیمینگ" ? (
-                      <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
-                        <span>
-                          <Gamepad2 size={16} color="#004c72" />
-                        </span>
-                        <span className="text-[12px] text-[#81858b]">
-                          {product.productType?.[0].usage}
-                        </span>
-                      </div>
+                    {isGamingLaptop ? (
+                      laptopGamingTag || MonitorGamingTag
+                    ) : hasLowStock ? (
+                      LowStockTag
                     ) : (
                       <div></div>
                     )}
+                    {RatingTag}
+                  </>
+                ) : (
+                  <>
+                    {hasLowStock ? (
+                      <>
+                        {LowStockTag} {laptopGamingTag || MonitorGamingTag}
+                      </>
+                    ) : (
+                      <>
+                        {laptopGamingTag || MonitorGamingTag} <div></div>
+                      </>
+                    )}
                   </>
                 )}
-
-                {/* rating */}
-                <div className="flex items-center gap-x-0.5">
-                  {/* logo */}
-                  <span>
-                    <Star color="#f1c21b" size={16} />
-                  </span>
-                  {/* rate */}
-                  <span className="text-[#666666] text-[10px]">
-                    {convertToPersianNumber(product.rating)}
-                  </span>
-                </div>
               </div>
 
               {/* price - offPrice - decount percent */}

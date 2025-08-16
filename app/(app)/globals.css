@@ -100,6 +100,7 @@
   --color-custom-primary: var(--custom-primary);
   --color-custom-skeleton: var(--custom-skeleton);
   --font-IRANYekanX: "IRANYekanX";
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -141,7 +142,6 @@
 /** custom classes **/
 
 @layer components {
-
   @keyframes soft-bounce {
     0%,
     100% {
@@ -156,17 +156,18 @@
     animation: soft-bounce 1.5s infinite;
   }
   @keyframes bounce-in-place {
-  0%, 100% {
-    transform: scale(1);
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.01);
+    }
   }
-  50% {
-    transform: scale(1.01);
-  }
-}
 
-.bounce-in-place {
-  animation: bounce-in-place 1.5s infinite;
-}
+  .bounce-in-place {
+    animation: bounce-in-place 1.5s infinite;
+  }
   .w90 {
     /* max-w-[1920px] w-[90%] mx-auto px-6 */
     max-width: 1920px;
@@ -187,6 +188,9 @@
   .addToCartToast {
     font-family: "IRANYekanX";
     color: red;
+  }
+  .bg-primaryGradient {
+    background-image: linear-gradient(90deg, #0079b1, #1b3570);
   }
 }
 

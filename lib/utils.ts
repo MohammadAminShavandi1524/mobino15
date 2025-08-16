@@ -111,7 +111,7 @@ type ColorInfo = {
 
 export function getColorInfo(color: string | undefined): ColorInfo {
   const colorMap: Record<string, ColorInfo> = {
-    TitaniumBlack: { hex: "#383838", label: "مشکی تیتانیومی" },
+    TitaniumBlack: { hex: "#333333", label: "مشکی تیتانیومی" },
     Black: { hex: "#1a1a1a", label: "مشکی" },
     Silver: { hex: "#cfcfcf", label: "نقره‌ای" },
     Purple: { hex: "#b030b0", label: "بنفش" },

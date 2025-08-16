@@ -319,7 +319,10 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 <span className="ml-0.5">رنگ :</span>
                 <span>{getColorInfo(matchedProductByOrder.color).label}</span>
                 <span
-                  style={{ backgroundColor: matchedProductByOrder.color }}
+                  style={{
+                    backgroundColor: getColorInfo(matchedProductByOrder.color)
+                      .hex,
+                  }}
                   className="size-4 rounded-full border border-[#d7dee0]"
                 ></span>
               </div>

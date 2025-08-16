@@ -11,6 +11,7 @@ interface ProductRatingProps {
 }
 
 const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
+  
   const ratings: number[] = [];
   productReviews?.forEach((review) => {
     ratings.push(review.rating);
