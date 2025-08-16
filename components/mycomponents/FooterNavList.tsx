@@ -12,7 +12,7 @@ interface FooterNavListProps {
 
 const FooterNavList = ({ options, title }: FooterNavListProps) => {
   return (
-    <div className="flex flex-col gap-y-7 w-100 text-white ">
+    <div className="flex flex-col gap-y-7 w-100 xl:w-75 2xl:w-100 text-white ">
       <div className="text-xl font-medium">{title}</div>
       <ul className="flex flex-col gap-y-3 text-sm font-medium pr-0.5">
         {options.map((option, index) => {

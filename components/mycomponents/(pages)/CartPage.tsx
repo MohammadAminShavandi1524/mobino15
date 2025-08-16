@@ -54,6 +54,7 @@ const CartPage = () => {
   const userCartProductsLength = userCartProducts?.filter((p) => {
     return p.available;
   }).length;
+ 
 
   const productCount = (product: Product) => {
     return userProductIds?.find((id) => id.productId === product.id)
@@ -104,41 +105,41 @@ const CartPage = () => {
     }, 0) ?? 0;
 
   // **************************************************************
-  if (userCartProductsLength) {
-    if (userCartProductsLength === 0)
-      return (
-        <div className="relative w90 flex flex-col mb-6  3xl:px-24">
-          <div className="text-xl my-3 px-4">سبد خرید</div>
-          <div className="flex flex-col items-center  w-full min-h-[540px] rounded-xl p-10 pt-0 border border-[#d3d8e4]">
-            <Image
-              className="rounded-xl"
-              src="/empty-cart.png"
-              alt="empty_cart"
-              width={500}
-              height={500}
-            />
-            <div className="text-xl text-[#333333] font-semibold">
-              سبد خرید شما خالیه!
-            </div>
-            <div className="text-lg text-[#666666] mt-4 mb-6">
-              برای مشاهده تخفیف‌های امروز، روی لینک زیر کلیک کنید.
-            </div>
-            <Link
-              className="flex items-center gap-x-1 text-[#223c78]"
-              href={""}
-            >
-              <span>
-                <BadgePercent color="#14a0de" />
-              </span>
-              <span>بیشترین تخفیف های امروز</span>
-              <span>
-                <ChevronLeft size={22} />
-              </span>
-            </Link>
+  // this loading and Cart_page loading must be the same
+  if (userCartProductsLength === undefined) {
+    return <>loading</>;
+  }
+  if (userCartProductsLength === 0)
+    return (
+      <div className="relative w90 flex flex-col mb-6  3xl:px-24">
+        <div className="text-xl my-3 px-4">سبد خرید</div>
+        <div className="flex flex-col items-center  w-full min-h-[540px] rounded-xl p-10 pt-0 border border-[#d3d8e4]">
+          <Image
+            className="rounded-xl"
+            src="/empty-cart.png"
+            alt="empty_cart"
+            width={500}
+            height={500}
+          />
+          <div className="text-xl text-[#333333] font-semibold">
+            سبد خرید شما خالیه!
           </div>
+          <div className="text-lg text-[#666666] mt-4 mb-6">
+            برای مشاهده تخفیف‌های امروز، روی لینک زیر کلیک کنید.
+          </div>
+          <Link className="flex items-center gap-x-1 text-[#223c78]" href={""}>
+            <span>
+              <BadgePercent color="#14a0de" />
+            </span>
+            <span>بیشترین تخفیف های امروز</span>
+            <span>
+              <ChevronLeft size={22} />
+            </span>
+          </Link>
         </div>
-      );
-
+      </div>
+    );
+  if (userCartProductsLength) {
     return (
       <div className="relative w90 grid grid-cols-20   gap-x-[50px] pt-4 mt-4 3xl:px-24">
         <div className=" flex flex-col  col-span-15">

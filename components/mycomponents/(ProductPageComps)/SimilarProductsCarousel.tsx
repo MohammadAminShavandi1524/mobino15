@@ -9,18 +9,11 @@ import { Category, Product } from "@/payload-types";
 import { convertIdToCatOrSub } from "@/lib/utils";
 
 interface SimilarProductsCarouselProps {
-
   product: Product;
 }
 
-const SimilarProductsCarousel = ({
- 
-  product,
-  
-}: SimilarProductsCarouselProps) => {
+const SimilarProductsCarousel = ({ product }: SimilarProductsCarouselProps) => {
   const trpc = useTRPC();
-
- 
 
   const productsData = useQuery(
     trpc.products.getSubCatProducts.queryOptions({
@@ -45,6 +38,7 @@ const SimilarProductsCarousel = ({
         <div className="text-xl font-medium">محصولات مشابه</div>
         <Link
           href={`/${convertIdToCatOrSub(product.category as string)}/${convertIdToCatOrSub(product.subCategory as string)}`}
+          target="_blank"
           className="flex items-center gap-x-2 cursor-pointer"
         >
           <span className="text-custom-primary">نمایش همه</span>

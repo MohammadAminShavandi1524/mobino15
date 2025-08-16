@@ -123,6 +123,7 @@ const ProductList = ({
           return (
             <Link
               href={`/products/${product.order}_${product.label}`}
+              target="_blank"
               className="relative w-full min-h-[480px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
               key={index}
             >

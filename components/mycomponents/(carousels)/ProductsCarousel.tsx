@@ -36,7 +36,10 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                 className="  relative flex flex-col justify-center basis-1/1 sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4  2xl:basis-1/5 3xl:basis-1/6 px-2 select-none  min-h-[360px]  pl-4 last:pl-0 sm:border-l sm:border-l-[#d3d8e4] last:border-l-0  mt-[50px]"
                 key={index}
               >
-                <Link href={`/products/${product.order}_${product.label}`}>
+                <Link
+                  target="_blank"
+                  href={`/products/${product.order}_${product.label}`}
+                >
                   {discountPercent && discountPercent > 8 && (
                     <div className="w-full absolute -top-10 px-10 pb-2 ">
                       <div className="text-[14px] text-center font-bold text-[#e6123d]">
