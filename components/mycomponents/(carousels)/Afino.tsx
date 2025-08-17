@@ -10,8 +10,8 @@ import {
 import { cn, convertToPersianNumber, shuffle } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronLeft, Percent } from "lucide-react";
-import Image from "next/image";
+import { ChevronLeft } from "lucide-react";
+
 import Link from "next/link";
 import ProductsCarousel from "./ProductsCarousel";
 

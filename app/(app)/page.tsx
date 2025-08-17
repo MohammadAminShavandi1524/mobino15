@@ -1,8 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { useTRPC } from "@/trpc/client";
+import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 import Skeleton from "@/components/mycomponents/(skeletonComponets)/Skleton";
 import CatCarousel from "@/components/mycomponents/(carousels)/CatCarousel";
@@ -21,6 +19,12 @@ import MobilePriceTags from "@/components/mycomponents/(CatPriceTag)/MobilePrice
 import LaptopPriceTags from "@/components/mycomponents/(CatPriceTag)/LaptopPriceTags";
 import TabletHighlight from "@/components/mycomponents/(CatHighlights)/TabletHighlight";
 import TabletCarousel from "@/components/mycomponents/(carousels)/TabletCarousel";
+import HeadphonesHighlight from "@/components/mycomponents/(CatHighlights)/HeadphonesHighlight";
+import HeadphonesCarousel from "@/components/mycomponents/(carousels)/HeadphonesCarousel";
+import BestBrandsCarousel from "@/components/mycomponents/(carousels)/BestBrandsCarousel";
+
+
+import LandingPageOverview from "@/components/mycomponents/ProductOverview/LandingPageOverview";
 
 export default async function Home() {
   prefetch(trpc.products.getAffinoCarousel.queryOptions());
@@ -97,6 +101,34 @@ export default async function Home() {
             </Suspense>
           </ErrorBoundary>
         </HydrateClient>
+
+        {/* Headphones subCategories */}
+
+        <HeadphonesHighlight />
+
+        {/* Headphones carousel */}
+        <HydrateClient>
+          <ErrorBoundary
+            fallback={<div>HeadphonesCarousel error boundary!!!!</div>}
+          >
+            <Suspense fallback={<>Headphones Carousel loading</>}>
+              <HeadphonesCarousel />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
+
+        {/* BEST brands carousel*/}
+
+        <HydrateClient>
+          <ErrorBoundary fallback={<div>BEST brands error boundary!!!!</div>}>
+            <Suspense fallback={<>BEST brands Carousel loading</>}>
+              <BestBrandsCarousel />
+            </Suspense>
+          </ErrorBoundary>
+        </HydrateClient>
+
+        {/* ProductOverview */}
+        <LandingPageOverview />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import { ChevronDown, ChevronLeft, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import FooterNavList from "./FooterNavList";
-import { cn, convertToPersianNumber } from "@/lib/utils";
+import {  convertToPersianNumber } from "@/lib/utils";
 import Image from "next/image";
 import {
   Collapsible,

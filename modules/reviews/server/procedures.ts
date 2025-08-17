@@ -60,6 +60,8 @@ export const reviewsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      console.log("🚀 ~ input:", input.Id)
+      
       const products = await ctx.db.find({
         collection: "products",
         depth: 0,
@@ -70,6 +72,7 @@ export const reviewsRouter = createTRPCRouter({
           },
         },
       });
+      console.log("🚀 ~ products: in getSubReviews", products)
 
       if (!products || products.totalDocs === 0) {
         throw new TRPCError({

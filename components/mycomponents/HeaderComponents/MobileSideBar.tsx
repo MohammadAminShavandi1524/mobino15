@@ -23,7 +23,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Category } from "@/payload-types";
-import { cn } from "@/lib/utils";
+import { adjustAlpha, cn } from "@/lib/utils";
 
 interface MobileSideBarProps {
   categories: Category[];
@@ -179,7 +179,10 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
 
                 <CollapsibleContent
                   className="mr-[11.5px] border-r-[1.5px] border-r-[#d3d8e4]"
-                  // style={{borderRightColor : cat.logoColor || "#d3d8e4"}}
+                  style={{
+                    borderRightColor:
+                      adjustAlpha(cat.logoColor || "#d3d8e4", 0.35) || "#d3d8e4",
+                  }}
                 >
                   {(selectedCategory(cat)?.subcategories?.docs as Category[])
                     ?.sort(

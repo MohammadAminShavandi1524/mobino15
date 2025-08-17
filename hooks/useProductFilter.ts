@@ -162,14 +162,14 @@ export const AllBrandOptions = [
 
   // * tablet
 
-  { label: "Microsoft", value: "microsoft", category: ["tablet"] },
+  { label: "مایکروسافت", value: "microsoft", category: ["tablet"] },
 
   // * Headphones
 
-  { label: "Beats", value: "beats", category: ["Headphones"] },
-  { label: "Razer", value: "razer", category: ["Headphones"] },
-  { label: "Anker", value: "anker", category: ["Headphones"] },
-  { label: "TSCO", value: "tsco", category: ["Headphones"] },
+  { label: "بیتس", value: "beats", category: ["Headphones"] },
+  { label: "ریزر", value: "razer", category: ["Headphones"] },
+  { label: "انکر", value: "anker", category: ["Headphones"] },
+  { label: "تسکو", value: "tsco", category: ["Headphones"] },
 
   // *SmartWatch
 

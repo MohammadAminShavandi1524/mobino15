@@ -1,6 +1,6 @@
 import { cn, convertToPersianNumber, getColorInfo, shuffle } from "@/lib/utils";
 import { Product, Review } from "@/payload-types";
-import { Box, Gamepad2, Percent, Star } from "lucide-react";
+import { Box, Gamepad2, Percent, Plus, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -107,7 +107,7 @@ const ProductList = ({
             <div className="flex items-center gap-x-0.5 text-[#e6123d] text-[10px]">
               <Box size={16} />
               <span>{convertToPersianNumber(product.quantity)}</span>
-              <span>عدد در انبار باقی مانده</span>
+              <span>عدد باقی مانده</span>
             </div>
           );
 
@@ -142,44 +142,35 @@ const ProductList = ({
               {/* دایره رنگ ها  */}
 
               {product.available ? (
-                <div className="flex flex-col gap-y-1.5 absolute top-[71px] right-[20px]">
+                <div className="flex flex-col items-center gap-y-1.5 absolute top-[71px] right-[20px] p-1 rounded-full  bg-[#ffffff] ">
                   {duplicateAvailableProducts &&
                     duplicateAvailableProducts.slice(0, 4).map((p, index) => {
                       return (
-                        <div
-                          key={index}
-                          className={cn(
-                            "w-[10px] h-[10px] rounded-full",
-                            [
-                              "Silver",
-                              "TitaniumSilver",
-                              "NaturalTitanium",
-                              "LightGray",
-                              "TitaniumWhite",
-                              "White",
-                            ].includes(getColorInfo(p.color).hex) &&
-                              "border border-[#e0e0e2]"
-                          )}
-                          style={{
-                            backgroundColor: getColorInfo(p.color).hex,
-                          }}
-                        ></div>
+                        <>
+                          <div
+                            key={index}
+                            className={cn(
+                              "size-2.5 rounded-full shadow-sm",
+                              index === 3 && "hidden"
+                            )}
+                            style={{
+                              backgroundColor: getColorInfo(p.color).hex,
+                            }}
+                          ></div>
+                          {duplicateAvailableProducts.length > 3 &&
+                            index === 3 && (
+                              <div>
+                                <Plus size={10} />
+                              </div>
+                            )}
+                        </>
                       );
                     })}
                 </div>
               ) : (
                 <div
                   className={cn(
-                    "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full",
-                    [
-                      "Silver",
-                      "TitaniumSilver",
-                      "NaturalTitanium",
-                      "LightGray",
-                      "TitaniumWhite",
-                      "White",
-                    ].includes(getColorInfo(product.color).hex) &&
-                      "border border-[#e0e0e2]"
+                    "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full border border-[#d7dee0]"
                   )}
                   style={{ backgroundColor: getColorInfo(product.color).hex }}
                 ></div>
@@ -226,7 +217,7 @@ const ProductList = ({
                   <>
                     {hasLowStock ? (
                       <>
-                        {LowStockTag} {laptopGamingTag || MonitorGamingTag}
+                        {laptopGamingTag || MonitorGamingTag} {LowStockTag}
                       </>
                     ) : (
                       <>

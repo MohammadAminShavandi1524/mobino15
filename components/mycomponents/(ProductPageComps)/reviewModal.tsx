@@ -39,7 +39,7 @@ const formSchema = z.object({
     .number("یک عدد بین ۱ تا ۵ انتخاب کن")
     .min(1, "حداقل امتیاز ۱ است")
     .max(5, "حداکثر امتیاز ۵ است"),
-  description: z.string().min(1, "توضیحات نمی‌تواند خالی باشد"),
+  description: z.string("توضیحات نمی‌تواند خالی باشد").min(1, "توضیحات نمی‌تواند خالی باشد"),
 });
 
 const ReviewModal = ({
@@ -60,7 +60,7 @@ const ReviewModal = ({
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(formSchema),
-    defaultValues: { description: "فعلا که از گوشی راضی هستم" },
+    // defaultValues: { description: "فعلا که از گوشی راضی هستم" },
   });
 
   const addreviewOnSubmit = (values: z.infer<typeof formSchema>) => {

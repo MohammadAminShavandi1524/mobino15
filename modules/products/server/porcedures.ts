@@ -580,6 +580,29 @@ export const productsRouter = createTRPCRouter({
       })),
     };
   }),
+  getHeadphonesCarousel: baseProcedure.query(async ({ ctx, input }) => {
+    const where: Where = {};
+    where.category = {
+      equals: "68790cf8f95b097b17ae9a5e",
+    };
+    where.available = {
+      equals: true,
+    };
+    const data: PaginatedDocs<Product> = await ctx.db.find({
+      collection: "products",
+      depth: 1,
+      where,
+      limit: 25,
+    });
+
+    return {
+      ...data,
+      docs: data.docs.map((doc) => ({
+        ...doc,
+        tenant: doc.tenant as Tenant,
+      })),
+    };
+  }),
   getOneWithOrder: baseProcedure
     .input(
       z.object({
