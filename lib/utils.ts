@@ -2,6 +2,7 @@ import { AllBrandOptions } from "@/hooks/useProductFilter";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import jalaali from "jalaali-js";
+import { Product } from "@/payload-types";
 
 const phoneTypeOptions = [
   { label: "اقتصادی", value: "Economic" },
@@ -328,7 +329,6 @@ export const convertCatOrSubToId = (value: string) => {
   }
 };
 
-
 const idToNameMap: Record<string, string> = {
   // cat
   "686ff08bd6713d28c018821b": "mobile",
@@ -373,7 +373,6 @@ export const convertIdToCatOrSub = (id: string) => {
   return idToNameMap[id] || null;
 };
 
-
 const nameToPersianMap: Record<string, string> = {
   // cat
   mobile: "موبایل",
@@ -416,4 +415,23 @@ const nameToPersianMap: Record<string, string> = {
 
 export const getPersianLabel = (englishName: string) => {
   return nameToPersianMap[englishName] || englishName;
+};
+
+export const getDiscountPercent = (product: Product) => {
+  const percent =
+    product.offPrice &&
+    Math.ceil(((product.price - product.offPrice) / product.price) * 100);
+
+  return percent;
+};
+
+export const getMainImageUrl = (product: Product) => {
+  const mainImageUrl =
+    product.images?.find((image) => {
+      return image.isMain;
+    })?.url ||
+    (product.images && product.images[0].url) ||
+    "";
+
+  return mainImageUrl;
 };

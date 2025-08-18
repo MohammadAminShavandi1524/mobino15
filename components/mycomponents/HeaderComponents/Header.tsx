@@ -75,7 +75,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  // console.log("🚀 ~ Header ~ data:", user?.username);
+  
 
   // *** cart item count ***
 
@@ -137,7 +137,7 @@ const Header = () => {
           isBannerDisplayed={isBannerDisplayed}
         />
 
-        <div className="  max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
+        <div className="max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
           {/* pc  */}
           {/* fixed part shown in more than 1024 devices*/}
           <div className="flex items-center justify-between mx-auto w-[90%] pb-6 max-lg:hidden">
@@ -184,11 +184,8 @@ const Header = () => {
             {/* optional pages */}
             <div className="flex items-center gap-x-4 mx-2">
               <Link
-                href="/off"
-                className={cn(
-                  "p-2.5 flex items-center gap-x-2",
-                  pathname === "/off" && "border-b-destructive border"
-                )}
+                href="/afino"
+                className={cn("p-2.5 flex items-center gap-x-2")}
               >
                 <span>
                   <CirclePercent />
@@ -197,10 +194,7 @@ const Header = () => {
               </Link>
               <Link
                 href="/aboutUs"
-                className={cn(
-                  "p-2.5 flex items-center gap-x-2",
-                  pathname === "/aboutUs" && "border-b-destructive border-2"
-                )}
+                className={cn("p-2.5 flex items-center gap-x-2")}
               >
                 <span>
                   <Info />
@@ -261,7 +255,6 @@ const Header = () => {
               </Link>
             </div>
           </div>
-          
         </div>
       </SidebarProvider>
     </header>

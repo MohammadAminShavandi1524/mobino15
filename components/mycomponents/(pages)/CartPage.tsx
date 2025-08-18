@@ -1,6 +1,12 @@
 "use client";
 
-import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
+import {
+  cn,
+  convertToPersianNumber,
+  getColorInfo,
+  getDiscountPercent,
+  getMainImageUrl,
+} from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/useCart";
 import { Product, Tenant, User } from "@/payload-types";
 import { useTRPC } from "@/trpc/client";
@@ -54,7 +60,6 @@ const CartPage = () => {
   const userCartProductsLength = userCartProducts?.filter((p) => {
     return p.available;
   }).length;
- 
 
   const productCount = (product: Product) => {
     return userProductIds?.find((id) => id.productId === product.id)
@@ -169,13 +174,9 @@ const CartPage = () => {
           {/* content */}
           <div className="flex flex-col  mt-4 gap-y-6">
             {userCartProducts.map((product, index) => {
-              const mainImage = product?.images?.find((img) => img.isMain);
+              const mainImageUrl = getMainImageUrl(product);
 
-              const discountPercent =
-                product.offPrice &&
-                Math.ceil(
-                  ((product.price - product.offPrice) / product.price) * 100
-                );
+              const discountPercent = getDiscountPercent(product);
 
               return (
                 <div
@@ -260,7 +261,7 @@ const CartPage = () => {
                             "self-baseline",
                             product.quantity === 0 && "opacity-50"
                           )}
-                          src={mainImage?.url as string}
+                          src={mainImageUrl}
                           alt={product.name}
                           width={200}
                           height={200}

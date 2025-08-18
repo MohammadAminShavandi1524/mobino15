@@ -1,7 +1,12 @@
 "use client";
 
 import z from "zod";
-import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
+import {
+  cn,
+  convertToPersianNumber,
+  getColorInfo,
+  getMainImageUrl,
+} from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { CircleCheck, CircleX, Percent, X } from "lucide-react";
 import Image from "next/image";
@@ -39,7 +44,9 @@ const formSchema = z.object({
     .number("یک عدد بین ۱ تا ۵ انتخاب کن")
     .min(1, "حداقل امتیاز ۱ است")
     .max(5, "حداکثر امتیاز ۵ است"),
-  description: z.string("توضیحات نمی‌تواند خالی باشد").min(1, "توضیحات نمی‌تواند خالی باشد"),
+  description: z
+    .string("توضیحات نمی‌تواند خالی باشد")
+    .min(1, "توضیحات نمی‌تواند خالی باشد"),
 });
 
 const ReviewModal = ({
@@ -48,11 +55,7 @@ const ReviewModal = ({
   product,
   userId,
 }: ReviewModalProps) => {
-  const mainImage =
-    product &&
-    product.images?.find((image) => {
-      return image.isMain;
-    })?.url;
+  const mainImageUrl = getMainImageUrl(product);
 
   const trpc = useTRPC();
   const router = useRouter();
@@ -64,7 +67,6 @@ const ReviewModal = ({
   });
 
   const addreviewOnSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     addReview.mutate({
       productId: product.id,
       description: values.description,
@@ -115,15 +117,13 @@ const ReviewModal = ({
               <div className="flex items-center gap-x-5 py-2.5 px-5 mb-8 rounded-lg shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
                 {/* image */}
                 <div className="flex justify-center items-center self-baseline min-w-[100px]">
-                  {mainImage && (
-                    <Image
-                      className={cn("")}
-                      src={mainImage}
-                      alt={product.name}
-                      width={80}
-                      height={80}
-                    />
-                  )}
+                  <Image
+                    className={cn("")}
+                    src={mainImageUrl}
+                    alt={product.name}
+                    width={80}
+                    height={80}
+                  />
                 </div>
 
                 {/* title */}

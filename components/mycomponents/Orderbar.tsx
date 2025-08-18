@@ -8,7 +8,7 @@ import { PaginatedDocs } from "payload";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface OrderbarProps {
-  products: Product[] | undefined;
+  products: Product[] | undefined | null;
   setFilters: SetValues<{
     sort: ParserBuilder<
       "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"

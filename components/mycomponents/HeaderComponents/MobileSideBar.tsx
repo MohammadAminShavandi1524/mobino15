@@ -83,7 +83,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             onClick={() => {
               toggleSidebar();
             }}
-            href="/off"
+            href="/afino"
             className="flex items-center gap-x-3 text-[#333333]"
           >
             <CirclePercent

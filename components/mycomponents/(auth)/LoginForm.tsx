@@ -34,10 +34,10 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "shavandi1524@gmail.com",
-      password: "v;>P1524LC^w^P_",
-    },
+    // defaultValues: {
+    //   email: "shavandi1524@gmail.com",
+    //   password: "v;>P1524LC^w^P_",
+    // },
   });
 
   const trpc = useTRPC();

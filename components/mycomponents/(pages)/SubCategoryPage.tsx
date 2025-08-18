@@ -12,6 +12,7 @@ import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { convertCatOrSubToId } from "@/lib/utils";
+import ProductListLayout from "../ProductListLayout";
 
 interface SubCategoryPageProps {
   category: string;
@@ -19,7 +20,6 @@ interface SubCategoryPageProps {
 }
 
 const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
-  const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
 
   const id = convertCatOrSubToId(subcategory);
@@ -50,69 +50,15 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
     });
 
   return (
-    <div className="w90 flex flex-col mt-4">
-      {/* bread crump */}
-      <BreadCrump
-        activePage="subcategory"
-        category={selectedCategoryData?.name}
-        subCategory={selectedSubCategoryData?.name}
-        className="px-[10px]"
-      />
-
-      {/* product and product filters */}
-
-      {isFiltersOpened ? (
-        <div className="relative flex px-[10px] mt-8 gap-x-8">
-          {/* filter*/}
-          <ProductFilters
-            activePage="SubCategory"
-            isFiltersOpened={isFiltersOpened}
-            setIsFiltersOpened={setIsFiltersOpened}
-          />
-
-          {/*orderbar and products list  */}
-          <div className="flex flex-col  w-full   ">
-            {/* order bar */}
-            <Orderbar
-              sorts={filters.sort}
-              setFilters={setFilters}
-              products={products}
-            />
-
-            {/* products list */}
-
-            <ProductList
-              products={products}
-              reviews={subReviews}
-              isFiltersOpened={isFiltersOpened}
-            />
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-y-5 w-full px-[10px] mt-8">
-          {/* filters and orderbar */}
-          <div className="flex gap-x-5">
-            <ProductFilters
-              activePage="SubCategory"
-              isFiltersOpened={isFiltersOpened}
-              setIsFiltersOpened={setIsFiltersOpened}
-            />
-            <Orderbar
-              sorts={filters.sort}
-              setFilters={setFilters}
-              products={products}
-            />
-          </div>
-          {/* product list */}
-
-          <ProductList
-            isFiltersOpened={isFiltersOpened}
-            products={products}
-            reviews={subReviews}
-          />
-        </div>
-      )}
-    </div>
+    <ProductListLayout
+      ProductsFiltersActivePage="SubCategory"
+      breadCrupActivePage="subcategory"
+      isCategory={false}
+      products={products}
+      reviews={subReviews}
+      selectedCategoryData={selectedCategoryData}
+      selectedSubCategoryData={selectedSubCategoryData}
+    />
   );
 };
 export default SubCategoryPage;

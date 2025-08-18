@@ -83,9 +83,13 @@
 
   --breakpoint-xs: 20rem; /** 320px **/
 
+  --breakpoint-s: 30rem; /** 480px **/
+
   --breakpoint-sm: 40rem; /** 640px **/
 
   --breakpoint-md: 48rem; /** 768px **/
+
+  --breakpoint-mlg: 56rem; /** 896px **/
 
   --breakpoint-lg: 64rem; /** 1024px **/
 

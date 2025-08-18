@@ -6,6 +6,7 @@ import {
   cn,
   convertToPersianNumber,
   getColorInfo,
+  getMainImageUrl,
   toJalali,
 } from "@/lib/utils";
 import AllProductSpecs from "../productAllSpec/AllProductSpecs";
@@ -103,12 +104,7 @@ const AllSpecAndReviews = ({
     }
   }
 
-  const mainImageUrl =
-    product &&
-    product.images?.find((image) => {
-      return image.isMain;
-    })?.url;
- 
+  const mainImageUrl = getMainImageUrl(product);
 
   return (
     <div className="relative flex flex-col my-10">
@@ -362,7 +358,7 @@ const AllSpecAndReviews = ({
           {/* image,title and color */}
           <div className="flex gap-x-5 mt-3">
             <div className="flex justify-center items-center self-baseline min-w-[100px]">
-              {mainImageUrl && (
+              
                 <Image
                   className={cn("")}
                   src={mainImageUrl}
@@ -370,7 +366,7 @@ const AllSpecAndReviews = ({
                   width={100}
                   height={100}
                 />
-              )}
+             
             </div>
             {/* title and color */}
             <div className="flex flex-col">

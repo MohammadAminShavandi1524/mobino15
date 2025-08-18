@@ -14,6 +14,7 @@ export const reviewsRouter = createTRPCRouter({
 
     return reviewsData?.docs || [];
   }),
+//  affino reviews
 
   getCatReviews: baseProcedure
     .input(
@@ -60,7 +61,7 @@ export const reviewsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
-      console.log("🚀 ~ input:", input.Id)
+     
       
       const products = await ctx.db.find({
         collection: "products",
@@ -72,7 +73,7 @@ export const reviewsRouter = createTRPCRouter({
           },
         },
       });
-      console.log("🚀 ~ products: in getSubReviews", products)
+      
 
       if (!products || products.totalDocs === 0) {
         throw new TRPCError({

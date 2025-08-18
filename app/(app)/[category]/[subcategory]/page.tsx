@@ -25,7 +25,7 @@ const SubCategory_Page = async ({
 
   const filters = await LoadProductFilters(serachParams);
   const id = convertCatOrSubToId(subcategory);
-  console.log("🚀 ~ SubCategory_Page ~ id:",subcategory , id)
+ 
 
   if (!id) return <div>param loading</div>;
   prefetch(

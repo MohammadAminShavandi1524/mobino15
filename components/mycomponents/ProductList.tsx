@@ -1,4 +1,10 @@
-import { cn, convertToPersianNumber, getColorInfo, shuffle } from "@/lib/utils";
+import {
+  cn,
+  convertToPersianNumber,
+  getColorInfo,
+  getDiscountPercent,
+  getMainImageUrl,
+} from "@/lib/utils";
 import { Product, Review } from "@/payload-types";
 import { Box, Gamepad2, Percent, Plus, Star } from "lucide-react";
 import Image from "next/image";
@@ -8,12 +14,14 @@ interface ProductListProps {
   products: Product[] | undefined | null;
   reviews: Review[] | undefined | null;
   isFiltersOpened: boolean;
+  isAfinoPage?: boolean;
 }
 
 const ProductList = ({
   products,
   isFiltersOpened,
   reviews,
+  isAfinoPage,
 }: ProductListProps) => {
   const getProductRating = (product: Product) => {
     const dkp = product.address.split("dkp-")[1].replace(/\D/g, "");
@@ -61,15 +69,9 @@ const ProductList = ({
         finalProducts.map((product: Product, index) => {
           const averageRating = getProductRating(product);
 
-          const mainImage = product.images?.find((image) => {
-            return image.isMain;
-          });
+          const mainImageUrl = getMainImageUrl(product);
 
-          const discountPercent =
-            product.offPrice &&
-            Math.ceil(
-              ((product.price - product.offPrice) / product.price) * 100
-            );
+          const discountPercent = getDiscountPercent(product);
 
           const duplicateAvailableProducts = products?.filter(
             (p) => p.name === product.name && p.available
@@ -124,11 +126,14 @@ const ProductList = ({
             <Link
               href={`/products/${product.order}_${product.label}`}
               target="_blank"
-              className="relative w-full min-h-[480px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md pt-[50px]"
+              className={cn(
+                "relative w-full min-h-[480px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md ",
+                !isAfinoPage && "pt-[50px]"
+              )}
               key={index}
             >
               {/* بخش نشون دادن تخفیف  */}
-              {product.available && product.offPrice && (
+              {!isAfinoPage && product.available && product.offPrice && (
                 <div className="w-full absolute  top-4 px-5 pb-2 ">
                   <div className="text-[14px] font-bold text-[#e6123d]">
                     {discountPercent && discountPercent > 5
@@ -142,7 +147,12 @@ const ProductList = ({
               {/* دایره رنگ ها  */}
 
               {product.available ? (
-                <div className="flex flex-col items-center gap-y-1.5 absolute top-[71px] right-[20px] p-1 rounded-full  bg-[#ffffff] ">
+                <div
+                  className={cn(
+                    "flex flex-col items-center gap-y-1.5 absolute top-[71px] right-[20px] p-1 rounded-full  bg-[#ffffff] ",
+                    isAfinoPage && "top-[30px]"
+                  )}
+                >
                   {duplicateAvailableProducts &&
                     duplicateAvailableProducts.slice(0, 4).map((p, index) => {
                       return (
@@ -178,15 +188,13 @@ const ProductList = ({
 
               {/* تصویر */}
               <div className="w-full flex items-center justify-center mt-5 mb-5">
-                {mainImage?.url && (
-                  <Image
-                    className={cn("")}
-                    src={mainImage.url}
-                    alt={`${product.name}`}
-                    width={206}
-                    height={206}
-                  />
-                )}
+                <Image
+                  className={cn("")}
+                  src={mainImageUrl}
+                  alt={`${product.name}`}
+                  width={206}
+                  height={206}
+                />
               </div>
 
               {/* title */}

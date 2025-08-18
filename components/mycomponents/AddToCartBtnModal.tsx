@@ -1,6 +1,12 @@
 "use client";
 
-import { cn, convertToPersianNumber, getColorInfo } from "@/lib/utils";
+import {
+  cn,
+  convertToPersianNumber,
+  getColorInfo,
+  getDiscountPercent,
+  getMainImageUrl,
+} from "@/lib/utils";
 import { Product } from "@/payload-types";
 import { CircleCheck, CircleX, Percent } from "lucide-react";
 import Image from "next/image";
@@ -19,13 +25,8 @@ const AddToCartBtnModal = ({
   setIsModalOpen,
   product,
 }: AddToCartBtnModalProps) => {
-  const mainImage = product.images?.find((image) => {
-    return image.isMain;
-  });
-
-  const discountPercent =
-    product.offPrice &&
-    Math.ceil(((product.price - product.offPrice) / product.price) * 100);
+  const mainImageUrl = getMainImageUrl(product);
+  const discountPercent = getDiscountPercent(product);
 
   return (
     <>
@@ -60,7 +61,7 @@ const AddToCartBtnModal = ({
               <div className="col-span-3 flex justify-center ">
                 <Image
                   className={cn("self-baseline")}
-                  src={mainImage?.url || ""}
+                  src={mainImageUrl}
                   alt={product.name}
                   width={100}
                   height={100}

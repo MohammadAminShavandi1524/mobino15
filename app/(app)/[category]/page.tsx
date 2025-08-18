@@ -18,7 +18,7 @@ interface Category_PageProps {
 
 const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
   const { category } = await params;
-  console.log("🚀 ~ Category_Page ~ category:", category);
+ 
 
   const id = convertCatOrSubToId(category);
   const filters = await LoadProductFilters(serachParams);

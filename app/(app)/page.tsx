@@ -23,7 +23,6 @@ import HeadphonesHighlight from "@/components/mycomponents/(CatHighlights)/Headp
 import HeadphonesCarousel from "@/components/mycomponents/(carousels)/HeadphonesCarousel";
 import BestBrandsCarousel from "@/components/mycomponents/(carousels)/BestBrandsCarousel";
 
-
 import LandingPageOverview from "@/components/mycomponents/ProductOverview/LandingPageOverview";
 
 export default async function Home() {
@@ -37,7 +36,7 @@ export default async function Home() {
       {/* image carousel */}
       <MainCarousel />
 
-      <div className="w90 flex flex-col mt-13 px-12">
+      <div className="max-w-[1920px] flex flex-col mt-6 s:mt-8 lg:mt-13  lg:w-9/10 lg:mx-auto lg:px-12">
         {/* categories carousel */}
         <CatCarousel />
 

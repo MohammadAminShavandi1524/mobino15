@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, getMainImageUrl } from "@/lib/utils";
 import { Product } from "@/payload-types";
 import Image from "next/image";
 import { useState } from "react";
@@ -10,13 +10,9 @@ interface ImageShowcaseProps {
 }
 
 const ImageShowcase = ({ product }: ImageShowcaseProps) => {
-  const mainImage =
-    product &&
-    product.images?.find((image) => {
-      return image.isMain;
-    })?.url;
+  const mainImageUrl = getMainImageUrl(product);
 
-  const [imageShowcase, setImageShowcase] = useState(mainImage);
+  const [imageShowcase, setImageShowcase] = useState(mainImageUrl);
 
   return (
     <div className="relative flex flex-col justify-center gap-y-[70px] col-span-9  h-full pt-[38px] pr-[46px] pb-[42px] pl-[52px] rounded-l-xl">
@@ -24,17 +20,15 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
       <div className="absolute"></div>
       {/* main image */}
       <div className="w-full flex items-center justify-center ">
-        {mainImage && (
-          <div>
-            <Image
-              className={cn("")}
-              src={imageShowcase ?? mainImage}
-              alt={`${product.name}`}
-              width={400}
-              height={400}
-            />
-          </div>
-        )}
+        <div>
+          <Image
+            className={cn("")}
+            src={imageShowcase ?? mainImageUrl}
+            alt={`${product.name}`}
+            width={400}
+            height={400}
+          />
+        </div>
       </div>
       {/* other image */}
       <div className="w-full flex flex-row-reverse items-center justify-center gap-x-2">
@@ -42,7 +36,7 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
           product.images?.slice(0, 4).map((img, index) => {
             const selectedImage = imageShowcase
               ? img.url === imageShowcase
-              : img.url === mainImage;
+              : img.url === mainImageUrl;
             return (
               <div
                 key={index}

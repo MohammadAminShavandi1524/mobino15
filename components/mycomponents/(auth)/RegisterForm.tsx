@@ -32,12 +32,12 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
   const form = useForm<z.infer<typeof registerSchema>>({
     mode: "all", // this will show the form errors immediently
     resolver: zodResolver(registerSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      sellername: "",
-    },
+    // defaultValues: {
+    //   username: "",
+    //   email: "",
+    //   password: "",
+    //   sellername: "",
+    // },
   });
 
   const registerOnSubmit = (values: z.infer<typeof registerSchema>) => {
@@ -57,7 +57,6 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
           migrateGuestCartToUser(user?.username);
         }
         router.push("/");
-        
       },
     })
   );
