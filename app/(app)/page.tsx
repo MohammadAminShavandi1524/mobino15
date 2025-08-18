@@ -32,11 +32,11 @@ export default async function Home() {
   prefetch(trpc.products.getTabletCarousel.queryOptions());
 
   return (
-    <div className="flex flex-col  overflow-x-hidden">
+    <div className="flex flex-col overflow-x-hidden">
       {/* image carousel */}
       <MainCarousel />
 
-      <div className="max-w-[1920px] flex flex-col mt-6 s:mt-8 lg:mt-13  lg:w-9/10 lg:mx-auto lg:px-12">
+      <div className="s:mt-8 mt-6 flex max-w-[1920px] flex-col lg:mx-auto lg:mt-13 lg:w-9/10 lg:px-12">
         {/* categories carousel */}
         <CatCarousel />
 
@@ -79,7 +79,7 @@ export default async function Home() {
           </ErrorBoundary>
         </HydrateClient>
 
-        <div className="grid grid-cols-2 items-center w-full gap-x-13 my-14">
+        <div className="mt-12  lg:my-14 flex gap-y-1 w-full flex-col items-center lg:grid lg:grid-cols-2 lg:gap-x-10 2xl:gap-x-13">
           {/* گوشی بر اساس قیمت  */}
           <MobilePriceTags />
           {/* لپ تاپ بر اساس قیمت  */}

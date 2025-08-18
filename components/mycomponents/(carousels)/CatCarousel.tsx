@@ -11,6 +11,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 
 const categoriesCarouselOptions = [
   {
@@ -61,19 +62,7 @@ const categoriesCarouselOptions = [
 ];
 
 const CatCarousel = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 1024px)");
-
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsMobile(e.matches);
-
-    handleChange(mediaQuery);
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  const { lg } = useBreakpoints();
 
   return (
     <Carousel autoplay interval={7000} className="">
@@ -82,7 +71,7 @@ const CatCarousel = () => {
           return (
             <CarouselItem
               key={index}
-              className="s:basis-1/4 3xl:basis-1/8 flex basis-1/3 items-center justify-center px-2 select-none lg:basis-1/5 xl:basis-1/6 2xl:basis-1/7"
+              className="s:basis-1/4 3xl:basis-1/8 mlg:basis-1/5 flex basis-1/3 items-center justify-center px-2 select-none lg:basis-1/5 xl:basis-1/6 2xl:basis-1/7"
             >
               <Link
                 className="group flex flex-col items-center gap-y-5 pt-1"
@@ -97,8 +86,8 @@ const CatCarousel = () => {
                         )}
                         src={option.img}
                         alt={option.label}
-                        width={isMobile ? 55 : 78}
-                        height={isMobile ? 55 : 78}
+                        width={lg ? 78 : 55}
+                        height={lg ? 78 : 55}
                       />
                       {/* <div className="size-[55px] border"></div> */}
                     </div>
@@ -112,8 +101,8 @@ const CatCarousel = () => {
           );
         })}
       </CarouselContent>
-      <CarouselPrevious className="top-[63px] max-lg:size-7.5 max-md:hidden md:right-4 lg:-right-10 max-lg:[&>*]:size-6" />
-      <CarouselNext className="top-[63px] max-lg:size-7.5 max-md:hidden md:left-4 lg:-left-12 max-lg:[&>*]:size-6" />
+      <CarouselPrevious className="top-[63px] max-lg:size-7.5 max-lg:hidden md:right-4 lg:-right-10 max-lg:[&>*]:size-6" />
+      <CarouselNext className="top-[63px] max-lg:size-7.5 max-lg:hidden md:left-4 lg:-left-12 max-lg:[&>*]:size-6" />
     </Carousel>
   );
 };

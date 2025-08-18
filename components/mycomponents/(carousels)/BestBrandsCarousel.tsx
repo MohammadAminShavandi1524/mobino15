@@ -12,10 +12,12 @@ import {
 } from "@/components/ui/carousel";
 import { BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 
 interface BestBrandsCarouselProps {}
 
 const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
+  const { lg, sm } = useBreakpoints();
   const options = [
     {
       img: "https://www.technolife.com/image/banner_BrandBanners_yqE3hH_1a75ca9e-c20c-4ec2-9557-5e55e803138f.png",
@@ -80,20 +82,22 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
   ];
 
   return (
-    <div className="my-13 flex w-full rounded-2xl border-[1.5px] border-[#d3d8e4]">
-      <div className="bg-primaryGradient flex flex-col items-center justify-center gap-y-1.25 rounded-r-2xl px-10.5 pt-8 pb-6.5 font-medium text-white">
+    <div className="mt-10 mb-4 flex w-full rounded-t-[12px] border-[1.5px] border-[#d3d8e4] max-lg:flex-col lg:my-13 lg:rounded-2xl">
+      <div className="bg-primaryGradient flex items-center justify-center gap-x-2 rounded-t-[12px] py-3 font-medium text-white lg:flex-col lg:gap-y-1.25 lg:rounded-r-2xl lg:px-10.5 lg:pt-8 lg:pb-6.5">
         <span>
-          <BadgeCheck size={36} />
+          <BadgeCheck size={lg ? 36 : sm ? 24 : 20} />
         </span>
-        <span className="min-w-[124px] text-lg font-bold">برند های منتخب</span>
+        <span className="text-sm font-bold sm:text-base lg:min-w-[124px] lg:text-lg">
+          برند های منتخب
+        </span>
       </div>
 
-      <Carousel className="w-full">
-        <CarouselContent className="px-4 pt-4 pr-3">
+      <Carousel autoplay interval={7000} className="w-full">
+        <CarouselContent className="pt-4 pl-3 max-lg:pb-2 lg:px-4 lg:pr-3">
           {options.map((option, index) => {
             return (
               <CarouselItem
-                className="3xl:basis-1/6 relative flex basis-1/1 items-center justify-center px-1 pl-2 select-none last:border-l-0 last:pl-0 sm:basis-1/2 sm:border-l sm:border-l-[#d3d8e4] md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
+                className="3xl:basis-1/6 mlg:basis-1/5 relative flex basis-1/3 items-center justify-center border-l border-l-[#d3d8e4] px-1 pl-2 select-none last:border-l-0 last:pl-0 sm:basis-1/4 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
                 key={index}
               >
                 <Link href={option.href}>
@@ -102,16 +106,16 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
                     style={{ scale: option.scale }}
                     src={option.img}
                     alt={option.label}
-                    width={116}
-                    height={88}
+                    width={lg ? 116 : sm ? 95 : 82}
+                    height={lg ? 88 : sm ? 72 : 62}
                   />
                 </Link>
               </CarouselItem>
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="top-[61px] right-5 max-md:hidden [&>*]:text-[#1b3570]" />
-        <CarouselNext className="top-[61px] left-3 max-md:hidden [&>*]:text-[#1b3570]" />
+        <CarouselPrevious className="top-[61px] right-5 max-lg:hidden [&>*]:text-[#1b3570]" />
+        <CarouselNext className="top-[61px] left-3 max-lg:hidden [&>*]:text-[#1b3570]" />
       </Carousel>
     </div>
   );

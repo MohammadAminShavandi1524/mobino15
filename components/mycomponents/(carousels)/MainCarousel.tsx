@@ -7,9 +7,9 @@ import {
   CarouselPrevious,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const MainCarousel = () => {
   const mainCarouselOptions = [
@@ -84,23 +84,11 @@ const MainCarousel = () => {
     },
   ];
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 1024px)");
-
-    const handleChange = (e: MediaQueryListEvent | MediaQueryList) =>
-      setIsMobile(e.matches);
-
-    handleChange(mediaQuery);
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  const { lg } = useBreakpoints();
 
   //* mobile main carousel
 
-  if (isMobile) {
+  if (!lg) {
     return (
       <Carousel autoplay interval={6500} className="group w-screen">
         <CarouselContent className="">

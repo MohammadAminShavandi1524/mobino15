@@ -1,4 +1,4 @@
-import CatHighlights from "./CatHighlights";
+
 import CustomCatHighlight from "./CustomCatHighlight";
 
 const MobileHighlights = () => {
@@ -30,7 +30,7 @@ const MobileHighlights = () => {
       bgColor="#d6eaf8"
       label="موبایل"
       options={MobileOptions}
-      imageSize={185}
+      
     />
   );
 };

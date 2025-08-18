@@ -66,7 +66,7 @@ const Footer = () => {
   ];
 
   return (
-    <div className="w-full p-4 pt-15">
+    <div className="w-full p-4 pt-8 lg:pt-15">
       {/* mobile and tablet footer 1024 */}
       <div className="bg-primaryGradient flex w-full flex-col rounded-[16px] px-2 pt-8 lg:hidden">
         {/* header */}

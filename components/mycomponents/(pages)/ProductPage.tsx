@@ -27,7 +27,7 @@ import ProductFaTitle from "../(ProductPageComps)/ProductFaTitle";
 import ProductEnTitle from "../(ProductPageComps)/ProductEnTitle";
 
 import ServiceHighlights from "../(ProductPageComps)/ServiceHighlights";
-import SimilarProductsCarousel from "../(ProductPageComps)/SimilarProductsCarousel";
+import SimilarProductsCarousel from "../(carousels)/SimilarProductsCarousel";
 
 import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
 import AllSpecAndReviews from "../(ProductPageComps)/AllSpecAndReviews";
