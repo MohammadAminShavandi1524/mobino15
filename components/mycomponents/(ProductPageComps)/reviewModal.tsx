@@ -85,7 +85,7 @@ const ReviewModal = ({
         setIsReviewModalOpen(false);
         router.refresh();
       },
-    })
+    }),
   );
 
   return (
@@ -93,17 +93,17 @@ const ReviewModal = ({
       {isReviewModalOpen && (
         <div
           onClick={() => setIsReviewModalOpen(false)}
-          className="fixed z-[500] top-0 right-0  bg-zinc-900/50 min-w-screen min-h-screen flex justify-center items-center overflow-y-scroll"
+          className="fixed top-0 right-0 z-[500] flex min-h-screen min-w-screen items-center justify-center overflow-y-scroll bg-zinc-900/50"
         >
           <div
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="flex flex-col w-[420px]  max-w-[420px]  bg-white rounded-xl shadow-[0px_1px_4px_rgba(0,0,0,0.08)] p-4 py-6"
+            className="flex w-[420px] max-w-[420px] flex-col rounded-xl bg-white p-4 py-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
           >
             {/* header */}
-            <div className="flex items-center justify-between pb-5 px-5 mb-5 border-b border-b-[#919ebc]">
-              <span className="text-xl ">افزودن نظر</span>
+            <div className="mb-5 flex items-center justify-between border-b border-b-[#919ebc] px-5 pb-5">
+              <span className="text-xl">افزودن نظر</span>
               <span
                 onClick={() => setIsReviewModalOpen(false)}
                 className="cursor-pointer"
@@ -114,9 +114,9 @@ const ReviewModal = ({
 
             <div>
               {/* title and image */}
-              <div className="flex items-center gap-x-5 py-2.5 px-5 mb-8 rounded-lg shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
+              <div className="mb-8 flex items-center gap-x-5 rounded-lg px-5 py-2.5 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
                 {/* image */}
-                <div className="flex justify-center items-center self-baseline min-w-[100px]">
+                <div className="flex min-w-[100px] items-center justify-center self-baseline">
                   <Image
                     className={cn("")}
                     src={mainImageUrl}
@@ -128,7 +128,7 @@ const ReviewModal = ({
 
                 {/* title */}
                 <ProductFaTitle
-                  className="productlist-title overflow-y-hidden text-[12px]/[18px] text-[#212121] font-normal text-justify m-0"
+                  className="productlist-title m-0 overflow-y-hidden text-justify text-[12px]/[18px] font-normal text-[#212121]"
                   label={product.label}
                 />
               </div>
@@ -144,7 +144,7 @@ const ReviewModal = ({
                     name="rating"
                     control={form.control}
                     render={({ field }) => (
-                      <FormItem className="w-full mb-4 flex flex-col items-center gap-y-4">
+                      <FormItem className="mb-4 flex w-full flex-col items-center gap-y-4">
                         <FormLabel className="text-center text-[14px]">
                           به این کالا امتیاز دهید :)
                         </FormLabel>
@@ -181,7 +181,7 @@ const ReviewModal = ({
                           </FormLabel>
                           <FormControl>
                             <Textarea
-                              className="w-[380px] h-[120px] text-base resize-none"
+                              className="h-[120px] w-[380px] resize-none text-base"
                               {...field}
                             />
                           </FormControl>
@@ -195,7 +195,7 @@ const ReviewModal = ({
                   <button
                     disabled={addReview.isPending}
                     type="submit"
-                    className="flex items-center justify-center h-13 w-full bg-custom-primary text-white cursor-pointer rounded-lg text-lg disabled:opacity-90 disabled:cursor-pointer "
+                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-lg text-white disabled:cursor-pointer disabled:opacity-90"
                   >
                     ثبت نظر
                   </button>

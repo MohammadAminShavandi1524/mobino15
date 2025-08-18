@@ -24,7 +24,7 @@ interface OrderbarProps {
 
 const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
   const handleSortChange = (
-    value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"
+    value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
   ) => {
     if (sorts === value) {
       setFilters({ sort: null });
@@ -41,10 +41,7 @@ const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
   ];
 
   return (
-    <div
-      className=" flex items-center justify-between w-full text-[12px] bg-[#e9ecf2] pr-[14px] pl-6 mb-6
-          rounded-lg"
-    >
+    <div className="mb-6 flex w-full items-center justify-between rounded-lg bg-[#e9ecf2] pr-[14px] pl-6 text-[12px]">
       {/* orders */}
       <div className="flex gap-x-8">
         {/* order logo */}
@@ -68,12 +65,12 @@ const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
                       | "MostPopular"
                       | "HighestPrice"
                       | "LowestPrice"
-                      | "BiggestDiscount"
+                      | "BiggestDiscount",
                   )
                 }
                 className={cn(
-                  "py-4 cursor-pointer",
-                  isSelected && "text-[#004b68] font-medium"
+                  "cursor-pointer py-4",
+                  isSelected && "font-medium text-[#004b68]",
                 )}
               >
                 {sort.label}

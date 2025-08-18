@@ -81,21 +81,20 @@ const AppliedFilters = () => {
   }
 
   return (
-    <div className="flex flex-wrap gap-2 py-2 max-w-full">
+    <div className="flex max-w-full flex-wrap gap-2 py-2">
       {appliedFilters.map((filter, index) => (
         <div
           key={index}
-          className="flex items-center  gap-x-1 bg-[#223c78] text-[12px] text-[white] px-2 py-1 rounded-md
-            min-w-0 max-w-[180px]"
+          className="flex max-w-[180px] min-w-0 items-center gap-x-1 rounded-md bg-[#223c78] px-2 py-1 text-[12px] text-[white]"
         >
-          <span className="truncate max-w-[150px]">{filter.label}</span>
+          <span className="max-w-[150px] truncate">{filter.label}</span>
           <X
             size={12}
             className="cursor-pointer"
             onClick={() => {
               if (filter.key === "color" && filter.value && filters.color) {
                 const newColors = filters.color.filter(
-                  (c) => c !== filter.value
+                  (c) => c !== filter.value,
                 );
                 setFilters({
                   ...filters,
@@ -107,7 +106,7 @@ const AppliedFilters = () => {
                 filters.brand
               ) {
                 const newBrands = filters.brand.filter(
-                  (b) => b !== filter.value
+                  (b) => b !== filter.value,
                 );
                 setFilters({
                   ...filters,

@@ -43,7 +43,7 @@ const AllHeadphoneSpec = ({ product }: AllHeadphoneSpecProps) => {
           title="ابعاد"
           value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
         />
-       <AllSpecCard
+        <AllSpecCard
           title="وزن"
           value={`${convertToPersianNumber(spec.weight)} گرم`}
         />

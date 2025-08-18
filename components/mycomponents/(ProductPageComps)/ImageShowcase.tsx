@@ -15,11 +15,11 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
   const [imageShowcase, setImageShowcase] = useState(mainImageUrl);
 
   return (
-    <div className="relative flex flex-col justify-center gap-y-[70px] col-span-9  h-full pt-[38px] pr-[46px] pb-[42px] pl-[52px] rounded-l-xl">
+    <div className="relative col-span-9 flex h-full flex-col justify-center gap-y-[70px] rounded-l-xl pt-[38px] pr-[46px] pb-[42px] pl-[52px]">
       {/* like and share */}
       <div className="absolute"></div>
       {/* main image */}
-      <div className="w-full flex items-center justify-center ">
+      <div className="flex w-full items-center justify-center">
         <div>
           <Image
             className={cn("")}
@@ -31,7 +31,7 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
         </div>
       </div>
       {/* other image */}
-      <div className="w-full flex flex-row-reverse items-center justify-center gap-x-2">
+      <div className="flex w-full flex-row-reverse items-center justify-center gap-x-2">
         {product.images &&
           product.images?.slice(0, 4).map((img, index) => {
             const selectedImage = imageShowcase
@@ -41,8 +41,8 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
               <div
                 key={index}
                 className={cn(
-                  "p-0.5 border  border-[#d7dee0] rounded-sm cursor-pointer",
-                  selectedImage && "border-2 border-[#14a0de]"
+                  "cursor-pointer rounded-sm border border-[#d7dee0] p-0.5",
+                  selectedImage && "border-2 border-[#14a0de]",
                 )}
                 onClick={() => setImageShowcase(img.url)}
               >

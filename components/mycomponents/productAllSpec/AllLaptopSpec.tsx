@@ -32,14 +32,14 @@ const AllLaptopSpec = ({ product }: AllLaptopSpecProps) => {
         type: "ssd" | "hdd";
         capacity: "64gb" | "128gb" | "256gb" | "512gb" | "1tb" | "2tb" | "4tb";
         id?: string | null;
-      }[]
+      }[],
     ) => {
       return storages.map((storage) => {
         return (
           convertToPersianNumber(
             storage.capacity
               ?.replace(/gb/i, " گیگابایت")
-              ?.replace(/tb/i, " ترابایت")
+              ?.replace(/tb/i, " ترابایت"),
           ) +
           " " +
           storage.type
@@ -80,7 +80,7 @@ const AllLaptopSpec = ({ product }: AllLaptopSpecProps) => {
         <AllSpecCard title="مدل گرافیک" value={spec.gpuInfo.model} />
         <AllSpecCard
           title="سایز صفحه نمایش"
-           value={`${convertToPersianNumber(spec.DisplaySize)} اینچ`}
+          value={`${convertToPersianNumber(spec.DisplaySize)} اینچ`}
         />
         <AllSpecCard
           title="رزولوشن نمایشگر"

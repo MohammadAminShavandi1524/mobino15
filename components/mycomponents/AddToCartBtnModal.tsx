@@ -33,16 +33,16 @@ const AddToCartBtnModal = ({
       {isModalOpen && (
         <div
           onClick={() => setIsModalOpen(false)}
-          className="fixed z-[500] top-0 right-0  bg-zinc-900/50 min-w-screen min-h-screen flex justify-center items-center"
+          className="fixed top-0 right-0 z-[500] flex min-h-screen min-w-screen items-center justify-center bg-zinc-900/50"
         >
           <div
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="flex flex-col w-[460px]  max-w-[460px]  bg-white rounded-xl shadow-[0px_1px_4px_rgba(0,0,0,0.08)] p-4 py-6"
+            className="flex w-[460px] max-w-[460px] flex-col rounded-xl bg-white p-4 py-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
           >
             {/* header */}
-            <div className="flex items-center justify-between border-b border-b-[#d3d8e4] mx-2 pb-5 mb-5">
+            <div className="mx-2 mb-5 flex items-center justify-between border-b border-b-[#d3d8e4] pb-5">
               <div className="flex items-center gap-x-2 text-[#1c9722]">
                 <span>
                   <CircleCheck />
@@ -57,8 +57,8 @@ const AddToCartBtnModal = ({
               </div>
             </div>
             {/* image title color */}
-            <div className="grid grid-cols-10 gap-x-2 px-4 mb-6">
-              <div className="col-span-3 flex justify-center ">
+            <div className="mb-6 grid grid-cols-10 gap-x-2 px-4">
+              <div className="col-span-3 flex justify-center">
                 <Image
                   className={cn("self-baseline")}
                   src={mainImageUrl}
@@ -67,15 +67,15 @@ const AddToCartBtnModal = ({
                   height={100}
                 />
               </div>
-              <div className="col-span-7 flex flex-col ">
+              <div className="col-span-7 flex flex-col">
                 {/* product fa title */}
-                <div className="productlist-title text-[#333333] text-[16px]/[32px] font-medium min-h-[72px] mb-3">
+                <div className="productlist-title mb-3 min-h-[72px] text-[16px]/[32px] font-medium text-[#333333]">
                   {product.label}
                 </div>
                 {/* color */}
                 <div className="flex items-center gap-x-2">
                   <div
-                    className="size-4 border border-[#d7dee0] rounded-full"
+                    className="size-4 rounded-full border border-[#d7dee0]"
                     style={{
                       backgroundColor: getColorInfo(product.color).hex,
                     }}
@@ -87,19 +87,19 @@ const AddToCartBtnModal = ({
               </div>
             </div>
             {/* price offPrice discountPercent */}
-            <div className="flex items-center self-baseline-last px-4 pl-6 mb-6">
+            <div className="mb-6 flex items-center self-baseline-last px-4 pl-6">
               {product.offPrice ? (
-                <div className="flex items-center self-baseline-last gap-x-1.5">
+                <div className="flex items-center gap-x-1.5 self-baseline-last">
                   {/* discount percent */}
-                  <div className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 min-w-7 rounded-sm px-1 ml-[50px]">
+                  <div className="ml-[50px] flex h-5 min-w-7 items-center justify-center gap-x-0.5 rounded-sm bg-[#da1e28] px-1 text-white">
                     <span>
                       <Percent strokeWidth={2.5} size={14} />
                     </span>
-                    <span className="text-[12px] pt-[2px]">
+                    <span className="pt-[2px] text-[12px]">
                       {convertToPersianNumber(discountPercent || "33")}
                     </span>
                   </div>
-                  <div className="text-[#919ebc] line-through text-[14px] pt-[]">
+                  <div className="pt-[] text-[14px] text-[#919ebc] line-through">
                     {product.price.toLocaleString("fa-IR")}
                   </div>
                   <div className="text-lg font-medium">
@@ -110,7 +110,7 @@ const AddToCartBtnModal = ({
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center self-baseline-last gap-x-1">
+                <div className="flex items-center gap-x-1 self-baseline-last">
                   <span className="text-lg font-medium">
                     {product.price.toLocaleString("fa-IR")}
                   </span>
@@ -123,7 +123,7 @@ const AddToCartBtnModal = ({
             {/* cart  */}
             <div className="mx-4">
               <Link
-                className="flex justify-center items-center w-full self-center h-13 bg-custom-primary text-white rounded-xl"
+                className="bg-custom-primary flex h-13 w-full items-center justify-center self-center rounded-xl text-white"
                 href="/cart"
               >
                 مشاهده سبد خرید

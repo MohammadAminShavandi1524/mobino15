@@ -10,29 +10,29 @@ const LoadingDots = ({ size, className, dotClassName }: LoadingDotsProps) => {
   return (
     <div
       className={cn(
-        " flex  justify-center items-center gap-x-0.75 sm:gap-x-1  w-full text-center",
-        className
+        "flex w-full items-center justify-center gap-x-0.75 text-center sm:gap-x-1",
+        className,
       )}
     >
       <div
         className={cn(
-          "size-1.5 sm:size-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.2s]",
+          "bg-custom-primary size-1.5 animate-bounce rounded-full [animation-delay:-0.2s] sm:size-2",
           size && `size-${size}`,
-          dotClassName
+          dotClassName,
         )}
       ></div>
       <div
         className={cn(
-          "size-1.5 sm:size-2 bg-custom-primary rounded-full animate-bounce [animation-delay:-0.15s]",
+          "bg-custom-primary size-1.5 animate-bounce rounded-full [animation-delay:-0.15s] sm:size-2",
           size && `size-${size}`,
-          dotClassName
+          dotClassName,
         )}
       ></div>
       <div
         className={cn(
-          "size-1.5 sm:size-2 bg-custom-primary rounded-full animate-bounce",
+          "bg-custom-primary size-1.5 animate-bounce rounded-full sm:size-2",
           size && `size-${size}`,
-          dotClassName
+          dotClassName,
         )}
       ></div>
     </div>

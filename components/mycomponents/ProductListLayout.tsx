@@ -31,9 +31,9 @@ const ProductListLayout = ({
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
   return (
-    <div className="w90 flex flex-col mt-4">
+    <div className="w90 mt-4 flex flex-col">
       {/* bread crump and categories tags */}
-      <div className="flex flex-col px-[10px] gap-y-4">
+      <div className="flex flex-col gap-y-4 px-[10px]">
         {/* bread crump */}
         {breadCrupActivePage === "category" ? (
           <BreadCrump
@@ -64,13 +64,12 @@ const ProductListLayout = ({
                     <Link
                       href={`/${selectedCategoryData.name}/${sub.name}`}
                       key={index}
-                      className="px-6 py-2 text-[10px] text-[#81858b] border border-[#81858b] rounded-md
-                    cursor-pointer"
+                      className="cursor-pointer rounded-md border border-[#81858b] px-6 py-2 text-[10px] text-[#81858b]"
                     >
                       {sub.label}
                     </Link>
                   );
-                }
+                },
               )}
           </div>
         )}
@@ -79,7 +78,7 @@ const ProductListLayout = ({
       {/* product and product filters */}
 
       {isFiltersOpened ? (
-        <div className="relative flex px-[10px] mt-8 gap-x-8">
+        <div className="relative mt-8 flex gap-x-8 px-[10px]">
           {/* filter*/}
           <ProductFilters
             activePage={ProductsFiltersActivePage}
@@ -88,7 +87,7 @@ const ProductListLayout = ({
           />
 
           {/*orderbar and products list  */}
-          <div className="flex flex-col  w-full   ">
+          <div className="flex w-full flex-col">
             {/* order bar */}
             <Orderbar
               sorts={filters.sort}
@@ -107,7 +106,7 @@ const ProductListLayout = ({
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-y-5 w-full px-[10px] mt-8">
+        <div className="mt-8 flex w-full flex-col gap-y-5 px-[10px]">
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters

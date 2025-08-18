@@ -102,13 +102,13 @@ const MainCarousel = () => {
 
   if (isMobile) {
     return (
-      <Carousel autoplay interval={6500} className="w-screen group">
+      <Carousel autoplay interval={6500} className="group w-screen">
         <CarouselContent className="">
           {mainCarouselMobileOptions.map((option, index) => {
             return (
               <CarouselItem key={index} className="w-full">
                 <Link
-                  className="relative w-full h-[240px] xs:h-[260px] s:h-[350px] sm:h-110  md:h-[550px] mlg:h-[650px] block"
+                  className="xs:h-[260px] s:h-[350px] mlg:h-[650px] relative block h-[240px] w-full sm:h-110 md:h-[550px]"
                   href={option.href}
                 >
                   <Image
@@ -128,13 +128,13 @@ const MainCarousel = () => {
 
   //  *pc main carousel
   return (
-    <Carousel autoplay interval={5000} className="w-screen group">
+    <Carousel autoplay interval={5000} className="group w-screen">
       <CarouselContent className="">
         {mainCarouselOptions.map((option, index) => {
           return (
             <CarouselItem key={index} className="w-full">
               <Link
-                className="relative w-full h-75 xl:h-90 2xl:h-105 3xl:h-[450px] block"
+                className="3xl:h-[450px] relative block h-75 w-full xl:h-90 2xl:h-105"
                 href={option.href}
               >
                 <Image
@@ -149,8 +149,8 @@ const MainCarousel = () => {
         })}
       </CarouselContent>
 
-      <CarouselPrevious className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[40px] 2xl:size-10 2xl:[&>*]:size-7 max-md:hidden" />
-      <CarouselNext className="opacity-0 invisible group-hover:opacity-100 group-hover:visible flex justify-center items-center transition-all bottom-[25px] right-[90px] 2xl:size-10 2xl:[&>*]:size-7 max-md:hidden" />
+      <CarouselPrevious className="invisible right-[40px] bottom-[25px] flex items-center justify-center opacity-0 transition-all group-hover:visible group-hover:opacity-100 max-md:hidden 2xl:size-10 2xl:[&>*]:size-7" />
+      <CarouselNext className="invisible right-[90px] bottom-[25px] flex items-center justify-center opacity-0 transition-all group-hover:visible group-hover:opacity-100 max-md:hidden 2xl:size-10 2xl:[&>*]:size-7" />
     </Carousel>
   );
 };

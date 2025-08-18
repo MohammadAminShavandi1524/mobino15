@@ -8,7 +8,7 @@ interface SkeletonProps {
 const Skeleton = ({ height, width }: SkeletonProps) => {
   return (
     <div
-      className={cn("block bg-custom-skeleton rounded-xl animate-pulse")}
+      className={cn("bg-custom-skeleton block animate-pulse rounded-xl")}
       style={{ width: `${width}px`, height: `${height}px` }}
     ></div>
   );

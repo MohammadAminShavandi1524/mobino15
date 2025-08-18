@@ -16,12 +16,12 @@ const MainSpecCard = ({
   return (
     <div
       className={cn(
-        "flex items-center  text-[14px] border-b border-dashed border-b-[#d3d8e4] pt-4 pb-[14px]",
+        "flex items-center border-b border-dashed border-b-[#d3d8e4] pt-4 pb-[14px] text-[14px]",
         firstChild && "pt-0",
-        lastChild && "border-b-0 pb-0"
+        lastChild && "border-b-0 pb-0",
       )}
     >
-      <span className="text-[#385086] font-light ml-3">{title} :</span>
+      <span className="ml-3 font-light text-[#385086]">{title} :</span>
       <span>{value}</span>
     </div>
   );

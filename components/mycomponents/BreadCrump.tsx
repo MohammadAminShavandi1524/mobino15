@@ -25,7 +25,7 @@ const BreadCrump = ({
       <div
         className={cn(
           "flex items-center gap-x-3 text-[12px] text-[#81858b]",
-          className
+          className,
         )}
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
@@ -40,13 +40,13 @@ const BreadCrump = ({
       <div
         className={cn(
           "flex items-center gap-x-3 text-[12px] text-[#81858b]",
-          className
+          className,
         )}
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
         <Link className={cn("text-black")} href={`/products`}>
-         محصولات تخفیف خورده
+          محصولات تخفیف خورده
         </Link>
       </div>
     );
@@ -55,7 +55,7 @@ const BreadCrump = ({
       <div
         className={cn(
           "flex items-center gap-x-3 text-[12px] text-[#81858b]",
-          className
+          className,
         )}
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
@@ -70,7 +70,7 @@ const BreadCrump = ({
       <div
         className={cn(
           "flex items-center gap-x-3 text-[12px] text-[#81858b]",
-          className
+          className,
         )}
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
@@ -90,7 +90,7 @@ const BreadCrump = ({
       <div
         className={cn(
           "flex items-center gap-x-3 text-[12px] text-[#81858b]",
-          className
+          className,
         )}
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>

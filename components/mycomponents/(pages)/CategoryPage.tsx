@@ -20,7 +20,6 @@ interface CategoryPageProps {
 }
 
 const CategoryPage = ({ category }: CategoryPageProps) => {
-
   const [filters, setFilters] = useProductFilters();
 
   const id = convertCatOrSubToId(category);
@@ -29,15 +28,15 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
   if (!id) return <div>param loading</div>; // loading for empty param
 
   const catReviews = useSuspenseQuery(
-    trpc.reviews.getCatReviews.queryOptions({ Id: id })
+    trpc.reviews.getCatReviews.queryOptions({ Id: id }),
   ).data;
 
   const products = useSuspenseQuery(
-    trpc.products.getCatProducts.queryOptions({ ...filters, Id: id })
+    trpc.products.getCatProducts.queryOptions({ ...filters, Id: id }),
   ).data.docs;
 
   const { data: categories } = useSuspenseQuery(
-    trpc.categories.getMany.queryOptions()
+    trpc.categories.getMany.queryOptions(),
   );
 
   const selectedCategoryData = categories?.docs.find((doc) => {
@@ -49,7 +48,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
 
   selectedCategoryData &&
     (selectedCategoryData?.subcategories?.docs as Category[]).sort(
-      (a, b) => a.order - b.order
+      (a, b) => a.order - b.order,
     );
 
   // ?

@@ -204,12 +204,12 @@ const ColorFilter = ({
       <div className="cursor-pointer border-b border-b-[#ced0d0]">
         <div
           onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className=" flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
+          className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
         >
           <div className="relative">
             <div>رنگ ها</div>
             {isColorFilterActive && (
-              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+              <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]"></div>
             )}
           </div>
 
@@ -222,12 +222,11 @@ const ColorFilter = ({
           </motion.div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-y-2 gap-x-1 pt-1 px-[14px] pb-3">
+        <div className="flex flex-wrap items-center gap-x-1 gap-y-2 px-[14px] pt-1 pb-3">
           {options.map((colorGroup) => {
             const isSelected = colors?.includes(colorGroup.name);
 
             const handleColorChange = () => {
-            
               setFilters((prev) => {
                 const prevColors = prev.color || [];
                 return {
@@ -248,21 +247,22 @@ const ColorFilter = ({
                 {/* color */}
                 <div
                   className={cn(
-                    "h-[50px] w-[50px] rounded-[10px] border border-[#e0e0e2] flex items-center justify-center",
-                    isSelected && "border-[3px] border-[#19bfd3]"
+                    "flex h-[50px] w-[50px] items-center justify-center rounded-[10px] border border-[#e0e0e2]",
+                    isSelected && "border-[3px] border-[#19bfd3]",
                   )}
                 >
                   {colorGroup.label === "سفید" ||
                   colorGroup.label === "سیاه" ? (
                     <div
                       className={cn(
-                        "w-9 h-9 rounded-md",
-                        colorGroup.label === "سفید" && "border border-[#e0e0e2]"
+                        "h-9 w-9 rounded-md",
+                        colorGroup.label === "سفید" &&
+                          "border border-[#e0e0e2]",
                       )}
                       style={{ background: colorGroup.color }}
                     ></div>
                   ) : (
-                    <div className={cn("w-9 h-9 rounded-md grid grid-cols-4 ")}>
+                    <div className={cn("grid h-9 w-9 grid-cols-4 rounded-md")}>
                       <div
                         style={{
                           background: adjustAlpha(colorGroup.color, 0.25),
@@ -304,12 +304,12 @@ const ColorFilter = ({
   return (
     <div
       onClick={() => setIsFilterOpen(!isFilterOpen)}
-      className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333] cursor-pointer"
+      className="flex cursor-pointer items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
     >
       <div className="relative">
         <div>رنگ ها</div>
         {isColorFilterActive && (
-          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+          <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]"></div>
         )}
       </div>
       <motion.div

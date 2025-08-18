@@ -5,6 +5,6 @@ interface ProductEnTitleProps {
 }
 
 const ProductEnTitle = ({ name }: ProductEnTitleProps) => {
-  return <div className="text-[#385086] text-[14px] mb-4">{name}</div>;
+  return <div className="mb-4 text-[14px] text-[#385086]">{name}</div>;
 };
 export default ProductEnTitle;

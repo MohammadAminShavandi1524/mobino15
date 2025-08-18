@@ -16,15 +16,15 @@ export default function ThemeButton() {
     <button
       aria-label="Toggle Dark Mode"
       type="button"
-      className="flex items-center justify-center rounded-lg p-2 cursor-pointer"
+      className="flex cursor-pointer items-center justify-center rounded-lg p-2"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {resolvedTheme === "dark" ? (
-        <span className=" text-2xl text-primaryText">
+        <span className="text-primaryText text-2xl">
           <Moon />
         </span>
       ) : (
-        <span className=" text-2xl text-primaryText">
+        <span className="text-primaryText text-2xl">
           <Sun />
         </span>
       )}

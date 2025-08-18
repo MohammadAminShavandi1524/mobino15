@@ -13,7 +13,6 @@ import ProductListLayout from "../ProductListLayout";
 interface AllProductsPageProps {}
 
 const AllProductsPage = ({}: AllProductsPageProps) => {
-  
   const [filters, setFilters] = useProductFilters();
 
   const trpc = useTRPC();
@@ -21,7 +20,7 @@ const AllProductsPage = ({}: AllProductsPageProps) => {
   const { data: productsData } = useSuspenseQuery(
     trpc.products.getMany.queryOptions({
       ...filters,
-    })
+    }),
   );
   const allReviews = useSuspenseQuery(trpc.reviews.getMany.queryOptions()).data;
 

@@ -59,7 +59,7 @@ export function cn(...inputs: ClassValue[]) {
 export function adjustAlpha(rgba: string, newAlpha: number): string {
   return rgba.replace(
     /rgba?\((\d+),\s*(\d+),\s*(\d+),\s*\d*\.?\d+\)/,
-    `rgba($1, $2, $3, ${newAlpha})`
+    `rgba($1, $2, $3, ${newAlpha})`,
   );
 }
 
@@ -175,7 +175,7 @@ export const getStrapMaterial = (value: string): string => {
 
 export function getCompatibilityLabels(values: string[]): string[] {
   return values.map(
-    (v) => compatibilityOptions.find((opt) => opt.value === v)?.label || v
+    (v) => compatibilityOptions.find((opt) => opt.value === v)?.label || v,
   );
 }
 

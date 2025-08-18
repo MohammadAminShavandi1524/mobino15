@@ -14,16 +14,15 @@ const AuthPage = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  
 
   // if (user) {
   //   redirect("/");
   // }
 
   return (
-    <div className="flex w-full h-screen bg-white">
+    <div className="flex h-screen w-full bg-white">
       {/* content part  */}
-      <section className="w-1/4 h-full flex flex-col items-center px-12 pt-15">
+      <section className="flex h-full w-1/4 flex-col items-center px-12 pt-15">
         {/* logo */}
         <Logo
           logoImage_height={50}
@@ -31,47 +30,45 @@ const AuthPage = () => {
           text_className="text-[40px]"
         />
         {/* ورود یا ثبت نام */}
-        <div className="flex gap-x-5 items-center mt-12 mb-10 text-[22px]/[22px]  transition-all min-h-[30px] ">
+        <div className="mt-12 mb-10 flex min-h-[30px] items-center gap-x-5 text-[22px]/[22px] transition-all">
           <button
-            className={`pb-1.5  cursor-pointer ${
+            className={`cursor-pointer pb-1.5 ${
               isSignIn
-                ? "text-[#2962ff] border-b-2 border-b-[#2962ff] cursor-pointer"
+                ? "cursor-pointer border-b-2 border-b-[#2962ff] text-[#2962ff]"
                 : ""
-            }  `}
+            } `}
             onClick={() => setIsSignIn(true)}
             disabled={isSignIn}
           >
             ورود
           </button>
-          <span className="w-[2px] h-full bg-gray-700 rounded-sm"></span>
+          <span className="h-full w-[2px] rounded-sm bg-gray-700"></span>
           <button
-            className={`pb-1.5  cursor-pointer ${
+            className={`cursor-pointer pb-1.5 ${
               !isSignIn
-                ? "text-[#2962ff] border-b-2 border-b-[#2962ff] cursor-pointer"
+                ? "cursor-pointer border-b-2 border-b-[#2962ff] text-[#2962ff]"
                 : ""
-            }  `}
+            } `}
             onClick={() => setIsSignIn(false)}
             disabled={!isSignIn}
           >
             ثبت نام
           </button>
         </div>
-        <div className="font-medium text-sm mb-6">خوش اومدی !</div>
+        <div className="mb-6 text-sm font-medium">خوش اومدی !</div>
 
         {/**  form **/}
 
         {isSignIn ? (
           // ? Sign In
-          <LoginForm  />
+          <LoginForm />
         ) : (
           // ? Sign Up
-          <RegisterForm  user={user}/>
+          <RegisterForm user={user} />
         )}
       </section>
       {/* empty part */}
-      <section className=" flex-1 h-full bg-[#253a56]">
-        
-      </section>
+      <section className="h-full flex-1 bg-[#253a56]"></section>
     </div>
   );
 };

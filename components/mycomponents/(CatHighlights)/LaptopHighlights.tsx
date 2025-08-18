@@ -1,4 +1,3 @@
-
 import CustomCatHighlight from "./CustomCatHighlight";
 
 const LaptopHighlights = () => {

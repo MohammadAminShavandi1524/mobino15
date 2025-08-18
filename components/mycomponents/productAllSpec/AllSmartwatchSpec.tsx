@@ -54,11 +54,11 @@ const AllSmartwatchSpec = ({ product }: AllSmartwatchSpecProps) => {
           value={getSensors(spec.sensors).join(" , ")}
         />
 
-         <AllSpecCard
+        <AllSpecCard
           title="ابعاد"
           value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
         />
-     <AllSpecCard
+        <AllSpecCard
           title="وزن"
           value={`${convertToPersianNumber(spec.weight)} گرم`}
         />

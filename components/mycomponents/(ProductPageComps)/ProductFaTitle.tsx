@@ -4,12 +4,17 @@ import { cn } from "@/lib/utils";
 
 interface ProductFaTitleProps {
   label: string;
-  className?:string
+  className?: string;
 }
 
-const ProductFaTitle = ({ label , className }: ProductFaTitleProps) => {
+const ProductFaTitle = ({ label, className }: ProductFaTitleProps) => {
   return (
-    <div className={cn("text-black text-[20px]/[40px] font-medium mb-4" , className)}>
+    <div
+      className={cn(
+        "mb-4 text-[20px]/[40px] font-medium text-black",
+        className,
+      )}
+    >
       {label}
     </div>
   );

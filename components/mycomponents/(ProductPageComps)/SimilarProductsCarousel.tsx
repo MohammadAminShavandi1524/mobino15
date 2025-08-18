@@ -18,7 +18,7 @@ const SimilarProductsCarousel = ({ product }: SimilarProductsCarouselProps) => {
   const productsData = useQuery(
     trpc.products.getSubCatProducts.queryOptions({
       Id: product.subCategory as string,
-    })
+    }),
   ).data?.docs;
 
   const products = productsData?.filter((p) => {
@@ -26,20 +26,17 @@ const SimilarProductsCarousel = ({ product }: SimilarProductsCarouselProps) => {
   });
 
   const uniqueAvailableProducts = Array.from(
-    new Map(products?.map((p) => [p.name, p])).values()
+    new Map(products?.map((p) => [p.name, p])).values(),
   );
 
   return (
-    <div
-      className="mt-13 w-full flex flex-col min-h-120 p-3 pb-6 border border-[#d3d8e4]
-            rounded-2xl"
-    >
-      <div className="flex justify-between items-center  w-full  px-6 pt-3  rounded-md">
+    <div className="mt-13 flex min-h-120 w-full flex-col rounded-2xl border border-[#d3d8e4] p-3 pb-6">
+      <div className="flex w-full items-center justify-between rounded-md px-6 pt-3">
         <div className="text-xl font-medium">محصولات مشابه</div>
         <Link
           href={`/${convertIdToCatOrSub(product.category as string)}/${convertIdToCatOrSub(product.subCategory as string)}`}
           target="_blank"
-          className="flex items-center gap-x-2 cursor-pointer"
+          className="flex cursor-pointer items-center gap-x-2"
         >
           <span className="text-custom-primary">نمایش همه</span>
           <span className="text-custom-primary">

@@ -22,7 +22,7 @@ const Logo = ({
   logo_className,
 }: LogoProps) => {
   return (
-    <Link href="/" className="flex items-center  gap-x-2">
+    <Link href="/" className="flex items-center gap-x-2">
       <Image
         className={cn(logo_className)}
         src="/yellow_logo.png"
@@ -32,7 +32,7 @@ const Logo = ({
       />
 
       <div
-        className={cn("pb-1 text-[36px]/4 text-custom-primary", text_className)}
+        className={cn("text-custom-primary pb-1 text-[36px]/4", text_className)}
       >
         موبی<span className="">نو</span>
       </div>

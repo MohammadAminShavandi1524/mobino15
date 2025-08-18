@@ -16,8 +16,7 @@ const AuthBtn = ({ setIsSideBarOpen, user }: AuthBtnProps) => {
         setIsSideBarOpen(false);
       }}
       href={user ? "/admin" : "/auth"}
-      className="min-w-[140px] px-2.5 py-1.25 sm:px-4 sm:py-2 border border-custom-primary rounded-md sm:rounded-lg text-[15px]
-           "
+      className="border-custom-primary min-w-[140px] rounded-md border px-2.5 py-1.25 text-[15px] sm:rounded-lg sm:px-4 sm:py-2"
     >
       {user ? (
         <>
@@ -27,10 +26,10 @@ const AuthBtn = ({ setIsSideBarOpen, user }: AuthBtnProps) => {
         </>
       ) : (
         <>
-          <span className="text-[14px] sm:text-[15px] lg:pl-4 lg:border-l lg:border-custom-primary">
+          <span className="lg:border-custom-primary text-[14px] sm:text-[15px] lg:border-l lg:pl-4">
             ورود
           </span>
-          <span className="hidden lg:inline pr-4">ثبت نام</span>
+          <span className="hidden pr-4 lg:inline">ثبت نام</span>
         </>
       )}
     </Link>

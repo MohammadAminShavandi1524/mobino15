@@ -28,7 +28,7 @@ const MobileMainSpec = ({ product }: MobileMainSpecProps) => {
         />
         <MainSpecCard
           title="سایز صفحه نمایش"
-           value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <MainSpecCard
           title="وضوح دوربین اصلی"

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import { ChevronDown, ChevronLeft, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import FooterNavList from "./FooterNavList";
-import {  convertToPersianNumber } from "@/lib/utils";
+import { convertToPersianNumber } from "@/lib/utils";
 import Image from "next/image";
 import {
   Collapsible,
@@ -66,11 +66,11 @@ const Footer = () => {
   ];
 
   return (
-    <div className=" p-4 pt-15 w-full ">
+    <div className="w-full p-4 pt-15">
       {/* mobile and tablet footer 1024 */}
-      <div className="bg-primaryGradient flex flex-col w-full pt-8 px-2 rounded-[16px] lg:hidden ">
+      <div className="bg-primaryGradient flex w-full flex-col rounded-[16px] px-2 pt-8 lg:hidden">
         {/* header */}
-        <div className="flex justify-between items-center mx-4  pb-4 border-b border-b-[#fcfcfc] mb-4">
+        <div className="mx-4 mb-4 flex items-center justify-between border-b border-b-[#fcfcfc] pb-4">
           <div>
             <Logo
               logo_className="hidden"
@@ -84,9 +84,9 @@ const Footer = () => {
                 behavior: "smooth",
               });
             }}
-            className="flex items-center gap-x-1 md:gap-x-1.5  pr-4 pl-2 md:pl-2.5 py-2  bg-[#fcfeff] rounded-lg cursor-pointer"
+            className="flex cursor-pointer items-center gap-x-1 rounded-lg bg-[#fcfeff] py-2 pr-4 pl-2 md:gap-x-1.5 md:pl-2.5"
           >
-            <span className="text-[12px] md:text-[14px] font-medium">
+            <span className="text-[12px] font-medium md:text-[14px]">
               بازگشت به بالا
             </span>
             <span>
@@ -95,11 +95,11 @@ const Footer = () => {
           </button>
         </div>
         {/* content */}
-        <div className="flex flex-col mx-4 py-2.5 border-b border-b-[#fcfcfc]">
+        <div className="mx-4 flex flex-col border-b border-b-[#fcfcfc] py-2.5">
           {/* Quick access */}
           <Collapsible className="group/collapsible text-white">
             <CollapsibleTrigger className="w-full pb-5">
-              <div className="flex justify-between items-center w-full">
+              <div className="flex w-full items-center justify-between">
                 <span className="text-sm">دسترسی سریع</span>
                 <span>
                   <ChevronDown
@@ -110,10 +110,10 @@ const Footer = () => {
               </div>
             </CollapsibleTrigger>
 
-            <CollapsibleContent className="flex flex-col gap-y-2.5 mr-1.5 mb-6.5 mt-2.5 pr-2.75 border-r-[1.5px] border-r-[#d3d8e4]">
+            <CollapsibleContent className="mt-2.5 mr-1.5 mb-6.5 flex flex-col gap-y-2.5 border-r-[1.5px] border-r-[#d3d8e4] pr-2.75">
               {quickAccessOptions.map((option, index) => {
                 return (
-                  <li className="list-none text-[12px] " key={index}>
+                  <li className="list-none text-[12px]" key={index}>
                     <Link href={option.href}>{option.label}</Link>
                   </li>
                 );
@@ -123,7 +123,7 @@ const Footer = () => {
           {/* Best-selling products */}
           <Collapsible className="group/collapsible text-white">
             <CollapsibleTrigger className="w-full pb-5">
-              <div className="flex justify-between items-center w-full">
+              <div className="flex w-full items-center justify-between">
                 <span className="text-sm">پرفروش ترین محصولات</span>
                 <span>
                   <ChevronDown
@@ -134,10 +134,10 @@ const Footer = () => {
               </div>
             </CollapsibleTrigger>
 
-            <CollapsibleContent className="flex flex-col gap-y-2.5 mr-1.5 mb-6.5 mt-2.5 pr-2.75 border-r-[1.5px] border-r-[#d3d8e4]">
+            <CollapsibleContent className="mt-2.5 mr-1.5 mb-6.5 flex flex-col gap-y-2.5 border-r-[1.5px] border-r-[#d3d8e4] pr-2.75">
               {bestSellingProductsOptions.map((option, index) => {
                 return (
-                  <li className="list-none text-[12px] " key={index}>
+                  <li className="list-none text-[12px]" key={index}>
                     <Link href={option.href}>{option.label}</Link>
                   </li>
                 );
@@ -146,9 +146,9 @@ const Footer = () => {
           </Collapsible>
           {/* contact with us */}
           <div className="flex flex-col text-white">
-            <div className="text-sm mb-2.5">درباره موبینو</div>
-            <ul className="flex flex-col gap-y-2.5 mr-1.5 mb-6.5 mt-2.5 pr-2.75 border-r-[1.5px] border-r-[#d3d8e4]">
-              <li className="list-none flex items-center gap-x-1.5 text-[12px]">
+            <div className="mb-2.5 text-sm">درباره موبینو</div>
+            <ul className="mt-2.5 mr-1.5 mb-6.5 flex flex-col gap-y-2.5 border-r-[1.5px] border-r-[#d3d8e4] pr-2.75">
+              <li className="flex list-none items-center gap-x-1.5 text-[12px]">
                 <span>آدرس جیمیل:</span>
 
                 <Link
@@ -160,7 +160,7 @@ const Footer = () => {
                   maminshavandi1524@gmail.com
                 </Link>
               </li>
-              <li className="list-none flex items-center gap-x-1.5 text-[12px]">
+              <li className="flex list-none items-center gap-x-1.5 text-[12px]">
                 <span className="">لینک ریپازیتوری:</span>
 
                 <Link
@@ -176,8 +176,8 @@ const Footer = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="my-4 py-4 mx-6 mb-6  flex justify-center w-fit sm:w-full">
-          <div className="flex gap-x-3  text-white text-[12px] md:text-[14px]">
+        <div className="mx-6 my-4 mb-6 flex w-fit justify-center py-4 sm:w-full">
+          <div className="flex gap-x-3 text-[12px] text-white md:text-[14px]">
             <span>{convertToPersianNumber(1404)}</span>
             <span>
               منابع اطلاعات: دیجی‌کالا + هوش مصنوعی | طراحی الهام‌گرفته از
@@ -187,9 +187,9 @@ const Footer = () => {
         </div>
       </div>
       {/* pc footer */}
-      <div className="bg-primaryGradient flex flex-col w-full  rounded-[30px] max-lg:hidden pt-18 px-36">
+      <div className="bg-primaryGradient flex w-full flex-col rounded-[30px] px-36 pt-18 max-lg:hidden">
         {/* header */}
-        <div className="flex justify-between items-center pb-12 border-b border-b-[#fcfcfc] mb-12">
+        <div className="mb-12 flex items-center justify-between border-b border-b-[#fcfcfc] pb-12">
           <div>
             <Logo
               logo_className="hidden"
@@ -203,7 +203,7 @@ const Footer = () => {
                 behavior: "smooth",
               });
             }}
-            className="flex items-center gap-x-4 pr-7 pl-5 py-4  bg-[#fcfeff] rounded-lg cursor-pointer"
+            className="flex cursor-pointer items-center gap-x-4 rounded-lg bg-[#fcfeff] py-4 pr-7 pl-5"
           >
             <span className="text-[15px] font-medium">بازگشت به بالا</span>
             <span>
@@ -227,9 +227,9 @@ const Footer = () => {
           </div>
 
           {/* contact with us */}
-          <div className="flex flex-col gap-y-7  text-white ">
+          <div className="flex flex-col gap-y-7 text-white">
             <div className="text-xl font-medium">درباره موبینو</div>
-            <ul className="flex flex-col gap-y-3 text-sm font-medium pr-0.5">
+            <ul className="flex flex-col gap-y-3 pr-0.5 text-sm font-medium">
               <li className="flex items-center gap-x-1.5">
                 <Image
                   src="/footer/gmail.png"
@@ -247,9 +247,9 @@ const Footer = () => {
                   maminshavandi1524@gmail.com
                 </Link>
               </li>
-              <li className="flex  gap-x-1.5">
+              <li className="flex gap-x-1.5">
                 <Image
-                  className="rounded-full self-baseline"
+                  className="self-baseline rounded-full"
                   src="/footer/github.png"
                   alt="github"
                   width={24}
@@ -269,8 +269,8 @@ const Footer = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="mt-12 py-12 flex justify-center  w-full  border-t border-t-[#fcfcfc]">
-          <div className="flex gap-x-3 w-7/10 text-white text-[14px]">
+        <div className="mt-12 flex w-full justify-center border-t border-t-[#fcfcfc] py-12">
+          <div className="flex w-7/10 gap-x-3 text-[14px] text-white">
             <span>{convertToPersianNumber(1404)}</span>
             <span>
               اطلاعات محصولات با کمک منابع معتبر از جمله دیجی‌کالا و فناوری‌های

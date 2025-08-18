@@ -58,7 +58,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
         }
         router.push("/");
       },
-    })
+    }),
   );
 
   // const username = form.watch("username");
@@ -69,7 +69,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
   return (
     <Form {...form}>
       <form
-        className="flex flex-col w-full items-center gap-y-4"
+        className="flex w-full flex-col items-center gap-y-4"
         onSubmit={form.handleSubmit(registerOnSubmit)}
       >
         {/* user name */}
@@ -81,7 +81,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
                 نام کاربری
               </FormLabel>
               <FormControl>
-                <Input className="w-[380px] h-[60px] text-base" {...field} />
+                <Input className="h-[60px] w-[380px] text-base" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -92,12 +92,12 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
           name="sellername"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="mr-[10px] text-[12px] flex gap-x-1">
+              <FormLabel className="mr-[10px] flex gap-x-1 text-[12px]">
                 <span>نام فروشگاه</span>
                 {/* <span>(اسمی که نمایش داده میشود)</span> */}
               </FormLabel>
               <FormControl>
-                <Input className="w-[380px] h-[60px] text-base" {...field} />
+                <Input className="h-[60px] w-[380px] text-base" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -110,7 +110,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">ایمیل</FormLabel>
               <FormControl>
-                <Input className="w-[380px] h-[60px] text-base" {...field} />
+                <Input className="h-[60px] w-[380px] text-base" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -125,7 +125,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
               <FormControl>
                 <Input
                   type="password"
-                  className="w-[380px] h-[60px] text-base"
+                  className="h-[60px] w-[380px] text-base"
                   {...field}
                 />
               </FormControl>
@@ -137,7 +137,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
         <button
           disabled={register.isPending}
           type="submit"
-          className="block w-full h-[60px] mt-5 bg-custom-primary text-white text-xl font-semibold rounded-md cursor-pointer"
+          className="bg-custom-primary mt-5 block h-[60px] w-full cursor-pointer rounded-md text-xl font-semibold text-white"
         >
           ثبت نام
         </button>

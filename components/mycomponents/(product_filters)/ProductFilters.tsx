@@ -32,7 +32,7 @@ const ProductFilters = ({
       value !== undefined &&
       value !== false &&
       value !== "" &&
-      (!Array.isArray(value) || value.length > 0)
+      (!Array.isArray(value) || value.length > 0),
   );
 
   const isPriceFilterActive = (filters: ProductFilters) => {
@@ -65,9 +65,9 @@ const ProductFilters = ({
   //
   if (isFiltersOpened)
     return (
-      <aside className="flex flex-col self-start min-w-[270px] max-w-[270px]  sticky top-0 right-0 border border-[#ced0d0] rounded-md pb-4">
+      <aside className="sticky top-0 right-0 flex max-w-[270px] min-w-[270px] flex-col self-start rounded-md border border-[#ced0d0] pb-4">
         {/* header */}
-        <div className="flex items-center justify-between  p-[14px] border-b border-b-[#ced0d0]">
+        <div className="flex items-center justify-between border-b border-b-[#ced0d0] p-[14px]">
           <div className="flex items-center gap-x-2 text-[#333333]">
             <span>
               <SlidersHorizontal size={16} />
@@ -84,9 +84,9 @@ const ProductFilters = ({
 
         {/* enabled filters */}
         {hasActiveFilters && (
-          <div className="flex flex-col  mx-[14px] border-b border-b-[#ced0d0]">
+          <div className="mx-[14px] flex flex-col border-b border-b-[#ced0d0]">
             {/*  Applied filters tag and the Remove filters button  */}
-            <div className="flex justify-between items-center py-3">
+            <div className="flex items-center justify-between py-3">
               <div className="text-[12px] text-[#333333]">
                 فیلتر‌های اعمال شده
               </div>
@@ -100,7 +100,7 @@ const ProductFilters = ({
                     brand: null,
                   })
                 }
-                className="flex items-center gap-x-1 text-[#9c9d9e] cursor-pointer"
+                className="flex cursor-pointer items-center gap-x-1 text-[#9c9d9e]"
               >
                 <span className="text-[12px]">حذف همه</span>
                 <span>
@@ -116,7 +116,7 @@ const ProductFilters = ({
         )}
 
         {/* filters */}
-        <div className="flex flex-col mx-[14px]">
+        <div className="mx-[14px] flex flex-col">
           <AvailableProductsFilter
             available={filters.available}
             onAvailableChange={(value) => onChange("available", value)}
@@ -149,8 +149,7 @@ const ProductFilters = ({
   return (
     <div
       onClick={() => setIsFiltersOpened(true)}
-      className="flex items-center w-[130px] h-[50px] px-[14px] bg-[#f6f6f6] border border-[#ced0d0] 
-      gap-x-2 text-[#333333] rounded-md cursor-pointer"
+      className="flex h-[50px] w-[130px] cursor-pointer items-center gap-x-2 rounded-md border border-[#ced0d0] bg-[#f6f6f6] px-[14px] text-[#333333]"
     >
       <span>
         <SlidersHorizontal size={16} />

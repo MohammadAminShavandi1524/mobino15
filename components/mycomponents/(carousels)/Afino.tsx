@@ -39,7 +39,7 @@ const Afino = () => {
   const trpc = useTRPC();
 
   const _productsData = useSuspenseQuery(
-    trpc.products.getAffinoCarousel.queryOptions()
+    trpc.products.getAffinoCarousel.queryOptions(),
   );
 
   const productsData = _productsData.data.docs.filter((product) => {
@@ -49,21 +49,18 @@ const Afino = () => {
   });
 
   const products = Array.from(
-    new Map(productsData.map((p) => [p.name, p])).values()
+    new Map(productsData.map((p) => [p.name, p])).values(),
   ).slice(0, 10);
 
   return (
-    <div
-      className=" w-full flex flex-col lg:min-h-120  lg:p-3 pb-6 border-b lg:border border-[#ffd7d9]
-            lg:rounded-2xl mt-6 lg:mt-13"
-    >
-      <div className="flex justify-between items-center  w-full bg-[#a2191f] text-white px-5 pr-7 py-1.5 mb-3 lg:px-6 lg:py-3 lg:mb-6 lg:rounded-md">
-        <div className="text-[15px] md:text-xl lg:text-2xl font-medium">
+    <div className="mt-6 flex w-full flex-col border-b border-[#ffd7d9] pb-6 lg:mt-13 lg:min-h-120 lg:rounded-2xl lg:border lg:p-3">
+      <div className="mb-3 flex w-full items-center justify-between bg-[#a2191f] px-5 py-1.5 pr-7 text-white lg:mb-6 lg:rounded-md lg:px-6 lg:py-3">
+        <div className="text-[15px] font-medium md:text-xl lg:text-2xl">
           آفینو
         </div>
         <Link
           href={""}
-          className="flex items-center gap-x-1.5 lg:gap-x-2 cursor-pointer"
+          className="flex cursor-pointer items-center gap-x-1.5 lg:gap-x-2"
         >
           <span className="text-[12px] md:text-sm">نمایش همه</span>
           <span>

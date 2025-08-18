@@ -12,13 +12,13 @@ const HeaderSkeleton = () => {
   }
 
   return (
-    <header className=" bg-background flex flex-col w-full mx-auto border-b border-b-[#d7dee0]">
+    <header className="bg-background mx-auto flex w-full flex-col border-b border-b-[#d7dee0]">
       {/* banners */}
       {isBannerDisplayed && <Skeleton height={60} width={1920} />}
 
-      <div className="pt-4 max-w-[1920px] w-full mx-auto  px-6">
+      <div className="mx-auto w-full max-w-[1920px] px-6 pt-4">
         {/* fixed part */}
-        <div className="flex items-center justify-between mx-auto w-[90%] pb-6">
+        <div className="mx-auto flex w-[90%] items-center justify-between pb-6">
           {/* logo and searchbar */}
           <section className="flex items-center gap-x-6">
             {/* logo */}
@@ -37,11 +37,11 @@ const HeaderSkeleton = () => {
           </section>
         </div>
         {/* navbar */}
-        <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3">
+        <nav className="mx-auto flex w-[90%] items-center gap-x-4 pb-3 text-[14px] font-medium text-[#666666]">
           {/* Product categories */}
           <Skeleton height={44} width={176} />
           {/* optional pages */}
-          <div className="flex items-center gap-x-4 mx-2">
+          <div className="mx-2 flex items-center gap-x-4">
             <Skeleton height={44} width={140} />
             <Skeleton height={44} width={98} />
             <Skeleton height={44} width={128} />

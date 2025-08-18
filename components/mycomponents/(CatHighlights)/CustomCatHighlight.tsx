@@ -17,11 +17,11 @@ const CustomCatHighlight = ({
   label,
   options,
   bgColor,
-  imageSize
+  imageSize,
 }: CustomCatHighlightProps) => {
   return (
-    <div className="flex flex-col  justify-center items-center w-full my-14 ">
-      <div className="text-[26px] font-medium text-black mb-8">
+    <div className="my-14 flex w-full flex-col items-center justify-center">
+      <div className="mb-8 text-[26px] font-medium text-black">
         برترین های {label}
       </div>
       <ul className="flex items-center gap-x-14">
@@ -29,18 +29,18 @@ const CustomCatHighlight = ({
           return (
             <li key={index}>
               <Link
-                className="flex flex-col items-center gap-y-3 cursor-pointer"
+                className="flex cursor-pointer flex-col items-center gap-y-3"
                 href={option.href}
               >
-                <div className="relative size-50  flex justify-center items-center">
+                <div className="relative flex size-50 items-center justify-center">
                   <div
                     className={cn("size-43 rounded-[24px]")}
                     style={{ backgroundColor: bgColor }}
                   ></div>
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[182px] h-[182px] flex justify-center items-center">
+                  <div className="absolute top-1/2 left-1/2 flex h-[182px] w-[182px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center">
                     <Image
                       className={cn(
-                        "transition-all hover:scale-110 object-cover"
+                        "object-cover transition-all hover:scale-110",
                       )}
                       src={option.img}
                       alt={option.label}

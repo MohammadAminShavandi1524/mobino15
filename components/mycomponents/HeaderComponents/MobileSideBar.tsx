@@ -38,7 +38,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
   return (
     <Sidebar className="">
       <SidebarHeader className="p-3">
-        <div className="flex justify-between items-center mb-5">
+        <div className="mb-5 flex items-center justify-between">
           <Logo
             logoImage_height={32}
             logoImage_width={32}
@@ -48,7 +48,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             onClick={() => {
               toggleSidebar();
             }}
-            className="p-1 cursor-pointer"
+            className="cursor-pointer p-1"
           >
             <X />
           </button>
@@ -62,7 +62,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
               toggleSidebar();
             }}
             href=""
-            className="flex items-center gap-x-3 "
+            className="flex items-center gap-x-3"
           >
             <Image
               src="/shopicon.gif"
@@ -71,7 +71,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
               height={24}
               unoptimized
             />
-            <span className="font-medium text-custom-primary text-[14px]">
+            <span className="text-custom-primary text-[14px] font-medium">
               فروشنده شو
             </span>
           </Link>
@@ -91,7 +91,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
               color="#b9375d"
               size={24}
             />
-            <span className=" text-[14px]">شگفت انگیز ها</span>
+            <span className="text-[14px]">شگفت انگیز ها</span>
           </Link>
         </SidebarGroup>
         <SidebarGroup className="border-b border-b-[#d3d8e4]">
@@ -109,7 +109,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
               height={24}
               unoptimized
             />
-            <span className=" text-[14px]">درباره ما</span>
+            <span className="text-[14px]">درباره ما</span>
           </Link>
         </SidebarGroup>
         {/* <SidebarGroup className="border-b border-b-[#d3d8e4]">
@@ -141,7 +141,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             className="flex items-center gap-x-3 text-[#333333]"
           >
             <Boxes color="#9cb8cc" size={24} />
-            <span className="text-[#666666] text-[14px]">همه محصولات</span>
+            <span className="text-[14px] text-[#666666]">همه محصولات</span>
           </Link>
         </SidebarGroup>
 
@@ -157,7 +157,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
                   <CollapsibleTrigger
                     className={cn("pb-2", index === 0 && "mt-2")}
                   >
-                    <div className="flex justify-between items-center w-full text-[#666666]">
+                    <div className="flex w-full items-center justify-between text-[#666666]">
                       <div className="flex items-center gap-x-3">
                         <span>
                           <LucideIcon
@@ -181,12 +181,13 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
                   className="mr-[11.5px] border-r-[1.5px] border-r-[#d3d8e4]"
                   style={{
                     borderRightColor:
-                      adjustAlpha(cat.logoColor || "#d3d8e4", 0.35) || "#d3d8e4",
+                      adjustAlpha(cat.logoColor || "#d3d8e4", 0.35) ||
+                      "#d3d8e4",
                   }}
                 >
                   {(selectedCategory(cat)?.subcategories?.docs as Category[])
                     ?.sort(
-                      (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity)
+                      (a, b) => (a.order ?? Infinity) - (b.order ?? Infinity),
                     )
                     .map((sub, index) => {
                       return (
@@ -196,8 +197,8 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
                           }}
                           key={sub.id}
                           className={cn(
-                            "block px-5 pr-6 py-2 text-[14px] text-[#555555]",
-                            index === 0 && "mt-1"
+                            "block px-5 py-2 pr-6 text-[14px] text-[#555555]",
+                            index === 0 && "mt-1",
                           )}
                           href={`/${cat.name}/${sub.name}`}
                         >

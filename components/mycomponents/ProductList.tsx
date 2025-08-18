@@ -34,7 +34,7 @@ const ProductList = ({
       .flatMap((p) => Ids.push(p.id));
 
     const productReviews = reviews?.filter((review) =>
-      Ids.includes(review.product as string)
+      Ids.includes(review.product as string),
     );
 
     const ratings: number[] = [];
@@ -50,7 +50,7 @@ const ProductList = ({
 
   const availableProducts = products?.filter((p) => p.available) ?? [];
   const uniqueAvailableProducts = Array.from(
-    new Map(availableProducts.map((p) => [p.name, p])).values()
+    new Map(availableProducts.map((p) => [p.name, p])).values(),
   );
 
   const unavailableProducts = products?.filter((p) => !p.available) ?? [];
@@ -60,9 +60,9 @@ const ProductList = ({
   return (
     <div
       className={cn(
-        "grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-3 gap-y-3 ",
+        "3xl:grid-cols-5 grid gap-x-3 gap-y-3 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
         !isFiltersOpened &&
-          "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 "
+          "3xl:grid-cols-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
       )}
     >
       {finalProducts &&
@@ -74,7 +74,7 @@ const ProductList = ({
           const discountPercent = getDiscountPercent(product);
 
           const duplicateAvailableProducts = products?.filter(
-            (p) => p.name === product.name && p.available
+            (p) => p.name === product.name && p.available,
           );
 
           const hasRating = !Number.isNaN(averageRating);
@@ -88,7 +88,7 @@ const ProductList = ({
           const laptopGamingTag = product.productType?.[0].blockType ===
             "laptop" &&
             product.productType?.[0].usage === "گیمینگ" && (
-              <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
+              <div className="flex items-center gap-x-1 rounded-[12px] bg-[#f8f8f8] px-2">
                 <Gamepad2 size={16} color="#004c72" />
                 <span className="text-[12px] text-[#81858b]">
                   {product.productType?.[0].usage}
@@ -99,14 +99,14 @@ const ProductList = ({
           const MonitorGamingTag = product.productType?.[0].blockType ===
             "monitor" &&
             product.productType?.[0].usageType.includes("gaming") && (
-              <div className="flex items-center gap-x-1 rounded-[12px] px-2 bg-[#f8f8f8]">
+              <div className="flex items-center gap-x-1 rounded-[12px] bg-[#f8f8f8] px-2">
                 <Gamepad2 size={16} color="#004c72" />
                 <span className="text-[12px] text-[#81858b]">گیمینگ</span>
               </div>
             );
 
           const LowStockTag = (
-            <div className="flex items-center gap-x-0.5 text-[#e6123d] text-[10px]">
+            <div className="flex items-center gap-x-0.5 text-[10px] text-[#e6123d]">
               <Box size={16} />
               <span>{convertToPersianNumber(product.quantity)}</span>
               <span>عدد باقی مانده</span>
@@ -116,7 +116,7 @@ const ProductList = ({
           const RatingTag = (
             <div className="flex items-center gap-x-0.5">
               <Star color="#f1c21b" size={16} />
-              <span className="text-[#666666] text-[10px]">
+              <span className="text-[10px] text-[#666666]">
                 {convertToPersianNumber(averageRating)}
               </span>
             </div>
@@ -127,20 +127,20 @@ const ProductList = ({
               href={`/products/${product.order}_${product.label}`}
               target="_blank"
               className={cn(
-                "relative w-full min-h-[480px] bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] rounded-md ",
-                !isAfinoPage && "pt-[50px]"
+                "relative min-h-[480px] w-full rounded-md bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)]",
+                !isAfinoPage && "pt-[50px]",
               )}
               key={index}
             >
               {/* بخش نشون دادن تخفیف  */}
               {!isAfinoPage && product.available && product.offPrice && (
-                <div className="w-full absolute  top-4 px-5 pb-2 ">
+                <div className="absolute top-4 w-full px-5 pb-2">
                   <div className="text-[14px] font-bold text-[#e6123d]">
                     {discountPercent && discountPercent > 5
                       ? "پیشنهاد شگفت انگیز"
                       : "فروش ویژه"}
                   </div>
-                  <div className="mt-2 h-[4px] bg-[#e6123d] rounded-sm"></div>
+                  <div className="mt-2 h-[4px] rounded-sm bg-[#e6123d]"></div>
                 </div>
               )}
 
@@ -149,8 +149,8 @@ const ProductList = ({
               {product.available ? (
                 <div
                   className={cn(
-                    "flex flex-col items-center gap-y-1.5 absolute top-[71px] right-[20px] p-1 rounded-full  bg-[#ffffff] ",
-                    isAfinoPage && "top-[30px]"
+                    "absolute top-[71px] right-[20px] flex flex-col items-center gap-y-1.5 rounded-full bg-[#ffffff] p-1",
+                    isAfinoPage && "top-[30px]",
                   )}
                 >
                   {duplicateAvailableProducts &&
@@ -161,7 +161,7 @@ const ProductList = ({
                             key={index}
                             className={cn(
                               "size-2.5 rounded-full shadow-sm",
-                              index === 3 && "hidden"
+                              index === 3 && "hidden",
                             )}
                             style={{
                               backgroundColor: getColorInfo(p.color).hex,
@@ -180,14 +180,14 @@ const ProductList = ({
               ) : (
                 <div
                   className={cn(
-                    "absolute top-[71px] right-[20px] w-[10px] h-[10px] rounded-full border border-[#d7dee0]"
+                    "absolute top-[71px] right-[20px] h-[10px] w-[10px] rounded-full border border-[#d7dee0]",
                   )}
                   style={{ backgroundColor: getColorInfo(product.color).hex }}
                 ></div>
               )}
 
               {/* تصویر */}
-              <div className="w-full flex items-center justify-center mt-5 mb-5">
+              <div className="mt-5 mb-5 flex w-full items-center justify-center">
                 <Image
                   className={cn("")}
                   src={mainImageUrl}
@@ -198,7 +198,7 @@ const ProductList = ({
               </div>
 
               {/* title */}
-              <div className="productlist-title min-h-[63px] px-6 text-justify text-[14px] text-[#212121] font-light mb-3">
+              <div className="productlist-title mb-3 min-h-[63px] px-6 text-justify text-[14px] font-light text-[#212121]">
                 {product.label}
               </div>
 
@@ -206,8 +206,8 @@ const ProductList = ({
 
               <div
                 className={cn(
-                  "flex items-center justify-between mb-6 min-h-4",
-                  hasRating ? "px-6" : "pr-5.5 pl-5.5"
+                  "mb-6 flex min-h-4 items-center justify-between",
+                  hasRating ? "px-6" : "pr-5.5 pl-5.5",
                 )}
               >
                 {hasRating ? (
@@ -242,45 +242,42 @@ const ProductList = ({
                 product.offPrice ? (
                   <div className="relative flex items-center justify-between px-4 pb-[42px]">
                     {/* discount percent */}
-                    <div
-                      className="flex items-center justify-center gap-x-0.5 bg-[#da1e28] text-white h-5 min-w-7 max-w-7.5 rounded-sm
-                      px-1"
-                    >
+                    <div className="flex h-5 max-w-7.5 min-w-7 items-center justify-center gap-x-0.5 rounded-sm bg-[#da1e28] px-1 text-white">
                       <span>
                         <Percent strokeWidth={2.5} size={14} />
                       </span>
-                      <span className="text-[12px] pt-[2px]">
+                      <span className="pt-[2px] text-[12px]">
                         {convertToPersianNumber(discountPercent || "33")}
                       </span>
                     </div>
                     {/* price */}
                     <div className="flex items-center gap-x-1 text-[#212121]">
-                      <span className="font-bold text-[20px]">
+                      <span className="text-[20px] font-bold">
                         {product.offPrice.toLocaleString("fa-IR")}
                       </span>
                       <span className="text-[12px]">تومان</span>
                     </div>
                     {/* off price */}
-                    <div className="absolute bottom-[12px] left-[5px] px-4 gap-x-1 text-[#919ebc]">
-                      <span className="font-bold text-[17px] line-through">
+                    <div className="absolute bottom-[12px] left-[5px] gap-x-1 px-4 text-[#919ebc]">
+                      <span className="text-[17px] font-bold line-through">
                         {product.price.toLocaleString("fa-IR")}
                       </span>
                       <span className="text-[12px]">تومان</span>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-end gap-x-1 pl-4 pb-[42px] text-[#212121]">
-                    <span className="font-bold text-[20px]">
+                  <div className="flex items-center justify-end gap-x-1 pb-[42px] pl-4 text-[#212121]">
+                    <span className="text-[20px] font-bold">
                       {product.price.toLocaleString("fa-IR")}
                     </span>
                     <span className="text-[12px]">تومان</span>
                   </div>
                 )
               ) : (
-                <div className="flex items-center justify-end gap-x-1  px-4 pb-[42px] text-[#212121]">
-                  <span className="w-full h-[1px] bg-[#ced0d0]"></span>
+                <div className="flex items-center justify-end gap-x-1 px-4 pb-[42px] text-[#212121]">
+                  <span className="h-[1px] w-full bg-[#ced0d0]"></span>
                   <span className="text-[16px]"> ناموجود</span>
-                  <span className="w-[50px] h-[1px] bg-[#ced0d0]"></span>
+                  <span className="h-[1px] w-[50px] bg-[#ced0d0]"></span>
                 </div>
               )}
             </Link>

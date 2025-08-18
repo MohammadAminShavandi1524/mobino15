@@ -39,11 +39,11 @@ const AddToCartButton = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="relative flex items-center justify-center mx-[10px] h-13 rounded-lg bg-custom-primary cursor-pointer">
+      <div className="bg-custom-primary relative mx-[10px] flex h-13 cursor-pointer items-center justify-center rounded-lg">
         <LoadingDots dotClassName="bg-white" />
       </div>
     ),
-  }
+  },
 );
 
 interface ProductPageProps {
@@ -63,15 +63,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
     .data.user;
 
   const matchedProductByDKP: Product[] = useSuspenseQuery(
-    trpc.products.getOneWithDKP.queryOptions({ order: orderParam })
+    trpc.products.getOneWithDKP.queryOptions({ order: orderParam }),
   ).data.docs;
 
   const matchedProductByOrder: Product = useSuspenseQuery(
-    trpc.products.getOneWithOrder.queryOptions({ order: orderParam })
+    trpc.products.getOneWithOrder.queryOptions({ order: orderParam }),
   ).data.docs[0];
 
   const { data: productReviews } = useQuery(
-    trpc.reviews.getOne.queryOptions({ product: product })
+    trpc.reviews.getOne.queryOptions({ product: product }),
   );
 
   const [MPProductShowcase, setMPProductsShowcase] = useState<
@@ -90,7 +90,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
       matchedProductByOrder.quantity === 0)
   )
     return (
-      <div className="w90 flex flex-col mt-4">
+      <div className="w90 mt-4 flex flex-col">
         <div className="px-[10px]">ناموجود</div>
       </div>
     );
@@ -100,7 +100,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   if (matchedProductByDKP.length > 1) {
     const TheProduct = MPProductShowcase ?? matchedProductByOrder;
     return (
-      <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+      <div className="w90 mt-4 flex max-w-[1600px] flex-col px-[10px]">
         {/* modal */}
 
         <AddToCartBtnModal
@@ -123,12 +123,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
             productData={matchedProductByOrder}
             category={
               convertIdToCatOrSub(
-                matchedProductByOrder?.category as string
+                matchedProductByOrder?.category as string,
               ) as string
             }
             subCategory={
               convertIdToCatOrSub(
-                matchedProductByOrder?.subCategory as string
+                matchedProductByOrder?.subCategory as string,
               ) as string
             }
             className="px-1"
@@ -136,15 +136,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
         </div>
 
         {/*  */}
-        <div className="flex  gap-x-[50px] relative bg-[#fcfeff]">
-          <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
-            <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
+        <div className="relative flex gap-x-[50px] bg-[#fcfeff]">
+          <div className="grid min-h-[700px] w-full grid-cols-20 rounded-xl border border-[#d3d8e4]">
+            <div className="col-span-11 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-10 pl-0">
               {/* product fa title */}
               <ProductFaTitle label={matchedProductByOrder.label} />
               {/* product en title */}
               <ProductEnTitle name={matchedProductByOrder.name} />
 
-              <div className="self-baseline mb-10">
+              <div className="mb-10 self-baseline">
                 {/* product rating */}
                 <ProductRating
                   productReviews={productReviews}
@@ -152,13 +152,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 />
 
                 {/* product color */}
-                <div className="flex flex-col self-baseline gap-y-[14px] pl-6 pb-4 border-b border-b-[#d3d8e4]">
-                  <div className="flex items-center gap-x-2 ">
+                <div className="flex flex-col gap-y-[14px] self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
+                  <div className="flex items-center gap-x-2">
                     <span>رنگ :</span>
                     <span>{getColorInfo(TheProduct.color).label}</span>
                   </div>
 
-                  <div className="flex flex-row-reverse gap-x-3 items-center">
+                  <div className="flex flex-row-reverse items-center gap-x-3">
                     {matchedAvailableProducts.map((p, index) => {
                       const isSelected = p.color === TheProduct.color;
 
@@ -174,13 +174,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
                         >
                           <div
                             className={cn(
-                              "flex justify-between items-center self-baseline p-[4px] border border-[#d7dee0]  rounded-[6px] ",
-                              isSelected && "border-[#14a0de]"
+                              "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
+                              isSelected && "border-[#14a0de]",
                             )}
                           >
                             <div
-                              className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
-                            rounded-[6px]"
+                              className="flex h-5 w-5 items-center justify-center rounded-[6px] border border-[#d7dee0]"
                               style={{
                                 backgroundColor: getColorInfo(p.color).hex,
                               }}
@@ -195,8 +194,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
                             </div>
                             <span
                               className={cn(
-                                "text-[14px] font-medium text-[#666666] ml-3 mr-2",
-                                isSelected && "text-[#333333]"
+                                "mr-2 ml-3 text-[14px] font-medium text-[#666666]",
+                                isSelected && "text-[#333333]",
                               )}
                             >
                               {getColorInfo(p.color).label}
@@ -210,11 +209,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
               </div>
 
               {/* main specifictions */}
-              <div className="flex flex-col gap-y-2.5 ">
-                <div className="text-[14px] font-medium pr-1.5">
+              <div className="flex flex-col gap-y-2.5">
+                <div className="pr-1.5 text-[14px] font-medium">
                   ویژگی های اصلی
                 </div>
-                <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
+                <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-[20px] pl-[30px]">
                   <ProductMainSpec product={matchedProductByOrder} />
                 </div>
               </div>
@@ -224,7 +223,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           </div>
 
           {/* landing aside */}
-          <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
+          <div className="sticky top-5 flex min-w-[400px] flex-col self-baseline rounded-[16px] border border-[#d3d8e4] p-6">
             {/* seller info */}
             <SellerInfo
               product={matchedProductByOrder}
@@ -265,7 +264,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   // * single products
 
   return (
-    <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
+    <div className="w90 mt-4 flex max-w-[1600px] flex-col px-[10px]">
       {/* modal */}
       <AddToCartBtnModal
         isModalOpen={isModalOpen}
@@ -286,12 +285,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
           productData={matchedProductByOrder}
           category={
             convertIdToCatOrSub(
-              matchedProductByOrder.category as string
+              matchedProductByOrder.category as string,
             ) as string
           }
           subCategory={
             convertIdToCatOrSub(
-              matchedProductByOrder.subCategory as string
+              matchedProductByOrder.subCategory as string,
             ) as string
           }
           className="px-1"
@@ -299,15 +298,15 @@ const ProductPage = ({ product }: ProductPageProps) => {
       </div>
 
       {/*  */}
-      <div className="flex gap-x-[50px] relative bg-[#fcfeff]">
-        <div className="grid grid-cols-20  w-full min-h-[700px] border border-[#d3d8e4] rounded-xl">
-          <div className="flex flex-col col-span-11 h-full p-10 pl-0 bg-[#fcfeff] rounded-r-xl">
+      <div className="relative flex gap-x-[50px] bg-[#fcfeff]">
+        <div className="grid min-h-[700px] w-full grid-cols-20 rounded-xl border border-[#d3d8e4]">
+          <div className="col-span-11 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-10 pl-0">
             {/* product fa title */}
             <ProductFaTitle label={matchedProductByOrder.label} />
             {/* product en title */}
             <ProductEnTitle name={matchedProductByOrder.name} />
 
-            <div className="self-baseline mb-10">
+            <div className="mb-10 self-baseline">
               {/* product rating */}
               <ProductRating
                 productReviews={productReviews}
@@ -315,7 +314,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
               />
 
               {/* product color */}
-              <div className="flex items-center gap-x-1 self-baseline  pl-6 pb-4 border-b border-b-[#d3d8e4]">
+              <div className="flex items-center gap-x-1 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
                 <span className="ml-0.5">رنگ :</span>
                 <span>{getColorInfo(matchedProductByOrder.color).label}</span>
                 <span
@@ -330,11 +329,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
             {/* main specifictions */}
 
-            <div className="flex flex-col gap-y-2.5 ">
-              <div className="text-[14px] font-medium pr-1.5">
+            <div className="flex flex-col gap-y-2.5">
+              <div className="pr-1.5 text-[14px] font-medium">
                 ویژگی های اصلی
               </div>
-              <div className="w-full  bg-white p-[20px] pl-[30px] border border-[#d7dee0] rounded-[10px]">
+              <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-[20px] pl-[30px]">
                 <ProductMainSpec product={matchedProductByOrder} />
               </div>
             </div>
@@ -345,7 +344,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         </div>
 
         {/* landing aside */}
-        <div className="sticky top-5 flex flex-col min-w-[400px] self-baseline p-6 border border-[#d3d8e4] rounded-[16px]">
+        <div className="sticky top-5 flex min-w-[400px] flex-col self-baseline rounded-[16px] border border-[#d3d8e4] p-6">
           {/* seller info */}
           <SellerInfo product={matchedProductByOrder} productType="single" />
 

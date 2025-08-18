@@ -16,16 +16,15 @@ const CartBtn = ({ cartItemCount, setIsSideBarOpen }: CartBtnProps) => {
       onClick={() => {
         setIsSideBarOpen(false);
       }}
-      className="relative flex items-center justify-center text-primary size-8 sm:size-10 border border-border
-              rounded-md"
+      className="text-primary border-border relative flex size-8 items-center justify-center rounded-md border sm:size-10"
       href="/cart"
     >
       <ShoppingCart size={24} />
       {/* cart item count */}
       <div
         className={cn(
-          "absolute -bottom-[3px] -right-[4px] sm:-bottom-[3px] sm:-right-[3px]  size-4 sm:size-5 flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full",
-          cartItemCount === 0 && "pb-[4px]"
+          "absolute -right-[4px] -bottom-[3px] z-5 flex size-4 items-center justify-center rounded-full border border-[#14a0de] bg-[#14a0de] p-[3px] pt-[4px] text-xs text-white sm:-right-[3px] sm:-bottom-[3px] sm:size-5",
+          cartItemCount === 0 && "pb-[4px]",
         )}
       >
         {convertToPersianNumber(cartItemCount)}

@@ -28,7 +28,7 @@ const TabletMainSpec = ({ product }: TabletMainSpecProps) => {
         />
         <MainSpecCard
           title="سایز صفحه نمایش"
-           value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
+          value={`${convertToPersianNumber(spec.displaySize)} اینچ`}
         />
         <MainSpecCard
           title="رزولوشن دوربین اصلی"

@@ -68,7 +68,7 @@ const Pricefilter = ({
           <div className="relative">
             <div>محدوده قیمت</div>
             {isPriceFilterActive && (
-              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]" />
+              <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]" />
             )}
           </div>
 
@@ -81,11 +81,11 @@ const Pricefilter = ({
           </motion.div>
         </div>
 
-        <div className="flex flex-col items-center mb-6">
+        <div className="mb-6 flex flex-col items-center">
           <div className="flex items-center gap-x-1">
-            <span className="text-[#81858b] text-[18px]">از</span>
+            <span className="text-[18px] text-[#81858b]">از</span>
             <input
-              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none focus:ring-0 caret-custom-primary placeholder-[#3f4064]"
+              className="caret-custom-primary h-[54px] max-w-[150px] border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none"
               dir="ltr"
               type="text"
               value={formatWithThousandSeparator(localMinPrice)}
@@ -96,9 +96,9 @@ const Pricefilter = ({
             <TomanLogo />
           </div>
           <div className="flex items-center gap-x-1">
-            <span className="text-[#81858b] text-[18px]">تا</span>
+            <span className="text-[18px] text-[#81858b]">تا</span>
             <input
-              className="h-[54px] max-w-[150px] text-[#3f4064] text-[24px] font-extrabold px-[10px] border-0 border-b focus:outline-none focus:ring-0 caret-custom-primary placeholder-[#3f4064]"
+              className="caret-custom-primary h-[54px] max-w-[150px] border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none"
               dir="ltr"
               placeholder="∞"
               type="text"
@@ -116,12 +116,12 @@ const Pricefilter = ({
   return (
     <div
       onClick={() => setIsFilterOpen(true)}
-      className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333] cursor-pointer"
+      className="flex cursor-pointer items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
     >
       <div className="relative">
         <div>محدوده قیمت</div>
         {isPriceFilterActive && (
-          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]" />
+          <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]" />
         )}
       </div>
       <motion.div

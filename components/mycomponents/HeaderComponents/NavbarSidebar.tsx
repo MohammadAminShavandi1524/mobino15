@@ -24,7 +24,7 @@ const NavbarSidebar = ({
 
   const [activeCategory, setActiveCategory] = useState<null | Category>(null);
   const [activeSubCategory, setActiveSubCategory] = useState<null | Category>(
-    null
+    null,
   );
 
   const trpc = useTRPC();
@@ -39,20 +39,20 @@ const NavbarSidebar = ({
 
   selectedCategory &&
     (selectedCategory?.subcategories?.docs as Category[]).sort(
-      (a, b) => a.order - b.order
+      (a, b) => a.order - b.order,
     );
 
   // ?
 
   if (isOpen) {
     return (
-      <div className="absolute right-0 top-[calc(100%+1px)] z-50 flex w-full  bg-zinc-900/50 h-screen border-t border-[#d7dee0] max-lg:hidden">
+      <div className="absolute top-[calc(100%+1px)] right-0 z-50 flex h-screen w-full border-t border-[#d7dee0] bg-zinc-900/50 max-lg:hidden">
         {/* categories */}
-        <ul className="min-w-[280px] bg-white text-custom-primary pt-4 px-4 flex flex-col ">
+        <ul className="text-custom-primary flex min-w-[280px] flex-col bg-white px-4 pt-4">
           {/* تمام محصولات  */}
           <li
             className={cn(
-              "pb-1 mb-1 border-b border-b-[#f0f0f0] rounded-md  group"
+              "group mb-1 rounded-md border-b border-b-[#f0f0f0] pb-1",
             )}
             onMouseEnter={() => setIsAllPHovered(true)}
             onMouseLeave={() => setIsAllPHovered(false)}
@@ -73,12 +73,12 @@ const NavbarSidebar = ({
                   boxShadow: "0 2px 8px 0 rgba(0,0,0,.1)",
                   color: "#9cb8cc",
                 }}
-                className="w-9 h-9 flex items-center justify-center bg-background rounded-full"
+                className="bg-background flex h-9 w-9 items-center justify-center rounded-full"
               >
                 <Icons.Boxes size={24} />
               </div>
               {/* label */}
-              <div className="flex-1 font-medium text-[14px] text-[#333333] mr-[14px]">
+              <div className="mr-[14px] flex-1 text-[14px] font-medium text-[#333333]">
                 همه محصولات
               </div>
             </Link>
@@ -93,7 +93,7 @@ const NavbarSidebar = ({
               <li
                 key={doc.id}
                 onMouseEnter={() => setActiveCategory(doc)}
-                className={cn("pb-1 mb-1 border-b rounded-md group")}
+                className={cn("group mb-1 rounded-md border-b pb-1")}
                 style={{
                   // borderBottomColor: adjustAlpha(
                   //   doc.logoColor ?? "#f0f0f0",
@@ -106,8 +106,8 @@ const NavbarSidebar = ({
                         background: generateGradient(
                           adjustAlpha(
                             doc.logoColor || "rgba(100,166,227,0.8)",
-                            0.75
-                          ) ?? "rgba(100,166,227,1)"
+                            0.75,
+                          ) ?? "rgba(100,166,227,1)",
                         ),
                       }
                     : {}),
@@ -124,12 +124,12 @@ const NavbarSidebar = ({
                       boxShadow: "0 2px 8px 0 rgba(0,0,0,.1)",
                       color: doc.logoColor || "#7ab2e6",
                     }}
-                    className="w-9 h-9 flex items-center justify-center bg-background rounded-full"
+                    className="bg-background flex h-9 w-9 items-center justify-center rounded-full"
                   >
                     <LucideIcon size={24} />
                   </div>
                   {/* label */}
-                  <div className="flex-1 font-medium text-[14px] text-[#333333] mr-[14px]">
+                  <div className="mr-[14px] flex-1 text-[14px] font-medium text-[#333333]">
                     {doc.label}
                   </div>
                   {/* arrow logo */}
@@ -139,8 +139,8 @@ const NavbarSidebar = ({
                       whileHover={{ scale: 1.3 }}
                       whileTap={{ scale: 0.8 }}
                       className={cn(
-                        "w-8 h-8 flex items-center justify-center opacity-0",
-                        activeCategory === doc && "opacity-100"
+                        "flex h-8 w-8 items-center justify-center opacity-0",
+                        activeCategory === doc && "opacity-100",
                       )}
                       style={{
                         color: doc.logoColor ?? undefined,
@@ -161,18 +161,18 @@ const NavbarSidebar = ({
           !!activeCategory.subcategories?.docs?.length && (
             <div
               style={{ boxShadow: "-2px -2px 10px -5px rgba(0,0,0,0.3) inset" }}
-              className="min-w-[280px] bg-white text-custom-primary pt-4 pb-8 pl-4 flex flex-col gap-y-3"
+              className="text-custom-primary flex min-w-[280px] flex-col gap-y-3 bg-white pt-4 pb-8 pl-4"
             >
               <Link
                 href={`/${activeCategory.name}`}
                 onClick={() => setIsOpen(false)}
-                className="min-h-10 text-[#333]  font-semibold py-2 px-4 rounded-md mr-4"
+                className="mr-4 min-h-10 rounded-md px-4 py-2 font-semibold text-[#333]"
                 style={
                   activeCategory
                     ? {
                         backgroundColor: adjustAlpha(
                           activeCategory.logoColor ?? "#111111",
-                          0.3
+                          0.3,
                         ),
                       }
                     : undefined
@@ -192,20 +192,20 @@ const NavbarSidebar = ({
                           key={sub.id}
                           onMouseEnter={() => setActiveSubCategory(sub || null)}
                           onMouseLeave={() => setActiveSubCategory(null)}
-                          className="min-h-10 flex items-center text-base pr-8 text-[#333] hover:bg-[#f1f8ff] rounded-sm cursor-pointer "
+                          className="flex min-h-10 cursor-pointer items-center rounded-sm pr-8 text-base text-[#333] hover:bg-[#f1f8ff]"
                           style={
                             activeSubCategory?.id === sub.id
                               ? {
                                   backgroundColor: adjustAlpha(
                                     activeCategory?.logoColor ?? "#111111",
-                                    0.1
+                                    0.1,
                                   ),
                                 }
                               : undefined
                           }
                         >
                           <Link
-                            className="flex items-center h-full w-full  min-h-10"
+                            className="flex h-full min-h-10 w-full items-center"
                             href={`/${activeCategory.name}/${sub.name}`}
                             onClick={() => setIsOpen(false)}
                           >
@@ -213,7 +213,7 @@ const NavbarSidebar = ({
                           </Link>
                         </li>
                       );
-                    }
+                    },
                   )}
               </ul>
             </div>
@@ -226,11 +226,11 @@ const NavbarSidebar = ({
             setActiveCategory(null);
           }}
           className={cn(
-            "flex-1 bg-transparent/50  transition-opacity duration-300",
-            isOpen ? "opacity-100" : "opacity-0 "
+            "flex-1 bg-transparent/50 transition-opacity duration-300",
+            isOpen ? "opacity-100" : "opacity-0",
           )}
         >
-          <div className="bg-transparent text-white pr-6 pt-4 cursor-pointer">
+          <div className="cursor-pointer bg-transparent pt-4 pr-6 text-white">
             <X size={28} />
           </div>
         </div>

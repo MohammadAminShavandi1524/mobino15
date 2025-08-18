@@ -16,7 +16,7 @@ const AfinoPage = ({}: AfinoPageProps) => {
   const { data: productsData } = useSuspenseQuery(
     trpc.products.getAfinoProducts.queryOptions({
       ...filters,
-    })
+    }),
   );
   const allReviews = useSuspenseQuery(trpc.reviews.getMany.queryOptions()).data;
 
@@ -26,7 +26,7 @@ const AfinoPage = ({}: AfinoPageProps) => {
     const percent =
       (product.offPrice &&
         Math.ceil(
-          ((product.price - product.offPrice) / product.price) * 100
+          ((product.price - product.offPrice) / product.price) * 100,
         )) ||
       0;
 

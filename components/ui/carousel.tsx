@@ -64,7 +64,7 @@ function Carousel({
       slidesToScroll: 1,
       containScroll: "trimSnaps",
     },
-    plugins
+    plugins,
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
@@ -93,7 +93,7 @@ function Carousel({
         scrollNext();
       }
     },
-    [scrollPrev, scrollNext]
+    [scrollPrev, scrollNext],
   );
 
   React.useEffect(() => {
@@ -119,11 +119,11 @@ function Carousel({
       if (api.canScrollNext()) {
         api.scrollNext();
       } else {
-        api.scrollTo(0); 
+        api.scrollTo(0);
       }
-    }, interval || 3000); 
+    }, interval || 3000);
 
-    return () => clearInterval(timer); 
+    return () => clearInterval(timer);
   }, [api, autoplay, interval]);
 
   return (
@@ -160,14 +160,14 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       ref={carouselRef}
-      className="overflow-hidden "
+      className="overflow-hidden"
       data-slot="carousel-content"
     >
       <div
         className={cn(
           "flex",
           orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
+          className,
         )}
         {...props}
       />
@@ -186,7 +186,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
         orientation === "horizontal" ? "lg:pl-4" : "pt-4",
-        className
+        className,
       )}
       {...props}
     />
@@ -207,11 +207,11 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-9 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.1)]  pl-0.5",
+        "absolute size-9 rounded-full pl-0.5 shadow-[0_2px_8px_rgba(0,0,0,0.1)]",
         orientation === "horizontal"
-          ? " -translate-y-1/2"
+          ? "-translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
+        className,
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
@@ -236,11 +236,11 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-9 rounded-full shadow-[0_1px_4px_rgba(0,0,0,0.1)]  pr-0.5",
+        "absolute size-9 rounded-full pr-0.5 shadow-[0_1px_4px_rgba(0,0,0,0.1)]",
         orientation === "horizontal"
-          ? " -translate-y-1/2"
+          ? "-translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
-        className
+        className,
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}

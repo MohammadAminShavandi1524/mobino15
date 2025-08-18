@@ -28,11 +28,11 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
   if (!id) return <div>param loading</div>; // loading for empty param
 
   const subReviews = useSuspenseQuery(
-    trpc.reviews.getSubReviews.queryOptions({ Id: id })
+    trpc.reviews.getSubReviews.queryOptions({ Id: id }),
   ).data;
 
   const products = useSuspenseQuery(
-    trpc.products.getSubCatProducts.queryOptions({ ...filters, Id: id })
+    trpc.products.getSubCatProducts.queryOptions({ ...filters, Id: id }),
   ).data.docs;
 
   const { data: categories } = useQuery(trpc.categories.getMany.queryOptions());

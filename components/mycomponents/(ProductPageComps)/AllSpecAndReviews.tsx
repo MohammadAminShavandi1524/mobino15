@@ -107,16 +107,16 @@ const AllSpecAndReviews = ({
   const mainImageUrl = getMainImageUrl(product);
 
   return (
-    <div className="relative flex flex-col my-10">
+    <div className="relative my-10 flex flex-col">
       {/* header */}
-      <div className="sticky top-0 z-6 flex items-center  px-11  gap-x-10 text-[14px] bg-[#f3f8fd] border-b border-b-[#919ebc] text-[#919ebc]">
+      <div className="sticky top-0 z-6 flex items-center gap-x-10 border-b border-b-[#919ebc] bg-[#f3f8fd] px-11 text-[14px] text-[#919ebc]">
         <Link
           to="introduction"
           offset={-70}
           spy={true}
           smooth={true}
           duration={500}
-          className="py-4 cursor-pointer "
+          className="cursor-pointer py-4"
           activeStyle={{ borderBottom: "4px solid black", color: "black" }}
         >
           معرفی محصول
@@ -127,7 +127,7 @@ const AllSpecAndReviews = ({
           spy={true}
           smooth={true}
           duration={500}
-          className="py-4 cursor-pointer"
+          className="cursor-pointer py-4"
           activeStyle={{ borderBottom: "4px solid black", color: "black" }}
         >
           مشخصات فنی
@@ -138,22 +138,22 @@ const AllSpecAndReviews = ({
           spy={true}
           smooth={true}
           duration={500}
-          className="py-4 cursor-pointer"
+          className="cursor-pointer py-4"
           activeStyle={{ borderBottom: "4px solid black", color: "black" }}
         >
           نظرات کاربران
         </Link>
       </div>
       <div className="relative flex gap-x-[50px] pt-5">
-        <div className="flex flex-col w-full">
+        <div className="flex w-full flex-col">
           {/* product introduction */}
           <Element name="introduction">
-            <div className="flex flex-col gap-y-5 pt-4 mb-14">
-              <div className="flex items-center gap-x-3 mr-5">
-                <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
+            <div className="mb-14 flex flex-col gap-y-5 pt-4">
+              <div className="mr-5 flex items-center gap-x-3">
+                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
                 <span className="text-xl font-medium">معرفی محصول</span>
               </div>
-              <p className="text-justify text-[16px]/[32px] text-[#23254e] px-10.5">
+              <p className="px-10.5 text-justify text-[16px]/[32px] text-[#23254e]">
                 {convertToPersianNumber(product.introduction)}
               </p>
             </div>
@@ -164,13 +164,13 @@ const AllSpecAndReviews = ({
 
           {/* all spec */}
           <Element name="allSpec">
-            <div className="flex flex-col gap-y-5 pt-4 mt-10 mb-14">
-              <div className="flex items-center gap-x-3 mr-5">
-                <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
+            <div className="mt-10 mb-14 flex flex-col gap-y-5 pt-4">
+              <div className="mr-5 flex items-center gap-x-3">
+                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
                 <span className="text-xl font-medium">مشخصات فنی</span>
               </div>
               {/*All spec cards */}
-              <div className="flex flex-col gap-y-2.5 ">
+              <div className="flex flex-col gap-y-2.5">
                 <AllProductSpecs product={product} />
               </div>
             </div>
@@ -181,15 +181,15 @@ const AllSpecAndReviews = ({
 
           {/* reviews */}
           <Element name="reviews">
-            <div className="relative flex gap-x-10 mt-10">
-              <div className="flex flex-col w-full">
+            <div className="relative mt-10 flex gap-x-10">
+              <div className="flex w-full flex-col">
                 {/* reviews header */}
-                <div className="flex items-center gap-x-3 mr-5 mb-5">
-                  <span className="size-3 rounded-full bg-custom-primary border border-[#919ebc]"></span>
+                <div className="mr-5 mb-5 flex items-center gap-x-3">
+                  <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
                   <span className="text-xl font-medium">نظرات کاربران</span>
                 </div>
                 {/* reviews orderbar */}
-                <div className="flex items-center gap-x-4 bg-[#f1f8ff] w-full p-[14px] text-[12px] mb-8 rounded-sm">
+                <div className="mb-8 flex w-full items-center gap-x-4 rounded-sm bg-[#f1f8ff] p-[14px] text-[12px]">
                   <div className="flex items-center gap-x-2 text-[#333333]">
                     <span>
                       <ArrowDownWideNarrow size={18} color="#333333" />
@@ -201,8 +201,8 @@ const AllSpecAndReviews = ({
                       <div
                         onClick={() => setReviewOrderBar(option.value)}
                         className={cn(
-                          "text-[#919ebc] cursor-pointer",
-                          option.value === reviewOrderBar && "text-[#0079b1]"
+                          "cursor-pointer text-[#919ebc]",
+                          option.value === reviewOrderBar && "text-[#0079b1]",
                         )}
                         key={index}
                       >
@@ -226,9 +226,9 @@ const AllSpecAndReviews = ({
 
                       return (
                         <div key={index}>
-                          <div className="flex flex-col w-full px-8  border-double  border-b-[#d3d8e4]">
+                          <div className="flex w-full flex-col border-double border-b-[#d3d8e4] px-8">
                             {/* profile logo and username */}
-                            <div className="flex items-center gap-x-2.5 mb-4">
+                            <div className="mb-4 flex items-center gap-x-2.5">
                               <div>
                                 {displayName === "کاربر ناشناس" ? (
                                   <CircleQuestionMark />
@@ -251,19 +251,19 @@ const AllSpecAndReviews = ({
                               {toJalali(review.updatedAt)}
                             </div>
                             {/* description */}
-                            <div className="text-[#385086] text-base/relaxed mb-8">
+                            <div className="mb-8 text-base/relaxed text-[#385086]">
                               {review.description}
                             </div>
                           </div>
                           {/* divider */}
-                          <div className="w-full h-0.25 bg-[#d3d8e4] "></div>
-                          <div className="w-full h-0.25 bg-[#d3d8e4] mt-0.75"></div>
+                          <div className="h-0.25 w-full bg-[#d3d8e4]"></div>
+                          <div className="mt-0.75 h-0.25 w-full bg-[#d3d8e4]"></div>
                         </div>
                       );
                     })
                   ) : (
-                    <div className="w-full p-6 bg-[#f1f8ff]">
-                      <div className="flex flex-col gap-y-2 w-full px-8 py-4.5 bg-white">
+                    <div className="w-full bg-[#f1f8ff] p-6">
+                      <div className="flex w-full flex-col gap-y-2 bg-white px-8 py-4.5">
                         <span className="text-base">
                           برای راهنمایی دیگران درمورد این کالا نظر دهید.
                         </span>
@@ -277,17 +277,17 @@ const AllSpecAndReviews = ({
               </div>
 
               {/* reviews aside */}
-              <div className="sticky top-16 z-5 flex flex-col min-w-[400px] max-w-[400px] self-baseline pt-10 ">
-                <div className="flex justify-between gap-x-6 mb-10">
+              <div className="sticky top-16 z-5 flex max-w-[400px] min-w-[400px] flex-col self-baseline pt-10">
+                <div className="mb-10 flex justify-between gap-x-6">
                   <div className="">
                     {ratingNumbers.map((rating) => (
                       <div
                         key={rating}
-                        className="flex justify-between items-center gap-x-1.5"
+                        className="flex items-center justify-between gap-x-1.5"
                       >
                         <div style={{ direction: "rtl" }}>
                           <Progress
-                            className="min-w-[180px] max-w-[180px] h-2.5 rounded-[16px] bg-[#e9ecf2]"
+                            className="h-2.5 max-w-[180px] min-w-[180px] rounded-[16px] bg-[#e9ecf2]"
                             value={percentages[rating]}
                           />
                         </div>
@@ -297,17 +297,17 @@ const AllSpecAndReviews = ({
                       </div>
                     ))}
                   </div>
-                  <div className="flex flex-col items-end ">
+                  <div className="flex flex-col items-end">
                     {/* reviews averege */}
-                    <div className="text-[40px]/[40px] font-extrabold text-[#385086] mb-3">
+                    <div className="mb-3 text-[40px]/[40px] font-extrabold text-[#385086]">
                       {convertToPersianNumber(
                         productReviews && productReviews?.length > 0
                           ? averageRating
-                          : 0
+                          : 0,
                       )}
                     </div>
                     {/* reviews count */}
-                    <div className="flex items-center gap-x-1 mb-3">
+                    <div className="mb-3 flex items-center gap-x-1">
                       <span>{convertToPersianNumber(ratings.length)}</span>
                       <span>نظر</span>
                     </div>
@@ -325,7 +325,7 @@ const AllSpecAndReviews = ({
                   </div>
                 </div>
                 {/* add review */}
-                <div className="flex flex-col w-full rounded-2xl p-6 min-h-[140px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)] gap-y-3">
+                <div className="flex min-h-[140px] w-full flex-col gap-y-3 rounded-2xl p-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
                   <div className="flex items-center gap-x-2 px-2">
                     <Image
                       src="/productpage/comment.gif"
@@ -340,7 +340,7 @@ const AllSpecAndReviews = ({
                   </div>
                   <button
                     onClick={() => setIsReviewModalOpen(true)}
-                    className="flex items-center justify-center gap-x-1 bg-custom-primary text-white h-13 w-full rounded-lg cursor-pointer"
+                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center gap-x-1 rounded-lg text-white"
                   >
                     <span>افزودن نظر</span>
                     <span>
@@ -354,41 +354,35 @@ const AllSpecAndReviews = ({
         </div>
 
         {/* aside */}
-        <div className="sticky top-20 z-5 flex flex-col min-w-[400px] max-w-[400px] min-h-100 self-baseline p-6  rounded-[16px] shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
+        <div className="sticky top-20 z-5 flex min-h-100 max-w-[400px] min-w-[400px] flex-col self-baseline rounded-[16px] p-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
           {/* image,title and color */}
-          <div className="flex gap-x-5 mt-3">
-            <div className="flex justify-center items-center self-baseline min-w-[100px]">
-              
-                <Image
-                  className={cn("")}
-                  src={mainImageUrl}
-                  alt={product.name}
-                  width={100}
-                  height={100}
-                />
-             
+          <div className="mt-3 flex gap-x-5">
+            <div className="flex min-w-[100px] items-center justify-center self-baseline">
+              <Image
+                className={cn("")}
+                src={mainImageUrl}
+                alt={product.name}
+                width={100}
+                height={100}
+              />
             </div>
             {/* title and color */}
             <div className="flex flex-col">
               {/* title */}
               <ProductFaTitle
-                className="productlist-title text-[14px]/[20px] text-[#212121] font-normal text-justify"
+                className="productlist-title text-justify text-[14px]/[20px] font-normal text-[#212121]"
                 label={product.label}
               />
 
               {/* product color */}
-              <div
-                className="flex justify-between items-center self-baseline  
-                   rounded-[6px] "
-              >
+              <div className="flex items-center justify-between self-baseline rounded-[6px]">
                 <div
-                  className="w-5 h-5 flex items-center justify-center border border-[#d7dee0] 
-                      rounded-full"
+                  className="flex h-5 w-5 items-center justify-center rounded-full border border-[#d7dee0]"
                   style={{
                     backgroundColor: getColorInfo(product.color).hex,
                   }}
                 ></div>
-                <span className="text-[12px] font-medium text-[#333333] ml-3 mr-2">
+                <span className="mr-2 ml-3 text-[12px] font-medium text-[#333333]">
                   {getColorInfo(product.color).label}
                 </span>
               </div>
@@ -396,8 +390,8 @@ const AllSpecAndReviews = ({
           </div>
           {/* seller info */}
 
-          <div className="flex flex-col gap-x-3  mt-8 mr-4.5 bg-transparent ">
-            <div className="pb-3 border-b border-b-[#d3d8e4]">
+          <div className="mt-8 mr-4.5 flex flex-col gap-x-3 bg-transparent">
+            <div className="border-b border-b-[#d3d8e4] pb-3">
               <div className="flex items-center pb-2">
                 <span className="">
                   <Store color="#3b5388" size={20} />
@@ -411,10 +405,10 @@ const AllSpecAndReviews = ({
               </div>
 
               <div className="flex items-center">
-                <span className=" w-5 h-5 flex justify-center items-center">
+                <span className="flex h-5 w-5 items-center justify-center">
                   <Truck color="#3b5388" size={16} />
                 </span>
-                <span className="text-[#385086] mr-4 text-[14px]">
+                <span className="mr-4 text-[14px] text-[#385086]">
                   {typeof product.tenant === "object" &&
                   product.tenant !== null &&
                   (product.tenant as Tenant).name !== "موبینو"

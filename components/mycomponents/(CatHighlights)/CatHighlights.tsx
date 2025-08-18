@@ -13,8 +13,8 @@ interface CatHighlightsProps {
 
 const CatHighlights = ({ options, label }: CatHighlightsProps) => {
   return (
-    <div className="flex flex-col  justify-center items-center w-full my-14 ">
-      <div className="text-[26px] font-medium text-black mb-8">
+    <div className="my-14 flex w-full flex-col items-center justify-center">
+      <div className="mb-8 text-[26px] font-medium text-black">
         برترین های {label}
       </div>
       <ul className="flex items-center gap-x-14">
@@ -22,7 +22,7 @@ const CatHighlights = ({ options, label }: CatHighlightsProps) => {
           return (
             <li key={index}>
               <Link
-                className="flex flex-col items-center gap-y-3 cursor-pointer"
+                className="flex cursor-pointer flex-col items-center gap-y-3"
                 href={option.href}
               >
                 <Image

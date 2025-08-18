@@ -80,11 +80,8 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
   ];
 
   return (
-    <div
-      className="my-13 w-full flex  border-[1.5px] border-[#d3d8e4]
-           rounded-2xl "
-    >
-      <div className="bg-primaryGradient flex flex-col justify-center items-center gap-y-1.25 pt-8 pb-6.5 px-10.5 text-white font-medium rounded-r-2xl">
+    <div className="my-13 flex w-full rounded-2xl border-[1.5px] border-[#d3d8e4]">
+      <div className="bg-primaryGradient flex flex-col items-center justify-center gap-y-1.25 rounded-r-2xl px-10.5 pt-8 pb-6.5 font-medium text-white">
         <span>
           <BadgeCheck size={36} />
         </span>
@@ -92,11 +89,11 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
       </div>
 
       <Carousel className="w-full">
-        <CarouselContent className="pt-4 px-4 pr-3 ">
+        <CarouselContent className="px-4 pt-4 pr-3">
           {options.map((option, index) => {
             return (
               <CarouselItem
-                className="relative flex justify-center items-center basis-1/1 sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4  2xl:basis-1/5 3xl:basis-1/6 px-1 select-none pl-2 last:pl-0 sm:border-l sm:border-l-[#d3d8e4] last:border-l-0"
+                className="3xl:basis-1/6 relative flex basis-1/1 items-center justify-center px-1 pl-2 select-none last:border-l-0 last:pl-0 sm:basis-1/2 sm:border-l sm:border-l-[#d3d8e4] md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-1/5"
                 key={index}
               >
                 <Link href={option.href}>

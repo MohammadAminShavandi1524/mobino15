@@ -26,28 +26,22 @@ const AuthBtn = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div
-        className=" min-w-[60px] lg:min-w-[140px] h-8 sm:h-10 px-2.5 py-1.25 sm:px-4 sm:py-2 border  border-custom-primary rounded-lg text-[15px]
-            flex justify-center items-center "
-      >
+      <div className="border-custom-primary flex h-8 min-w-[60px] items-center justify-center rounded-lg border px-2.5 py-1.25 text-[15px] sm:h-10 sm:px-4 sm:py-2 lg:min-w-[140px]">
         <LoadingDots size={2.5} />
       </div>
     ),
-  }
+  },
 );
 
 const CartBtn = dynamic(() => import("./CartBtn").then((mod) => mod.default), {
   ssr: false,
   loading: () => (
-    <div
-      className="relative flex items-center justify-center text-primary size-8 sm:size-10 border border-border
-              rounded-md"
-    >
+    <div className="text-primary border-border relative flex size-8 items-center justify-center rounded-md border sm:size-10">
       <ShoppingCart size={24} />
       {/* cart item count */}
       <div
         className={cn(
-          "absolute -bottom-[3px] -right-[4px] sm:-bottom-[3px] sm:-right-[3px]  size-4 sm:size-5 flex justify-center items-center border border-[#14a0de] bg-[#14a0de] text-white text-xs z-5 p-[3px] pt-[4px] rounded-full pb-[4px]"
+          "absolute -right-[4px] -bottom-[3px] z-5 flex size-4 items-center justify-center rounded-full border border-[#14a0de] bg-[#14a0de] p-[3px] pt-[4px] pb-[4px] text-xs text-white sm:-right-[3px] sm:-bottom-[3px] sm:size-5",
         )}
       >
         {convertToPersianNumber(0)}
@@ -75,7 +69,6 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  
 
   // *** cart item count ***
 
@@ -90,13 +83,13 @@ const Header = () => {
   userProductIds.flatMap((o) => productIds.push(o.productId));
 
   const userCartProducts = useQuery(
-    trpc.products.getCartProducts.queryOptions({ productIds: productIds })
+    trpc.products.getCartProducts.queryOptions({ productIds: productIds }),
   ).data?.docs;
 
   const availableProductIds = new Set(
     userCartProducts
       ?.filter((product) => product.available && product.quantity > 0)
-      .map((product) => product.id)
+      .map((product) => product.id),
   );
 
   const cartItemCount =
@@ -114,7 +107,7 @@ const Header = () => {
   }
 
   return (
-    <header className="relative bg-background flex flex-col w-full max-h-full mx-auto border-b border-b-[#d7dee0]">
+    <header className="bg-background relative mx-auto flex max-h-full w-full flex-col border-b border-b-[#d7dee0]">
       {/* banners */}
       <Image
         className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
@@ -137,10 +130,10 @@ const Header = () => {
           isBannerDisplayed={isBannerDisplayed}
         />
 
-        <div className="max-w-[1920px] w-full mx-auto px-6 py-4 lg:pb-0">
+        <div className="mx-auto w-full max-w-[1920px] px-6 py-4 lg:pb-0">
           {/* pc  */}
           {/* fixed part shown in more than 1024 devices*/}
-          <div className="flex items-center justify-between mx-auto w-[90%] pb-6 max-lg:hidden">
+          <div className="mx-auto flex w-[90%] items-center justify-between pb-6 max-lg:hidden">
             {/* logo and searchbar */}
             <section className="flex items-center gap-x-6">
               {/* logo */}
@@ -164,7 +157,7 @@ const Header = () => {
           </div>
 
           {/*navbar shown in more than 1024 devices */}
-          <nav className="mx-auto w-[90%] flex items-center gap-x-4 text-[14px] text-[#666666] font-medium pb-3 max-lg:hidden">
+          <nav className="mx-auto flex w-[90%] items-center gap-x-4 pb-3 text-[14px] font-medium text-[#666666] max-lg:hidden">
             {/* Product categories */}
             <motion.button
               key="modal"
@@ -172,8 +165,8 @@ const Header = () => {
                 setIsSideBarOpen(!isSideBarOpen);
               }}
               className={cn(
-                "p-2.5 flex items-center gap-x-2 cursor-pointer rounded-md hover:bg-[#f1f8ff] hover:text-primary ",
-                isSideBarOpen && "bg-[#f1f8ff] text-primary"
+                "hover:text-primary flex cursor-pointer items-center gap-x-2 rounded-md p-2.5 hover:bg-[#f1f8ff]",
+                isSideBarOpen && "text-primary bg-[#f1f8ff]",
               )}
             >
               <span>
@@ -182,10 +175,10 @@ const Header = () => {
               <span>دسته بندی محصولات</span>
             </motion.button>
             {/* optional pages */}
-            <div className="flex items-center gap-x-4 mx-2">
+            <div className="mx-2 flex items-center gap-x-4">
               <Link
                 href="/afino"
-                className={cn("p-2.5 flex items-center gap-x-2")}
+                className={cn("flex items-center gap-x-2 p-2.5")}
               >
                 <span>
                   <CirclePercent />
@@ -194,7 +187,7 @@ const Header = () => {
               </Link>
               <Link
                 href="/aboutUs"
-                className={cn("p-2.5 flex items-center gap-x-2")}
+                className={cn("flex items-center gap-x-2 p-2.5")}
               >
                 <span>
                   <Info />
@@ -212,7 +205,7 @@ const Header = () => {
               </Link> */}
             </div>
             {/* seller login */}
-            <Link href="" className="p-2.5 text-custom-primary">
+            <Link href="" className="text-custom-primary p-2.5">
               فروشنده شو
             </Link>
           </nav>
@@ -222,7 +215,7 @@ const Header = () => {
           {/* mobile and tablet */}
 
           <div className="flex items-center justify-between lg:hidden">
-            <SidebarTrigger className="size-8 p-1 " />
+            <SidebarTrigger className="size-8 p-1" />
 
             <div>
               <Logo
@@ -243,13 +236,13 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center gap-x-4 sm:gap-x-20 mt-5  lg:hidden">
+          <div className="mt-5 flex items-center justify-between gap-x-4 sm:gap-x-20 lg:hidden">
             {/* searchbar */}
             <div className="w-full">
               <SearchBar />
             </div>
             {/* seller login */}
-            <div className="hidden sm:block min-w-[100px] text-center py-2 text-[12px] sm:text-[14px] sm:text-base">
+            <div className="hidden min-w-[100px] py-2 text-center text-[12px] sm:block sm:text-base sm:text-[14px]">
               <Link href="" className="text-custom-primary">
                 فروشنده شو
               </Link>

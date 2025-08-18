@@ -38,21 +38,19 @@ const BrandFilter = ({
     return option.category.includes(categoryName);
   });
 
-
-
   if (activePage === "SubCategory") return <></>;
 
   if (isFilterOpen)
     return (
-      <div className="cursor-pointer ">
+      <div className="cursor-pointer">
         <div
           onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className=" flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
+          className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
         >
           <div className="relative">
             <div>برند</div>
             {isBrandFilterActive && (
-              <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+              <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]"></div>
             )}
           </div>
 
@@ -66,20 +64,19 @@ const BrandFilter = ({
         </div>
 
         {activePage === "all" ? (
-          <ScrollArea dir="rtl" className="flex flex-col max-h-[275px] ">
+          <ScrollArea dir="rtl" className="flex max-h-[275px] flex-col">
             {AllBrandOptions.map((brand, index) => {
               const isSelected = brands?.includes(brand.value);
 
               return (
                 <div
                   key={index}
-                  className="flex items-center justify-between text-[12px] py-3 ml-[30px] cursor-pointer"
+                  className="ml-[30px] flex cursor-pointer items-center justify-between py-3 text-[12px]"
                 >
                   <div className="flex items-center gap-x-3">
                     <Checkbox
                       checked={isSelected}
                       onCheckedChange={(checked) => {
-                        
                         if (!brands)
                           return setFilters({ brand: [brand.value] });
 
@@ -89,7 +86,7 @@ const BrandFilter = ({
 
                         setFilters({ brand: newBrands });
                       }}
-                      className="w-5 h-5 data-[state=checked]:bg-[#196ec0] data-[state=checked]:border-transparent cursor-pointer"
+                      className="h-5 w-5 cursor-pointer data-[state=checked]:border-transparent data-[state=checked]:bg-[#196ec0]"
                     />
                     <div className="text-[#333333]">{brand.label}</div>
                   </div>
@@ -101,14 +98,14 @@ const BrandFilter = ({
             })}
           </ScrollArea>
         ) : (
-          <ScrollArea dir="rtl" className="flex flex-col max-h-[275px] ">
+          <ScrollArea dir="rtl" className="flex max-h-[275px] flex-col">
             {filteredOptions.map((brand, index) => {
               const isSelected = brands?.includes(brand.value);
 
               return (
                 <div
                   key={index}
-                  className="flex items-center justify-between text-[12px] py-3 ml-[30px] cursor-pointer"
+                  className="ml-[30px] flex cursor-pointer items-center justify-between py-3 text-[12px]"
                 >
                   <div className="flex items-center gap-x-3">
                     <Checkbox
@@ -123,7 +120,7 @@ const BrandFilter = ({
 
                         setFilters({ brand: newBrands });
                       }}
-                      className="w-5 h-5 data-[state=checked]:bg-[#196ec0] data-[state=checked]:border-transparent cursor-pointer"
+                      className="h-5 w-5 cursor-pointer data-[state=checked]:border-transparent data-[state=checked]:bg-[#196ec0]"
                     />
                     <div className="text-[#333333]">{brand.label}</div>
                   </div>
@@ -141,12 +138,12 @@ const BrandFilter = ({
   return (
     <div
       onClick={() => setIsFilterOpen(!isFilterOpen)}
-      className="flex items-center justify-between py-5 text-[14px] font-medium text-[#333333] cursor-pointer"
+      className="flex cursor-pointer items-center justify-between py-5 text-[14px] font-medium text-[#333333]"
     >
       <div className="relative">
         <div>برند</div>
         {isBrandFilterActive && (
-          <div className="absolute top-[8px] left-[-14px] w-[6px] h-[6px] rounded-full bg-[#19bfd3]"></div>
+          <div className="absolute top-[8px] left-[-14px] h-[6px] w-[6px] rounded-full bg-[#19bfd3]"></div>
         )}
       </div>
       <motion.div

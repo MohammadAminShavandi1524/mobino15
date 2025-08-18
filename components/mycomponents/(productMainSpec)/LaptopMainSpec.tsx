@@ -51,14 +51,14 @@ const LaptopMainSpec = ({ product }: LaptopMainSpecProps) => {
         type: "ssd" | "hdd";
         capacity: "64gb" | "128gb" | "256gb" | "512gb" | "1tb" | "2tb" | "4tb";
         id?: string | null;
-      }[]
+      }[],
     ) => {
       return storages.map((storage) => {
         return (
           convertToPersianNumber(
             storage.capacity
               ?.replace(/gb/i, " گیگابایت")
-              ?.replace(/tb/i, " ترابایت")
+              ?.replace(/tb/i, " ترابایت"),
           ) +
           " " +
           storage.type

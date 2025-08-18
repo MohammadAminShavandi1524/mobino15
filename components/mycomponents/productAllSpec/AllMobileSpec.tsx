@@ -91,7 +91,7 @@ const AllMobileSpec = ({ product }: AllMobileSpecProps) => {
           title="ضد آب"
           value={spec.waterResistant ? "هست" : "نیست"}
         />
-         <AllSpecCard
+        <AllSpecCard
           title="ابعاد"
           value={`${convertToPersianNumber(spec.dimensions)} میلی متر`}
         />

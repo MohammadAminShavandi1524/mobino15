@@ -25,8 +25,8 @@ const SearchBar = () => {
   const is_sm_mediaquery = useMediaQuery("(max-width: 640px)");
 
   return (
-    <div className="flex gap-x-4 w-full  lg:w-[400px] xl:w-[600px] rounded-md bg-[#f0f0f0] h-10 md:h-12 lg:h-14  px-4 py-3">
-      <span className="text-xl sm:text-3xl text-gray-400 flex items-center justify-center">
+    <div className="flex h-10 w-full gap-x-4 rounded-md bg-[#f0f0f0] px-4 py-3 md:h-12 lg:h-14 lg:w-[400px] xl:w-[600px]">
+      <span className="flex items-center justify-center text-xl text-gray-400 sm:text-3xl">
         <Search />
       </span>
       <input
@@ -35,7 +35,7 @@ const SearchBar = () => {
             ? "جستجو ..."
             : "محصول، برند یا دسته مورد نظرتان را جستجو کنید"
         }
-        className="bg-[#f0f0f0] w-full text-[14px] focus:outline-0"
+        className="w-full bg-[#f0f0f0] text-[14px] focus:outline-0"
         type="text"
       />
     </div>

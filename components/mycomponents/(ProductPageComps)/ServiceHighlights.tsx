@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 
 const ServiceHighlights = () => {
   return (
-    <div className="flex justify-between w-[700px] mx-auto gap-x-3 my-15">
+    <div className="mx-auto my-15 flex w-[700px] justify-between gap-x-3">
       <Link href={""} className="flex flex-col items-center gap-y-3">
         <Image
           src="/productpage/refund.png"
