@@ -35,7 +35,7 @@ const ProductOverview = ({ children, className }: ProductOverviewProps) => {
     <ProductOverviewContext.Provider value={{ isOpened, setIsOpened }}>
       <div
         className={cn(
-          "mt-8 flex flex-col border-t border-t-[#d7dee0] pt-8 text-justify max-lg:px-4",
+          "mt-[150px] flex flex-col border-t border-t-[#d7dee0] pt-8 text-justify max-lg:px-4",
           className,
         )}
       >

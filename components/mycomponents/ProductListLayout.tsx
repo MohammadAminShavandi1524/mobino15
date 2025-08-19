@@ -9,6 +9,108 @@ import ProductFilters from "./(product_filters)/ProductFilters";
 import Orderbar from "./Orderbar";
 import ProductList from "./ProductList";
 
+import {
+  MobileOverview,
+  LaptopOverview,
+  TabletOverview,
+  HeadphoneOverview,
+  SmartWatchOverview,
+  MonitorOverview,
+} from "./ProductOverview/Cat";
+
+import {
+  // موبایل
+  XiaomiPhoneOverview,
+  HonorPhoneOverview,
+  RealmePhoneOverview,
+  SamsungPhoneOverview,
+  IPhoneOverview,
+
+  // لپ‌تاپ
+  DellLaptopOverview,
+  MSILaptopOverview,
+  AcerLaptopOverview,
+  HPLaptopOverview,
+  LenovoLaptopOverview,
+  AsusLaptopOverview,
+  AppleLaptopOverview,
+
+  // تبلت
+  LenovoTabletOverview,
+  MicrosoftTabletOverview,
+  SamsungTabletOverview,
+  AppleTabletOverview,
+
+  // هدفون
+  TscoHeadphonesOverview,
+  AnkerHeadphonesOverview,
+  RazerHeadphonesOverview,
+  BeatsHeadphonesOverview,
+
+  // ساعت هوشمند
+  XiaomiSmartWatchOverview,
+  SamsungSmartwatchOverview,
+  AppleWatchOverview,
+
+  // مانیتور
+  AcerMonitorOverview,
+  LGMonitorOverview,
+  DellMonitorOverview,
+  SamsungMonitorOverview,
+  ASUSMonitorOverview,
+} from "./ProductOverview/Sub";
+
+const categoryMap: Record<string, React.ReactNode> = {
+  mobile: <MobileOverview />,
+  laptop: <LaptopOverview />,
+  tablet: <TabletOverview />,
+  Headphones: <HeadphoneOverview />,
+  SmartWatch: <SmartWatchOverview />,
+  Monitor: <MonitorOverview />,
+};
+
+const SubCategoryMap: Record<string, React.ReactNode> = {
+  //* موبایل
+  XiaomiPhone: <XiaomiPhoneOverview />,
+  iPhone: <IPhoneOverview />,
+  samsungPhone: <SamsungPhoneOverview />,
+  HonorPhone: <HonorPhoneOverview />,
+  RealmePhone: <RealmePhoneOverview />,
+
+  //* لپ‌تاپ
+  DellLaptop: <DellLaptopOverview />,
+  MSILaptop: <MSILaptopOverview />,
+  AcerLaptop: <AcerLaptopOverview />,
+  HPLaptop: <HPLaptopOverview />,
+  lenovoLaptop: <LenovoLaptopOverview />,
+  asusLaptop: <AsusLaptopOverview />,
+  appleLaptop: <AppleLaptopOverview />,
+
+  //* تبلت
+  LenovoTablet: <LenovoTabletOverview />,
+  MicrosoftTablet: <MicrosoftTabletOverview />,
+  SamsungTablet: <SamsungTabletOverview />,
+  AppleTablet: <AppleTabletOverview />,
+
+  //* هدفون
+  TscoHeadphones: <TscoHeadphonesOverview />,
+  AnkerHeadphones: <AnkerHeadphonesOverview />,
+  RazerHeadphones: <RazerHeadphonesOverview />,
+  BeatsHeadphones: <BeatsHeadphonesOverview />,
+
+  //* ساعت هوشمند
+  XiaomiSmartWatch: <XiaomiSmartWatchOverview />,
+  SamsungSmartwatch: <SamsungSmartwatchOverview />,
+  AppleWatch: <AppleWatchOverview />,
+
+  //* مانیتور
+  AcerMonitor: <AcerMonitorOverview />,
+  LGMonitor: <LGMonitorOverview />,
+  DellMonitor: <DellMonitorOverview />,
+  SamsungMonitor: <SamsungMonitorOverview />,
+  ASUSMonitor: <ASUSMonitorOverview />,
+};
+
 interface ProductListLayoutProps {
   breadCrupActivePage: "category" | "subcategory" | "all" | "afino";
   ProductsFiltersActivePage: "category" | "all" | "SubCategory";
@@ -28,8 +130,13 @@ const ProductListLayout = ({
   selectedCategoryData,
   selectedSubCategoryData,
 }: ProductListLayoutProps) => {
+  console.log(
+    "🚀 ~ ProductListLayout ~ selectedSubCategoryData:",
+    selectedSubCategoryData?.name,
+  );
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
   const [filters, setFilters] = useProductFilters();
+
   return (
     <div className="w90 mt-4 flex flex-col">
       {/* bread crump and categories tags */}
@@ -130,6 +237,15 @@ const ProductListLayout = ({
           />
         </div>
       )}
+      {/* product overviews Cat*/}
+
+      {isCategory &&
+        selectedCategoryData?.name &&
+        categoryMap[selectedCategoryData.name]}
+
+      {/* product overviews Cat*/}
+      {selectedSubCategoryData?.name &&
+        SubCategoryMap[selectedSubCategoryData.name]}
     </div>
   );
 };

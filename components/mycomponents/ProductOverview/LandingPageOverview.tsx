@@ -10,7 +10,7 @@ import {
 
 const LandingPageOverview = () => {
   return (
-    <ProductOverview>
+    <ProductOverview className="mt-8">
       <Content>
         <MainTitle label="فروشگاه اینترنتی موبینو" />
 

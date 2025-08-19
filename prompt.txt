@@ -33,7 +33,7 @@ subCategory id : 687bc42cf2c04befa15c900d     subCategory name : AppleWatch
 
 category    id : 687bc225f2c04befa15c8fbf        category name : Monitor
 subCategory id : 687bc685f2c04befa15c9130     subCategory name : AcerMonitor
-subCategory id : 687bc655f2c04befa15c9117     subCategory name : LG monitor
+subCategory id : 687bc655f2c04befa15c9117     subCategory name : LGMonitor
 subCategory id : 687bc627f2c04befa15c9100     subCategory name : DellMonitor
 subCategory id : 687bc5e5f2c04befa15c90df     subCategory name : SamsungMonitor
 subCategory id : 687bc5b7f2c04befa15c90c3     subCategory name : ASUSMonitor
