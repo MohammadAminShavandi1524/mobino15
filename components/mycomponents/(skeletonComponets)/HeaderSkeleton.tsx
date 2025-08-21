@@ -7,7 +7,8 @@ import Skeleton from "./Skleton";
 const HeaderSkeleton = () => {
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
   const pathname = usePathname();
-  if (pathname === "/auth") {
+
+  if (pathname === "/auth" || pathname === "/auth/seller" ||pathname === "/auth/user" || pathname === "/test") {
     return <div className="hidden"></div>;
   }
 

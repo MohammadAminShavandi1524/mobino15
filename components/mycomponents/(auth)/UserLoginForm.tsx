@@ -28,7 +28,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 
-const LoginForm = () => {
+interface UserLoginFormProps {}
+
+const UserLoginForm = ({}: UserLoginFormProps) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -44,7 +46,7 @@ const LoginForm = () => {
   const queryClient = useQueryClient();
 
   const login = useMutation(
-    trpc.auth.login.mutationOptions({
+    trpc.auth.UserLogin.mutationOptions({
       onError: () => {
         toast.error("ایمیل یا رمز عبور اشتباه است");
       },
@@ -70,7 +72,6 @@ const LoginForm = () => {
   const loginOnSubmit = (values: z.infer<typeof loginSchema>) => {
     login.mutate(values);
   };
-
   return (
     <Form {...form}>
       <form
@@ -84,7 +85,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">ایمیل</FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+                <Input className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -97,7 +98,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+                <Input className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -107,7 +108,7 @@ const LoginForm = () => {
         <button
           disabled={login.isPending}
           type="submit"
-          className="bg-custom-primary mt-5 block h-[60px] w-full cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
+          className="bg-primaryGradient s:w-full xss:w-[370px] mt-5 block h-[48px] w-75 cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
         >
           ورود
         </button>
@@ -115,4 +116,5 @@ const LoginForm = () => {
     </Form>
   );
 };
-export default LoginForm;
+
+export default UserLoginForm;

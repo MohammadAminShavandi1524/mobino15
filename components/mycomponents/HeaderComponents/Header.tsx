@@ -69,7 +69,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  console.log(user?.roles);
+  console.log(user);
   // *** cart item count ***
 
   const categories = useSuspenseQuery(trpc.categories.getMany.queryOptions())
@@ -102,7 +102,12 @@ const Header = () => {
 
   // ************************************************************************
 
-  if (pathname === "/auth") {
+  if (
+    pathname === "/auth" ||
+    pathname === "/auth/seller" ||
+    pathname === "/auth/user" ||
+    pathname === "/test"
+  ) {
     return <div className="hidden"></div>;
   }
 
@@ -124,7 +129,7 @@ const Header = () => {
       <div className="block lg:hidden">
         <Link
           href="/Monitor"
-          className="h-10.5 relative block s:h-14 w-full sm:h-16 md:h-20"
+          className="s:h-14 relative block h-10.5 w-full sm:h-16 md:h-20"
         >
           <Image
             src="/mobilebanner.gif"

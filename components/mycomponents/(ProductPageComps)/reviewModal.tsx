@@ -195,7 +195,7 @@ const ReviewModal = ({
                   <button
                     disabled={addReview.isPending}
                     type="submit"
-                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-lg text-white disabled:cursor-pointer disabled:opacity-90"
+                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-lg text-white disabled:cursor-default disabled:opacity-90"
                   >
                     ثبت نظر
                   </button>

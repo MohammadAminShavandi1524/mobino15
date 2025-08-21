@@ -83,6 +83,8 @@
 
   --breakpoint-xs: 20rem; /** 320px **/
 
+  --breakpoint-xss: 25rem; /** 400px **/
+  
   --breakpoint-s: 30rem; /** 480px **/
 
   --breakpoint-sm: 40rem; /** 640px **/

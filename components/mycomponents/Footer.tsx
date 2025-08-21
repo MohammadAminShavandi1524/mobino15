@@ -16,7 +16,12 @@ import {
 const Footer = () => {
   const pathname = usePathname();
 
-  if (pathname === "/auth") {
+  if (
+    pathname === "/auth" ||
+    pathname === "/auth/seller" ||
+    pathname === "/auth/user" ||
+    pathname === "/test"
+  ) {
     return <div className="hidden"></div>;
   }
 

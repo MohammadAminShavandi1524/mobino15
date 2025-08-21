@@ -132,7 +132,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   username: string;
-  sellername: string;
+  sellername?: string | null;
   roles?: ('user' | 'seller' | 'superAdmin')[] | null;
   tenants?:
     | {

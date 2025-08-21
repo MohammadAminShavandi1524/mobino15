@@ -15,8 +15,14 @@ const AuthBtn = ({ setIsSideBarOpen, user }: AuthBtnProps) => {
       onClick={() => {
         setIsSideBarOpen(false);
       }}
-      href={user ? "/admin" : "/auth"}
-      className="border-custom-primary min-w-[140px] rounded-md border px-2.5 py-1.25 text-[15px] sm:rounded-lg sm:px-4 sm:py-2"
+      href={
+        user
+          ? user.roles?.includes("user")
+            ? "/profile"
+            : "admin"
+          : "/auth/user"
+      }
+      className="border-custom-primary block rounded-md border px-2.5 py-1.25 text-[15px] sm:rounded-lg sm:px-4 sm:py-2 lg:min-w-[140px]"
     >
       {user ? (
         <>

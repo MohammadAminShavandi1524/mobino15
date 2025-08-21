@@ -76,6 +76,8 @@ const AllSpecAndReviews = ({
 
   const ratingNumbers = [5, 4, 3, 2, 1];
 
+  //* sorts
+
   if (productReviews && productReviews?.length > 0) {
     switch (reviewOrderBar) {
       case "Newest":
@@ -222,7 +224,7 @@ const AllSpecAndReviews = ({
                           : user.username.includes("superAdmin") ||
                               user.username.includes("seller")
                             ? user.sellername
-                            : user.username;
+                            : convertToPersianNumber(user.username);
 
                       return (
                         <div key={index}>

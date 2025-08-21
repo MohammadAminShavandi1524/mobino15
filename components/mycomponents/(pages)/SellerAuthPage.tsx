@@ -9,7 +9,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
-const AuthPage = () => {
+const SellerAuthPage = () => {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
 
   const trpc = useTRPC();
@@ -72,4 +72,4 @@ const AuthPage = () => {
     </div>
   );
 };
-export default AuthPage;
+export default SellerAuthPage;

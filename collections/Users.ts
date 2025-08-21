@@ -32,16 +32,10 @@ export const Users: CollectionConfig = {
     },
     {
       name: "sellername",
-      required: true,
+      required: false,
       unique: true,
       type: "text",
     },
-
-
-
-
-
-
 
     {
       admin: {

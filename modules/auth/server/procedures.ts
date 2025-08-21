@@ -2,7 +2,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { headers as getHeaders, cookies as getCookies } from "next/headers";
 import { AUTH_COOKIE } from "../constants";
-import { loginSchema, registerSchema } from "../schemas";
+import { loginSchema, registerSchema, UserRegisterSchema } from "../schemas";
 import { generateCookies } from "../utils";
 
 export const authRouter = createTRPCRouter({
@@ -88,8 +88,6 @@ export const authRouter = createTRPCRouter({
         },
       });
 
-      
-
       await ctx.db.create({
         collection: "users",
         data: {
@@ -157,10 +155,98 @@ export const authRouter = createTRPCRouter({
     });
 
     // deley
-       await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     return data;
   }),
+
+  UserRegister: baseProcedure
+    .input(UserRegisterSchema)
+    .mutation(async ({ ctx, input }) => {
+      //* email error
+
+      const existingEamil = await ctx.db.find({
+        collection: "users",
+        limit: 1,
+        where: {
+          email: {
+            equals: input.email,
+          },
+        },
+      });
+
+      const _existingEamil = existingEamil.docs[0];
+
+      if (_existingEamil) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "این ایمیل قبلاً انتخاب شده است.",
+        });
+      }
+      // ******************************************************************************
+
+      const randomNumber = Math.floor(1000 + Math.random() * 9000); // عدد تصادفی بین 1000 تا 9999
+      const username = `کاربر${randomNumber}`;
+
+      await ctx.db.create({
+        collection: "users",
+        data: {
+          email: input.email,
+          password: input.password,
+          username: username,
+          roles: ["user"],
+        },
+      });
+
+      const data = await ctx.db.login({
+        collection: "users",
+        data: {
+          email: input.email,
+          password: input.password,
+        },
+      });
+
+      if (!data.token) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "ورود ناموفق بود",
+        });
+      }
+
+      await generateCookies({
+        prefix: ctx.db.config.cookiePrefix,
+        value: data.token,
+      });
+    }),
+
+  UserLogin: baseProcedure
+    .input(loginSchema)
+    .mutation(async ({ ctx, input }) => {
+      const data = await ctx.db.login({
+        collection: "users",
+        data: {
+          email: input.email,
+          password: input.password,
+        },
+      });
+
+      if (!data.token) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "ایمیل یا رمز عبور اشتباه است.",
+        });
+      }
+
+      await generateCookies({
+        prefix: ctx.db.config.cookiePrefix,
+        value: data.token,
+      });
+
+      // deley
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      return data;
+    }),
 
   logout: baseProcedure.mutation(async () => {
     const cookies = await getCookies();
