@@ -24,6 +24,7 @@ import HeadphonesCarousel from "@/components/mycomponents/(carousels)/Headphones
 import BestBrandsCarousel from "@/components/mycomponents/(carousels)/BestBrandsCarousel";
 
 import LandingPageOverview from "@/components/mycomponents/ProductOverview/LandingPageOverview";
+import ProductsCarouselSkeleton from "@/components/mycomponents/(skeletonComponets)/Landing/ProductsCarouselSkeleton";
 
 export default async function Home() {
   prefetch(trpc.products.getAffinoCarousel.queryOptions());
@@ -43,7 +44,7 @@ export default async function Home() {
         {/* afino - discountedProducts */}
         <HydrateClient>
           <ErrorBoundary fallback={<div>afino error boundary!!!!</div>}>
-            <Suspense fallback={<>afino loading</>}>
+            <Suspense fallback={<ProductsCarouselSkeleton />}>
               <Afino />
             </Suspense>
           </ErrorBoundary>
@@ -58,7 +59,7 @@ export default async function Home() {
           <ErrorBoundary
             fallback={<div>flagBearerMobiles error boundary!!!!</div>}
           >
-            <Suspense fallback={<>flagBearerMobiles loading</>}>
+            <Suspense fallback={ <ProductsCarouselSkeleton  />}>
               <FlagBearerMobiles />
             </Suspense>
           </ErrorBoundary>
@@ -73,13 +74,13 @@ export default async function Home() {
           <ErrorBoundary
             fallback={<div>LaptopCarousel error boundary!!!!</div>}
           >
-            <Suspense fallback={<>LaptopCarousel loading</>}>
+            <Suspense fallback={ <ProductsCarouselSkeleton  />}>
               <LaptopCarousel />
             </Suspense>
           </ErrorBoundary>
         </HydrateClient>
 
-        <div className="mt-12  lg:my-14 flex gap-y-1 w-full flex-col items-center lg:grid lg:grid-cols-2 lg:gap-x-10 2xl:gap-x-13">
+        <div className="mt-12 flex w-full flex-col items-center gap-y-1 lg:my-14 lg:grid lg:grid-cols-2 lg:gap-x-10 2xl:gap-x-13">
           {/* گوشی بر اساس قیمت  */}
           <MobilePriceTags />
           {/* لپ تاپ بر اساس قیمت  */}
@@ -95,7 +96,7 @@ export default async function Home() {
           <ErrorBoundary
             fallback={<div>TabletCarousel error boundary!!!!</div>}
           >
-            <Suspense fallback={<>TabletCarousel loading</>}>
+            <Suspense fallback={ <ProductsCarouselSkeleton  />}>
               <TabletCarousel />
             </Suspense>
           </ErrorBoundary>
@@ -110,7 +111,7 @@ export default async function Home() {
           <ErrorBoundary
             fallback={<div>HeadphonesCarousel error boundary!!!!</div>}
           >
-            <Suspense fallback={<>Headphones Carousel loading</>}>
+            <Suspense fallback={ <ProductsCarouselSkeleton  />}>
               <HeadphonesCarousel />
             </Suspense>
           </ErrorBoundary>

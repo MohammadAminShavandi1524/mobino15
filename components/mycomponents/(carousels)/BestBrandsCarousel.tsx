@@ -17,7 +17,6 @@ import { useBreakpoints } from "@/hooks/useBreakPoint";
 interface BestBrandsCarouselProps {}
 
 const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
-  const { lg, sm } = useBreakpoints();
   const options = [
     {
       img: "https://www.technolife.com/image/banner_BrandBanners_yqE3hH_1a75ca9e-c20c-4ec2-9557-5e55e803138f.png",
@@ -81,17 +80,19 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
     },
   ];
 
+  const { lg, md, sm } = useBreakpoints();
+
   return (
     <div className="mt-10 mb-4 flex w-full rounded-t-[12px] border-[1.5px] border-[#d3d8e4] max-lg:flex-col lg:my-13 lg:rounded-2xl">
       <div className="bg-primaryGradient flex items-center justify-center gap-x-2 rounded-t-[12px] py-3 font-medium text-white lg:flex-col lg:gap-y-1.25 lg:rounded-r-2xl lg:px-10.5 lg:pt-8 lg:pb-6.5">
         <span>
-          <BadgeCheck size={lg ? 36 : sm ? 24 : 20} />
+          <BadgeCheck className="size-5 sm:size-6 lg:size-9" />
         </span>
         <span className="text-sm font-bold sm:text-base lg:min-w-[124px] lg:text-lg">
           برند های منتخب
         </span>
       </div>
-
+      
       <Carousel autoplay interval={7000} className="w-full">
         <CarouselContent className="pt-4 pl-3 max-lg:pb-2 lg:px-4 lg:pr-3">
           {options.map((option, index) => {
@@ -101,14 +102,44 @@ const BestBrandsCarousel = ({}: BestBrandsCarouselProps) => {
                 key={index}
               >
                 <Link href={option.href}>
-                  <Image
+                  {/* <Image
                     className={cn("object-cover")}
                     style={{ scale: option.scale }}
                     src={option.img}
                     alt={option.label}
                     width={lg ? 116 : sm ? 95 : 82}
                     height={lg ? 88 : sm ? 72 : 62}
-                  />
+                  /> */}
+                  <div className="max-lg:hidden">
+                    <Image
+                      className={cn("object-cover")}
+                      style={{ scale: option.scale }}
+                      src={option.img}
+                      alt={option.label}
+                      width={116}
+                      height={88}
+                    />
+                  </div>
+                  <div className="max-sm:hidden sm:block lg:hidden">
+                    <Image
+                      className={cn("object-cover")}
+                      style={{ scale: option.scale }}
+                      src={option.img}
+                      alt={option.label}
+                      width={95}
+                      height={72}
+                    />
+                  </div>
+                  <div className="block sm:hidden">
+                    <Image
+                      className={cn("object-cover")}
+                      style={{ scale: option.scale }}
+                      src={option.img}
+                      alt={option.label}
+                      width={82}
+                      height={62}
+                    />
+                  </div>
                 </Link>
               </CarouselItem>
             );

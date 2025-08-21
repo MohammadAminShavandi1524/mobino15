@@ -172,6 +172,34 @@
   .bounce-in-place {
     animation: bounce-in-place 1.5s infinite;
   }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem; /* rounded-xl */
+    background-color: #e5e7eb; /* bg-gray-200 */
+  }
+
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    animation: shimmer 2s infinite;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+  }
+
   .w90 {
     /* max-w-[1920px] w-[90%] mx-auto px-6 */
     max-width: 1920px;

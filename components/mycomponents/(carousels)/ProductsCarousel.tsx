@@ -19,13 +19,12 @@ import { Percent } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 interface ProductsCarouselProps {
   products: Product[] | undefined | null;
 }
 
 const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
- const {lg}= useBreakpoints()
+  const { lg } = useBreakpoints();
 
   return (
     <Carousel autoplay interval={7000} className="pl-4">
@@ -53,15 +52,19 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                       <div className="mt-2 h-[4px] rounded-sm bg-[#e6123d]"></div>
                     </div>
                   )}
+
                   <div className="mb-3 flex w-full items-center justify-center lg:mb-5">
-                    <Image
-                      className={cn("")}
-                      src={mainImageUrl}
-                      alt={`${product.name}`}
-                      width={lg ? 186 : 125}
-                      height={lg ? 186 : 125}
-                    />
+                    <div className="relative size-[125px] lg:size-[186px]">
+                      {" "}
+                      <Image
+                        className={cn("")}
+                        src={mainImageUrl}
+                        alt={`${product.name}`}
+                        fill
+                      />
+                    </div>
                   </div>
+
                   {/* title */}
                   <div className="productlist-title mb-3 min-h-[63px] px-5 text-justify text-xs/[20px] font-light text-[#212121] lg:px-6 lg:text-[14px]">
                     {product.label}
@@ -72,10 +75,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                       {/* discount percent */}
                       <div className="flex h-5 w-7 items-center justify-center gap-x-0.5 rounded-sm bg-[#da1e28] px-1 text-white">
                         <span>
-                          <Percent
-                            strokeWidth={2.5}
-                            size={lg ? 14 : 12}
-                          />
+                          <Percent strokeWidth={2.5} size={lg ? 14 : 12} />
                         </span>
                         <span className="pt-[2px] text-xs lg:text-[12px]">
                           {convertToPersianNumber(discountPercent || "33")}

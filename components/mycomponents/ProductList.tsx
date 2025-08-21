@@ -67,6 +67,7 @@ const ProductList = ({
     >
       {finalProducts &&
         finalProducts.map((product: Product, index) => {
+          console.log(product.color);
           const averageRating = getProductRating(product);
 
           const mainImageUrl = getMainImageUrl(product);
@@ -162,6 +163,7 @@ const ProductList = ({
                             className={cn(
                               "size-2.5 rounded-full shadow-sm",
                               index === 3 && "hidden",
+                              product.color === "White" && "border border-[#b4b4b4]",
                             )}
                             style={{
                               backgroundColor: getColorInfo(p.color).hex,
@@ -181,6 +183,7 @@ const ProductList = ({
                 <div
                   className={cn(
                     "absolute top-[71px] right-[20px] h-[10px] w-[10px] rounded-full border border-[#d7dee0]",
+                    product.color === "White" && "border border-[#b4b4b4]",
                   )}
                   style={{ backgroundColor: getColorInfo(product.color).hex }}
                 ></div>

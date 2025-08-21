@@ -27,9 +27,7 @@ const ProductsCarouselLayout = ({
   headerTextColor,
   isAfino,
 }: ProductsCarouselLayoutProps) => {
-
-    const {lg}= useBreakpoints()
- 
+  const { lg } = useBreakpoints();
 
   return (
     <div
@@ -58,7 +56,7 @@ const ProductsCarouselLayout = ({
         >
           <span className="text-[12px] md:text-sm">نمایش همه</span>
           <span>
-            <ChevronLeft size={lg ? 20 : 16} />
+            <ChevronLeft className="size-4 lg:size-5" />
           </span>
         </Link>
       </div>

@@ -132,7 +132,7 @@ const CartPage = () => {
           <div className="mt-4 mb-6 text-lg text-[#666666]">
             برای مشاهده تخفیف‌های امروز، روی لینک زیر کلیک کنید.
           </div>
-          <Link className="flex items-center gap-x-1 text-[#223c78]" href={""}>
+          <Link className="flex items-center gap-x-1 text-[#223c78]" href={"/afino"}>
             <span>
               <BadgePercent color="#14a0de" />
             </span>

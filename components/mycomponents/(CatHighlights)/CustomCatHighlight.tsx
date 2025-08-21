@@ -22,7 +22,7 @@ const CustomCatHighlight = ({
   bgColor,
 }: CustomCatHighlightProps) => {
   const { _2xl, _3xl, lg, md, mlg, s, sm, xl, xs } = useBreakpoints();
-  console.log(_2xl);
+ 
 
   return (
     <div className="my-14 flex w-full flex-col items-center justify-center">
@@ -39,51 +39,30 @@ const CustomCatHighlight = ({
               >
                 <div
                   className={cn(
-                    "relative flex items-center justify-center",
-                    _2xl
-                      ? "size-[200px]"
-                      : lg
-                        ? "size-[187px]"
-                        : sm
-                          ? "size-[125px]"
-                          : "size-[88px]",
+                    "sm:size:[125px] relative flex size-[88px] items-center justify-center lg:size-[187px] 2xl:size-[200px]",
                   )}
                 >
                   <div
                     className={cn(
-                      "rounded-[12px] lg:rounded-[24px]",
-
-                      _2xl
-                        ? "size-[172px]"
-                        : lg
-                          ? "size-[160.5px]"
-                          : sm
-                            ? "size-[94.5px]"
-                            : "size-[75.5px]",
+                      "size-[75.5px] rounded-[12px] sm:size-[94.5px] lg:size-[160.5px] lg:rounded-[24px] 2xl:size-[172px]",
                     )}
                     style={{ backgroundColor: bgColor }}
                   ></div>
                   <div
                     className={cn(
-                      "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center justify-center",
-                      _2xl
-                        ? "size-[182px]"
-                        : lg
-                          ? "size-[170px]"
-                          : sm
-                            ? "size-[100px]"
-                            : "size-[80px]",
+                      "absolute top-1/2 left-1/2 flex size-[80px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center sm:size-[100px] lg:size-[170px] 2xl:size-[182px]",
                     )}
                   >
-                    <Image
-                      className={cn(
-                        "object-cover transition-all hover:scale-110",
-                      )}
-                      src={option.img}
-                      alt={option.label}
-                      width={_2xl ? 182 : lg ? 170 : sm ? 100 : 80}
-                      height={_2xl ? 182 : lg ? 170 : sm ? 100 : 80}
-                    />
+                    <div className="relative size-[80px] sm:size-[100px] lg:size-[170px] 2xl:size-[182px]">
+                      <Image
+                        className={cn(
+                          "object-cover transition-all hover:scale-110",
+                        )}
+                        src={option.img}
+                        alt={option.label}
+                       fill
+                      />
+                    </div>
                   </div>
                 </div>
                 <span className="text-xs sm:text-sm lg:text-[18px]">

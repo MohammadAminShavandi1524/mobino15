@@ -1,16 +1,16 @@
 import { cn } from "@/lib/utils";
 
 interface SkeletonProps {
-  width: number;
-  height: number;
+  className: string;
 }
 
-const Skeleton = ({ height, width }: SkeletonProps) => {
+const Skeleton = ({ className }: SkeletonProps) => {
   return (
     <div
-      className={cn("bg-custom-skeleton block animate-pulse rounded-xl")}
-      style={{ width: `${width}px`, height: `${height}px` }}
-    ></div>
+      // style={{ width: `${width}px`, height: `${height}px` }}
+      className={cn("shimmer", className)}
+    />
   );
 };
+
 export default Skeleton;

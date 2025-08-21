@@ -69,7 +69,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-
+  console.log(user?.roles);
   // *** cart item count ***
 
   const categories = useSuspenseQuery(trpc.categories.getMany.queryOptions())
@@ -108,16 +108,34 @@ const Header = () => {
 
   return (
     <header className="bg-background relative mx-auto flex max-h-full w-full flex-col border-b border-b-[#d7dee0]">
-      {/* banners */}
-      <Image
-        className={cn("", isBannerDisplayed && "block", "max-xl:hidden")}
-        src="/banner.png"
-        alt="top banner"
-        width={0}
-        height={0}
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-      />
+      {/* banners pc */}
+      <div className="hidden lg:block">
+        <Link href="/Monitor" className="relative block h-15 w-full">
+          <Image
+            src="/banner.gif"
+            alt="banner"
+            fill
+            unoptimized
+            className="object-cover object-center"
+          />
+        </Link>
+      </div>
+      {/* banners mobile */}
+      <div className="block lg:hidden">
+        <Link
+          href="/Monitor"
+          className="h-10.5 relative block s:h-14 w-full sm:h-16 md:h-20"
+        >
+          <Image
+            src="/mobilebanner.gif"
+            alt="mobilebanner"
+            fill
+            unoptimized
+            className="object-cover object-center"
+          />
+        </Link>
+      </div>
+
       <SidebarProvider>
         {/*mobile sidebar */}
         <div>
