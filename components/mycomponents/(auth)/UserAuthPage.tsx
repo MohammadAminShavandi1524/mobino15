@@ -31,7 +31,7 @@ const UserAuthPage = ({}: UserAuthPageProps) => {
     <div className="s:bg-gradient-to-br s:from-[#9f7aea] s:via-[#5d54a4] s:to-[#1a2a6c] max-s:flex max-s:justify-center relative min-h-screen w-full px-8 py-10">
       <ParticlesBackground />
 
-      <section className="s:absolute s:top-1/2 s:left-1/2 s:-translate-x-1/2 s:-translate-y-1/2 s:rounded-2xl s:shadow-2xl s:p-8 max-s:w-full s:w-[min(92vw,420px)] flex min-h-120 flex-col items-center bg-white">
+      <section className="s:absolute s:top-1/2 s:left-1/2 s:-translate-x-1/2 s:-translate-y-1/2 s:rounded-2xl s:shadow-2xl s:p-8 max-s:w-full max-s:overflow-hidden s:w-[min(92vw,420px)] flex min-h-120 flex-col items-center bg-white">
         <div className="s:my-2 s:mb-8 my-10 flex w-full flex-col items-center gap-y-8">
           {/* logo */}
           <Logo

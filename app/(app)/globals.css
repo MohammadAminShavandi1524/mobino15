@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   --custom-primary: oklch(0.3708 0.1074 264.21);
   --custom-skeleton: oklch(0.9276 0.0058 264.53);
@@ -84,7 +82,7 @@
   --breakpoint-xs: 20rem; /** 320px **/
 
   --breakpoint-xss: 25rem; /** 400px **/
-  
+
   --breakpoint-s: 30rem; /** 480px **/
 
   --breakpoint-sm: 40rem; /** 640px **/
@@ -225,6 +223,16 @@
   }
   .bg-primaryGradient {
     background-image: linear-gradient(90deg, #0079b1, #1b3570);
+  }
+
+  .sellerAuthBgGradient {
+    background: #ffffff;
+    background: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 60%,
+      rgba(118, 157, 228, 1) 100%
+    );
   }
 }
 

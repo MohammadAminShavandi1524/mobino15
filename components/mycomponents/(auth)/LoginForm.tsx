@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { SellerAuthInput } from "./SellerAuthInput";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -74,7 +75,7 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form
-        className="flex w-full flex-col items-center gap-y-4"
+        className="flex  flex-col items-center gap-y-4"
         onSubmit={form.handleSubmit(loginOnSubmit)}
       >
         {/* email  */}
@@ -84,7 +85,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">ایمیل</FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+                <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -97,7 +98,7 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+                <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -107,7 +108,7 @@ const LoginForm = () => {
         <button
           disabled={login.isPending}
           type="submit"
-          className="bg-custom-primary mt-5 block h-[60px] w-full cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
+          className="bg-custom-primary mt-5 block h-[54px] w-[340px] cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
         >
           ورود
         </button>

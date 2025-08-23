@@ -1,3 +1,8 @@
+ایا انیمیشنی وجود داره که مثلا وقتی وارد صفحه ای میشیم بیاد از بالا مثلا توپ بریزه و با فیزیک واقعی کم کم اون ظرف از توپ پر بشه
+
+
+
+
 category    id : 686ff08bd6713d28c018821b        category name : mobile
 subCategory id : 687b56ed17fd79323bbc24da     subCategory name : HonorPhone
 subCategory id : 687b566217fd79323bbc24a5     subCategory name : RealmePhone

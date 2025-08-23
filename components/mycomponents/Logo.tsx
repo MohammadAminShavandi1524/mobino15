@@ -13,6 +13,7 @@ interface LogoProps {
   logoImage_height?: number;
   text_className?: string;
   logo_className?: string;
+  className?: string;
 }
 
 const Logo = ({
@@ -20,9 +21,10 @@ const Logo = ({
   logoImage_width,
   text_className,
   logo_className,
+  className,
 }: LogoProps) => {
   return (
-    <Link href="/" className="flex items-center gap-x-2">
+    <Link href="/" className={cn("flex items-center gap-x-2", className)}>
       <Image
         className={cn(logo_className)}
         src="/yellow_logo.png"

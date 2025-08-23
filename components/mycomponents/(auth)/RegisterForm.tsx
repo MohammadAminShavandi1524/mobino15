@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { SellerAuthInput } from "./SellerAuthInput";
 
 interface RegisterFormProps {
   user: User | null;
@@ -69,7 +70,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
   return (
     <Form {...form}>
       <form
-        className="flex w-full flex-col items-center gap-y-4"
+        className="flex  flex-col items-center gap-y-4"
         onSubmit={form.handleSubmit(registerOnSubmit)}
       >
         {/* user name */}
@@ -81,7 +82,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
                 نام کاربری
               </FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+                <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -97,7 +98,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
                 {/* <span>(اسمی که نمایش داده میشود)</span> */}
               </FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+              <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -110,7 +111,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">ایمیل</FormLabel>
               <FormControl>
-                <Input className="h-[60px] w-[380px] text-base" {...field} />
+              <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -123,11 +124,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  className="h-[60px] w-[380px] text-base"
-                  {...field}
-                />
+               <SellerAuthInput type="password" className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
