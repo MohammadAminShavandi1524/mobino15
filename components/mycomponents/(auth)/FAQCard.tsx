@@ -24,7 +24,7 @@ const FAQCard = ({
   return (
     <div
       className={cn(
-        "z-2 flex flex-col rounded-2xl border border-[#efdcc7] bg-white/25 px-4 py-2  backdrop-blur-sm transition-all duration-200",
+        "z-2 flex max-lg:w-full lg:max-w-[660px] flex-col rounded-2xl border border-[#efdcc7] bg-white/25 px-4 py-2 backdrop-blur-sm transition-all duration-200",
         isSelected && "border-[#e7a579] pb-5",
       )}
     >
@@ -33,11 +33,11 @@ const FAQCard = ({
         onClick={() => setOpenedFAQ(openedFAQ === index ? null : index)}
         className="flex cursor-pointer items-center justify-between"
       >
-        <div className="flex items-center gap-x-3 pb-2">
+        <div className="flex items-center gap-x-4 pb-2 xl:gap-x-5 2xl:gap-x-3">
           {/* number */}
           <div
             className={cn(
-              "flex size-[50px] items-center justify-center rounded-full bg-[#f8e2cb] pt-0.75 text-2xl text-[#ea580c] transition-colors duration-200",
+              "flex size-[45px] shrink-0 items-center justify-center rounded-full bg-[#f8e2cb] pt-1 xl:pt-1.25 text-[22px] text-[#ea580c] transition-colors duration-200 xl:size-[50px] xl:text-2xl",
               isSelected && "bg-[#ea580c] text-white",
             )}
           >
@@ -46,7 +46,7 @@ const FAQCard = ({
           {/* label */}
           <div
             className={cn(
-              "text-base text-neutral-600",
+              "pt-1 xl:pt-1.25 text-right  text-[15px] xl:text-base text-neutral-600 2xl:pt-0",
               isSelected && "text-[#e77b02]",
             )}
           >
@@ -55,13 +55,23 @@ const FAQCard = ({
         </div>
 
         {/* chevron */}
-        <div className="flex size-[50px] justify-center pt-[7px]">
+        <div className="max-xl:hidden mr-4 flex size-[50px] justify-center pt-[7px] 2xl:mr-0">
           <ChevronDown
             className={cn(
               "transition duration-250",
               isSelected && "-rotate-180",
             )}
             size={30}
+            color="#ea580c"
+          />
+        </div>
+        <div className="xl:hidden mr-4 flex size-[45px] justify-center pt-[7px] 2xl:mr-0">
+          <ChevronDown
+            className={cn(
+              "transition duration-250",
+              isSelected && "-rotate-180",
+            )}
+            size={24}
             color="#ea580c"
           />
         </div>
@@ -78,7 +88,7 @@ const FAQCard = ({
             transition={{ duration: 0.3 }}
             style={{ overflow: "hidden", transformOrigin: "top" }}
             layout
-            className="pr-[62px] pl-6 text-sm/relaxed text-neutral-600"
+            className="pr-[62px] pl-6 text-sm/relaxed text-neutral-600 max-sm:text-justify"
           >
             {answer}
           </motion.div>

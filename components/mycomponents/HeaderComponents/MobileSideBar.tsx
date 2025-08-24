@@ -61,7 +61,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             onClick={() => {
               toggleSidebar();
             }}
-            href=""
+            href="/auth/seller"
             className="flex items-center gap-x-3"
           >
             <Image
@@ -99,7 +99,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             onClick={() => {
               toggleSidebar();
             }}
-            href="/off"
+            href=""
             className="flex items-center gap-x-3 text-[#333333]"
           >
             <Image

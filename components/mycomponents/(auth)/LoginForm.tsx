@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { SellerAuthInput } from "./SellerAuthInput";
+import SellerAuthSubmitBtn from "./SellerAuthSubmitBtn";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -105,13 +106,8 @@ const LoginForm = () => {
           )}
         />
         {/* submit button */}
-        <button
-          disabled={login.isPending}
-          type="submit"
-          className="bg-custom-primary mt-5 block h-[54px] w-[340px] cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
-        >
-          ورود
-        </button>
+        
+        <SellerAuthSubmitBtn label="ورود" disabled={login.isPending} />
       </form>
     </Form>
   );

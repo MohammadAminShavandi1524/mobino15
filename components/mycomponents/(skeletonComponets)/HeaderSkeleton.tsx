@@ -8,18 +8,22 @@ const HeaderSkeleton = () => {
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
   const pathname = usePathname();
 
-  if (pathname === "/auth" || pathname === "/auth/seller" ||pathname === "/auth/user" || pathname === "/test") {
+  if (
+    pathname === "/auth" ||
+    pathname === "/auth/seller" ||
+    pathname === "/auth/user" ||
+    pathname === "/test"
+  ) {
     return <div className="hidden"></div>;
   }
 
   return (
     <header className="bg-background mx-auto flex w-full flex-col border-b border-b-[#d7dee0]">
-      {/* banners */}
-      {isBannerDisplayed && (
-        <Skeleton className="s:h-14 h-10.5 w-full rounded-none sm:h-16 md:h-20 lg:h-15" />
-      )}
+      {/* banner */}
 
-      <div className="mx-auto w-full max-w-[1920px] px-6 pt-4">
+      <Skeleton className="s:h-14 relative h-10.5 w-full rounded-none sm:h-16 md:h-20 lg:h-15" />
+
+      <div className="mx-auto w-full max-w-[1920px] px-6 pt-4 pb-2.75 max-lg:hidden">
         {/* fixed part */}
         <div className="mx-auto flex w-[90%] items-center justify-between pb-6">
           {/* logo and searchbar */}
@@ -27,12 +31,10 @@ const HeaderSkeleton = () => {
             {/* logo */}
             <Skeleton className="h-[45px] w-[145px]" />
             {/* searchbar */}
-            <Skeleton className="h-[45px] w-[600px]" />
+            <Skeleton className="h-[45px] w-full lg:w-[400px] xl:w-[600px]" />
           </section>
           {/* auth and cart button  */}
           <section className="flex items-center gap-x-6">
-            {/* dark/light mode button */}
-            <Skeleton className="h-[40px] w-[40px]" />
             {/* login/signup button */}
             <Skeleton className="h-[40px] w-[140px]" />
             {/* cart button */}
@@ -52,6 +54,26 @@ const HeaderSkeleton = () => {
           {/* seller login */}
           <Skeleton className="h-[44px] w-[91px]" />
         </nav>
+      </div>
+
+      <div className="px-6 pt-4 pb-4.25 lg:hidden">
+        <div className="flex items-center justify-between">
+          <Skeleton className="size-8 p-1" />
+
+          <Skeleton className="h-10 w-[102px]" />
+
+          <div className="flex items-center gap-x-3">
+            <Skeleton className="size-10" />
+            <Skeleton className="h-10 w-15" />
+          </div>
+        </div>
+        <div className="mt-5 flex items-center justify-between gap-x-4 sm:gap-x-20">
+          {/* searchbar */}
+          <Skeleton className="h-12 w-full" />
+
+          {/* seller login */}
+          <Skeleton className="hidden h-10 w-25 sm:block" />
+        </div>
       </div>
     </header>
   );

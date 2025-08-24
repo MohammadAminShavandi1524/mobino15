@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 
 const categoriesCarouselOptions = [
@@ -77,7 +78,7 @@ const CatCarousel = () => {
                 <div className="flex size-[90px] items-center justify-center rounded-full border border-[#14a0de] lg:size-32 lg:group-hover:border-3">
                   <div className="size-[79px] overflow-hidden rounded-full lg:size-28">
                     <div className="flex size-[79px] items-center justify-center overflow-hidden rounded-full border-1 border-[#c7cbdb] lg:size-[112px]">
-                      <div className="relative size-[55px] lg:size-[79px]">
+                      <div  className="relative size-[55px] lg:size-[79px]">
                         <Image
                           className={cn(
                             "transition-all lg:object-cover lg:group-hover:scale-115",

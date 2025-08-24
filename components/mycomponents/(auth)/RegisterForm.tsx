@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import { SellerAuthInput } from "./SellerAuthInput";
+import SellerAuthSubmitBtn from "./SellerAuthSubmitBtn";
 
 interface RegisterFormProps {
   user: User | null;
@@ -70,7 +71,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
   return (
     <Form {...form}>
       <form
-        className="flex  flex-col items-center gap-y-4"
+        className="flex flex-col items-center gap-y-4"
         onSubmit={form.handleSubmit(registerOnSubmit)}
       >
         {/* user name */}
@@ -98,7 +99,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
                 {/* <span>(اسمی که نمایش داده میشود)</span> */}
               </FormLabel>
               <FormControl>
-              <SellerAuthInput className="" {...field} />
+                <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -111,7 +112,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">ایمیل</FormLabel>
               <FormControl>
-              <SellerAuthInput className="" {...field} />
+                <SellerAuthInput className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
@@ -124,20 +125,15 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
             <FormItem>
               <FormLabel className="mr-[10px] text-[12px]">رمز عبور</FormLabel>
               <FormControl>
-               <SellerAuthInput type="password" className="" {...field} />
+                <SellerAuthInput type="password" className="" {...field} />
               </FormControl>
               <FormMessage className="mr-[10px] text-[12px]" />
             </FormItem>
           )}
         />
         {/* submit button */}
-        <button
-          disabled={register.isPending}
-          type="submit"
-          className="bg-custom-primary mt-5 block h-[60px] w-full cursor-pointer rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
-        >
-          ثبت نام
-        </button>
+
+        <SellerAuthSubmitBtn label="ثبت نام" disabled={register.isPending} />
       </form>
     </Form>
   );

@@ -146,6 +146,31 @@
 /** custom classes **/
 
 @layer components {
+  @keyframes bubble {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(10px, -20px) scale(1.05);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.animate-bubble {
+  animation: bubble 6s ease-in-out infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+
   @keyframes soft-bounce {
     0%,
     100% {

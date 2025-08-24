@@ -228,7 +228,7 @@ const Header = () => {
               </Link> */}
             </div>
             {/* seller login */}
-            <Link href="" className="text-custom-primary p-2.5">
+            <Link href="/auth/seller" className="text-custom-primary p-2.5">
               فروشنده شو
             </Link>
           </nav>
@@ -271,6 +271,9 @@ const Header = () => {
               </Link>
             </div>
           </div>
+
+
+          
         </div>
       </SidebarProvider>
     </header>

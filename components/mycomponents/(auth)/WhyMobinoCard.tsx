@@ -13,20 +13,15 @@ const WhyMobinoCard = ({ imgSrc, label }: WhyMobinoCardProps) => {
   return (
     <motion.div
       whileHover={{ scale: 1.075 }}
-      className="flex h-fit items-center gap-x-2 rounded-lg border-[2px] border-[#1cc662] py-4 pr-4 pl-4"
+      whileTap={{ scale: 0.9 }}
+      className="flex items-center gap-x-2 rounded-lg border-[2px] border-[#1cc662] py-4 pr-4 pl-4 select-none"
     >
       {/* logo  */}
-      <div className="text-neutral-600">
-        <Image
-          className="min-size-13 block"
-          src={imgSrc}
-          alt="logo"
-          width={52}
-          height={52}
-        />
+      <div className="min-size-[42px] max-size-[42px] xl:max-size-[46px] xl:min-size-[46px] relative size-[42px] shrink-0 xl:size-[46px] 2xl:size-[52px]">
+        <Image className="block" src={imgSrc} alt="logo" fill />
       </div>
       {/* label */}
-      <div className="text-lg text-neutral-700"> {label}</div>
+      <div className="text-base text-neutral-700 2xl:text-lg"> {label}</div>
     </motion.div>
   );
 };

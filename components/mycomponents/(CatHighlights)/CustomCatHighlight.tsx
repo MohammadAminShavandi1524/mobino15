@@ -4,7 +4,8 @@ import { useBreakpoints } from "@/hooks/useBreakPoint";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
+import { motion } from "framer-motion";
 
 interface CustomCatHighlightProps {
   options: {
@@ -22,7 +23,6 @@ const CustomCatHighlight = ({
   bgColor,
 }: CustomCatHighlightProps) => {
   const { _2xl, _3xl, lg, md, mlg, s, sm, xl, xs } = useBreakpoints();
- 
 
   return (
     <div className="my-14 flex w-full flex-col items-center justify-center">
@@ -53,16 +53,17 @@ const CustomCatHighlight = ({
                       "absolute top-1/2 left-1/2 flex size-[80px] -translate-x-1/2 -translate-y-1/2 transform items-center justify-center sm:size-[100px] lg:size-[170px] 2xl:size-[182px]",
                     )}
                   >
-                    <div className="relative size-[80px] sm:size-[100px] lg:size-[170px] 2xl:size-[182px]">
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className="relative size-[80px] sm:size-[100px] lg:size-[170px] 2xl:size-[182px]"
+                    >
                       <Image
-                        className={cn(
-                          "object-cover transition-all hover:scale-110",
-                        )}
+                        className={cn("object-cover transition-all")}
                         src={option.img}
                         alt={option.label}
-                       fill
+                        fill
                       />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
                 <span className="text-xs sm:text-sm lg:text-[18px]">
