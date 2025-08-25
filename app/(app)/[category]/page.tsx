@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import CategoryPage from "@/components/mycomponents/(pages)/CategoryPage";
+import ProductListLayoutSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListLayoutSkeleton";
 import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { convertCatOrSubToId } from "@/lib/utils";
@@ -32,7 +33,7 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>category error boundary!!!!</div>}>
-        <Suspense fallback={<>category loading</>}>
+        <Suspense fallback={<ProductListLayoutSkeleton isCategory={true}/>}>
           <CategoryPage category={category} />
           <ScrollToTopOnUrlChange />
         </Suspense>

@@ -1,9 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Skeleton from "../(skeletonComponets)/Skleton";
+import Skeleton from "./Skleton";
 
-const TestPage = () => {
+interface ProductListLayoutSkeletonProps {
+  isCategory?: boolean;
+}
+
+const ProductListLayoutSkeleton = ({
+  isCategory,
+}: ProductListLayoutSkeletonProps) => {
   return (
     <div className="mt-4 flex flex-col lg:mx-auto lg:w-[90%] lg:max-w-[1920px] lg:px-6">
       <div className="flex flex-col gap-y-4 px-5 lg:px-2">
@@ -14,12 +19,15 @@ const TestPage = () => {
           <Skeleton className="h-5 w-[100px]" />
         </div>
         {/* category tag */}
-        <div className="flex items-center gap-x-3">
-          <Skeleton className="h-9 w-[110px]" />
-          <Skeleton className="h-9 w-[110px]" />
-          <Skeleton className="h-9 w-[110px]" />
-          <Skeleton className="h-9 w-[110px]" />
-        </div>
+
+        {isCategory && (
+          <div className="flex items-center gap-x-3">
+            <Skeleton className="h-9 w-[110px]" />
+            <Skeleton className="h-9 w-[110px]" />
+            <Skeleton className="h-9 w-[110px]" />
+            <Skeleton className="h-9 w-[110px]" />
+          </div>
+        )}
       </div>
 
       {/* orderbar productlist filters */}
@@ -141,12 +149,10 @@ const TestPage = () => {
 
                       {/* price - offPrice - decount percent */}
 
-                      <div className="flex w-full items-center justify-end gap-x-1 pb-10 px-0.5">
+                      <div className="flex w-full items-center justify-end gap-x-1 px-0.5 pb-10">
                         <Skeleton className="h-7.5 w-24" />
                         <Skeleton className="h-5 w-8" />
                       </div>
-
-
                     </div>
                     {/* image and colors */}
                     <div className="col-span-9 flex w-full flex-col items-center">
@@ -169,11 +175,7 @@ const TestPage = () => {
             </div>
 
             {/* pc */}
-            <div
-              className={cn(
-                "3xl:grid-cols-5 s:grid-cols-2 mlg:grid-cols-3 max-s:hidden grid grid-cols-1 gap-x-3 gap-y-3 max-lg:px-4 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
-              )}
-            >
+            <div className="3xl:grid-cols-5 s:grid-cols-2 mlg:grid-cols-3 max-s:hidden grid grid-cols-1 gap-x-3 gap-y-3 max-lg:px-4 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {/* product card */}
               {Array.from({ length: 40 }).map((_, index) => (
                 <div
@@ -212,4 +214,4 @@ const TestPage = () => {
   );
 };
 
-export default TestPage;
+export default ProductListLayoutSkeleton;

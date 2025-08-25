@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import SubCategoryPage from "@/components/mycomponents/(pages)/SubCategoryPage";
+import ProductListLayoutSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListLayoutSkeleton";
 import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { convertCatOrSubToId } from "@/lib/utils";
@@ -37,7 +38,7 @@ const SubCategory_Page = async ({
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>subCategory error boundary!!!!</div>}>
-        <Suspense fallback={<>subCategory loading</>}>
+        <Suspense fallback={<ProductListLayoutSkeleton/>}>
           <SubCategoryPage category={category} subcategory={subcategory} />
           <ScrollToTopOnUrlChange />
         </Suspense>

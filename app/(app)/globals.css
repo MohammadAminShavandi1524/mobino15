@@ -242,6 +242,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .productlist-mobiletitle {
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .addToCartToast {
     font-family: "IRANYekanX";
     color: red;

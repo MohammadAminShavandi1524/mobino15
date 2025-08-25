@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import AllProductsPage from "@/components/mycomponents/(pages)/AllProductsPage";
+import ProductListLayoutSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListLayoutSkeleton";
 import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
@@ -21,7 +22,7 @@ const Products_Page = async ({ serachParams }: Products_PageProps) => {
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>header error boundary!!!!</div>}>
-        <Suspense fallback={<>all products loading</>}>
+        <Suspense fallback={<ProductListLayoutSkeleton/>}>
           <ScrollToTopOnUrlChange />
           <AllProductsPage />
         </Suspense>

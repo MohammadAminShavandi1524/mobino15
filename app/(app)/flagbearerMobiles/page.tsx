@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import AfinoPage from "@/components/mycomponents/(pages)/AfinoPage";
 import AllProductsPage from "@/components/mycomponents/(pages)/AllProductsPage";
 import FlagBearerMobilesPage from "@/components/mycomponents/(pages)/FlagBearerMobilesPage";
+import ProductListLayoutSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductListLayoutSkeleton";
 
 import { ScrollToTopOnUrlChange } from "@/components/mycomponents/ScrollToTopOnUrlChange ";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
@@ -27,7 +28,7 @@ const FlagBearer_Mobiles = async ({
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>FlagBearerMobiles error boundary!!!!</div>}>
-        <Suspense fallback={<>FlagBearerMobiles loading</>}>
+        <Suspense fallback={<ProductListLayoutSkeleton/>}>
           <ScrollToTopOnUrlChange />
           <FlagBearerMobilesPage />
         </Suspense>

@@ -27,7 +27,9 @@ const AuthBtn = dynamic(
     ssr: false,
     loading: () => (
       <div className="border-custom-primary flex h-8 min-w-[60px] items-center justify-center rounded-lg border px-2.5 py-1.25 text-[15px] sm:h-10 sm:px-4 sm:py-2 lg:min-w-[140px]">
-        <LoadingDots size={2.5} />
+        <div className="max-s:hidden"><LoadingDots size={2.5} /></div>
+        <div className="s:hidden block"><LoadingDots size={1.5} /></div>
+        
       </div>
     ),
   },
@@ -105,8 +107,7 @@ const Header = () => {
   if (
     pathname === "/auth" ||
     pathname === "/auth/seller" ||
-    pathname === "/auth/user" ||
-    pathname === "/test"
+    pathname === "/auth/user" 
   ) {
     return <div className="hidden"></div>;
   }
