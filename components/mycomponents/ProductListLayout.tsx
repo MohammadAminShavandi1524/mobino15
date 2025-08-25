@@ -139,18 +139,20 @@ const ProductListLayout = ({
   selectedSubCategoryData,
   isCustomProductOverview,
 }: ProductListLayoutProps) => {
-  console.log(
-    "🚀 ~ ProductListLayout ~ selectedSubCategoryData:",
-    selectedSubCategoryData?.name,
-  );
+  // console.log(
+  //   "🚀 ~ ProductListLayout ~ selectedSubCategoryData:",
+  //   selectedSubCategoryData?.name,
+  // );
   const [isFiltersOpened, setIsFiltersOpened] = useState(true);
+  const [productslength, setProductslength] = useState<number>(0);
   const [filters, setFilters] = useProductFilters();
 
   return (
-    <div className="w90 mt-4 flex flex-col">
+    <div className="lg:w-[90%] mt-4 flex flex-col lg:mx-auto lg:max-w-[1920px] lg:px-6">
       {/* bread crump and categories tags */}
-      <div className="flex flex-col gap-y-4 px-[10px]">
-        {/* bread crump */}
+      <div className="flex flex-col gap-y-4 px-4.5 lg:px-[10px]">
+        <div className="px-1">
+           {/* bread crump */}
         {breadCrupActivePage === "category" ? (
           <BreadCrump
             activePage="category"
@@ -170,11 +172,13 @@ const ProductListLayout = ({
         ) : (
           <BreadCrump activePage="flagBearerMobiles" />
         )}
+        </div>
+       
 
         {/* categories tags */}
 
         {isCategory && (
-          <div className="flex items-center gap-x-4">
+          <div className="flex flex-wrap items-center gap-x-3 s:gap-x-4 gap-y-2">
             {selectedCategoryData &&
               (selectedCategoryData?.subcategories?.docs as Category[]).map(
                 (sub, index) => {
@@ -182,7 +186,7 @@ const ProductListLayout = ({
                     <Link
                       href={`/${selectedCategoryData.name}/${sub.name}`}
                       key={index}
-                      className="cursor-pointer rounded-md border border-[#81858b] px-6 py-2 text-[10px] text-[#81858b]"
+                      className="shrink-0 cursor-pointer rounded-md border border-[#81858b] px-6 py-2 text-[10px] text-[#81858b]"
                     >
                       {sub.label}
                     </Link>
@@ -191,12 +195,13 @@ const ProductListLayout = ({
               )}
           </div>
         )}
+
       </div>
 
       {/* product and product filters */}
 
       {isFiltersOpened ? (
-        <div className="relative mt-8 flex gap-x-8 px-[10px]">
+        <div className="relative mt-4 flex gap-x-8 lg:mt-8 lg:px-[10px]">
           {/* filter*/}
           <ProductFilters
             activePage={ProductsFiltersActivePage}
@@ -208,9 +213,11 @@ const ProductListLayout = ({
           <div className="flex w-full flex-col">
             {/* order bar */}
             <Orderbar
+              activePage={ProductsFiltersActivePage}
               sorts={filters.sort}
               setFilters={setFilters}
               products={products}
+              productslength={productslength}
             />
 
             {/* products list */}
@@ -220,11 +227,12 @@ const ProductListLayout = ({
               reviews={reviews}
               isFiltersOpened={isFiltersOpened}
               isAfinoPage={breadCrupActivePage === "afino"}
+              setProductslength={setProductslength}
             />
           </div>
         </div>
       ) : (
-        <div className="mt-8 flex w-full flex-col gap-y-5 px-[10px]">
+        <div className="mt-4 lg:mt-8 flex w-full flex-col gap-y-5 px-[10px]">
           {/* filters and orderbar */}
           <div className="flex gap-x-5">
             <ProductFilters
@@ -233,9 +241,11 @@ const ProductListLayout = ({
               setIsFiltersOpened={setIsFiltersOpened}
             />
             <Orderbar
+              activePage={ProductsFiltersActivePage}
               sorts={filters.sort}
               setFilters={setFilters}
               products={products}
+              productslength={productslength}
             />
           </div>
           {/* product list */}
@@ -245,6 +255,7 @@ const ProductListLayout = ({
             products={products}
             reviews={reviews}
             isAfinoPage={breadCrupActivePage === "afino"}
+            setProductslength={setProductslength}
           />
         </div>
       )}

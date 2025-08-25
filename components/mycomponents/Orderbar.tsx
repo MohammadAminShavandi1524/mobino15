@@ -1,11 +1,13 @@
 "use client";
 
-import { cn, convertToPersianNumber } from "@/lib/utils";
+import { cn, convertToPersianNumber, getSortLabel } from "@/lib/utils";
 import { Product } from "@/payload-types";
-import { ArrowDownWideNarrow } from "lucide-react";
+import { ArrowDownWideNarrow, SlidersHorizontal } from "lucide-react";
 import { ParserBuilder, SetValues } from "nuqs";
 import { PaginatedDocs } from "payload";
 import { Dispatch, SetStateAction, useState } from "react";
+import OrderBarModal from "./OrderBarModal";
+import FiltersModal from "./FiltersModal";
 
 interface OrderbarProps {
   products: Product[] | undefined | null;
@@ -20,16 +22,30 @@ interface OrderbarProps {
     | "LowestPrice"
     | "BiggestDiscount"
     | null;
+  productslength: number;
+
+  activePage: "category" | "all" | "SubCategory" | "custom";
 }
 
-const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
+const Orderbar = ({
+  products,
+  setFilters,
+  sorts,
+  productslength,
+  activePage,
+}: OrderbarProps) => {
+  const [isOrderbarModalOpened, setIsOrderbarModalOpened] = useState(false);
+  const [isfiltersModalOpened, setIsfiltersModalOpened] = useState(false);
+
   const handleSortChange = (
     value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
   ) => {
     if (sorts === value) {
       setFilters({ sort: null });
+      setIsOrderbarModalOpened(false);
     } else {
       setFilters({ sort: value });
+      setIsOrderbarModalOpened(false);
     }
   };
 
@@ -41,50 +57,102 @@ const Orderbar = ({ products, setFilters, sorts }: OrderbarProps) => {
   ];
 
   return (
-    <div className="mb-6 flex w-full items-center justify-between rounded-lg bg-[#e9ecf2] pr-[14px] pl-6 text-[12px]">
-      {/* orders */}
-      <div className="flex gap-x-8">
-        {/* order logo */}
-        <div className="flex items-center gap-x-2 text-[#333333]">
-          <span>
-            <ArrowDownWideNarrow size={20} color="#333333" />
-          </span>
-          <span className="font-medium">ترتیب :</span>
-        </div>
-        {/* order tags */}
-        <div className="flex gap-x-6 font-light text-[#212121]">
-          {sortOptions.map((sort, index) => {
-            const isSelected = sorts?.includes(sort.value);
-
-            return (
-              <div
-                key={index}
-                onClick={() =>
-                  handleSortChange(
-                    sort.value as
-                      | "MostPopular"
-                      | "HighestPrice"
-                      | "LowestPrice"
-                      | "BiggestDiscount",
-                  )
-                }
-                className={cn(
-                  "cursor-pointer py-4",
-                  isSelected && "font-medium text-[#004b68]",
-                )}
-              >
-                {sort.label}
+    <>
+      <OrderBarModal
+        sorts={sorts}
+        isOrderbarModalOpened={isOrderbarModalOpened}
+        setIsOrderbarModalOpened={setIsOrderbarModalOpened}
+        handleSortChange={handleSortChange}
+        sortOptions={sortOptions}
+      />
+      <FiltersModal
+        isfiltersModalOpened={isfiltersModalOpened}
+        setIsfiltersModalOpened={setIsfiltersModalOpened}
+        activePage={activePage}
+      />
+      <div className="w-full bg-white max-lg:sticky max-lg:top-0 max-lg:z-5 max-lg:p-4">
+        <div className="mb-6 flex items-center justify-between rounded-lg bg-[#e9ecf2] text-[12px] max-lg:px-4 lg:px-0 lg:pr-[14px] lg:pl-6">
+          {/* pc orderbar */}
+          <>
+            {/* orders */}
+            <div className="hidden gap-x-8 lg:flex">
+              {/* order logo */}
+              <div className="flex items-center gap-x-2 text-[#333333]">
+                <span>
+                  <ArrowDownWideNarrow size={20} color="#333333" />
+                </span>
+                <span className="font-medium">ترتیب :</span>
               </div>
-            );
-          })}
+              {/* order tags */}
+              <div className="flex gap-x-6 font-light text-[#212121]">
+                {sortOptions.map((sort, index) => {
+                  const isSelected = sorts?.includes(sort.value);
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() =>
+                        handleSortChange(
+                          sort.value as
+                            | "MostPopular"
+                            | "HighestPrice"
+                            | "LowestPrice"
+                            | "BiggestDiscount",
+                        )
+                      }
+                      className={cn(
+                        "cursor-pointer py-4",
+                        isSelected && "font-medium text-[#004b68]",
+                      )}
+                    >
+                      {sort.label}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            {/* total products */}
+            <div className="hidden gap-x-1 lg:flex">
+              <span>{convertToPersianNumber(productslength)}</span>
+              <span>کالا</span>
+            </div>
+          </>
+
+          {/* mobile order bar */}
+          <>
+            {/* order modal and filter sidebar */}
+            <div className="flex gap-x-6 s:gap-x-8 lg:hidden">
+              {/* filter sidebar */}
+              <button
+                onClick={() => setIsfiltersModalOpened(true)}
+                className="flex cursor-pointer items-center gap-x-1 max-lg:py-3"
+              >
+                <span className="ml-1">
+                  <SlidersHorizontal size={16} color="#333333" />
+                </span>
+                <span>فیلتر ها</span>
+              </button>
+              {/* order modal */}
+              <button
+                onClick={() => setIsOrderbarModalOpened(true)}
+                className="flex cursor-pointer items-center gap-x-1 max-lg:py-3"
+              >
+                <span className="">
+                  <ArrowDownWideNarrow size={20} color="#333333" />
+                </span>
+                <span>ترتیب :</span>
+                <span>{getSortLabel(sorts)}</span>
+              </button>
+            </div>
+            {/* total products */}
+            <div className="flex gap-x-1 lg:hidden max-lg:py-3">
+              <span>{convertToPersianNumber(productslength)}</span>
+              <span>کالا</span>
+            </div>
+          </>
         </div>
       </div>
-      {/* total products */}
-      <div className="flex gap-x-1">
-        <span>{convertToPersianNumber(products?.length || 0)}</span>
-        <span>کالا</span>
-      </div>
-    </div>
+    </>
   );
 };
 export default Orderbar;

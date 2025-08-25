@@ -435,3 +435,16 @@ export const getMainImageUrl = (product: Product) => {
 
   return mainImageUrl;
 };
+
+const sortOptions = [
+  { label: "محبوب‌ترین‌ها", value: "MostPopular" },
+  { label: "بیشترین قیمت", value: "HighestPrice" },
+  { label: "کم ترین قیمت", value: "LowestPrice" },
+  { label: "بیشترین تخفیف", value: "BiggestDiscount" },
+];
+
+export const getSortLabel = (value: string | null) => {
+  if (value === null) return "انتخاب نشده";
+  const option = sortOptions.find((opt) => opt.value === value);
+  return option ? option.label : null; // یا یه مقدار پیش‌فرض مثل "" برگردون
+};

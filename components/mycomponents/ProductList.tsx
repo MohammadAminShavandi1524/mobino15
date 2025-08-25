@@ -9,12 +9,14 @@ import { Product, Review } from "@/payload-types";
 import { Box, Gamepad2, Percent, Plus, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 
 interface ProductListProps {
   products: Product[] | undefined | null;
   reviews: Review[] | undefined | null;
   isFiltersOpened: boolean;
   isAfinoPage?: boolean;
+  setProductslength: Dispatch<SetStateAction<number>>;
 }
 
 const ProductList = ({
@@ -22,6 +24,7 @@ const ProductList = ({
   isFiltersOpened,
   reviews,
   isAfinoPage,
+  setProductslength,
 }: ProductListProps) => {
   const getProductRating = (product: Product) => {
     const dkp = product.address.split("dkp-")[1].replace(/\D/g, "");
@@ -57,17 +60,19 @@ const ProductList = ({
 
   const finalProducts = [...uniqueAvailableProducts, ...unavailableProducts];
 
+  setProductslength(finalProducts.length);
+
   return (
     <div
       className={cn(
-        "3xl:grid-cols-5 grid gap-x-3 gap-y-3 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
+        "3xl:grid-cols-5 s:grid-cols-2 mlg:grid-cols-3 grid grid-cols-1 gap-x-3 gap-y-3 max-lg:px-4 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
         !isFiltersOpened &&
           "3xl:grid-cols-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5",
       )}
     >
       {finalProducts &&
         finalProducts.map((product: Product, index) => {
-          console.log(product.color);
+          
           const averageRating = getProductRating(product);
 
           const mainImageUrl = getMainImageUrl(product);
@@ -163,7 +168,8 @@ const ProductList = ({
                             className={cn(
                               "size-2.5 rounded-full shadow-sm",
                               index === 3 && "hidden",
-                              product.color === "White" && "border border-[#b4b4b4]",
+                              product.color === "White" &&
+                                "border border-[#b4b4b4]",
                             )}
                             style={{
                               backgroundColor: getColorInfo(p.color).hex,

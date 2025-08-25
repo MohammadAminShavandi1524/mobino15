@@ -65,7 +65,7 @@ const ProductFilters = ({
   //
   if (isFiltersOpened)
     return (
-      <aside className="sticky top-0 right-0 flex max-w-[270px] min-w-[270px] flex-col self-start rounded-md border border-[#ced0d0] pb-4">
+      <aside className="sticky top-0 right-0 flex max-w-[270px] min-w-[270px] flex-col self-start rounded-md border border-[#ced0d0] pb-4 max-lg:hidden">
         {/* header */}
         <div className="flex items-center justify-between border-b border-b-[#ced0d0] p-[14px]">
           <div className="flex items-center gap-x-2 text-[#333333]">
@@ -149,7 +149,7 @@ const ProductFilters = ({
   return (
     <div
       onClick={() => setIsFiltersOpened(true)}
-      className="flex h-[50px] w-[130px] cursor-pointer items-center gap-x-2 rounded-md border border-[#ced0d0] bg-[#f6f6f6] px-[14px] text-[#333333]"
+      className="flex h-[50px] w-[130px] cursor-pointer items-center gap-x-2 rounded-md border border-[#ced0d0] bg-[#f6f6f6] px-[14px] text-[#333333] max-lg:hidden"
     >
       <span>
         <SlidersHorizontal size={16} />

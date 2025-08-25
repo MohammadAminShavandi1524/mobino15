@@ -3,9 +3,16 @@
 import { useProductFilters } from "@/hooks/useProductFilter";
 import { getBrandLabelFa } from "@/lib/utils";
 import { X } from "lucide-react";
+import { TempfiltersProps } from "../FiltersModal";
+import { Dispatch, SetStateAction } from "react";
 
-const AppliedFilters = () => {
-  const [filters, setFilters] = useProductFilters();
+interface FiltersModalAppliedFiltersProps {
+  Tempfilters: TempfiltersProps;
+  setTempFilters: Dispatch<SetStateAction<TempfiltersProps>>;
+}
+
+const FiltersModalAppliedFilters = ({Tempfilters ,setTempFilters}:FiltersModalAppliedFiltersProps) => {
+  
 
   const colorLabels: Record<string, string> = {
     WhiteGroup: "سفید",
@@ -40,29 +47,29 @@ const AppliedFilters = () => {
     value?: string;
   }[] = [];
 
-  if (filters.available) {
+  if (Tempfilters.available) {
     appliedFilters.push({
       label: "فقط کالا های موجود",
       key: "available",
     });
   }
 
-  if (filters.minPrice) {
+  if (Tempfilters.minPrice) {
     appliedFilters.push({
-      label: `از ${Number(filters.minPrice).toLocaleString()} تومان`,
+      label: `از ${Number(Tempfilters.minPrice).toLocaleString()} تومان`,
       key: "minPrice",
     });
   }
 
-  if (filters.maxPrice) {
+  if (Tempfilters.maxPrice) {
     appliedFilters.push({
-      label: `تا ${Number(filters.maxPrice).toLocaleString()} تومان`,
+      label: `تا ${Number(Tempfilters.maxPrice).toLocaleString()} تومان`,
       key: "maxPrice",
     });
   }
 
-  if (filters.color && filters.color.length > 0) {
-    filters.color.forEach((colorKey) => {
+  if (Tempfilters.color && Tempfilters.color.length > 0) {
+    Tempfilters.color.forEach((colorKey) => {
       appliedFilters.push({
         label: `رنگ: ${colorLabels[colorKey] || colorKey}`,
         key: "color",
@@ -71,10 +78,10 @@ const AppliedFilters = () => {
     });
   }
 
-  if (filters.brand && filters.brand.length > 0) {
-    filters.brand.forEach((brand) => {
+  if (Tempfilters.brand && Tempfilters.brand.length > 0) {
+    Tempfilters.brand.forEach((brand) => {
       appliedFilters.push({
-        label: `برند: ${getBrandLabelFa(brand) }`,
+        label: `برند: ${getBrandLabelFa(brand)}`,
         key: "brand",
         value: brand,
       });
@@ -82,7 +89,7 @@ const AppliedFilters = () => {
   }
 
   return (
-    <div className="flex max-w-full flex-wrap gap-2 pb-4 lg:py-2 max-lg:pr-5 max-lg:pl-6">
+    <div className="flex max-w-full flex-wrap gap-2 pb-4 max-lg:pr-5 max-lg:pl-6 lg:py-2">
       {appliedFilters.map((filter, index) => (
         <div
           key={index}
@@ -93,28 +100,28 @@ const AppliedFilters = () => {
             size={12}
             className="cursor-pointer"
             onClick={() => {
-              if (filter.key === "color" && filter.value && filters.color) {
-                const newColors = filters.color.filter(
+              if (filter.key === "color" && filter.value && Tempfilters.color) {
+                const newColors = Tempfilters.color.filter(
                   (c) => c !== filter.value,
                 );
-                setFilters({
-                  ...filters,
+                setTempFilters({
+                  ...Tempfilters,
                   color: newColors.length > 0 ? newColors : null,
                 });
               } else if (
                 filter.key === "brand" &&
                 filter.value &&
-                filters.brand
+                Tempfilters.brand
               ) {
-                const newBrands = filters.brand.filter(
+                const newBrands = Tempfilters.brand.filter(
                   (b) => b !== filter.value,
                 );
-                setFilters({
-                  ...filters,
+                setTempFilters({
+                  ...Tempfilters,
                   brand: newBrands.length > 0 ? newBrands : null,
                 });
               } else {
-                setFilters({ ...filters, [filter.key]: null });
+                setTempFilters({ ...Tempfilters, [filter.key]: null });
               }
             }}
           />
@@ -123,4 +130,4 @@ const AppliedFilters = () => {
     </div>
   );
 };
-export default AppliedFilters;
+export default FiltersModalAppliedFilters;

@@ -3,15 +3,17 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { motion } from "framer-motion";
-interface AvailableProductsFilterProps {
+
+interface FiltersModalAvailableFilterProps {
   available: boolean | null;
   onAvailableChange: (value: boolean) => void;
 }
 
-const AvailableProductsFilter = ({
+const FiltersModalAvailableFilter = ({
   available,
   onAvailableChange,
-}: AvailableProductsFilterProps) => {
+}: FiltersModalAvailableFilterProps) => {
+
   
   const handleAvailableChange = () => {
     if (available === null) onAvailableChange(true);
@@ -46,4 +48,5 @@ const AvailableProductsFilter = ({
     </div>
   );
 };
-export default AvailableProductsFilter;
+
+export default FiltersModalAvailableFilter

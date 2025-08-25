@@ -69,7 +69,7 @@ const Header = () => {
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
-  console.log(user);
+  // console.log(user);
   // *** cart item count ***
 
   const categories = useSuspenseQuery(trpc.categories.getMany.queryOptions())
@@ -199,24 +199,29 @@ const Header = () => {
             </motion.button>
             {/* optional pages */}
             <div className="mx-2 flex items-center gap-x-4">
+
               <Link
                 href="/afino"
-                className={cn("flex items-center gap-x-2 p-2.5")}
+                className={cn("flex items-center gap-x-1.5 p-2.5")}
               >
                 <span>
-                  <CirclePercent />
+                  <CirclePercent color="#b9375d" />
                 </span>
                 <span>شگفت انگیز ها</span>
               </Link>
+
+
               <Link
                 href="/aboutUs"
-                className={cn("flex items-center gap-x-2 p-2.5")}
+                className={cn("flex items-center gap-x-1.5 p-2.5")}
               >
                 <span>
-                  <Info />
+                  <Info color="#2296f3" />
                 </span>
                 <span>درباره ما</span>
               </Link>
+
+
               {/* <Link
                 href="/InstallmentPurchase"
                 className="p-2.5 flex items-center gap-x-2"
