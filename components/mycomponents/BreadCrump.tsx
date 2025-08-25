@@ -7,7 +7,7 @@ interface BreadCrumpProps {
   category?: string;
   subCategory?: string;
   productData?: Product;
-  activePage: "category" | "subcategory" | "product" | "all" | "afino";
+  activePage: "category" | "subcategory" | "product" | "all" | "afino" | "flagBearerMobiles";
   className?: string;
 }
 // products must be added later
@@ -45,8 +45,23 @@ const BreadCrump = ({
       >
         <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("text-black")} href={`/products`}>
+        <Link className={cn("text-black")} href="">
           محصولات تخفیف خورده
+        </Link>
+      </div>
+    );
+  else if (activePage === "flagBearerMobiles")
+    return (
+      <div
+        className={cn(
+          "flex items-center gap-x-3 text-[12px] text-[#81858b]",
+          className,
+        )}
+      >
+        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+        <span>/</span>
+        <Link className={cn("text-black")} href="">
+          پرچمداران هوشمند
         </Link>
       </div>
     );

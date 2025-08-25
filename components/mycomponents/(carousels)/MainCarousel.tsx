@@ -19,9 +19,9 @@ const mainCarouselOptions = [
     href: "/mobile/iPhone",
   },
   {
-    img: "/mainCarousel/xia15.webp",
-    alt: "xia15",
-    href: "",
+    img: "/mainCarousel/monitor.webp",
+    alt: "monitor",
+    href: "/Monitor",
   },
   {
     img: "/mainCarousel/laptop.webp",
@@ -71,7 +71,11 @@ const mainCarouselMobileOptions = [
     alt: "laptop",
     href: "/laptop",
   },
-
+  {
+    img: "/mainCarousel/mobile/monitor.webp",
+    alt: "monitor",
+    href: "/Monitor",
+  },
   {
     img: "/mainCarousel/mobile/smartwatch.png",
     alt: "smartwatch",

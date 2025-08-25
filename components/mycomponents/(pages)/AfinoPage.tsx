@@ -40,6 +40,7 @@ const AfinoPage = ({}: AfinoPageProps) => {
       isCategory={false}
       products={products}
       reviews={allReviews}
+      isCustomProductOverview="afino"
     />
   );
 };

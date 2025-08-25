@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
 
 interface BrandFilterProps {
   brands: string[] | null;
-  activePage: "category" | "all" | "SubCategory";
+  activePage: "category" | "all" | "SubCategory" | "custom";
   isBrandFilterActive: boolean;
   setFilters: SetValues<{
     brand: ParserBuilder<string[]>;
@@ -38,7 +38,7 @@ const BrandFilter = ({
     return option.category.includes(categoryName);
   });
 
-  if (activePage === "SubCategory") return <></>;
+  if (activePage === "SubCategory" || activePage === "custom") return <></>;
 
   if (isFilterOpen)
     return (

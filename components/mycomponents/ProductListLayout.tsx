@@ -59,6 +59,8 @@ import {
   SamsungMonitorOverview,
   ASUSMonitorOverview,
 } from "./ProductOverview/Sub";
+import AfinoOverview from "./ProductOverview/custom/AfinoOverview";
+import FlagbearerMobilesOverview from "./ProductOverview/custom/FlagbearerMobilesOverview";
 
 const categoryMap: Record<string, React.ReactNode> = {
   mobile: <MobileOverview />,
@@ -112,13 +114,19 @@ const SubCategoryMap: Record<string, React.ReactNode> = {
 };
 
 interface ProductListLayoutProps {
-  breadCrupActivePage: "category" | "subcategory" | "all" | "afino";
-  ProductsFiltersActivePage: "category" | "all" | "SubCategory";
+  breadCrupActivePage:
+    | "category"
+    | "subcategory"
+    | "all"
+    | "afino"
+    | "flagBearerMobiles";
+  ProductsFiltersActivePage: "category" | "all" | "SubCategory" | "custom";
   selectedCategoryData?: Category | undefined;
   selectedSubCategoryData?: Category | undefined;
   isCategory: boolean;
   products: Product[] | undefined | null;
   reviews: Review[] | undefined | null;
+  isCustomProductOverview?: "afino" | "flagBearerMobiles";
 }
 
 const ProductListLayout = ({
@@ -129,6 +137,7 @@ const ProductListLayout = ({
   reviews,
   selectedCategoryData,
   selectedSubCategoryData,
+  isCustomProductOverview,
 }: ProductListLayoutProps) => {
   console.log(
     "🚀 ~ ProductListLayout ~ selectedSubCategoryData:",
@@ -156,8 +165,10 @@ const ProductListLayout = ({
           />
         ) : breadCrupActivePage === "afino" ? (
           <BreadCrump activePage="afino" />
-        ) : (
+        ) : breadCrupActivePage === "all" ? (
           <BreadCrump activePage="all" />
+        ) : (
+          <BreadCrump activePage="flagBearerMobiles" />
         )}
 
         {/* categories tags */}
@@ -243,9 +254,15 @@ const ProductListLayout = ({
         selectedCategoryData?.name &&
         categoryMap[selectedCategoryData.name]}
 
-      {/* product overviews Cat*/}
+      {/* product overviews Sub*/}
       {selectedSubCategoryData?.name &&
         SubCategoryMap[selectedSubCategoryData.name]}
+
+      {/* product overviews Custom*/}
+      {isCustomProductOverview === "afino" && <AfinoOverview />}
+      {isCustomProductOverview === "flagBearerMobiles" && (
+        <FlagbearerMobilesOverview />
+      )}
     </div>
   );
 };

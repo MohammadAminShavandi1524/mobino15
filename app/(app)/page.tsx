@@ -23,8 +23,9 @@ import HeadphonesHighlight from "@/components/mycomponents/(CatHighlights)/Headp
 import HeadphonesCarousel from "@/components/mycomponents/(carousels)/HeadphonesCarousel";
 import BestBrandsCarousel from "@/components/mycomponents/(carousels)/BestBrandsCarousel";
 
-import LandingPageOverview from "@/components/mycomponents/ProductOverview/LandingPageOverview";
+
 import ProductsCarouselSkeleton from "@/components/mycomponents/(skeletonComponets)/Landing/ProductsCarouselSkeleton";
+import LandingPageOverview from "@/components/mycomponents/ProductOverview/custom/LandingPageOverview";
 
 export default async function Home() {
   prefetch(trpc.products.getAffinoCarousel.queryOptions());

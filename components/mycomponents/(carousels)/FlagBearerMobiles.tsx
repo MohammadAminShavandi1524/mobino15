@@ -20,7 +20,7 @@ const FlagBearerMobiles = () => {
     <ProductsCarouselLayout
       headerTitle="پرچمداران هوشمند"
       products={products}
-      viewAllHref={""}
+      viewAllHref={"/flagbearerMobiles"}
       isAfino="false"
     />
   );

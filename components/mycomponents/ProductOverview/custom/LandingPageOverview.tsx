@@ -6,7 +6,7 @@ import {
   MainTitle,
   Paragraph,
   Title,
-} from "./ProductOverview";
+} from "../ProductOverview";
 
 const LandingPageOverview = () => {
   return (
