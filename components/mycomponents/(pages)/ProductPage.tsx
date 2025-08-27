@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/carousel";
 import LikeAndShareBtns from "../(ProductPageComps)/LikeAndShareBtns";
 import TomanLogo from "../TomanLogo";
+import AddToCartBtnMobileModal from "../(ProductPageComps)/AddToCartBtnMobileModal";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -64,6 +65,7 @@ interface ProductPageProps {
 const ProductPage = ({ product }: ProductPageProps) => {
   if (!product) return <div>param loading</div>;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isMobileModalOpen, setIsMobileModalOpen] = useState<boolean>(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
 
   const orderParam = decodeURIComponent(product as string).split("_")[0];
@@ -119,6 +121,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
           product={TheProduct}
         />
 
+        {/* AddToCartBtnModal mobile */}
+        <AddToCartBtnMobileModal
+          isMobileModalOpen={isMobileModalOpen}
+          setIsMobileModalOpen={setIsMobileModalOpen}
+          product={TheProduct}
+        />
+
         {/* review modal */}
         <ReviewModal
           product={TheProduct}
@@ -127,7 +136,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           userId={user?.id}
         />
 
-        <div className="flex flex-col px-4 xss:px-6 s:px-8  lg:px-0">
+        <div className="xss:px-6 s:px-8 flex flex-col px-4 lg:px-0">
           {/* bread crump */}
           <div className="mb-5">
             <BreadCrump
@@ -253,6 +262,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
               <AddToCartButton
                 productId={TheProduct.id}
                 setIsModalOpen={setIsModalOpen}
+                setIsMobileModalOpen={setIsMobileModalOpen}
                 userName={user?.username}
               />
             </div>
@@ -263,7 +273,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
             {/*  Like And Share Btns */}
             <LikeAndShareBtns />
             {/* image carousel showCase */}
-            <Carousel>
+            <Carousel autoplay interval={7000}>
               <CarouselContent className="my-10">
                 {matchedProductByOrder.images?.map((img, index) => {
                   return (
@@ -294,13 +304,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
               <ProductEnTitle name={matchedProductByOrder.name} />
 
               {/* product color */}
-              <div className="flex flex-col gap-y-[14px]  border-b border-b-[#d3d8e4] pb-4 pl-6">
+              <div className="flex flex-col gap-y-[14px] border-b border-b-[#d3d8e4] pb-4 pl-6">
                 <div className="flex items-center gap-x-2 text-sm 2xl:text-base">
                   <span>رنگ :</span>
                   <span>{getColorInfo(TheProduct.color).label}</span>
                 </div>
 
-                <div className="flex flex-row-reverse w-fit gap-x-3">
+                <div className="flex w-fit flex-row-reverse gap-x-3">
                   {matchedAvailableProducts.map((p, index) => {
                     const isSelected = p.color === TheProduct.color;
 
@@ -355,8 +365,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
               <SellerInfo product={TheProduct} productType="single" />
             </div>
           </div>
-
-          
         </div>
 
         {/* ServiceHighlights */}
@@ -380,6 +388,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           <AddToCartButton
             userName={user?.username}
             setIsModalOpen={setIsModalOpen}
+            setIsMobileModalOpen={setIsMobileModalOpen}
             productId={TheProduct.id}
           />
 
@@ -437,6 +446,13 @@ const ProductPage = ({ product }: ProductPageProps) => {
         setIsModalOpen={setIsModalOpen}
         product={matchedProductByOrder}
       />
+
+      {/* AddToCartBtnModal mobile */}
+      <AddToCartBtnMobileModal
+        isMobileModalOpen={isMobileModalOpen}
+        setIsMobileModalOpen={setIsMobileModalOpen}
+        product={matchedProductByOrder}
+      />
       {/* review modal */}
       <ReviewModal
         product={matchedProductByOrder}
@@ -444,7 +460,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         setIsReviewModalOpen={setIsReviewModalOpen}
         userId={user?.id}
       />
-      <div className="flex flex-col px-4 xss:px-6 s:px-8  lg:px-0">
+      <div className="xss:px-6 s:px-8 flex flex-col px-4 lg:px-0">
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -525,6 +541,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
             <AddToCartButton
               setIsModalOpen={setIsModalOpen}
+              setIsMobileModalOpen={setIsMobileModalOpen}
               productId={matchedProductByOrder.id}
               userName={user?.username}
             />
@@ -536,7 +553,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           {/*  Like And Share Btns */}
           <LikeAndShareBtns />
           {/* image carousel showCase */}
-          <Carousel>
+          <Carousel autoplay interval={7000}>
             <CarouselContent className="my-10">
               {matchedProductByOrder.images?.map((img, index) => {
                 return (
@@ -619,6 +636,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
       <div className="xss:px-6 fixed right-0 bottom-0 z-10 flex w-full flex-col-reverse border-t border-t-[#d7dee0] bg-[#f8f8f8] px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-x-4 lg:hidden">
         <AddToCartButton
           userName={user?.username}
+          setIsMobileModalOpen={setIsMobileModalOpen}
           setIsModalOpen={setIsModalOpen}
           productId={matchedProductByOrder.id}
         />

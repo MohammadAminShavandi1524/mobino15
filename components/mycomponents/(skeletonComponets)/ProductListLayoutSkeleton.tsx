@@ -122,7 +122,7 @@ const ProductListLayoutSkeleton = ({
               {/* product card */}
 
               {Array.from({ length: 8 }).map((_, index) => (
-                <div className="relative flex min-h-[250px] flex-col gap-y-4 border-b-6 border-double border-b-[#f1f3f8] p-3">
+                <div key={index} className="relative flex min-h-[250px] flex-col gap-y-4 border-b-6 border-double border-b-[#f1f3f8] p-3">
                   <div className="mt-5 mb-6 flex w-full flex-col px-1">
                     <Skeleton className="mb-2 h-5 w-19" />
                     <Skeleton className="h-1 w-full" />
