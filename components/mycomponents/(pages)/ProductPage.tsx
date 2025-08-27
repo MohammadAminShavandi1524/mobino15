@@ -111,8 +111,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
   if (matchedProductByDKP.length > 1) {
     const TheProduct = MPProductShowcase ?? matchedProductByOrder;
     return (
-      <div className="mt-4 flex flex-col lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
-        {/* modal */}
+      <div className="relative mt-4 lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
+        {/* AddToCartBtnModal sm: */}
         <AddToCartBtnModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
@@ -126,132 +126,237 @@ const ProductPage = ({ product }: ProductPageProps) => {
           setIsReviewModalOpen={setIsReviewModalOpen}
           userId={user?.id}
         />
-        {/* bread crump */}
-        <div className="mb-5">
-          <BreadCrump
-            activePage="product"
-            productData={matchedProductByOrder}
-            category={
-              convertIdToCatOrSub(
-                matchedProductByOrder?.category as string,
-              ) as string
-            }
-            subCategory={
-              convertIdToCatOrSub(
-                matchedProductByOrder?.subCategory as string,
-              ) as string
-            }
-            className="px-1"
-          />
-        </div>
 
-        {/* main content pc*/}
-        <div className="3xl:gap-x-[50px] relative hidden gap-x-0 bg-[#fcfeff] max-2xl:mt-4 max-2xl:border-y-5 max-2xl:border-double max-2xl:border-y-[#d3d8e4] max-2xl:py-10 lg:flex 2xl:gap-x-10">
-          {/* landing main */}
-          <div className="grid w-full grid-cols-20 rounded-xl 2xl:border 2xl:border-[#d3d8e4]">
-            <div className="col-span-10 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-0 pr-0.5 xl:col-span-11 2xl:p-10 2xl:pl-0">
+        <div className="flex flex-col px-4 xss:px-6 s:px-8  lg:px-0">
+          {/* bread crump */}
+          <div className="mb-5">
+            <BreadCrump
+              activePage="product"
+              productData={matchedProductByOrder}
+              category={
+                convertIdToCatOrSub(
+                  matchedProductByOrder?.category as string,
+                ) as string
+              }
+              subCategory={
+                convertIdToCatOrSub(
+                  matchedProductByOrder?.subCategory as string,
+                ) as string
+              }
+              className="px-1"
+            />
+          </div>
+
+          {/* main content pc*/}
+          <div className="3xl:gap-x-[50px] relative hidden gap-y-10 bg-[#fcfeff] max-2xl:mt-4 max-2xl:border-y-5 max-2xl:border-double max-2xl:border-y-[#d3d8e4] max-2xl:py-10 max-xl:flex-col lg:flex 2xl:gap-x-10">
+            {/* landing main */}
+            <div className="grid w-full grid-cols-20 rounded-xl 2xl:border 2xl:border-[#d3d8e4]">
+              <div className="col-span-10 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-0 pr-0.5 xl:col-span-11 2xl:p-10 2xl:pl-0">
+                {/* product fa title */}
+                <ProductFaTitle label={matchedProductByOrder.label} />
+                {/* product en title */}
+                <ProductEnTitle name={matchedProductByOrder.name} />
+
+                <div className="mb-10 self-baseline">
+                  {/* product rating */}
+                  <ProductRating
+                    productReviews={productReviews}
+                    rating={matchedProductByOrder.rating}
+                  />
+
+                  {/* product color */}
+                  <div className="flex flex-col gap-y-[14px] self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
+                    <div className="flex items-center gap-x-2 text-sm 2xl:text-base">
+                      <span>رنگ :</span>
+                      <span>{getColorInfo(TheProduct.color).label}</span>
+                    </div>
+
+                    <div className="flex flex-row-reverse items-center gap-x-3">
+                      {matchedAvailableProducts.map((p, index) => {
+                        const isSelected = p.color === TheProduct.color;
+
+                        const checkColor = isDarkColor(
+                          getColorInfo(p.color).hex,
+                        )
+                          ? "#fff"
+                          : "#000";
+
+                        return (
+                          <div
+                            key={index}
+                            className="cursor-pointer"
+                            onClick={() => setMPProductsShowcase(p)}
+                          >
+                            <div
+                              className={cn(
+                                "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
+                                isSelected && "border-[#14a0de]",
+                              )}
+                            >
+                              <div
+                                className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"
+                                style={{
+                                  backgroundColor: getColorInfo(p.color).hex,
+                                }}
+                              >
+                                {isSelected && (
+                                  <Check
+                                    color={checkColor}
+                                    size={12}
+                                    strokeWidth={3}
+                                  />
+                                )}
+                              </div>
+                              <span
+                                className={cn(
+                                  "mr-2 ml-2 text-[14px] text-[#666666] 2xl:mr-2 2xl:ml-3",
+                                  isSelected && "font-medium text-[#333333]",
+                                )}
+                              >
+                                {getColorInfo(p.color).label}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* main specifictions */}
+                <div className="flex flex-col gap-y-2.5">
+                  <div className="pr-1.5 pb-0.5 text-[15px] font-medium">
+                    ویژگی های اصلی
+                  </div>
+                  <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5 2xl:p-5 2xl:pl-7.5">
+                    <ProductMainSpec product={matchedProductByOrder} />
+                  </div>
+                </div>
+              </div>
+              {/* ImageShowcase col-span9*/}
+              <ImageShowcase product={matchedProductByOrder} />
+            </div>
+
+            {/* landing aside */}
+            <div className="flex flex-col self-baseline rounded-[16px] px-5 max-xl:w-full xl:sticky xl:top-5 xl:min-w-95 xl:border xl:border-[#d3d8e4] xl:p-5 2xl:min-w-100 2xl:p-6">
+              {/* seller info */}
+              <SellerInfo
+                product={matchedProductByOrder}
+                productType="multiple"
+                MPProductShowcase={MPProductShowcase}
+              />
+
+              {/* price info and quantity */}
+              <ProductAndQty product={TheProduct} />
+
+              {/* add to cart button */}
+              <AddToCartButton
+                productId={TheProduct.id}
+                setIsModalOpen={setIsModalOpen}
+                userName={user?.username}
+              />
+            </div>
+          </div>
+
+          {/* main content mobile */}
+          <div className="mt-2 flex flex-col items-center lg:hidden">
+            {/*  Like And Share Btns */}
+            <LikeAndShareBtns />
+            {/* image carousel showCase */}
+            <Carousel>
+              <CarouselContent className="my-10">
+                {matchedProductByOrder.images?.map((img, index) => {
+                  return (
+                    <CarouselItem
+                      className="flex basis-1/1 justify-center pl-4"
+                      key={index}
+                    >
+                      <Image
+                        className=""
+                        alt="product-image"
+                        src={img.url}
+                        width={280}
+                        height={280}
+                      />
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+            </Carousel>
+
+            <div className="mb-6 w-full pr-6 pl-5">
               {/* product fa title */}
-              <ProductFaTitle label={matchedProductByOrder.label} />
+              <ProductFaTitle
+                className="mt-4"
+                label={matchedProductByOrder.label}
+              />
               {/* product en title */}
               <ProductEnTitle name={matchedProductByOrder.name} />
 
-              <div className="mb-10 self-baseline">
-                {/* product rating */}
-                <ProductRating
-                  productReviews={productReviews}
-                  rating={matchedProductByOrder.rating}
-                />
+              {/* product color */}
+              <div className="flex flex-col gap-y-[14px]  border-b border-b-[#d3d8e4] pb-4 pl-6">
+                <div className="flex items-center gap-x-2 text-sm 2xl:text-base">
+                  <span>رنگ :</span>
+                  <span>{getColorInfo(TheProduct.color).label}</span>
+                </div>
 
-                {/* product color */}
-                <div className="flex flex-col gap-y-[14px] self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
-                  <div className="flex items-center gap-x-2 text-sm 2xl:text-base">
-                    <span>رنگ :</span>
-                    <span>{getColorInfo(TheProduct.color).label}</span>
-                  </div>
+                <div className="flex flex-row-reverse w-fit gap-x-3">
+                  {matchedAvailableProducts.map((p, index) => {
+                    const isSelected = p.color === TheProduct.color;
 
-                  <div className="flex flex-row-reverse items-center gap-x-3">
-                    {matchedAvailableProducts.map((p, index) => {
-                      const isSelected = p.color === TheProduct.color;
+                    const checkColor = isDarkColor(getColorInfo(p.color).hex)
+                      ? "#fff"
+                      : "#000";
 
-                      const checkColor = isDarkColor(getColorInfo(p.color).hex)
-                        ? "#fff"
-                        : "#000";
-
-                      return (
+                    return (
+                      <div
+                        key={index}
+                        className="cursor-pointer"
+                        onClick={() => setMPProductsShowcase(p)}
+                      >
                         <div
-                          key={index}
-                          className="cursor-pointer"
-                          onClick={() => setMPProductsShowcase(p)}
+                          className={cn(
+                            "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
+                            isSelected && "border-[#14a0de]",
+                          )}
                         >
                           <div
+                            className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"
+                            style={{
+                              backgroundColor: getColorInfo(p.color).hex,
+                            }}
+                          >
+                            {isSelected && (
+                              <Check
+                                color={checkColor}
+                                size={12}
+                                strokeWidth={3}
+                              />
+                            )}
+                          </div>
+                          <span
                             className={cn(
-                              "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
-                              isSelected && "border-[#14a0de]",
+                              "mr-2 ml-2 text-[14px] text-[#666666] 2xl:mr-2 2xl:ml-3",
+                              isSelected && "font-medium text-[#333333]",
                             )}
                           >
-                            <div
-                              className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"
-                              style={{
-                                backgroundColor: getColorInfo(p.color).hex,
-                              }}
-                            >
-                              {isSelected && (
-                                <Check
-                                  color={checkColor}
-                                  size={12}
-                                  strokeWidth={3}
-                                />
-                              )}
-                            </div>
-                            <span
-                              className={cn(
-                                "mr-2 ml-2 text-[14px] text-[#666666] 2xl:mr-2 2xl:ml-3",
-                                isSelected && "font-medium text-[#333333]",
-                              )}
-                            >
-                              {getColorInfo(p.color).label}
-                            </span>
-                          </div>
+                            {getColorInfo(p.color).label}
+                          </span>
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* main specifictions */}
-              <div className="flex flex-col gap-y-2.5">
-                <div className="pr-1.5 pb-0.5 text-[15px] font-medium">
-                  ویژگی های اصلی
-                </div>
-                <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5 2xl:p-5 2xl:pl-7.5">
-                  <ProductMainSpec product={matchedProductByOrder} />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
-            {/* ImageShowcase col-span9*/}
-            <ImageShowcase product={matchedProductByOrder} />
-          </div>
 
-          {/* landing aside */}
-          <div className="flex flex-col self-baseline rounded-[16px] px-5 max-xl:w-full xl:sticky xl:top-5 xl:min-w-95 xl:border xl:border-[#d3d8e4] xl:p-5 2xl:min-w-100 2xl:p-6">
             {/* seller info */}
-            <SellerInfo
-              product={matchedProductByOrder}
-              productType="multiple"
-              MPProductShowcase={MPProductShowcase}
-            />
-
-            {/* price info and quantity */}
-            <ProductAndQty product={TheProduct} />
-
-            {/* add to cart button */}
-            <AddToCartButton
-              productId={TheProduct.id}
-              setIsModalOpen={setIsModalOpen}
-              userName={user?.username}
-            />
+            <div className="w-full px-4">
+              <SellerInfo product={TheProduct} productType="single" />
+            </div>
           </div>
+
+          
         </div>
 
         {/* ServiceHighlights */}
@@ -268,6 +373,56 @@ const ProductPage = ({ product }: ProductPageProps) => {
           setIsReviewModalOpen={setIsReviewModalOpen}
           userName={user?.username}
         />
+
+        {/* mobile add to cart */}
+
+        <div className="xss:px-6 fixed right-0 bottom-0 z-10 flex w-full flex-col-reverse border-t border-t-[#d7dee0] bg-[#f8f8f8] px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-x-4 lg:hidden">
+          <AddToCartButton
+            userName={user?.username}
+            setIsModalOpen={setIsModalOpen}
+            productId={TheProduct.id}
+          />
+
+          <div className="flex items-center justify-end pb-3 pl-0.5 sm:justify-center sm:pb-1">
+            {TheProduct.offPrice ? (
+              <div className="flex flex-row-reverse items-center gap-x-3">
+                {/* off price */}
+                <div className="flex gap-x-1.25 sm:gap-x-2">
+                  <div className="text-lg font-bold sm:text-[20px]">
+                    {TheProduct.offPrice.toLocaleString("fa-IR")}
+                  </div>
+                  <div className="flex items-center justify-center pb-0.5 text-sm sm:pb-1 sm:text-base">
+                    تومان
+                  </div>
+                </div>
+                {/* price */}
+                <div className="pt-0.5 text-base font-bold text-[#919ebc] line-through sm:pt-0.5 sm:text-lg">
+                  {TheProduct.price.toLocaleString("fa-IR")}
+                </div>
+                {/* discount percent */}
+                <div className="flex h-5 min-w-7 items-center justify-center gap-x-0.5 rounded-sm bg-[#da1e28] px-1 text-white">
+                  <span>
+                    <Percent strokeWidth={2.5} size={14} />
+                  </span>
+                  <span className="pt-[2px] text-[12px]">
+                    {convertToPersianNumber(
+                      getDiscountPercent(TheProduct) || "33",
+                    )}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-x-1.25 sm:gap-x-2">
+                <div className="text-lg font-bold sm:text-[20px]">
+                  {TheProduct.price.toLocaleString("fa-IR")}
+                </div>
+                <div className="flex items-center justify-center pb-0.5 text-sm sm:pb-1 sm:text-base">
+                  تومان
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
@@ -289,7 +444,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         setIsReviewModalOpen={setIsReviewModalOpen}
         userId={user?.id}
       />
-      <div className="flex flex-col px-8 lg:px-0">
+      <div className="flex flex-col px-4 xss:px-6 s:px-8  lg:px-0">
         {/* bread crump */}
         <div className="mb-5">
           <BreadCrump
@@ -461,15 +616,14 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
       {/* mobile add to cart */}
 
-      <div className="xss:px-6 fixed right-0 bottom-0 z-10 flex w-full flex-col-reverse sm:grid sm:grid-cols-2 sm:gap-x-4  border-t border-t-[#d7dee0] bg-[#f8f8f8] px-4 py-4 lg:hidden">
-        
+      <div className="xss:px-6 fixed right-0 bottom-0 z-10 flex w-full flex-col-reverse border-t border-t-[#d7dee0] bg-[#f8f8f8] px-4 py-4 sm:grid sm:grid-cols-2 sm:gap-x-4 lg:hidden">
         <AddToCartButton
           userName={user?.username}
           setIsModalOpen={setIsModalOpen}
           productId={matchedProductByOrder.id}
         />
 
-        <div className="flex items-center sm:justify-center justify-end sm:pb-1 pb-3 pl-0.5">
+        <div className="flex items-center justify-end pb-3 pl-0.5 sm:justify-center sm:pb-1">
           {matchedProductByOrder.offPrice ? (
             <div className="flex flex-row-reverse items-center gap-x-3">
               {/* off price */}
@@ -509,8 +663,6 @@ const ProductPage = ({ product }: ProductPageProps) => {
           )}
         </div>
       </div>
-
-
     </div>
   );
 };
