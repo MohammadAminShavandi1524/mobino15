@@ -11,7 +11,7 @@ const ProductFaTitle = ({ label, className }: ProductFaTitleProps) => {
   return (
     <div
       className={cn(
-        "mb-4 text-[20px]/[40px] font-medium text-black",
+        "mb-4 text-[15px]/[30px] lg:text-[16px]/[32px] 2xl:text-[20px]/[40px] font-medium text-black",
         className,
       )}
     >

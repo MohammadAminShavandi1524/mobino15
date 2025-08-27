@@ -5,6 +5,10 @@ interface ProductEnTitleProps {
 }
 
 const ProductEnTitle = ({ name }: ProductEnTitleProps) => {
-  return <div className="mb-4 text-[14px] text-[#385086]">{name}</div>;
+  return (
+    <div className="mb-4 text-[12px] text-[#385086] max-lg:w-full lg:text-[14px]">
+      {name}
+    </div>
+  );
 };
 export default ProductEnTitle;

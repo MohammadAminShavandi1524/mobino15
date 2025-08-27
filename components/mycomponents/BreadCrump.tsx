@@ -10,13 +10,12 @@ interface BreadCrumpProps {
   activePage: "category" | "subcategory" | "product" | "all" | "afino" | "flagBearerMobiles";
   className?: string;
 }
-// products must be added later
+
 
 const BreadCrump = ({
   category,
   subCategory,
   productData,
-
   activePage,
   className,
 }: BreadCrumpProps) => {
@@ -28,9 +27,9 @@ const BreadCrump = ({
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+        <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("text-black")} href={`/products`}>
+        <Link className={cn("text-black shrink-0")} href={`/products`}>
           همه محصولات
         </Link>
       </div>
@@ -43,9 +42,9 @@ const BreadCrump = ({
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+        <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("text-black")} href="">
+        <Link className={cn("text-black shrink-0")} href="">
           محصولات تخفیف خورده
         </Link>
       </div>
@@ -58,9 +57,9 @@ const BreadCrump = ({
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+         <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("text-black")} href="">
+        <Link className={cn("text-black shrink-0")} href="">
           پرچمداران هوشمند
         </Link>
       </div>
@@ -73,9 +72,9 @@ const BreadCrump = ({
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+         <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("text-black")} href={`/${category}`}>
+        <Link className={cn("text-black shrink-0")} href={`/${category}`}>
           {getPersianLabel(category as string)}
         </Link>
       </div>
@@ -88,13 +87,13 @@ const BreadCrump = ({
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+        <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("")} href={`/${category}`}>
+        <Link className={cn("shrink-0")} href={`/${category}`}>
           {getPersianLabel(category as string)}
         </Link>
         <span>/</span>
-        <Link className={cn("text-black")} href={`/${category}/${subCategory}`}>
+        <Link className={cn("text-black shrink-0")} href={`/${category}/${subCategory}`}>
           {getPersianLabel(subCategory as string)}
         </Link>
       </div>
@@ -104,22 +103,22 @@ const BreadCrump = ({
     return (
       <div
         className={cn(
-          "flex items-center gap-x-3 text-[12px] text-[#81858b]",
+          "flex items-center max-s:justify-center gap-x-3 text-[12px] text-[#81858b] overflow-x-hidden",
           className,
         )}
       >
-        <Link href={"/"}>فروشگاه اینترنتی موبینو</Link>
+         <Link className="shrink-0" href={"/"}>فروشگاه اینترنتی موبینو</Link>
         <span>/</span>
-        <Link className={cn("")} href={`/${category}`}>
+        <Link className={cn("shrink-0")} href={`/${category}`}>
           {getPersianLabel(category as string)}
         </Link>
         <span>/</span>
-        <Link className={cn("")} href={`/${category}/${subCategory}`}>
+        <Link className={cn("shrink-0")} href={`/${category}/${subCategory}`}>
           {getPersianLabel(subCategory as string)}
         </Link>
-        <span>/</span>
+        <span className="max-s:hidden">/</span>
         <Link
-          className={cn("text-black")}
+          className={cn("text-black shrink-0 text-ellipsis max-s:hidden")}
           href={`/products/${productData?.order}_${productData?.label}`}
         >
           {productData?.label}

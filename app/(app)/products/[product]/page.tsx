@@ -7,14 +7,14 @@ import type { SearchParams } from "nuqs";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-interface Category_PageProps {
+interface Product_PageProps {
   serachParams: Promise<SearchParams>;
   params: Promise<{
     product: string;
   }>;
 }
 
-const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
+const Product_Page = async ({ serachParams, params }: Product_PageProps) => {
   const { product } = await params;
   if (!product) return <div>param loading</div>;
   const orderParam = decodeURIComponent(product).split("_")[0];
@@ -33,4 +33,4 @@ const Category_Page = async ({ serachParams, params }: Category_PageProps) => {
     </HydrateClient>
   );
 };
-export default Category_Page;
+export default Product_Page;

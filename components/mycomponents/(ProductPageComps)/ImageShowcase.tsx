@@ -1,9 +1,23 @@
 "use client";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn, getMainImageUrl } from "@/lib/utils";
 import { Product } from "@/payload-types";
+import {
+  Heart,
+  MessageCircleMore,
+  MessageSquareMore,
+  Share2,
+} from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { Link } from "react-scroll";
+import { toast, Toaster } from "sonner";
+import LikeAndShareBtns from "./LikeAndShareBtns";
 
 interface ImageShowcaseProps {
   product: Product;
@@ -14,10 +28,14 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
 
   const [imageShowcase, setImageShowcase] = useState(mainImageUrl);
 
+ 
+
   return (
-    <div className="relative col-span-9 flex h-full flex-col justify-center gap-y-[70px] rounded-l-xl pt-[38px] pr-[46px] pb-[42px] pl-[52px]">
-      {/* like and share */}
-      <div className="absolute"></div>
+    <div className="3xl:px-[50px] relative col-span-10 flex h-full flex-col gap-y-[70px] rounded-l-xl pt-[60px] pr-4 pb-0 pl-0 xl:col-span-9 xl:px-6 xl:pb-5 2xl:justify-center 2xl:px-10 2xl:pt-[60px] 2xl:pb-[42px]">
+      {/* like share and reviews btns */}
+      <div className="absolute top-[3px] left-[50%] z-2  -translate-x-[50%]  2xl:top-[20px]">
+        <LikeAndShareBtns/>
+      </div>
       {/* main image */}
       <div className="flex w-full items-center justify-center">
         <div>
@@ -46,13 +64,14 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
                 )}
                 onClick={() => setImageShowcase(img.url)}
               >
-                <Image
-                  className={cn("")}
-                  src={img.url}
-                  alt={`${product.name}`}
-                  width={80}
-                  height={80}
-                />
+                <div className="relative size-18 xl:size-20">
+                  <Image
+                    className={cn("")}
+                    src={img.url}
+                    alt={`${product.name}`}
+                    fill
+                  />
+                </div>
               </div>
             );
           })}

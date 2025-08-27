@@ -30,6 +30,7 @@ import { useTRPC } from "@/trpc/client";
 import { Progress } from "@/components/ui/progress";
 
 import { Link, Element } from "react-scroll";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 
 interface AllSpecAndReviewsProps {
   product: Product;
@@ -51,6 +52,8 @@ const AllSpecAndReviews = ({
   setIsReviewModalOpen,
   productReviews,
 }: AllSpecAndReviewsProps) => {
+  const { lg, md, mlg, xl, sm } = useBreakpoints();
+
   const [reviewOrderBar, setReviewOrderBar] = useState("Newest");
 
   const ratings: number[] = [];
@@ -111,10 +114,10 @@ const AllSpecAndReviews = ({
   return (
     <div className="relative my-10 flex flex-col">
       {/* header */}
-      <div className="sticky top-0 z-6 flex items-center gap-x-10 border-b border-b-[#919ebc] bg-[#f3f8fd] px-11 text-[14px] text-[#919ebc]">
+      <div className="sticky top-0 z-9 flex items-center gap-x-10 border-b border-b-[#919ebc] bg-[#f3f8fd] text-xs text-[#919ebc] max-xl:justify-center lg:text-sm xl:px-11">
         <Link
           to="introduction"
-          offset={-70}
+          offset={lg ? -70 : -55}
           spy={true}
           smooth={true}
           duration={500}
@@ -146,16 +149,19 @@ const AllSpecAndReviews = ({
           نظرات کاربران
         </Link>
       </div>
-      <div className="relative flex gap-x-[50px] pt-5">
+
+      <div className="relative flex gap-x-10 px-4 lg:px-0 lg:pt-5 2xl:gap-x-12.5">
         <div className="flex w-full flex-col">
           {/* product introduction */}
           <Element name="introduction">
-            <div className="mb-14 flex flex-col gap-y-5 pt-4">
-              <div className="mr-5 flex items-center gap-x-3">
-                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
-                <span className="text-xl font-medium">معرفی محصول</span>
+            <div className="mb-10 flex flex-col gap-y-3 px-4 pt-6 lg:mb-14 lg:gap-y-5 lg:px-0 lg:pt-4">
+              <div className="flex items-center gap-x-3 lg:mr-5">
+                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc] max-lg:hidden"></span>
+                <span className="text-base font-medium lg:text-xl">
+                  معرفی محصول
+                </span>
               </div>
-              <p className="px-10.5 text-justify text-[16px]/[32px] text-[#23254e]">
+              <p className="text-justify text-[14px]/[28px] text-[#23254e] lg:px-10.5 lg:text-[16px]/[32px]">
                 {convertToPersianNumber(product.introduction)}
               </p>
             </div>
@@ -166,11 +172,14 @@ const AllSpecAndReviews = ({
 
           {/* all spec */}
           <Element name="allSpec">
-            <div className="mt-10 mb-14 flex flex-col gap-y-5 pt-4">
-              <div className="mr-5 flex items-center gap-x-3">
-                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
-                <span className="text-xl font-medium">مشخصات فنی</span>
+            <div className="mt-10 mb-14 flex flex-col gap-y-3 pt-4 lg:gap-y-5">
+              <div className="mr-3 flex items-center gap-x-3 lg:mr-5">
+                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc] max-lg:hidden"></span>
+                <span className="text-base font-medium lg:text-xl">
+                  مشخصات فنی
+                </span>
               </div>
+
               {/*All spec cards */}
               <div className="flex flex-col gap-y-2.5">
                 <AllProductSpecs product={product} />
@@ -183,16 +192,17 @@ const AllSpecAndReviews = ({
 
           {/* reviews */}
           <Element name="reviews">
-            <div className="relative mt-10 flex gap-x-10">
+            <div className="relative mt-10 flex max-2xl:flex-col-reverse 2xl:gap-x-10">
               <div className="flex w-full flex-col">
-                {/* reviews header */}
-                <div className="mr-5 mb-5 flex items-center gap-x-3">
+                {/* reviews header pc*/}
+                <div className="mr-5 mb-5 hidden items-center gap-x-3 2xl:flex">
                   <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
                   <span className="text-xl font-medium">نظرات کاربران</span>
                 </div>
+
                 {/* reviews orderbar */}
-                <div className="mb-8 flex w-full items-center gap-x-4 rounded-sm bg-[#f1f8ff] p-[14px] text-[12px]">
-                  <div className="flex items-center gap-x-2 text-[#333333]">
+                <div className="s:gap-x-3 mb-6 flex w-full max-xss:justify-between items-center xss:gap-x-3 rounded-sm bg-[#f1f8ff] p-[14px] text-[12px] sm:mb-8 lg:gap-x-4">
+                  <div className="max-xss:hidden flex items-center gap-x-1 s:gap-x-2 text-[#333333]">
                     <span>
                       <ArrowDownWideNarrow size={18} color="#333333" />
                     </span>
@@ -213,6 +223,7 @@ const AllSpecAndReviews = ({
                     );
                   })}
                 </div>
+
                 {/* content */}
                 <div className="flex flex-col gap-y-8">
                   {productReviews && productReviews.length > 0 ? (
@@ -230,30 +241,40 @@ const AllSpecAndReviews = ({
                         <div key={index}>
                           <div className="flex w-full flex-col border-double border-b-[#d3d8e4] px-8">
                             {/* profile logo and username */}
-                            <div className="mb-4 flex items-center gap-x-2.5">
-                              <div>
+                            <div className="s:mb-4 s:gap-x-2.5 mb-2.5 flex items-center gap-x-1.5">
+                              <div className="max-s:hidden">
                                 {displayName === "کاربر ناشناس" ? (
                                   <CircleQuestionMark />
                                 ) : (
                                   <CircleUserRound />
                                 )}
                               </div>
-                              <div className="pt-0.5">{displayName}</div>
+                              <div className="s:hidden">
+                                {displayName === "کاربر ناشناس" ? (
+                                  <CircleQuestionMark size={20} />
+                                ) : (
+                                  <CircleUserRound size={20} />
+                                )}
+                              </div>
+
+                              <div className="s:text-base pt-0.5 text-sm">
+                                {displayName}
+                              </div>
                             </div>
                             {/* rating */}
                             <div className="mb-2.5">
                               <StaticRating
-                                className="gap-x-0.75"
+                                className="mb-2 gap-x-0.75"
                                 size={12}
                                 value={review.rating}
                               />
                             </div>
                             {/* date */}
-                            <div className="mb-6">
+                            <div className="s:text-base s:mb-6 mb-4 text-sm">
                               {toJalali(review.updatedAt)}
                             </div>
                             {/* description */}
-                            <div className="mb-8 text-base/relaxed text-[#385086]">
+                            <div className="s:text-base/relaxed mb-8 text-sm/relaxed text-[#385086]">
                               {review.description}
                             </div>
                           </div>
@@ -279,21 +300,22 @@ const AllSpecAndReviews = ({
               </div>
 
               {/* reviews aside */}
-              <div className="sticky top-16 z-5 flex max-w-[400px] min-w-[400px] flex-col self-baseline pt-10">
-                <div className="mb-10 flex justify-between gap-x-6">
+              <div className="mb-10 flex px-3 max-2xl:flex-row-reverse max-2xl:items-center max-2xl:gap-x-5 max-lg:flex-col max-lg:gap-y-4 lg:px-0 2xl:sticky 2xl:top-16 2xl:z-5 2xl:mb-0 2xl:max-w-[400px] 2xl:min-w-[400px] 2xl:flex-col 2xl:self-baseline 2xl:pt-10">
+                {/* review progress bars */}
+                <div className="s:gap-x-6 flex justify-between gap-x-2 max-2xl:w-full 2xl:mb-10">
                   <div className="">
                     {ratingNumbers.map((rating) => (
                       <div
                         key={rating}
-                        className="flex items-center justify-between gap-x-1.5"
+                        className="s:gap-x-1.5 flex items-center justify-between gap-x-1"
                       >
-                        <div style={{ direction: "rtl" }}>
+                        <div className="" style={{ direction: "rtl" }}>
                           <Progress
-                            className="h-2.5 max-w-[180px] min-w-[180px] rounded-[16px] bg-[#e9ecf2]"
+                            className="h-2 max-w-[180px] min-w-[180px] rounded-[16px] bg-[#e9ecf2] sm:h-2.5 sm:max-w-[180px] sm:min-w-[180px]"
                             value={percentages[rating]}
                           />
                         </div>
-                        <div className="text-[#919ebc]">
+                        <div className="text-sm text-[#919ebc] sm:text-base">
                           {convertToPersianNumber(rating)}
                         </div>
                       </div>
@@ -301,7 +323,7 @@ const AllSpecAndReviews = ({
                   </div>
                   <div className="flex flex-col items-end">
                     {/* reviews averege */}
-                    <div className="mb-3 text-[40px]/[40px] font-extrabold text-[#385086]">
+                    <div className="mb-3 text-[32px]/[32px] font-extrabold text-[#385086] sm:text-[40px]/[40px]">
                       {convertToPersianNumber(
                         productReviews && productReviews?.length > 0
                           ? averageRating
@@ -309,54 +331,89 @@ const AllSpecAndReviews = ({
                       )}
                     </div>
                     {/* reviews count */}
-                    <div className="mb-3 flex items-center gap-x-1">
+                    <div className="mb-3 flex items-center gap-x-1 text-sm sm:text-base">
                       <span>{convertToPersianNumber(ratings.length)}</span>
-                      <span>نظر</span>
+                      <span className="">نظر</span>
                     </div>
                     {/* reviews star averege  */}
                     <div>
-                      <StaticRating
-                        size={18}
-                        value={
-                          productReviews && productReviews?.length > 0
-                            ? averageRating
-                            : 0
-                        }
-                      />
+                      <div className="hidden sm:block">
+                        <StaticRating
+                          size={18}
+                          value={
+                            productReviews && productReviews?.length > 0
+                              ? averageRating
+                              : 0
+                          }
+                        />
+                      </div>
+                      <div className="sm:hidden">
+                        <StaticRating
+                          size={16}
+                          value={
+                            productReviews && productReviews?.length > 0
+                              ? averageRating
+                              : 0
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 {/* add review */}
-                <div className="flex min-h-[140px] w-full flex-col gap-y-3 rounded-2xl p-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
-                  <div className="flex items-center gap-x-2 px-2">
-                    <Image
-                      src="/productpage/comment.gif"
-                      alt="comment"
-                      width={20}
-                      height={20}
-                      unoptimized
-                    />
-                    <span className="text-[14px] font-medium">
+                <div className="flex gap-y-3 rounded-lg p-4 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] max-2xl:min-w-90 max-lg:w-full max-lg:justify-between sm:rounded-2xl lg:min-h-[140px] lg:flex-col lg:p-6 2xl:w-full">
+                  <div className="flex items-center gap-x-1.5 sm:gap-x-2 sm:px-2">
+                    <div className="relative size-4.5 sm:size-5">
+                      <Image
+                        src="/productpage/comment.gif"
+                        alt="comment"
+                        fill
+                        unoptimized
+                      />
+                    </div>
+
+                    <span className="text-xs font-medium sm:text-[14px]">
                       نظر خود را در مورد این محصول بنویسید ...
                     </span>
                   </div>
                   <button
                     onClick={() => setIsReviewModalOpen(true)}
-                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center gap-x-1 rounded-lg text-white"
+                    className="bg-custom-primary s:rounded-lg s:px-3 s:py-1.5 flex cursor-pointer items-center justify-center gap-x-1 rounded-sm px-2 py-1 text-white sm:px-4 sm:py-2 lg:h-13 lg:w-full lg:px-0 lg:py-0"
                   >
-                    <span>افزودن نظر</span>
-                    <span>
+                    <span className="s:text-sm text-xs sm:text-base">
+                      افزودن نظر
+                    </span>
+                    <span className="max-sm:hidden">
                       <Plus size={20} />
+                    </span>
+                    <span className="max-xss:hidden sm:hidden">
+                      <Plus size={16} />
                     </span>
                   </button>
                 </div>
+              </div>
+
+              {/* product fa tilte mobile*/}
+              <div className="mr-3 flex lg:hidden">
+                <ProductFaTitle
+                  label={product.label}
+                  className="text-[12px]/[24px] font-normal"
+                />
+              </div>
+              {/* reviews header mobile*/}
+              <div className="mr-3 mb-3 flex items-center gap-x-3 lg:mr-5 lg:mb-5 2xl:hidden">
+                <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc] max-lg:hidden"></span>
+                <span className="text-base font-medium lg:text-xl">
+                  نظرات کاربران
+                </span>
               </div>
             </div>
           </Element>
         </div>
 
-        {/* aside */}
-        <div className="sticky top-20 z-5 flex min-h-100 max-w-[400px] min-w-[400px] flex-col self-baseline rounded-[16px] p-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
+        {/* aside max-lg:hidden*/}
+        <div className="sticky top-20 z-5 hidden min-h-100 max-w-[400px] min-w-[400px] flex-col self-baseline rounded-[16px] p-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] xl:flex">
           {/* image,title and color */}
           <div className="mt-3 flex gap-x-5">
             <div className="flex min-w-[100px] items-center justify-center self-baseline">
@@ -372,7 +429,7 @@ const AllSpecAndReviews = ({
             <div className="flex flex-col">
               {/* title */}
               <ProductFaTitle
-                className="productlist-title text-justify text-[14px]/[20px] font-normal text-[#212121]"
+                className="productlist-title text-justify text-[14px]/[20px] font-normal text-[#212121] 2xl:text-[15px]/[24px]"
                 label={product.label}
               />
 

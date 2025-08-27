@@ -17,7 +17,7 @@ export const StaticRating = ({
   return (
     <div
       style={{ direction: "ltr" }}
-      className={cn("inline-flex items-center gap-x-1.5", className)}
+      className={cn("inline-flex items-center gap-x-1 s:gap-x-1.5", className)}
     >
       {Array.from({ length: 5 }, (_, i) => {
         const starValue = i + 1;

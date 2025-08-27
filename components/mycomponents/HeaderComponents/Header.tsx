@@ -27,9 +27,12 @@ const AuthBtn = dynamic(
     ssr: false,
     loading: () => (
       <div className="border-custom-primary flex h-8 min-w-[60px] items-center justify-center rounded-lg border px-2.5 py-1.25 text-[15px] sm:h-10 sm:px-4 sm:py-2 lg:min-w-[140px]">
-        <div className="max-s:hidden"><LoadingDots size={2.5} /></div>
-        <div className="s:hidden block"><LoadingDots size={1.5} /></div>
-        
+        <div className="max-s:hidden">
+          <LoadingDots size={2.5} />
+        </div>
+        <div className="s:hidden block">
+          <LoadingDots size={1.5} />
+        </div>
       </div>
     ),
   },
@@ -107,7 +110,7 @@ const Header = () => {
   if (
     pathname === "/auth" ||
     pathname === "/auth/seller" ||
-    pathname === "/auth/user" 
+    pathname === "/auth/user"
   ) {
     return <div className="hidden"></div>;
   }
@@ -200,28 +203,39 @@ const Header = () => {
             </motion.button>
             {/* optional pages */}
             <div className="mx-2 flex items-center gap-x-4">
-
               <Link
                 href="/afino"
                 className={cn("flex items-center gap-x-1.5 p-2.5")}
               >
                 <span>
-                  <CirclePercent color="#b9375d" />
+                   <Image
+                    className="cursor-pointer"
+                    src="/discount.gif"
+                    alt="discount"
+                    width={24}
+                    height={24}
+                    unoptimized
+                  />
                 </span>
                 <span>شگفت انگیز ها</span>
               </Link>
-
 
               <Link
                 href="/aboutUs"
                 className={cn("flex items-center gap-x-1.5 p-2.5")}
               >
                 <span>
-                  <Info color="#2296f3" />
+                  <Image
+                    className="cursor-pointer"
+                    src="/infoicon.gif"
+                    alt="infoicon"
+                    width={24}
+                    height={24}
+                    unoptimized
+                  />
                 </span>
                 <span>درباره ما</span>
               </Link>
-
 
               {/* <Link
                 href="/InstallmentPurchase"
@@ -277,9 +291,6 @@ const Header = () => {
               </Link>
             </div>
           </div>
-
-
-          
         </div>
       </SidebarProvider>
     </header>

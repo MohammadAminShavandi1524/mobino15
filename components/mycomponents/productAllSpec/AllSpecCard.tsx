@@ -10,11 +10,11 @@ interface AllSpecCardProps {
 
 const AllSpecCard = ({ title, value, valueClassname }: AllSpecCardProps) => {
   return (
-    <div className="flex flex-col gap-y-2 rounded-lg bg-[#f3f8fd] px-10.5 py-4">
-      <span>{title} :</span>
+    <div className="flex flex-col gap-y-2 rounded-lg bg-[#f3f8fd] px-6 lg:px-10.5 py-4">
+      <span className="text-sm lg:text-base">{title} :</span>
       <span
         className={cn(
-          "pr-0.5 text-[15px] font-light text-[#000511]",
+          "pr-0.5 text-sm lg:text-[15px] font-light text-[#000511]",
           valueClassname,
         )}
       >

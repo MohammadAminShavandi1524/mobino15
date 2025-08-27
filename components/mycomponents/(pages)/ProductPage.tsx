@@ -8,12 +8,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTRPC } from "@/trpc/client";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { Check } from "lucide-react";
+import { Check, Percent } from "lucide-react";
 
 import {
   cn,
   convertIdToCatOrSub,
+  convertToPersianNumber,
   getColorInfo,
+  getDiscountPercent,
   isDarkColor,
 } from "@/lib/utils";
 
@@ -33,6 +35,15 @@ import ProductMainSpec from "../(productMainSpec)/ProductMainSpec";
 import AllSpecAndReviews from "../(ProductPageComps)/AllSpecAndReviews";
 import ReviewModal from "../(ProductPageComps)/reviewModal";
 import ImageShowcase from "../(ProductPageComps)/ImageShowcase";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import LikeAndShareBtns from "../(ProductPageComps)/LikeAndShareBtns";
+import TomanLogo from "../TomanLogo";
 
 const AddToCartButton = dynamic(
   () => import("../AddToCartButton").then((mod) => mod.default),
@@ -53,7 +64,7 @@ interface ProductPageProps {
 const ProductPage = ({ product }: ProductPageProps) => {
   if (!product) return <div>param loading</div>;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(true);
 
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
@@ -82,7 +93,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
     return p.available;
   });
 
-  // * نا موجود
+  // * نا موجود   it must be added later when checkout added
 
   if (
     matchedProductByOrder &&
@@ -100,9 +111,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
   if (matchedProductByDKP.length > 1) {
     const TheProduct = MPProductShowcase ?? matchedProductByOrder;
     return (
-      <div className="w90 mt-4 flex max-w-[1600px] flex-col px-[10px]">
+      <div className="mt-4 flex flex-col lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
         {/* modal */}
-
         <AddToCartBtnModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
@@ -135,10 +145,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
           />
         </div>
 
-        {/*  */}
-        <div className="relative flex gap-x-[50px] bg-[#fcfeff]">
-          <div className="grid min-h-[700px] w-full grid-cols-20 rounded-xl border border-[#d3d8e4]">
-            <div className="col-span-11 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-10 pl-0">
+        {/* main content pc*/}
+        <div className="3xl:gap-x-[50px] relative hidden gap-x-0 bg-[#fcfeff] max-2xl:mt-4 max-2xl:border-y-5 max-2xl:border-double max-2xl:border-y-[#d3d8e4] max-2xl:py-10 lg:flex 2xl:gap-x-10">
+          {/* landing main */}
+          <div className="grid w-full grid-cols-20 rounded-xl 2xl:border 2xl:border-[#d3d8e4]">
+            <div className="col-span-10 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-0 pr-0.5 xl:col-span-11 2xl:p-10 2xl:pl-0">
               {/* product fa title */}
               <ProductFaTitle label={matchedProductByOrder.label} />
               {/* product en title */}
@@ -153,7 +164,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
                 {/* product color */}
                 <div className="flex flex-col gap-y-[14px] self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
-                  <div className="flex items-center gap-x-2">
+                  <div className="flex items-center gap-x-2 text-sm 2xl:text-base">
                     <span>رنگ :</span>
                     <span>{getColorInfo(TheProduct.color).label}</span>
                   </div>
@@ -179,7 +190,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                             )}
                           >
                             <div
-                              className="flex h-5 w-5 items-center justify-center rounded-[6px] border border-[#d7dee0]"
+                              className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"
                               style={{
                                 backgroundColor: getColorInfo(p.color).hex,
                               }}
@@ -194,8 +205,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
                             </div>
                             <span
                               className={cn(
-                                "mr-2 ml-3 text-[14px] font-medium text-[#666666]",
-                                isSelected && "text-[#333333]",
+                                "mr-2 ml-2 text-[14px] text-[#666666] 2xl:mr-2 2xl:ml-3",
+                                isSelected && "font-medium text-[#333333]",
                               )}
                             >
                               {getColorInfo(p.color).label}
@@ -210,20 +221,20 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
               {/* main specifictions */}
               <div className="flex flex-col gap-y-2.5">
-                <div className="pr-1.5 text-[14px] font-medium">
+                <div className="pr-1.5 pb-0.5 text-[15px] font-medium">
                   ویژگی های اصلی
                 </div>
-                <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-[20px] pl-[30px]">
+                <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5 2xl:p-5 2xl:pl-7.5">
                   <ProductMainSpec product={matchedProductByOrder} />
                 </div>
               </div>
             </div>
-            {/* ImageShowcase */}
+            {/* ImageShowcase col-span9*/}
             <ImageShowcase product={matchedProductByOrder} />
           </div>
 
           {/* landing aside */}
-          <div className="sticky top-5 flex min-w-[400px] flex-col self-baseline rounded-[16px] border border-[#d3d8e4] p-6">
+          <div className="flex flex-col self-baseline rounded-[16px] px-5 max-xl:w-full xl:sticky xl:top-5 xl:min-w-95 xl:border xl:border-[#d3d8e4] xl:p-5 2xl:min-w-100 2xl:p-6">
             {/* seller info */}
             <SellerInfo
               product={matchedProductByOrder}
@@ -264,7 +275,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   // * single products
 
   return (
-    <div className="w90 mt-4 flex max-w-[1600px] flex-col px-[10px]">
+    <div className="relative mt-4 lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
       {/* modal */}
       <AddToCartBtnModal
         isModalOpen={isModalOpen}
@@ -278,91 +289,163 @@ const ProductPage = ({ product }: ProductPageProps) => {
         setIsReviewModalOpen={setIsReviewModalOpen}
         userId={user?.id}
       />
-      {/* bread crump */}
-      <div className="mb-5">
-        <BreadCrump
-          activePage="product"
-          productData={matchedProductByOrder}
-          category={
-            convertIdToCatOrSub(
-              matchedProductByOrder.category as string,
-            ) as string
-          }
-          subCategory={
-            convertIdToCatOrSub(
-              matchedProductByOrder.subCategory as string,
-            ) as string
-          }
-          className="px-1"
-        />
-      </div>
+      <div className="flex flex-col px-8 lg:px-0">
+        {/* bread crump */}
+        <div className="mb-5">
+          <BreadCrump
+            activePage="product"
+            productData={matchedProductByOrder}
+            category={
+              convertIdToCatOrSub(
+                matchedProductByOrder.category as string,
+              ) as string
+            }
+            subCategory={
+              convertIdToCatOrSub(
+                matchedProductByOrder.subCategory as string,
+              ) as string
+            }
+            className="px-1"
+          />
+        </div>
 
-      {/*  */}
-      <div className="relative flex gap-x-[50px] bg-[#fcfeff]">
-        <div className="grid min-h-[700px] w-full grid-cols-20 rounded-xl border border-[#d3d8e4]">
-          <div className="col-span-11 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-10 pl-0">
-            {/* product fa title */}
-            <ProductFaTitle label={matchedProductByOrder.label} />
-            {/* product en title */}
-            <ProductEnTitle name={matchedProductByOrder.name} />
+        {/* main content pc*/}
+        <div className="3xl:gap-x-[50px] relative hidden gap-y-10 bg-[#fcfeff] max-2xl:mt-4 max-2xl:border-y-5 max-2xl:border-double max-2xl:border-y-[#d3d8e4] max-2xl:py-10 max-xl:flex-col lg:flex 2xl:gap-x-10">
+          {/* landing main */}
+          <div className="grid w-full grid-cols-20 rounded-xl 2xl:border 2xl:border-[#d3d8e4]">
+            <div className="col-span-10 flex h-full flex-col rounded-r-xl bg-[#fcfeff] p-0 pr-0.5 xl:col-span-11 2xl:p-10 2xl:pl-0">
+              {/* product fa title */}
+              <ProductFaTitle label={matchedProductByOrder.label} />
+              {/* product en title */}
+              <ProductEnTitle name={matchedProductByOrder.name} />
 
-            <div className="mb-10 self-baseline">
-              {/* product rating */}
-              <ProductRating
-                productReviews={productReviews}
-                rating={matchedProductByOrder.rating}
-              />
+              <div className="mb-10 self-baseline">
+                {/* product rating */}
+                <ProductRating
+                  productReviews={productReviews}
+                  rating={matchedProductByOrder.rating}
+                />
 
-              {/* product color */}
-              <div className="flex items-center gap-x-1 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
-                <span className="ml-0.5">رنگ :</span>
-                <span>{getColorInfo(matchedProductByOrder.color).label}</span>
-                <span
-                  style={{
-                    backgroundColor: getColorInfo(matchedProductByOrder.color)
-                      .hex,
-                  }}
-                  className="size-4 rounded-full border border-[#d7dee0]"
-                ></span>
+                {/* product color */}
+                <div className="flex items-center gap-x-1 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
+                  <span className="ml-0.5 text-sm 2xl:text-base">رنگ :</span>
+                  <span className="text-sm 2xl:text-base">
+                    {getColorInfo(matchedProductByOrder.color).label}
+                  </span>
+                  <span
+                    style={{
+                      backgroundColor: getColorInfo(matchedProductByOrder.color)
+                        .hex,
+                    }}
+                    className="size-3.5 rounded-full border border-[#d7dee0] 2xl:size-4"
+                  />
+                </div>
+              </div>
+
+              {/* main specifictions */}
+
+              <div className="flex flex-col gap-y-2.5">
+                <div className="pr-1.5 pb-0.5 text-[15px] font-medium">
+                  ویژگی های اصلی
+                </div>
+                <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5 2xl:p-5 2xl:pl-7.5">
+                  <ProductMainSpec product={matchedProductByOrder} />
+                </div>
               </div>
             </div>
 
-            {/* main specifictions */}
+            {/* ImageShowcase col-span9*/}
+            <ImageShowcase product={matchedProductByOrder} />
+          </div>
 
-            <div className="flex flex-col gap-y-2.5">
-              <div className="pr-1.5 text-[14px] font-medium">
-                ویژگی های اصلی
-              </div>
-              <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-[20px] pl-[30px]">
-                <ProductMainSpec product={matchedProductByOrder} />
-              </div>
+          {/* landing aside */}
+          <div className="flex flex-col self-baseline rounded-[16px] px-5 max-xl:w-full xl:sticky xl:top-5 xl:min-w-95 xl:border xl:border-[#d3d8e4] xl:p-5 2xl:min-w-100 2xl:p-6">
+            {/* seller info */}
+            <SellerInfo product={matchedProductByOrder} productType="single" />
+
+            {/* price info and quantity */}
+            <ProductAndQty product={matchedProductByOrder} />
+
+            {/* add to cart button */}
+
+            <AddToCartButton
+              setIsModalOpen={setIsModalOpen}
+              productId={matchedProductByOrder.id}
+              userName={user?.username}
+            />
+          </div>
+        </div>
+
+        {/* main content mobile */}
+        <div className="mt-2 flex flex-col items-center lg:hidden">
+          {/*  Like And Share Btns */}
+          <LikeAndShareBtns />
+          {/* image carousel showCase */}
+          <Carousel>
+            <CarouselContent className="my-10">
+              {matchedProductByOrder.images?.map((img, index) => {
+                return (
+                  <CarouselItem
+                    className="flex basis-1/1 justify-center pl-4"
+                    key={index}
+                  >
+                    <Image
+                      className=""
+                      alt="product-image"
+                      src={img.url}
+                      width={280}
+                      height={280}
+                    />
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+          </Carousel>
+
+          <div className="mb-6 w-full pr-6 pl-5">
+            {/* product fa title */}
+            <ProductFaTitle
+              className="mt-4"
+              label={matchedProductByOrder.label}
+            />
+            {/* product en title */}
+            <ProductEnTitle name={matchedProductByOrder.name} />
+            {/* product color */}
+            <div className="flex items-center gap-x-1 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
+              <span className="ml-0.5 text-sm 2xl:text-base">رنگ :</span>
+              <span className="text-sm 2xl:text-base">
+                {getColorInfo(matchedProductByOrder.color).label}
+              </span>
+              <span
+                style={{
+                  backgroundColor: getColorInfo(matchedProductByOrder.color)
+                    .hex,
+                }}
+                className="size-3.5 rounded-full border border-[#d7dee0] 2xl:size-4"
+              />
             </div>
           </div>
 
-          {/* ImageShowcase */}
-          <ImageShowcase product={matchedProductByOrder} />
-        </div>
-
-        {/* landing aside */}
-        <div className="sticky top-5 flex min-w-[400px] flex-col self-baseline rounded-[16px] border border-[#d3d8e4] p-6">
           {/* seller info */}
-          <SellerInfo product={matchedProductByOrder} productType="single" />
+          <div className="w-full px-4">
+            <SellerInfo product={matchedProductByOrder} productType="single" />
+          </div>
+        </div>
+      </div>
+      {/* ServiceHighlights */}
+      <ServiceHighlights />
 
-          {/* price info and quantity */}
-          <ProductAndQty product={matchedProductByOrder} />
+      {/* main specifictions for mobile*/}
 
-          {/* add to cart button */}
-
-          <AddToCartButton
-            setIsModalOpen={setIsModalOpen}
-            productId={matchedProductByOrder.id}
-            userName={user?.username}
-          />
+      <div className="mb-10 flex flex-col gap-y-2.5 px-4 lg:hidden">
+        <div className="pr-2 pb-0.5 text-[14px] font-medium">
+          ویژگی های اصلی
+        </div>
+        <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5">
+          <ProductMainSpec product={matchedProductByOrder} />
         </div>
       </div>
 
-      {/* ServiceHighlights */}
-      <ServiceHighlights />
       {/* similar products carousel */}
       <SimilarProductsCarousel product={matchedProductByOrder} />
 
@@ -375,21 +458,61 @@ const ProductPage = ({ product }: ProductPageProps) => {
         setIsReviewModalOpen={setIsReviewModalOpen}
         userName={user?.username}
       />
+
+      {/* mobile add to cart */}
+
+      <div className="xss:px-6 fixed right-0 bottom-0 z-10 flex w-full flex-col-reverse sm:grid sm:grid-cols-2 sm:gap-x-4  border-t border-t-[#d7dee0] bg-[#f8f8f8] px-4 py-4 lg:hidden">
+        
+        <AddToCartButton
+          userName={user?.username}
+          setIsModalOpen={setIsModalOpen}
+          productId={matchedProductByOrder.id}
+        />
+
+        <div className="flex items-center sm:justify-center justify-end sm:pb-1 pb-3 pl-0.5">
+          {matchedProductByOrder.offPrice ? (
+            <div className="flex flex-row-reverse items-center gap-x-3">
+              {/* off price */}
+              <div className="flex gap-x-1.25 sm:gap-x-2">
+                <div className="text-lg font-bold sm:text-[20px]">
+                  {matchedProductByOrder.offPrice.toLocaleString("fa-IR")}
+                </div>
+                <div className="flex items-center justify-center pb-0.5 text-sm sm:pb-1 sm:text-base">
+                  تومان
+                </div>
+              </div>
+              {/* price */}
+              <div className="pt-0.5 text-base font-bold text-[#919ebc] line-through sm:pt-0.5 sm:text-lg">
+                {matchedProductByOrder.price.toLocaleString("fa-IR")}
+              </div>
+              {/* discount percent */}
+              <div className="flex h-5 min-w-7 items-center justify-center gap-x-0.5 rounded-sm bg-[#da1e28] px-1 text-white">
+                <span>
+                  <Percent strokeWidth={2.5} size={14} />
+                </span>
+                <span className="pt-[2px] text-[12px]">
+                  {convertToPersianNumber(
+                    getDiscountPercent(matchedProductByOrder) || "33",
+                  )}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="flex gap-x-1.25 sm:gap-x-2">
+              <div className="text-lg font-bold sm:text-[20px]">
+                {matchedProductByOrder.price.toLocaleString("fa-IR")}
+              </div>
+              <div className="flex items-center justify-center pb-0.5 text-sm sm:pb-1 sm:text-base">
+                تومان
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+
     </div>
   );
-
-  // // *Loading
-
-  // return (
-  //   <div className="w90 flex flex-col mt-4 max-w-[1600px] px-[10px]">
-  //     {/* bread crump */}
-  //     <div className="mb-5">
-  //       <BreadCrump activePage="product" className="px-1" />
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default ProductPage;
-
-

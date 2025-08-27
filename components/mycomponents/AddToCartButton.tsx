@@ -23,18 +23,18 @@ const AddToCartButton = ({
   return (
     <>
       {isProductInCart(productId) ? (
-        <div className="text-custom-primary flex items-center justify-center px-2">
+        <div className="text-custom-primary flex items-center justify-center px-2 text-base ">
           <button
             onClick={() => removeProduct(productId)}
-            className="text-custom-primary h-13 w-1/4 cursor-pointer"
+            className="text-custom-primary h-12.5 w-1/4 cursor-pointer 2xl:h-13"
           >
             حذف
           </button>
           <Link
-            className="border-custom-primary relative flex h-13 w-3/4 items-center justify-center rounded-md border-2 pl-3"
+            className="border-custom-primary relative flex h-12.5 w-3/4 items-center justify-center rounded-md border-2 pl-3 2xl:h-13"
             href="/cart"
           >
-            <div>مشاهده سبد خرید</div>
+            <div className="">مشاهده سبد خرید</div>
             <div className="absolute left-[16px]">
               <ChevronLeft size={20} />
             </div>
@@ -47,9 +47,9 @@ const AddToCartButton = ({
               setIsModalOpen(true);
               addProduct(productId);
             }}
-            className="bg-custom-primary relative mx-[10px] flex h-13 cursor-pointer items-center justify-center rounded-lg text-white"
+            className="bg-custom-primary relative flex h-12.5 cursor-pointer items-center justify-center rounded-lg text-white  lg:mx-[10px] 2xl:h-13"
           >
-            <div className="text-[18px]">افزودن به سبد خرید</div>
+            <div className="text-lg">افزودن به سبد خرید</div>
             <div className="absolute left-[16px]">
               <ShoppingCart size={20} />
             </div>

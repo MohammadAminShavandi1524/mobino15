@@ -66,7 +66,7 @@ const ProductListLayoutSkeleton = ({
         <div className="flex w-full flex-col">
           {/* order bar */}
           <div className="w-full bg-white max-lg:sticky max-lg:top-0 max-lg:z-5 max-lg:p-4 max-lg:px-5">
-            <div className="mb-6 flex items-center justify-between rounded-lg border border-[#e9ecf2] max-lg:px-4 lg:px-0 lg:pr-[14px] lg:pl-6">
+            <div className="lg:mb-6 flex items-center justify-between rounded-lg border border-[#e9ecf2] max-lg:px-4 lg:px-0 lg:pr-[14px] lg:pl-6">
               {/* pc orderbar */}
               <>
                 {/* orders */}

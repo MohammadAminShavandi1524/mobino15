@@ -129,7 +129,7 @@ const ProductList = ({
                 className={cn(
                   "relative flex min-h-[250px] flex-col gap-y-4 border-b-6 border-double border-b-[#f1f3f8] p-3 pt-6",
                   !isAfinoPage && "pt-[75px]",
-                  !product.offPrice && "pt-[40px]",
+                  !product.offPrice && "pt-[30px]",
                 )}
               >
                 {/* بخش نشون دادن تخفیف  */}

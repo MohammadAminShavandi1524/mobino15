@@ -17,9 +17,9 @@ const SellerInfo = ({
   if (productType === "single")
     return (
       <>
-        <div className="pr-2 pb-2 font-medium">فروشنده</div>
+        <div className="max-lg:self-baseline pr-2 lg:pr-2 pb-3 2xl:pb-2 font-medium text-base lg:text-sm 2xl:text-base">فروشنده</div>
 
-        <div className="flex w-full flex-col gap-x-3 rounded-lg bg-[#f3f8fd] px-4.5 py-3 text-[14px]">
+        <div className="flex w-full flex-col gap-x-3 rounded-md lg:rounded-lg bg-[#f3f8fd]  px-4  2xl:px-4.5 py-2.5 2xl:py-3 text-[14px]">
           <div className="border-b border-b-white pb-3">
             <div className="flex items-center pb-2">
               <span className="text-[#385086]">

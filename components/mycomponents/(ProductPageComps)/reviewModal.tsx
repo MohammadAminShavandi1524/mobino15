@@ -99,20 +99,21 @@ const ReviewModal = ({
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="flex w-[420px] max-w-[420px] flex-col rounded-xl bg-white p-4 py-6 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
+            className="flex flex-col overflow-y-hidden bg-white px-4 py-8 max-sm:h-screen sm:w-[420px] sm:max-w-[420px] sm:rounded-xl sm:py-6 sm:shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
           >
             {/* header */}
             <div className="mb-5 flex items-center justify-between border-b border-b-[#919ebc] px-5 pb-5">
-              <span className="text-xl">افزودن نظر</span>
-              <span
+              <span className="text-lg sm:text-xl">افزودن نظر</span>
+              <button
                 onClick={() => setIsReviewModalOpen(false)}
-                className="cursor-pointer"
+                className="flex cursor-pointer items-center gap-x-1"
               >
+                <span className="pb-0.5 max-sm:hidden lg:hidden">بستن</span>
                 <X size={24} />
-              </span>
+              </button>
             </div>
 
-            <div>
+            <div className="">
               {/* title and image */}
               <div className="mb-8 flex items-center gap-x-5 rounded-lg px-5 py-2.5 shadow-[0px_1px_4px_rgba(0,0,0,0.08)]">
                 {/* image */}
@@ -128,7 +129,7 @@ const ReviewModal = ({
 
                 {/* title */}
                 <ProductFaTitle
-                  className="productlist-title m-0 overflow-y-hidden text-justify text-[12px]/[18px] font-normal text-[#212121]"
+                  className="productlist-title m-0 overflow-y-hidden text-justify text-[12px]/[18px] font-normal text-[#212121] lg:text-[14px]/[21px] 2xl:text-[15px]/[24px]"
                   label={product.label}
                 />
               </div>
@@ -181,7 +182,7 @@ const ReviewModal = ({
                           </FormLabel>
                           <FormControl>
                             <Textarea
-                              className="h-[120px] w-[380px] resize-none text-base"
+                              className="h-[120px] resize-none text-base lg:w-[380px]"
                               {...field}
                             />
                           </FormControl>
@@ -195,7 +196,7 @@ const ReviewModal = ({
                   <button
                     disabled={addReview.isPending}
                     type="submit"
-                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-lg text-white disabled:cursor-default disabled:opacity-90"
+                    className="bg-custom-primary flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-lg text-white disabled:cursor-default disabled:opacity-90 max-sm:self-end"
                   >
                     ثبت نظر
                   </button>

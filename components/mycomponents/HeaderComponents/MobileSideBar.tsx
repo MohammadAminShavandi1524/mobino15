@@ -86,10 +86,13 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             href="/afino"
             className="flex items-center gap-x-3 text-[#333333]"
           >
-            <CirclePercent
-              className="bounce-in-place"
-              color="#b9375d"
-              size={24}
+            <Image
+              className="cursor-pointer"
+              src="/discount.gif"
+              alt="discount"
+              width={24}
+              height={24}
+              unoptimized
             />
             <span className="text-[14px]">شگفت انگیز ها</span>
           </Link>

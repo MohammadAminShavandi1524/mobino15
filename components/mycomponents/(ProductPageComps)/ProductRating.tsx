@@ -21,7 +21,7 @@ const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
 
   return (
     <div className="mb-4 flex items-center gap-x-0.5 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
-      <div className="ml-0.5">
+      <div className="ml-0.5 2xl:text-base text-sm">
         {productReviews && productReviews?.length > 0
           ? "امتیاز کاربران :"
           : "نظرات کاربران :"}
@@ -45,10 +45,10 @@ const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
         className="mr-1 cursor-pointer text-[12px] text-[#0079b1]"
       >
         {productReviews && productReviews?.length > 0 && <span>(</span>}
-        <span className="ml-0.25 text-[14px]">
+        <span className="ml-0.25 text-xs 2xl:text-sm">
           {productReviews && convertToPersianNumber(productReviews?.length)}
         </span>
-        <span>نظر</span>
+        <span className="text-xs 2xl:text-sm">نظر</span>
         {productReviews && productReviews?.length > 0 && <span>)</span>}
       </Link>
     </div>
