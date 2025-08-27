@@ -64,7 +64,7 @@ interface ProductPageProps {
 const ProductPage = ({ product }: ProductPageProps) => {
   if (!product) return <div>param loading</div>;
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(true);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
 
   const orderParam = decodeURIComponent(product as string).split("_")[0];
 
@@ -276,7 +276,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   return (
     <div className="relative mt-4 lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
-      {/* modal */}
+      {/* AddToCartBtnModal sm: */}
       <AddToCartBtnModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

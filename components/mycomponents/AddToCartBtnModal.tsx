@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import TomanLogo from "./TomanLogo";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface AddToCartBtnModalProps {
   isModalOpen: boolean;
@@ -29,13 +30,27 @@ const AddToCartBtnModal = ({
   const discountPercent = getDiscountPercent(product);
 
   return (
-    <>
+    <AnimatePresence>
       {isModalOpen && (
-        <div
+        <motion.div
+          key="backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           onClick={() => setIsModalOpen(false)}
-          className="fixed top-0 right-0 z-[500] flex min-h-screen min-w-screen items-center justify-center bg-zinc-900/50"
+          className="fixed top-0 right-0 z-[500] hidden min-h-screen min-w-screen items-center justify-center bg-zinc-900/50 sm:flex"
         >
-          <div
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 250,
+              damping: 30,
+              mass: 1,
+            }}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -129,10 +144,10 @@ const AddToCartBtnModal = ({
                 مشاهده سبد خرید
               </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 export default AddToCartBtnModal;

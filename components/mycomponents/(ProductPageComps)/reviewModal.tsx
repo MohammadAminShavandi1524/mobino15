@@ -31,6 +31,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Rating, RatingButton } from "@/components/ui/rating";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 
 interface ReviewModalProps {
   isReviewModalOpen: boolean;
@@ -55,6 +57,8 @@ const ReviewModal = ({
   product,
   userId,
 }: ReviewModalProps) => {
+  const { sm } = useBreakpoints();
+
   const mainImageUrl = getMainImageUrl(product);
 
   const trpc = useTRPC();
@@ -89,17 +93,36 @@ const ReviewModal = ({
   );
 
   return (
-    <>
+    <AnimatePresence>
       {isReviewModalOpen && (
-        <div
+        <motion.div
+          key="backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
           onClick={() => setIsReviewModalOpen(false)}
           className="fixed top-0 right-0 z-[500] flex min-h-screen min-w-screen items-center justify-center overflow-y-scroll bg-zinc-900/50"
         >
-          <div
+          <motion.div
+            key="modal"
+            initial={{ y: "100%", opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: "100%", opacity: 0, scale: 0.95 }}
+            transition={
+              sm
+                ? {
+                    type: "spring",
+                    stiffness: 240, // کمتر = حرکت نرم‌تر و کندتر
+                    damping: 27, // کمی بالاتر برای کاهش لرزش اضافه
+                    mass: 1, // سنگین‌تر = حرکت کندتر
+                  }
+                : { duration: 0.3, ease: "easeOut" }
+            }
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="flex flex-col overflow-y-hidden bg-white px-4 py-8 max-sm:h-screen sm:w-[420px] sm:max-w-[420px] sm:rounded-xl sm:py-6 sm:shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
+            className="flex flex-col bg-white px-4 py-8 max-sm:h-screen sm:w-[420px] sm:max-w-[420px] sm:rounded-xl sm:py-6 sm:shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
           >
             {/* header */}
             <div className="mb-5 flex items-center justify-between border-b border-b-[#919ebc] px-5 pb-5">
@@ -203,10 +226,10 @@ const ReviewModal = ({
                 </form>
               </Form>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 export default ReviewModal;
