@@ -3,6 +3,7 @@
 import { useProductFilters } from "@/hooks/useProductFilter";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import FiltersModalAvailableFilter from "./(product_filters)/FiltersModalAvailableFilter";
 import FiltersModalPriceFilter from "./(product_filters)/FiltersModalPriceFilter";
@@ -84,9 +85,15 @@ const FiltersModal = ({
   };
 
   return (
-    <>
+    <AnimatePresence>
       {isfiltersModalOpened && (
-        <div className="fixed top-0 right-0 z-[500] flex h-full max-h-[1080px] min-h-fit w-full min-w-screen flex-col bg-[#fcfeff]">
+        <motion.div
+          initial={{ x: "100%", opacity: 0, scale: 0.95 }}
+          animate={{ x: 0, opacity: 1, scale: 1 }}
+          exit={{ x: "100%", opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="fixed top-0 right-0 z-[500] flex h-full max-h-[1080px] min-h-fit w-full min-w-screen flex-col bg-[#fcfeff]"
+        >
           {/* header */}
           <div className="flex w-full items-center justify-between border-b border-b-[#ced0d0] px-6 py-4">
             <div className="flex items-center gap-x-2">
@@ -189,9 +196,9 @@ const FiltersModal = ({
               انصراف
             </button>
           </div>
-        </div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 

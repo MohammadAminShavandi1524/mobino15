@@ -259,7 +259,6 @@ const Header = () => {
 
           <div className="flex items-center justify-between lg:hidden">
             <SidebarTrigger className="size-8 p-1" />
-
             <div>
               <Logo
                 logoImage_height={32}

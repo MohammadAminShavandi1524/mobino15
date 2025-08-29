@@ -1,12 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Skeleton from "../(skeletonComponets)/Skleton";
-import ProductsCarouselSkeleton from "../(skeletonComponets)/Landing/ProductsCarouselSkeleton";
-import Divider from "../(ProductPageComps)/Divider";
+import Skeleton from "./Skleton";
+import ProductsCarouselSkeleton from "./Landing/ProductsCarouselSkeleton";
 
-const TestPage = () => {
-  return (
+const ProductPageSkeleton = ({}) => {
+   return (
     <div className="relative mt-4 mb-50 lg:mx-auto lg:w-[90%] lg:max-w-[1600px] lg:px-2.5">
       <div className="xss:px-6 s:px-8 flex flex-col px-4 lg:px-0">
         {/* bread crump */}
@@ -465,7 +464,11 @@ const TestPage = () => {
   );
 };
 
-export default TestPage;
+export default ProductPageSkeleton;
+
+
+
+
 
 const ProductFaTitleSkeleton = () => {
   return (

@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import ProductPage from "@/components/mycomponents/(pages)/ProductPage";
+import ProductPageSkeleton from "@/components/mycomponents/(skeletonComponets)/ProductPageSkeleton";
 import { LoadProductFilters } from "@/hooks/useProductFilter";
 import { HydrateClient, prefetch, trpc } from "@/trpc/server";
 import type { SearchParams } from "nuqs";
@@ -26,7 +27,7 @@ const Product_Page = async ({ serachParams, params }: Product_PageProps) => {
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>product error boundary!!!!</div>}>
-        <Suspense fallback={<>product loading</>}>
+        <Suspense fallback={<ProductPageSkeleton/>}>
           <ProductPage product={product} />
         </Suspense>
       </ErrorBoundary>

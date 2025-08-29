@@ -41,7 +41,7 @@ const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
                 key={index}
               >
                 <Link
-                  target="_blank"
+                 
                   href={`/products/${product.order}_${product.label}`}
                 >
                   {discountPercent && discountPercent > 8 && (

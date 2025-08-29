@@ -233,6 +233,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 </div>
 
                 {/* main specifictions */}
+
                 <div className="flex flex-col gap-y-2.5">
                   <div className="pr-1.5 pb-0.5 text-[15px] font-medium">
                     ویژگی های اصلی
@@ -369,6 +370,17 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
         {/* ServiceHighlights */}
         <ServiceHighlights />
+
+        {/* main specifictions for mobile*/}
+
+        <div className="mb-10 flex flex-col gap-y-2.5 px-4 lg:hidden">
+          <div className="pr-2 pb-0.5 text-[14px] font-medium">
+            ویژگی های اصلی
+          </div>
+          <div className="w-full rounded-[10px] border border-[#d7dee0] bg-white p-4.5 pl-6.5">
+            <ProductMainSpec product={matchedProductByOrder} />
+          </div>
+        </div>
         {/* similar products carousel */}
         <SimilarProductsCarousel product={matchedProductByOrder} />
 
@@ -379,6 +391,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           productReviews={productReviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
+          setIsMobileModalOpen={setIsMobileModalOpen}
           userName={user?.username}
         />
 
@@ -432,6 +445,8 @@ const ProductPage = ({ product }: ProductPageProps) => {
             )}
           </div>
         </div>
+
+        {/*  */}
       </div>
     );
   }
@@ -574,7 +589,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
             </CarouselContent>
           </Carousel>
 
-          <div className="mb-6 w-full pr-6 pl-5">
+          <div className="mb-6 w-full pr-5 pl-4">
             {/* product fa title */}
             <ProductFaTitle
               className="mt-4"
@@ -628,6 +643,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         productReviews={productReviews}
         setIsModalOpen={setIsModalOpen}
         setIsReviewModalOpen={setIsReviewModalOpen}
+        setIsMobileModalOpen={setIsMobileModalOpen}
         userName={user?.username}
       />
 

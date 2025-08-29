@@ -3,6 +3,7 @@
 import { cn, getSortLabel } from "@/lib/utils";
 import { ArrowDownWideNarrow, Check, X } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface OrderBarModalProps {
   isOrderbarModalOpened: boolean;
@@ -30,13 +31,27 @@ const OrderBarModal = ({
   handleSortChange,
 }: OrderBarModalProps) => {
   return (
-    <>
+    <AnimatePresence>
       {isOrderbarModalOpened && (
-        <div
+        <motion.div
+          key="backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           onClick={() => setIsOrderbarModalOpened(false)}
           className="fixed top-0 right-0 z-[500] flex min-h-screen min-w-screen items-center justify-center overflow-y-scroll bg-zinc-900/50"
         >
-          <div
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 250,
+              damping: 30,
+              mass: 1,
+            }}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -99,10 +114,10 @@ const OrderBarModal = ({
                 );
               })}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 

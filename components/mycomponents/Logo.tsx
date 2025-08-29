@@ -24,7 +24,7 @@ const Logo = ({
   className,
 }: LogoProps) => {
   return (
-    <Link href="/" className={cn("flex items-center gap-x-2", className)}>
+    <Link href="/" className={cn("flex items-center s:gap-x-1.5 gap-x-2", className)}>
       <Image
         className={cn(logo_className)}
         src="/yellow_logo.png"
