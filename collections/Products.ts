@@ -1,8 +1,23 @@
+import { isSeller, isSuperAdmin, isUser } from "@/lib/access";
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "products",
-
+  access: {
+    read: ({ req }) => !isUser(req.user),
+    create: ({ req }) => {
+      return !isUser(req.user);
+    },
+    update: ({ req }) => {
+      return !isUser(req.user);
+    },
+    delete: ({ req }) => {
+      return !isUser(req.user);
+    },
+  },
+  admin: {
+    hidden: ({ user }) => isUser(user),
+  },
   fields: [
     //**        آدرس محصول         */
     {
