@@ -19,8 +19,8 @@ const Footer = () => {
   if (
     pathname === "/auth" ||
     pathname === "/auth/seller" ||
-    pathname === "/auth/user" ||
-    pathname === "/test"
+    pathname === "/auth/user" 
+    
   ) {
     return <div className="hidden"></div>;
   }

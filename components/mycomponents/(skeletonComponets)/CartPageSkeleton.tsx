@@ -1,9 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Skeleton from "../(skeletonComponets)/Skleton";
+import Skeleton from "./Skleton";
 
-const TestPage = () => {
+interface CartPageSkeletonProps {}
+
+const CartPageSkeleton = ({}: CartPageSkeletonProps) => {
   return (
     <div className="3xl:gap-x-10 s:px-6 relative mt-4 flex max-w-[1920px] grid-cols-20 flex-col gap-x-8 gap-y-10 pt-4 sm:px-6 md:px-8 lg:mx-auto lg:w-[90%] lg:px-8 xl:flex-row xl:px-10 2xl:px-20">
       {/* main content */}
@@ -44,8 +45,8 @@ const TestPage = () => {
                   <div className="flex w-50 flex-col pt-4 max-sm:w-full sm:col-span-11 sm:pt-4.5 2xl:col-span-13">
                     {/* product fa title */}
                     <div className="mb-4 flex min-h-20 flex-col gap-y-1 sm:min-h-[112px] sm:gap-y-1.5 lg:w-full 2xl:gap-y-2">
-                      <Skeleton className="h-4 w-50 xss:w-60 s:w-70 max-w-[540px] shrink sm:h-5 sm:w-80 xl:w-100 2xl:h-6 2xl:w-[480px]" />
-                      <Skeleton className="h-4 w-50 xss:w-60 s:w-70 max-w-[540px] shrink sm:h-5 sm:w-80 xl:w-100 2xl:h-6 2xl:w-[350px]" />
+                      <Skeleton className="xss:w-60 s:w-70 h-4 w-50 max-w-[540px] shrink sm:h-5 sm:w-80 xl:w-100 2xl:h-6 2xl:w-[480px]" />
+                      <Skeleton className="xss:w-60 s:w-70 h-4 w-50 max-w-[540px] shrink sm:h-5 sm:w-80 xl:w-100 2xl:h-6 2xl:w-[350px]" />
                     </div>
                     {/* seller info */}
                     <div className="flex flex-col gap-y-3 sm:gap-y-4">
@@ -123,4 +124,4 @@ const TestPage = () => {
   );
 };
 
-export default TestPage;
+export default CartPageSkeleton;
