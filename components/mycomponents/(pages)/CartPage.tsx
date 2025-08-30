@@ -159,32 +159,38 @@ const CartPage = () => {
 
   if (userCartProductsLength) {
     return (
-      <div className="3xl:gap-x-10 relative mt-4 flex max-w-[1920px] grid-cols-20 flex-col gap-x-8 gap-y-10 px-6 pt-4 sm:px-6 md:px-8 lg:mx-auto lg:w-[90%] lg:px-8 xl:flex-row xl:px-10 2xl:px-20">
+      <div className="3xl:gap-x-10 s:px-6 relative mt-4 flex max-w-[1920px] grid-cols-20 flex-col gap-x-8 gap-y-10 pt-4 sm:px-6 md:px-8 lg:mx-auto lg:w-[90%] lg:px-8 xl:flex-row xl:px-10 2xl:px-20">
         {/* main content */}
         <div className="flex flex-col">
           {/* header */}
-          <div className="flex items-center justify-between px-4">
-            <div className="flex items-center gap-x-3">
-              <div className="text-lg font-medium 2xl:text-xl">
+          <div className="s:px-4 max-s:border-b-6 max-s:border-b-[#d3d8e4] max-s:border-double xss:px-6 max-s:pb-4 flex items-center justify-between px-4">
+            <div className="flex items-center gap-x-2 md:gap-x-3">
+              <div className="text-base font-medium max-md:pt-0.5 md:text-lg 2xl:text-xl">
                 سبد خرید شما
               </div>
               {userCartProductsLength > 0 && (
                 <div className="flex items-center gap-x-1 text-xs font-medium 2xl:text-sm">
-                  <span className="">
+                  <span className="max-md:text-custom-primary max-md:border-custom-primary max-md:flex max-md:size-6 max-md:items-center max-md:justify-center max-md:rounded-full max-md:border max-md:pt-0.5 max-md:text-base max-md:font-medium">
                     {convertToPersianNumber(userCartProductsLength)}
                   </span>
-                  <span className="">عدد کالا</span>
+                  <span className="max-md:hidden">عدد کالا</span>
                 </div>
               )}
             </div>
 
             <button
               onClick={() => clearCart()}
-              className="flex cursor-pointer items-center gap-x-1.25 text-[14px]"
+              className="s:text-[14px] flex cursor-pointer items-center gap-x-1.25 text-xs"
             >
               <div>حذف کل سبد خرید</div>
               <div>
-                <Trash size={20} />
+                <span className="max-s:hidden">
+                  <Trash color="#ef4056" size={20} />
+                </span>
+                <span className="s:hidden">
+                  <Trash color="#ef4056" size={16} />
+                </span>
+                <span></span>
               </div>
             </button>
           </div>
@@ -200,17 +206,17 @@ const CartPage = () => {
                 <div
                   key={index}
                   className={cn(
-                    "relative flex flex-col rounded-xl border border-[#d3d8e4] p-6 pt-4 md:p-10 md:pt-6",
+                    "s:border s:rounded-xl s:border-[#d3d8e4] s:p-4 relative flex flex-col border-x-0 border-b-6 border-double border-b-[#d3d8e4] p-4 pb-6 max-sm:items-center sm:p-6 sm:pt-4 md:p-10 md:pt-6",
                     product.quantity === 0 && "bg-[#f6f6f6]",
                   )}
                 >
-                  {/* remove product */}
+                  {/* remove product absolute*/}
 
                   <button
                     onMouseEnter={() => setIsRemoveProductHovered(product.id)}
                     onMouseLeave={() => setIsRemoveProductHovered("")}
                     onClick={() => removeProduct(product.id)}
-                    className="absolute top-0 left-0 z-5 m-2 flex size-8 cursor-pointer items-center justify-center rounded-full bg-white p-1.5 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] md:size-9"
+                    className="absolute top-0 left-0 z-5 m-2 hidden size-8 cursor-pointer items-center justify-center rounded-full bg-white p-1.5 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] sm:flex md:size-9"
                   >
                     <span className="max-md:hidden">
                       <Trash2 size={20} color="#ef4056" />
@@ -222,29 +228,33 @@ const CartPage = () => {
 
                   {/* remove product tooltip */}
                   {isRemoveProductHovered === product.id && (
-                    <div className="absolute top-12 md:top-[55px] left-[8px] flex items-center rounded-full bg-white px-3.5 py-1.75 text-sm text-black shadow-[0px_2px_4px_rgba(0,0,0,0.2)]">
+                    <div className="absolute top-12 left-[8px] flex items-center rounded-full bg-white px-3.5 py-1.75 text-sm text-black shadow-[0px_2px_4px_rgba(0,0,0,0.2)] md:top-[55px]">
                       حذف
                     </div>
                   )}
 
-                  {/*  */}
-                  <div className="grid grid-cols-20">
-                    <div className="col-span-11 flex flex-col pt-4.5 2xl:col-span-13">
+                  {/* upper content */}
+                  <div className="s:px-0 xss:pr-2 xss:pl-1 s:gap-x-6 xss:gap-x-4 flex flex-row-reverse gap-x-4 sm:grid sm:grid-cols-20 sm:gap-x-0">
+                    {/* title and seller info */}
+                    <div className="flex flex-col pt-4 sm:col-span-11 sm:pt-4.5 2xl:col-span-13">
                       {/* product fa title */}
-                      <div className="min-h-[112px] text-[16px]/[32px] font-medium text-black 2xl:text-[18px]/[36px]">
+                      <div className="productlist-mobiletitle mb-4 min-h-20 text-[14px]/[28px] font-medium text-black sm:min-h-[112px] sm:text-[16px]/[32px] 2xl:text-[18px]/[36px]">
                         {product.label}
                       </div>
                       {/* seller info */}
-                      <div className="flex flex-col gap-y-4">
+                      <div className="flex flex-col gap-y-3 sm:gap-y-4">
                         {/* نام فروشنده */}
-                        <div className="flex items-center gap-x-2.5 2xl:gap-x-3.5">
+                        <div className="flex items-center gap-x-2 sm:gap-x-2.5 2xl:gap-x-3.5">
                           <span className="max-2xl:hidden">
                             <Store color="#385086" size={24} />
                           </span>
-                          <span className="2xl:hidden">
+                          <span className="max-sm:hidden 2xl:hidden">
                             <Store color="#385086" size={20} />
                           </span>
-                          <span className="pb-0.5 text-sm 2xl:text-base">
+                          <span className="sm:hidden">
+                            <Store color="#385086" size={18} />
+                          </span>
+                          <span className="pb-0.5 text-xs sm:text-sm 2xl:text-base">
                             {typeof product.tenant === "object" &&
                             product.tenant !== null
                               ? (product.tenant as Tenant).name
@@ -252,27 +262,33 @@ const CartPage = () => {
                           </span>
                         </div>
                         {/* گارانتی */}
-                        <div className="flex items-center gap-x-2.5 2xl:gap-x-3.5">
+                        <div className="flex items-center gap-x-2 sm:gap-x-2.5 2xl:gap-x-3.5">
                           <span className="max-2xl:hidden">
                             <BadgeCheck color="#385086" size={24} />
                           </span>
-                          <span className="2xl:hidden">
+                          <span className="max-sm:hidden 2xl:hidden">
                             <BadgeCheck color="#385086" size={20} />
                           </span>
-                          <span className="pb-0.5 text-sm 2xl:text-base">
+                          <span className="sm:hidden">
+                            <BadgeCheck color="#385086" size={18} />
+                          </span>
+                          <span className="pb-0.5 text-xs sm:text-sm 2xl:text-base">
                             {convertToPersianNumber(18)} ماه گارانتی شرکتی
                           </span>
                         </div>
                         {/* ارسال */}
                         {product.quantity !== 0 && (
-                          <div className="flex items-center gap-x-2.5 2xl:gap-x-3.5">
+                          <div className="flex items-center gap-x-2 sm:gap-x-2.5 2xl:gap-x-3.5">
                             <span className="max-2xl:hidden">
                               <Truck color="#385086" size={24} />
                             </span>
-                            <span className="2xl:hidden">
+                            <span className="max-sm:hidden 2xl:hidden">
                               <Truck color="#385086" size={20} />
                             </span>
-                            <span className="pb-0.5 text-sm 2xl:text-base">
+                            <span className="sm:hidden">
+                              <Truck color="#385086" size={18} />
+                            </span>
+                            <span className="pb-0.5 text-xs sm:text-sm 2xl:text-base">
                               {typeof product.tenant === "object" &&
                               product.tenant !== null &&
                               (product.tenant as Tenant).name !== "موبینو"
@@ -284,11 +300,11 @@ const CartPage = () => {
                       </div>
                     </div>
                     {/* image */}
-                    <div className="3xl:pr-0 mlg:pl-[68px] col-span-9 flex justify-end pt-6 sm:pl-10 md:pt-8 md:pl-[50px] lg:pt-10 xl:justify-center xl:pr-[24px] xl:pl-0 2xl:col-span-7 2xl:pr-[22px]">
+                    <div className="3xl:pr-0 mlg:pl-[68px] s:pt-0 flex justify-end pt-4 sm:col-span-9 sm:pl-10 md:pt-8 md:pl-[50px] lg:pt-10 xl:justify-center xl:pr-[24px] xl:pl-0 2xl:col-span-7 2xl:pr-[22px]">
                       <Link
                         href={`/products/${product.order}_${product.label}`}
                       >
-                        <div className="relative size-45 md:size-50">
+                        <div className="xss:size-32 relative size-24 sm:size-45 md:size-50">
                           <Image
                             className={cn(
                               "self-baseline",
@@ -302,7 +318,7 @@ const CartPage = () => {
                       </Link>
                     </div>
                   </div>
-
+                  {/* price and availablity */}
                   {product.quantity === 0 ? (
                     <div className="mt-6 flex w-full items-center justify-between pl-[10px] xl:pl-0">
                       <Link
@@ -349,7 +365,7 @@ const CartPage = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="mt-6 ml-[10px] flex min-w-80 flex-col self-baseline-last rounded-md border border-[#f0f0f0] px-6 py-3 xl:ml-0 2xl:min-w-90">
+                    <div className="mt-8 flex min-w-80 flex-col rounded-md border border-[#f0f0f0] px-6 py-3 max-sm:w-full max-sm:shadow-sm sm:mt-6 sm:ml-[10px] sm:self-baseline-last xl:ml-0 2xl:min-w-90">
                       {/* price */}
 
                       {product.offPrice ? (
@@ -613,7 +629,7 @@ const CartPage = () => {
 
             <button
               disabled={false}
-              className="bg-custom-primary mt-4 flex h-13 w-full cursor-pointer items-center justify-center rounded-lg text-xl text-white"
+              className="bg-custom-primary mt-4 flex h-12 w-full cursor-not-allowed items-center justify-center rounded-lg text-white opacity-90 sm:text-base md:h-13 lg:text-xl"
             >
               ادامه خرید
             </button>
