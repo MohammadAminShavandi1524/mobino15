@@ -214,6 +214,10 @@ export const Brands = [
 ];
 
 export const params = {
+  search: parseAsString.withOptions({
+    clearOnDefault: true,
+  }),
+
   minPrice: parseAsString.withOptions({
     clearOnDefault: true,
   }),

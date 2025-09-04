@@ -59,10 +59,17 @@ const Header = () => {
   const pathname = usePathname();
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [isBannerDisplayed, setIsBannerDisplayed] = useState<boolean>(true);
+  const [isSearchBarModalOpened, setIsSearchBarModalOpened] =
+    useState<boolean>(false);
 
   useEffect(() => {
-    if (isSideBarOpen) {
-      document.body.style.overflow = "hidden";
+    const shouldLockScroll = isSideBarOpen || isSearchBarModalOpened;
+
+    if (shouldLockScroll) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        document.body.style.overflow = "hidden";
+      }, 1);
     } else {
       document.body.style.overflow = "";
     }
@@ -70,7 +77,7 @@ const Header = () => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isSideBarOpen]);
+  }, [isSideBarOpen, isSearchBarModalOpened]);
 
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
@@ -110,7 +117,8 @@ const Header = () => {
   if (
     pathname === "/auth" ||
     pathname === "/auth/seller" ||
-    pathname === "/auth/user"
+    pathname === "/auth/user" ||
+    pathname === "/test"
   ) {
     return <div className="hidden"></div>;
   }
@@ -167,7 +175,11 @@ const Header = () => {
               <Logo />
 
               {/* searchbar */}
-              <SearchBar />
+              <SearchBar
+                userName={user?.username}
+                isSearchBarModalOpened={isSearchBarModalOpened}
+                setIsSearchBarModalOpened={setIsSearchBarModalOpened}
+              />
             </section>
             {/* auth and cart button  */}
             <section className="flex items-center gap-x-6">
@@ -208,7 +220,7 @@ const Header = () => {
                 className={cn("flex items-center gap-x-1.5 p-2.5")}
               >
                 <span>
-                   <Image
+                  <Image
                     className="cursor-pointer"
                     src="/discount.gif"
                     alt="discount"
@@ -281,7 +293,11 @@ const Header = () => {
           <div className="mt-5 flex items-center justify-between gap-x-4 sm:gap-x-20 lg:hidden">
             {/* searchbar */}
             <div className="w-full">
-              <SearchBar />
+              <SearchBar
+                userName={user?.username}
+                isSearchBarModalOpened={isSearchBarModalOpened}
+                setIsSearchBarModalOpened={setIsSearchBarModalOpened}
+              />
             </div>
             {/* seller login */}
             <div className="hidden min-w-[100px] py-2 text-center text-[12px] sm:block sm:text-base sm:text-[14px]">

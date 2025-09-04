@@ -36,7 +36,7 @@ const Logo = ({
       <div
         className={cn("text-custom-primary pb-1 text-[36px]/4", text_className)}
       >
-        موبی<span className="">نو</span>
+        موبینو
       </div>
     </Link>
   );

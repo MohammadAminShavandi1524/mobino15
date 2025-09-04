@@ -3,13 +3,14 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
 import z from "zod";
 import { PaginatedDocs, Where } from "payload";
-import { shuffle } from "@/lib/utils";
+import { getMainImageUrl, normalizeText, shuffle } from "@/lib/utils";
 import { TRPCError } from "@trpc/server";
 
 export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
     .input(
       z.object({
+        search: z.string().nullable().optional(),
         available: z.boolean().nullable().optional(),
         minPrice: z.string().nullable().optional(),
         maxPrice: z.string().nullable().optional(),
@@ -104,6 +105,17 @@ export const productsRouter = createTRPCRouter({
       if (input.brand && input.brand.length > 0) {
         where["productType.brand"] = { in: input.brand };
       }
+      // ** فیلتر سرچ
+
+      if (input.search) {
+        const normalized = normalizeText(input.search);
+        const regex = new RegExp(normalized, "i"); // i = insensitive
+
+        where.or = [
+          { label: { like: regex } },
+          { name: { like: input.search } },
+        ];
+      }
 
       const data: PaginatedDocs<Product> = await ctx.db.find({
         collection: "products",
@@ -112,6 +124,7 @@ export const productsRouter = createTRPCRouter({
         where,
         limit: 150,
       });
+
       // deley
       // await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -165,6 +178,36 @@ export const productsRouter = createTRPCRouter({
         })),
       };
     }),
+
+  getSearchMany: baseProcedure
+    .input(
+      z.object({
+        search: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const where: Where = {};
+      const normalized = normalizeText(input.search);
+      const regex = new RegExp(normalized, "i"); // i = insensitive
+
+      where.or = [{ label: { like: regex } }, { name: { like: input.search } }];
+
+      const data: PaginatedDocs<Product> = await ctx.db.find({
+        collection: "products",
+        limit: 20,
+        depth: 1,
+        where,
+      });
+
+      return {
+        docs: data.docs.map((doc) => ({
+          order: doc.order,
+          label: doc.label,
+          imageUrl: getMainImageUrl(doc),
+        })),
+      };
+    }),
+
   getAfinoProducts: baseProcedure
     .input(
       z.object({

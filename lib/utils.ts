@@ -448,3 +448,16 @@ export const getSortLabel = (value: string | null) => {
   const option = sortOptions.find((opt) => opt.value === value);
   return option ? option.label : null; // یا یه مقدار پیش‌فرض مثل "" برگردون
 };
+
+
+
+
+export function normalizeText(text: string) {
+        return text
+          .replace(/ي/g, "ی")
+          .replace(/ك/g, "ک")
+          .replace(/\u200c/g, " ")
+          .replace(/آ/g, "[آا]")
+          .replace(/^ا/, "[آا]")
+          .trim();
+      }

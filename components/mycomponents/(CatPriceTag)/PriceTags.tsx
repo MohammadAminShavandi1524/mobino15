@@ -11,9 +11,16 @@ interface PriceTagsProps {
     priceTag: number;
   }[];
   label: string;
+  type: "mobile" | "laptop";
 }
 
-const PriceTags = ({ evenColor, oddColor, options, label }: PriceTagsProps) => {
+const PriceTags = ({
+  evenColor,
+  oddColor,
+  options,
+  label,
+  type,
+}: PriceTagsProps) => {
   const { xl, lg } = useBreakpoints();
   return (
     <div className="flex flex-col gap-y-5 border-y border-[#c7cbdb] bg-white p-10 pt-8 max-lg:w-full lg:rounded-xl lg:border">
@@ -38,7 +45,7 @@ const PriceTags = ({ evenColor, oddColor, options, label }: PriceTagsProps) => {
                       : oddColor,
               }}
               className="flex h-20 items-center justify-center gap-x-1 rounded-lg text-xs sm:text-sm md:text-base lg:text-lg"
-              href={`/mobile?maxPrice=${option.priceTag}000000`}
+              href={`/${type}?maxPrice=${option.priceTag}000000`}
               key={index}
             >
               <span>تا</span>

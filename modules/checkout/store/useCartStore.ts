@@ -45,6 +45,9 @@ export const useCartStore = create<CartState>()(
           };
         }),
 
+
+
+        
       increaseProductCount: (userName, productId) =>
         set((state) => {
           const userCart = state.userCarts[userName] || { productIds: [] };

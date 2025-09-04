@@ -32,8 +32,8 @@ const ProductListLayoutSkeleton = ({
 
       {/* orderbar productlist filters */}
       <div className="relative mt-4 flex gap-x-8 lg:mt-8 lg:px-[10px]">
-        <aside className="sticky top-0 right-0 flex max-w-[270px] min-w-[270px] flex-col self-start rounded-md border border-[#ced0d0] pb-4 max-lg:hidden">
-          <div className="flex items-center justify-between border-b border-b-[#ced0d0] p-3.5">
+        <aside className="border-custom-skeleton sticky top-0 right-0 flex max-w-[270px] min-w-[270px] flex-col self-start rounded-md border pb-4 max-lg:hidden">
+          <div className="border-b-custom-skeleton flex items-center justify-between border-b p-3.5">
             <div className="flex items-center gap-x-1">
               <Skeleton className="size-5 rounded-sm" />
               <Skeleton className="h-5 w-[50px]" />
@@ -66,7 +66,7 @@ const ProductListLayoutSkeleton = ({
         <div className="flex w-full flex-col">
           {/* order bar */}
           <div className="w-full bg-white max-lg:sticky max-lg:top-0 max-lg:z-5 max-lg:p-4 max-lg:px-5">
-            <div className="lg:mb-6 flex items-center justify-between rounded-lg border border-[#e9ecf2] max-lg:px-4 lg:px-0 lg:pr-[14px] lg:pl-6">
+            <div className="flex items-center justify-between rounded-lg border border-[#e9ecf2] max-lg:px-4 lg:mb-6 lg:px-0 lg:pr-[14px] lg:pl-6">
               {/* pc orderbar */}
               <>
                 {/* orders */}
@@ -122,7 +122,10 @@ const ProductListLayoutSkeleton = ({
               {/* product card */}
 
               {Array.from({ length: 8 }).map((_, index) => (
-                <div key={index} className="relative flex min-h-[250px] flex-col gap-y-4 border-b-6 border-double border-b-[#f1f3f8] p-3">
+                <div
+                  key={index}
+                  className="relative flex min-h-[250px] flex-col gap-y-4 border-b-6 border-double border-b-[#f1f3f8] p-3"
+                >
                   <div className="mt-5 mb-6 flex w-full flex-col px-1">
                     <Skeleton className="mb-2 h-5 w-19" />
                     <Skeleton className="h-1 w-full" />

@@ -311,7 +311,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   <span>{getColorInfo(TheProduct.color).label}</span>
                 </div>
 
-                <div className="flex w-fit flex-row-reverse gap-x-3">
+                <div className="flex justify-end w-fit flex-row-reverse gap-x-3 gap-y-3 flex-wrap">
                   {matchedAvailableProducts.map((p, index) => {
                     const isSelected = p.color === TheProduct.color;
 

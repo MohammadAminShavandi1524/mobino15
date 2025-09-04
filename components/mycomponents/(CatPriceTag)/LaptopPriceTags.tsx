@@ -28,6 +28,7 @@ const LaptopPriceTags = () => {
       evenColor="#e7d7ee"
       oddColor="#ccaada"
       options={Options}
+      type="laptop"
     />
   );
 };

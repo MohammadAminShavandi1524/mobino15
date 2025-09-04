@@ -28,6 +28,7 @@ const MobilePriceTags = () => {
       evenColor="#6bb4e5"
       oddColor="#cde6f6"
       options={Options}
+      type="mobile"
     />
   );
 };

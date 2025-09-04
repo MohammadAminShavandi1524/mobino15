@@ -2,7 +2,6 @@ import { useCartStore } from "../store/useCartStore";
 
 export const getGuestId = (): string => {
   if (typeof window === "undefined") {
-    // اگر در سرور اجرا شد، مقدار پیش‌فرض برمی‌گردونه
     return "guest_ssr";
   }
 
@@ -42,7 +41,6 @@ export const migrateGuestCartToUser = (userName: string) => {
 
 export const useCart = (userName?: string) => {
   const finalUserName = userName || getGuestId();
-  
 
   const {
     userCarts,

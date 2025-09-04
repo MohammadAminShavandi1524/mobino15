@@ -24,9 +24,9 @@ const ProductFilters = ({
 
   type ProductFilters = ReturnType<typeof useProductFilters>[0];
 
-  const { sort, ...filtersWithoutSort } = filters;
+  const {  search,sort, ...filtersWithoutSortAndSearch } = filters;
 
-  const hasActiveFilters = Object.values(filtersWithoutSort).some(
+  const hasActiveFilters = Object.values(filtersWithoutSortAndSearch).some(
     (value) =>
       value !== null &&
       value !== undefined &&

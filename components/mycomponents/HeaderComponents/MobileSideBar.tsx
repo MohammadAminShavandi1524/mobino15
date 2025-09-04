@@ -102,7 +102,7 @@ const MobileSideBar = ({ categories }: MobileSideBarProps) => {
             onClick={() => {
               toggleSidebar();
             }}
-            href=""
+            href="/aboutUs"
             className="flex items-center gap-x-3 text-[#333333]"
           >
             <Image

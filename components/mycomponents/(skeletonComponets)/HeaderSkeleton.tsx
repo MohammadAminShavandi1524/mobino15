@@ -12,6 +12,7 @@ const HeaderSkeleton = () => {
     pathname === "/auth" ||
     pathname === "/auth/seller" ||
     pathname === "/auth/user"
+    
   ) {
     return <div className="hidden"></div>;
   }
@@ -30,7 +31,7 @@ const HeaderSkeleton = () => {
             {/* logo */}
             <Skeleton className="h-[45px] w-[145px]" />
             {/* searchbar */}
-            <Skeleton className="h-[45px] w-full lg:w-[400px] xl:w-[600px]" />
+            <Skeleton className="h-[45px] w-full lg:w-[460px] xl:w-[600px]" />
           </section>
           {/* auth and cart button  */}
           <section className="flex items-center gap-x-6">

@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import z from "zod";
 import { SellerAuthInput } from "./SellerAuthInput";
 import SellerAuthSubmitBtn from "./SellerAuthSubmitBtn";
+import { migrateGuestSearchToUser } from "@/modules/SearchHistory/hooks/useHistory";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -62,6 +63,7 @@ const LoginForm = () => {
 
         if (username) {
           migrateGuestCartToUser(username);
+          migrateGuestSearchToUser(username);
         }
 
         router.push("/");
@@ -76,7 +78,7 @@ const LoginForm = () => {
   return (
     <Form {...form}>
       <form
-        className="flex  flex-col items-center gap-y-4"
+        className="flex flex-col items-center gap-y-4"
         onSubmit={form.handleSubmit(loginOnSubmit)}
       >
         {/* email  */}
@@ -106,7 +108,7 @@ const LoginForm = () => {
           )}
         />
         {/* submit button */}
-        
+
         <SellerAuthSubmitBtn label="ورود" disabled={login.isPending} />
       </form>
     </Form>

@@ -23,6 +23,7 @@ import { toast } from "sonner";
 import z from "zod";
 import { SellerAuthInput } from "./SellerAuthInput";
 import SellerAuthSubmitBtn from "./SellerAuthSubmitBtn";
+import { migrateGuestSearchToUser } from "@/modules/SearchHistory/hooks/useHistory";
 
 interface RegisterFormProps {
   user: User | null;
@@ -57,6 +58,7 @@ const RegisterForm = ({ user }: RegisterFormProps) => {
       onSuccess: () => {
         if (user) {
           migrateGuestCartToUser(user?.username);
+          migrateGuestSearchToUser(user?.username);
         }
         router.push("/");
       },

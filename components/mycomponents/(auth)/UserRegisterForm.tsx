@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import ConicGradientButton from "./ConicGradientButton";
 
 interface UserRegisterFormProps {
   user: User | null;
@@ -97,13 +98,20 @@ const UserRegisterForm = ({ user }: UserRegisterFormProps) => {
           )}
         />
         {/* submit button */}
-        <button
+        {/* <button
           disabled={register.isPending}
           type="submit"
           className="bg-primaryGradient xss:w-[370px] s:w-full mt-5 block h-[48px] w-75 cursor-pointer rounded-md text-xl font-semibold text-white"
         >
           ثبت نام
-        </button>
+        </button> */}
+        <ConicGradientButton
+          buttonType="submit"
+          disabled={register.isPending}
+          className="bg-primaryGradient s:w-full xss:w-[370px] flex h-[48px] w-75 cursor-pointer items-center justify-center rounded-md text-xl font-semibold text-white disabled:cursor-default disabled:opacity-90"
+        >
+          ثبت نام
+        </ConicGradientButton>
       </form>
     </Form>
   );
