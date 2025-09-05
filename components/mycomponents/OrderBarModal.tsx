@@ -9,7 +9,7 @@ interface OrderBarModalProps {
   isOrderbarModalOpened: boolean;
   setIsOrderbarModalOpened: Dispatch<SetStateAction<boolean>>;
   sorts:
-    | "MostPopular"
+    | "TheLatest"
     | "HighestPrice"
     | "LowestPrice"
     | "BiggestDiscount"
@@ -19,7 +19,7 @@ interface OrderBarModalProps {
     value: string;
   }[];
   handleSortChange: (
-    value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
+    value: "TheLatest" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
   ) => void;
 }
 
@@ -83,7 +83,7 @@ const OrderBarModal = ({
                     onClick={() =>
                       handleSortChange(
                         sort.value as
-                          | "MostPopular"
+                          | "TheLatest"
                           | "HighestPrice"
                           | "LowestPrice"
                           | "BiggestDiscount",

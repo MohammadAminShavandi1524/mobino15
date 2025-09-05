@@ -17,12 +17,7 @@ export const productsRouter = createTRPCRouter({
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
         sort: z
-          .enum([
-            "MostPopular",
-            "HighestPrice",
-            "LowestPrice",
-            "BiggestDiscount",
-          ])
+          .enum(["TheLatest", "HighestPrice", "LowestPrice", "BiggestDiscount"])
           .nullable()
           .optional(),
       }),
@@ -125,16 +120,16 @@ export const productsRouter = createTRPCRouter({
         limit: 150,
       });
 
-      // deley
-      // await new Promise((resolve) => setTimeout(resolve, 2000));
-
       // ** مرتب سازی ها
 
       data.docs.sort((a: Product, b: Product) => {
         if (input.sort) {
           switch (input.sort) {
-            case "MostPopular":
-              return (b.rating ?? 0) - (a.rating ?? 0);
+            case "TheLatest":
+              return (
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+              );
 
             case "HighestPrice": {
               const priceA = a.offPrice ?? a.price ?? 0;
@@ -217,12 +212,7 @@ export const productsRouter = createTRPCRouter({
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
         sort: z
-          .enum([
-            "MostPopular",
-            "HighestPrice",
-            "LowestPrice",
-            "BiggestDiscount",
-          ])
+          .enum(["TheLatest", "HighestPrice", "LowestPrice", "BiggestDiscount"])
           .nullable()
           .optional(),
       }),
@@ -328,7 +318,7 @@ export const productsRouter = createTRPCRouter({
       data.docs.sort((a: Product, b: Product) => {
         if (input.sort) {
           switch (input.sort) {
-            case "MostPopular":
+            case "TheLatest":
               return (b.rating ?? 0) - (a.rating ?? 0);
 
             case "HighestPrice": {
@@ -382,12 +372,7 @@ export const productsRouter = createTRPCRouter({
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
         sort: z
-          .enum([
-            "MostPopular",
-            "HighestPrice",
-            "LowestPrice",
-            "BiggestDiscount",
-          ])
+          .enum(["TheLatest", "HighestPrice", "LowestPrice", "BiggestDiscount"])
           .nullable()
           .optional(),
       }),
@@ -494,7 +479,7 @@ export const productsRouter = createTRPCRouter({
       data.docs.sort((a: Product, b: Product) => {
         if (input.sort) {
           switch (input.sort) {
-            case "MostPopular":
+            case "TheLatest":
               return (b.rating ?? 0) - (a.rating ?? 0);
 
             case "HighestPrice": {
@@ -550,12 +535,7 @@ export const productsRouter = createTRPCRouter({
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
         sort: z
-          .enum([
-            "MostPopular",
-            "HighestPrice",
-            "LowestPrice",
-            "BiggestDiscount",
-          ])
+          .enum(["TheLatest", "HighestPrice", "LowestPrice", "BiggestDiscount"])
           .nullable()
           .optional(),
       }),
@@ -654,7 +634,7 @@ export const productsRouter = createTRPCRouter({
       data.docs.sort((a: Product, b: Product) => {
         if (input.sort) {
           switch (input.sort) {
-            case "MostPopular":
+            case "TheLatest":
               return (b.rating ?? 0) - (a.rating ?? 0);
 
             case "HighestPrice": {
@@ -709,12 +689,7 @@ export const productsRouter = createTRPCRouter({
         color: z.array(z.string()).nullable().optional(),
         brand: z.array(z.string()).nullable().optional(),
         sort: z
-          .enum([
-            "MostPopular",
-            "HighestPrice",
-            "LowestPrice",
-            "BiggestDiscount",
-          ])
+          .enum(["TheLatest", "HighestPrice", "LowestPrice", "BiggestDiscount"])
           .nullable()
           .optional(),
       }),
@@ -813,7 +788,7 @@ export const productsRouter = createTRPCRouter({
       data.docs.sort((a: Product, b: Product) => {
         if (input.sort) {
           switch (input.sort) {
-            case "MostPopular":
+            case "TheLatest":
               return (b.rating ?? 0) - (a.rating ?? 0);
 
             case "HighestPrice": {

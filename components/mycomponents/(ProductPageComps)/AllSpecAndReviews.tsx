@@ -54,7 +54,7 @@ const AllSpecAndReviews = ({
   productReviews,
   setIsMobileModalOpen,
 }: AllSpecAndReviewsProps) => {
-  const { lg} = useBreakpoints();
+  const { lg } = useBreakpoints();
 
   const [reviewOrderBar, setReviewOrderBar] = useState("Newest");
 
@@ -195,10 +195,7 @@ const AllSpecAndReviews = ({
           {/* reviews */}
           <Element name="reviews">
             <div className="relative mt-10 flex max-2xl:flex-col-reverse 2xl:gap-x-10">
-
-
               <div className="flex w-full flex-col">
-
                 {/* reviews header pc*/}
                 <div className="mr-5 mb-5 hidden items-center gap-x-3 2xl:flex">
                   <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc]"></span>
@@ -302,18 +299,12 @@ const AllSpecAndReviews = ({
                     </div>
                   )}
                 </div>
-
-
-
               </div>
 
               {/* reviews aside */}
               <div className="mb-10 flex px-3 max-2xl:flex-row-reverse max-2xl:items-center max-2xl:gap-x-5 max-lg:flex-col max-lg:gap-y-4 lg:px-0 2xl:sticky 2xl:top-16 2xl:z-5 2xl:mb-0 2xl:max-w-[400px] 2xl:min-w-[400px] 2xl:flex-col 2xl:self-baseline 2xl:pt-10">
-
-
                 {/* review progress bars */}
                 <div className="s:gap-x-6 flex justify-between gap-x-2 max-2xl:w-full 2xl:mb-10">
-
                   <div className="">
                     {ratingNumbers.map((rating) => (
                       <div
@@ -332,7 +323,6 @@ const AllSpecAndReviews = ({
                       </div>
                     ))}
                   </div>
-
 
                   <div className="flex flex-col items-end">
                     {/* reviews averege */}
@@ -374,9 +364,6 @@ const AllSpecAndReviews = ({
                   </div>
                 </div>
 
-
-
-
                 {/* add review */}
                 <div className="flex gap-y-3 rounded-lg p-4 shadow-[0px_1px_4px_rgba(0,0,0,0.08)] max-2xl:min-w-90 max-lg:w-full max-lg:justify-between sm:rounded-2xl lg:min-h-[140px] lg:flex-col lg:p-6 2xl:w-full">
                   <div className="flex items-center gap-x-1.5 sm:gap-x-2 sm:px-2">
@@ -408,11 +395,7 @@ const AllSpecAndReviews = ({
                     </span>
                   </button>
                 </div>
-
-
               </div>
-
-
 
               {/* product fa tilte mobile*/}
               <div className="mr-3 flex lg:hidden">
@@ -422,9 +405,6 @@ const AllSpecAndReviews = ({
                 />
               </div>
 
-
-
-
               {/* reviews header mobile*/}
               <div className="mr-3 mb-3 flex items-center gap-x-3 lg:mr-5 lg:mb-5 2xl:hidden">
                 <span className="bg-custom-primary size-3 rounded-full border border-[#919ebc] max-lg:hidden"></span>
@@ -432,9 +412,6 @@ const AllSpecAndReviews = ({
                   نظرات کاربران
                 </span>
               </div>
-
-              
-              
             </div>
           </Element>
         </div>
@@ -476,11 +453,9 @@ const AllSpecAndReviews = ({
             </div>
           </div>
 
-
           {/* seller info */}
 
           <div className="mt-8 mr-4.5 flex flex-col gap-x-3 bg-transparent">
-
             <div className="border-b border-b-[#d3d8e4] pb-3">
               <div className="flex items-center pb-2">
                 <span className="">
@@ -508,7 +483,6 @@ const AllSpecAndReviews = ({
               </div>
             </div>
 
-
             <div className="flex items-center pt-3 pb-1">
               <span className="">
                 <BadgeCheck color="#3b5388" size={20} />
@@ -517,9 +491,6 @@ const AllSpecAndReviews = ({
                 {convertToPersianNumber(18)} ماه گارانتی شرکتی
               </span>
             </div>
-
-
-
           </div>
 
           {/* price and qty */}

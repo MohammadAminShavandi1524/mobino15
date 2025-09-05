@@ -13,11 +13,11 @@ interface OrderbarProps {
   products: Product[] | undefined | null;
   setFilters: SetValues<{
     sort: ParserBuilder<
-      "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"
+      "TheLatest" | "HighestPrice" | "LowestPrice" | "BiggestDiscount"
     >;
   }>;
   sorts:
-    | "MostPopular"
+    | "TheLatest"
     | "HighestPrice"
     | "LowestPrice"
     | "BiggestDiscount"
@@ -38,7 +38,7 @@ const Orderbar = ({
   const [isfiltersModalOpened, setIsfiltersModalOpened] = useState(false);
 
   const handleSortChange = (
-    value: "MostPopular" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
+    value: "TheLatest" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
   ) => {
     if (sorts === value) {
       setFilters({ sort: null });
@@ -50,7 +50,7 @@ const Orderbar = ({
   };
 
   const sortOptions = [
-    { label: "محبوب‌ترین‌ها", value: "MostPopular" },
+    { label: "جدیدترین", value: "TheLatest" },
     { label: "بیشترین قیمت", value: "HighestPrice" },
     { label: "کم ترین قیمت", value: "LowestPrice" },
     { label: "بیشترین تخفیف", value: "BiggestDiscount" },
@@ -70,8 +70,8 @@ const Orderbar = ({
         setIsfiltersModalOpened={setIsfiltersModalOpened}
         activePage={activePage}
       />
-      <div className="w-full bg-white max-lg:sticky max-lg:top-0 max-lg:z-5 max-lg:px-4 max-lg:py-4 ">
-        <div className="lg:mb-6 flex items-center justify-between rounded-lg bg-[#e9ecf2] text-[12px] max-lg:px-4 lg:px-0 lg:pr-[14px] lg:pl-6">
+      <div className="w-full bg-white max-lg:sticky max-lg:top-0 max-lg:z-5 max-lg:px-4 max-lg:py-4">
+        <div className="flex items-center justify-between rounded-lg bg-[#e9ecf2] text-[12px] max-lg:px-4 lg:mb-6 lg:px-0 lg:pr-[14px] lg:pl-6">
           {/* pc orderbar */}
           <>
             {/* orders */}
@@ -94,7 +94,7 @@ const Orderbar = ({
                       onClick={() =>
                         handleSortChange(
                           sort.value as
-                            | "MostPopular"
+                            | "TheLatest"
                             | "HighestPrice"
                             | "LowestPrice"
                             | "BiggestDiscount",
@@ -121,7 +121,7 @@ const Orderbar = ({
           {/* mobile order bar */}
           <>
             {/* order modal and filter sidebar */}
-            <div className="flex gap-x-6 s:gap-x-8 lg:hidden">
+            <div className="s:gap-x-8 flex gap-x-6 lg:hidden">
               {/* filter sidebar */}
               <button
                 onClick={() => setIsfiltersModalOpened(true)}
@@ -145,7 +145,7 @@ const Orderbar = ({
               </button>
             </div>
             {/* total products */}
-            <div className="flex gap-x-1 lg:hidden max-lg:py-3">
+            <div className="flex gap-x-1 max-lg:py-3 lg:hidden">
               <span>{convertToPersianNumber(productslength)}</span>
               <span>کالا</span>
             </div>

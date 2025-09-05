@@ -232,7 +232,7 @@ export const params = {
     clearOnDefault: true,
   }),
   sort: parseAsStringLiteral([
-    "MostPopular",
+    "TheLatest",
     "HighestPrice",
     "LowestPrice",
     "BiggestDiscount",
