@@ -3,6 +3,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, AnimatePresence, scale } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useBreakpoints } from "@/hooks/useBreakPoint";
 
 interface AboutUsPageProps {}
 
@@ -269,20 +270,20 @@ const AboutUsPage = ({}: AboutUsPageProps) => {
   }, []);
 
   return (
-    <div className="mt-4 flex flex-col lg:mx-auto lg:w-[90%] lg:max-w-[1920px] lg:px-6">
-      <div className="grid grid-cols-20 pt-4 pb-70">
-        <div className="col-span-9 flex flex-col justify-center gap-y-4 pt-6 pl-10">
+    <div className="s:px-8 mt-4 flex flex-col px-6 lg:mx-auto lg:w-[90%] lg:max-w-[1920px] lg:px-6">
+      <div className="pb-30 lg:grid lg:grid-cols-20 lg:pb-70">
+        <div className="flex flex-col gap-y-4 pt-8 max-lg:w-full lg:col-span-9 lg:pt-16.5 lg:pl-12 xl:pl-16 2xl:pl-20">
           {/* title */}
-          <div className="text-custom-primary mb-2 text-[36px] font-bold">
+          <div className="text-custom-primary mb-2 text-2xl font-bold lg:text-[32px] 2xl:text-[36px]">
             درباره پروژه
           </div>
-          <div className="text-justify text-xl leading-8 text-gray-700">
+          <div className="text-justify text-base leading-8 text-gray-700 lg:text-lg 2xl:text-xl">
             این وب‌سایت به‌عنوان یک پروژه‌ی شخصی طراحی و توسعه داده شده است تا
             نمونه‌ای از یک فروشگاه اینترنتی مدرن و مقیاس‌پذیر را نمایش دهد. در
             ساخت این پروژه از جدیدترین تکنولوژی‌ها و ابزارهای روز استفاده شده تا
             علاوه بر سرعت و کارایی، تجربه کاربری روان و ساده‌ای فراهم شود.
           </div>
-          <div className="text-justify text-xl leading-8 text-gray-700">
+          <div className="text-justify text-base leading-8 text-gray-700 lg:text-lg 2xl:text-xl">
             در فرآیند توسعه، تلاش شده از جدیدترین تکنولوژی‌ها و ابزارهای روز
             استفاده شود تا علاوه بر افزایش سرعت بارگذاری و بهینه‌سازی برای
             موتورهای جستجو (SEO)، یک رابط کاربری ساده، جذاب و واکنش‌گرا در
@@ -291,9 +292,9 @@ const AboutUsPage = ({}: AboutUsPageProps) => {
         </div>
 
         {/* image */}
-        <div className="col-span-11 flex justify-center pt-20">
+        <div className="hidden items-center justify-center pt-20 lg:col-span-11 lg:flex">
           <motion.div
-            className="relative h-[392px] w-[700px] overflow-hidden shadow-2xl"
+            className="relative overflow-hidden shadow-2xl lg:h-[280px] lg:w-[500px] xl:h-[336px] xl:w-[600px] 2xl:h-[392px] 2xl:w-[700px]"
             style={{ perspective: "1200px", borderRadius: "2%" }}
             whileHover={{
               rotateY: 18,
@@ -339,7 +340,7 @@ const AboutUsPage = ({}: AboutUsPageProps) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-20 gap-x-14 pb-20">
+      <div className="flex flex-col pb-20 max-lg:gap-y-14 lg:grid lg:grid-cols-20 lg:gap-x-10 2xl:gap-x-14">
         <ProjectSpecTable
           Options={TechnologiesUsedOptions}
           title="تکنولوژی‌های مورد استفاده"
@@ -392,21 +393,25 @@ const ProjectSpecTable = ({
   hoveredIndex,
   setHoveredIndex,
 }: ProjectSpecTableProps) => {
+  const { sm } = useBreakpoints();
+
   return (
-    <div className="col-span-10 flex flex-col gap-y-7">
-      <div className="mr-3 text-2xl font-medium text-[#333333]">{title}</div>
+    <div className="flex flex-col gap-y-5 lg:col-span-10 2xl:gap-y-7">
+      <div className="mr-3 text-[22px] font-medium text-[#333333] lg:text-xl 2xl:text-2xl">
+        {title}
+      </div>
 
       <div
         className={cn(
-          "grid grid-cols-2 gap-x-4 gap-y-4 rounded-xl border border-[#d7dee0] p-6",
-          openedTech && "grid-cols-1",
+          "grid grid-cols-1 gap-x-4 gap-y-4 rounded-xl border border-[#d7dee0] p-4 xss:p-5 sm:grid-cols-2 2xl:p-6",
+          openedTech && "grid-cols-1 sm:grid-cols-1",
         )}
       >
         {Options.map((opt, index) => {
           const isSelected = opt.index === openedTech;
           const isHoverd = opt.index === hoveredIndex;
 
-          if (openedTech && !isSelected) return null;
+          if (openedTech && sm && !isSelected) return null;
 
           return (
             <motion.div
@@ -424,7 +429,7 @@ const ProjectSpecTable = ({
                 onMouseEnter={() => setHoveredIndex(opt.index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className={cn(
-                  "flex cursor-pointer items-center justify-center px-8 py-6 text-xl",
+                  "flex cursor-pointer items-center justify-center px-6 py-4 text-[22px] lg:text-lg 2xl:px-8 2xl:py-6 2xl:text-xl",
                   isSelected ? "rounded-t-2xl" : "rounded-2xl",
                 )}
                 style={{
@@ -455,7 +460,7 @@ const ProjectSpecTable = ({
                       duration: 0.5,
                       ease: "easeInOut",
                     }}
-                    className="max-h-[210px] flex-1 overflow-hidden overflow-y-hidden bg-[#f3f8fd] p-6 text-justify text-lg/relaxed text-[#222222]"
+                    className="s:p-6 s:text-lg/relaxed flex-1 overflow-hidden overflow-y-hidden bg-[#f3f8fd] p-4 text-justify text-base/relaxed text-[#222222] lg:max-h-[275px] xl:max-h-[250px] 2xl:max-h-[210px]"
                   >
                     {opt.content}
                   </motion.div>
