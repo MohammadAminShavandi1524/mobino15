@@ -96,6 +96,26 @@ export function isDarkColor(hex: string): boolean {
   return luminance < 140; // هرچی کمتر باشه، تیره‌تره
 }
 
+export function invertHex(hex: string) {
+  // اگر # اول هست حذفش کن
+  if (hex.startsWith("#")) {
+    hex = hex.slice(1);
+  }
+
+  // تبدیل هر کانال RGB
+  const r = 255 - parseInt(hex.slice(0, 2), 16);
+  const g = 255 - parseInt(hex.slice(2, 4), 16);
+  const b = 255 - parseInt(hex.slice(4, 6), 16);
+
+  // برگرداندن به hex و بزرگ کردن حروف
+  return (
+    "#" +
+    r.toString(16).padStart(2, "0") +
+    g.toString(16).padStart(2, "0") +
+    b.toString(16).padStart(2, "0")
+  ).toUpperCase();
+}
+
 export function shuffle<T>(array: T[]): T[] {
   const result = [...array];
   for (let i = result.length - 1; i > 0; i--) {

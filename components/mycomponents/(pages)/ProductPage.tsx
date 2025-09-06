@@ -16,7 +16,7 @@ import {
   convertToPersianNumber,
   getColorInfo,
   getDiscountPercent,
-  isDarkColor,
+  invertHex,
 } from "@/lib/utils";
 
 import BreadCrump from "@/components/mycomponents/BreadCrump";
@@ -184,11 +184,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                       {matchedAvailableProducts.map((p, index) => {
                         const isSelected = p.color === TheProduct.color;
 
-                        const checkColor = isDarkColor(
-                          getColorInfo(p.color).hex,
-                        )
-                          ? "#fff"
-                          : "#000";
+                        const checkColor = invertHex(getColorInfo(p.color).hex);
 
                         return (
                           <div
@@ -201,6 +197,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
                                 "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
                                 isSelected && "border-[#14a0de]",
                               )}
+                              style={{
+                                borderColor: isSelected
+                                  ? checkColor
+                                  : "#d7dee0",
+                              }}
                             >
                               <div
                                 className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"
@@ -311,13 +312,11 @@ const ProductPage = ({ product }: ProductPageProps) => {
                   <span>{getColorInfo(TheProduct.color).label}</span>
                 </div>
 
-                <div className="flex justify-end w-fit flex-row-reverse gap-x-3 gap-y-3 flex-wrap">
+                <div className="flex w-fit flex-row-reverse flex-wrap justify-end gap-x-3 gap-y-3">
                   {matchedAvailableProducts.map((p, index) => {
                     const isSelected = p.color === TheProduct.color;
 
-                    const checkColor = isDarkColor(getColorInfo(p.color).hex)
-                      ? "#fff"
-                      : "#000";
+                    const checkColor = invertHex(getColorInfo(p.color).hex);
 
                     return (
                       <div
@@ -330,6 +329,9 @@ const ProductPage = ({ product }: ProductPageProps) => {
                             "flex items-center justify-between self-baseline rounded-[6px] border border-[#d7dee0] p-[4px]",
                             isSelected && "border-[#14a0de]",
                           )}
+                          style={{
+                            borderColor: isSelected ? checkColor : "#d7dee0",
+                          }}
                         >
                           <div
                             className="flex size-4.5 items-center justify-center rounded-[6px] border border-[#d7dee0] 2xl:size-5"

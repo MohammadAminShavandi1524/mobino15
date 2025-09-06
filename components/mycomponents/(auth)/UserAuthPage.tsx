@@ -9,6 +9,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import UserRegisterForm from "./UserRegisterForm";
 import UserLoginForm from "./UserLoginForm";
+import { redirect } from "next/navigation";
 
 interface UserAuthPageProps {}
 
@@ -23,9 +24,9 @@ const UserAuthPage = ({}: UserAuthPageProps) => {
   const trpc = useTRPC();
   const user = useSuspenseQuery(trpc.auth.session.queryOptions()).data.user;
 
-  // if (user) {
-  //   redirect("/");
-  // }
+  if (user) {
+    redirect("/");
+  }
 
   return (
     <div className="s:bg-gradient-to-br s:from-[#9f7aea] s:via-[#5d54a4] s:to-[#1a2a6c] max-s:flex max-s:justify-center relative min-h-screen w-full px-8 py-10">

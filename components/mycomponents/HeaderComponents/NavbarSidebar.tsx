@@ -165,7 +165,10 @@ const NavbarSidebar = ({
             >
               <Link
                 href={`/${activeCategory.name}`}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setActiveCategory(null);
+                  setIsOpen(false);
+                }}
                 className="mr-4 min-h-10 rounded-md px-4 py-2 font-semibold text-[#333]"
                 style={
                   activeCategory
