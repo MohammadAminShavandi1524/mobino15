@@ -3,7 +3,7 @@ import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 
 import z from "zod";
 import { PaginatedDocs, Where } from "payload";
-import { getMainImageUrl, normalizeText, shuffle } from "@/lib/utils";
+import { getMainImageUrl, normalizeText } from "@/lib/utils";
 import { TRPCError } from "@trpc/server";
 
 export const productsRouter = createTRPCRouter({

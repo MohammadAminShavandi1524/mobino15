@@ -8,7 +8,6 @@ import { loadSlim } from "@tsparticles/slim";
 const ParticlesBackground = () => {
   const [init, setInit] = useState(false);
 
-  // این فقط یکبار اجرا میشه
   useEffect(() => {
     initParticlesEngine(async (engine: Engine) => {
       await loadSlim(engine);

@@ -437,7 +437,7 @@ export const getMainImageUrl = (product: Product) => {
 };
 
 const sortOptions = [
-  { label: "محبوب‌ترین‌ها", value: "MostPopular" },
+  { label: "جدیدترین", value: "TheLatest" },
   { label: "بیشترین قیمت", value: "HighestPrice" },
   { label: "کم ترین قیمت", value: "LowestPrice" },
   { label: "بیشترین تخفیف", value: "BiggestDiscount" },
@@ -446,18 +446,15 @@ const sortOptions = [
 export const getSortLabel = (value: string | null) => {
   if (value === null) return "انتخاب نشده";
   const option = sortOptions.find((opt) => opt.value === value);
-  return option ? option.label : null; // یا یه مقدار پیش‌فرض مثل "" برگردون
+  return option ? option.label : null;
 };
 
-
-
-
 export function normalizeText(text: string) {
-        return text
-          .replace(/ي/g, "ی")
-          .replace(/ك/g, "ک")
-          .replace(/\u200c/g, " ")
-          .replace(/آ/g, "[آا]")
-          .replace(/^ا/, "[آا]")
-          .trim();
-      }
+  return text
+    .replace(/ي/g, "ی")
+    .replace(/ك/g, "ک")
+    .replace(/\u200c/g, " ")
+    .replace(/آ/g, "[آا]")
+    .replace(/^ا/, "[آا]")
+    .trim();
+}

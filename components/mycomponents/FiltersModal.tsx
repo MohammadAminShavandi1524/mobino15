@@ -40,8 +40,6 @@ const FiltersModal = ({
     setTempFilters(filtersWithoutSort);
   }, [isfiltersModalOpened]);
 
-  type ProductFilters = ReturnType<typeof useProductFilters>[0];
-
   const hasActiveFilters = Object.values(Tempfilters).some(
     (value) =>
       value !== null &&
@@ -74,24 +72,20 @@ const FiltersModal = ({
     );
   };
 
-  const onChange = (key: keyof typeof filters, value: unknown) => {
-    setFilters({ ...filters, [key]: value });
-  };
-
   const onSubmit = () => {
+    setIsfiltersModalOpened(false);
     setFilters(Tempfilters);
     setTempFilters(filtersWithoutSort);
-    setIsfiltersModalOpened(false);
   };
 
   return (
-    <AnimatePresence>
+    <>
       {isfiltersModalOpened && (
-        <motion.div
-          initial={{ x: "100%", opacity: 0, scale: 0.95 }}
-          animate={{ x: 0, opacity: 1, scale: 1 }}
-          exit={{ x: "100%", opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+        <div
+          // initial={{ x: "100%", opacity: 0, scale: 0.95 }}
+          // animate={{ x: 0, opacity: 1, scale: 1 }}
+          // exit={{ x: "100%", opacity: 0, scale: 0.95 }}
+          // transition={{ duration: 0.25, ease: "easeOut" }}
           className="fixed top-0 right-0 z-[500] flex h-full max-h-[1080px] min-h-fit w-full min-w-screen flex-col bg-[#fcfeff]"
         >
           {/* header */}
@@ -196,9 +190,9 @@ const FiltersModal = ({
               انصراف
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 

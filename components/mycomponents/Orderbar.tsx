@@ -5,9 +5,11 @@ import { Product } from "@/payload-types";
 import { ArrowDownWideNarrow, SlidersHorizontal } from "lucide-react";
 import { ParserBuilder, SetValues } from "nuqs";
 import { PaginatedDocs } from "payload";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import OrderBarModal from "./OrderBarModal";
 import FiltersModal from "./FiltersModal";
+import { useProductFilters } from "@/hooks/useProductFilter";
+import { useSearchParams } from "next/navigation";
 
 interface OrderbarProps {
   products: Product[] | undefined | null;
@@ -37,16 +39,19 @@ const Orderbar = ({
   const [isOrderbarModalOpened, setIsOrderbarModalOpened] = useState(false);
   const [isfiltersModalOpened, setIsfiltersModalOpened] = useState(false);
 
+  const searchParams = useSearchParams();
+  const queryString = useMemo(() => searchParams.toString(), [searchParams]);
+
+  useEffect(() => {
+    setIsOrderbarModalOpened(false);
+    setIsfiltersModalOpened(false);
+  }, [queryString]);
+
   const handleSortChange = (
     value: "TheLatest" | "HighestPrice" | "LowestPrice" | "BiggestDiscount",
   ) => {
-    if (sorts === value) {
-      setFilters({ sort: null });
-      setIsOrderbarModalOpened(false);
-    } else {
-      setFilters({ sort: value });
-      setIsOrderbarModalOpened(false);
-    }
+    setFilters({ sort: sorts === value ? null : value });
+    setIsOrderbarModalOpened(false);
   };
 
   const sortOptions = [
