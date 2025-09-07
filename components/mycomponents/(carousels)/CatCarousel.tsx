@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-
 const categoriesCarouselOptions = [
   {
     img: "/categoriesCarousel/iphoneCat.webp",
@@ -60,10 +59,10 @@ const categoriesCarouselOptions = [
     href: "/mobile/XiaomiPhone",
   },
 ];
-
+// autoplay interval={7000}
 const CatCarousel = () => {
   return (
-    <Carousel autoplay interval={7000} className="">
+    <Carousel className="">
       <CarouselContent className="ml-0 flex justify-between">
         {categoriesCarouselOptions.map((option, index) => {
           return (
@@ -78,10 +77,10 @@ const CatCarousel = () => {
                 <div className="flex size-[90px] items-center justify-center rounded-full border border-[#14a0de] lg:size-32 lg:group-hover:border-3">
                   <div className="size-[79px] overflow-hidden rounded-full lg:size-28">
                     <div className="flex size-[79px] items-center justify-center overflow-hidden rounded-full border-1 border-[#c7cbdb] lg:size-[112px]">
-                      <div  className="relative size-[55px] lg:size-[79px]">
+                      <div className="relative size-[55px] lg:size-[79px]">
                         <Image
                           className={cn(
-                            "transition-all lg:object-cover lg:group-hover:scale-115",
+                            "transform-gpu transition-transform duration-300 ease-out lg:object-cover lg:group-hover:scale-115",
                           )}
                           src={option.img}
                           alt={option.label}

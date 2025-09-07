@@ -28,7 +28,7 @@ const ProductsCarouselLayout = ({
   isAfino,
 }: ProductsCarouselLayoutProps) => {
   const { lg } = useBreakpoints();
-
+   if(products.length < 3) return <></>
   return (
     <div
       className={cn(

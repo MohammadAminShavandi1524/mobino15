@@ -162,10 +162,9 @@ const CartPage = () => {
     return (
       <div className="3xl:gap-x-10 s:px-6 relative mt-4 flex max-w-[1920px] grid-cols-20 flex-col gap-x-8 gap-y-10 pt-4 sm:px-6 md:px-8 lg:mx-auto lg:w-[90%] lg:px-8 xl:flex-row xl:px-10 2xl:px-20">
         {/* main content */}
-        <div className="flex flex-col">
+        <div className="flex w-full flex-col">
           {/* header */}
           <div className="s:px-4 max-s:border-b-6 max-s:border-b-[#d3d8e4] max-s:border-double xss:px-6 max-s:pb-4 flex items-center justify-between px-4">
-
             <div className="flex items-center gap-x-2 md:gap-x-3">
               <div className="text-base font-medium max-md:pt-0.5 md:text-lg 2xl:text-xl">
                 سبد خرید شما
@@ -519,7 +518,7 @@ const CartPage = () => {
                                 disabled={
                                   productCount(product) >= product.quantity
                                 }
-                                className="flex size-8 md:size-9 cursor-pointer items-center justify-center rounded-sm border border-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] disabled:cursor-default disabled:border disabled:border-[#f6f6f6] disabled:text-[#d0d0d0] disabled:opacity-50"
+                                className="flex size-8 cursor-pointer items-center justify-center rounded-sm border border-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)] disabled:cursor-default disabled:border disabled:border-[#f6f6f6] disabled:text-[#d0d0d0] disabled:opacity-50 md:size-9"
                               >
                                 <span className="max-md:hidden">
                                   <Plus size={22} color="#385086" />
@@ -548,7 +547,7 @@ const CartPage = () => {
                                     ? removeProduct(product.id)
                                     : decreaseProductCount(product.id)
                                 }
-                                className="flex size-8 md:size-9 cursor-pointer items-center justify-center rounded-sm shadow-[0px_1px_4px_rgba(0,0,0,0.08)]"
+                                className="flex size-8 cursor-pointer items-center justify-center rounded-sm shadow-[0px_1px_4px_rgba(0,0,0,0.08)] md:size-9"
                               >
                                 {productCount(product) === 1 ? (
                                   <>
@@ -580,8 +579,6 @@ const CartPage = () => {
               );
             })}
           </div>
-
-
         </div>
         {/* aside */}
         <div className="flex flex-col self-baseline max-xl:w-full xl:sticky xl:top-5 xl:min-w-90 2xl:min-w-100">
