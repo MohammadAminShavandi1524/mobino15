@@ -5,7 +5,10 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
 import TomanLogo from "../TomanLogo";
-import { formatWithThousandSeparator } from "@/lib/utils";
+import {
+  formatWithThousandSeparator,
+  persianToEnglishNumber,
+} from "@/lib/utils";
 
 interface PricefilterProps {
   minPrice: string | null;
@@ -37,12 +40,18 @@ const Pricefilter = ({
   }, [maxPrice]);
 
   const handleLocalMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
+    const numericValue = persianToEnglishNumber(e.target.value).replace(
+      /\D/g,
+      "",
+    );
     setLocalMinPrice(numericValue);
   };
 
   const handleLocalMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
+    const numericValue = persianToEnglishNumber(e.target.value).replace(
+      /\D/g,
+      "",
+    );
     setLocalMaxPrice(numericValue);
   };
 

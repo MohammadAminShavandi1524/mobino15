@@ -2,9 +2,9 @@
 
 import dynamic from "next/dynamic";
 
-import { Category, Product, Tenant, User } from "@/payload-types";
+import { Category, Product, Review, Tenant, User } from "@/payload-types";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTRPC } from "@/trpc/client";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -87,6 +87,16 @@ const ProductPage = ({ product }: ProductPageProps) => {
     trpc.reviews.getOne.queryOptions({ product: product }),
   );
 
+  const [reviews, setReviews] = useState<Review[] | undefined>([]);
+
+  useEffect(() => {
+    if (productReviews) {
+      setReviews(productReviews);
+    }
+  }, [productReviews]);
+
+  
+
   const [MPProductShowcase, setMPProductsShowcase] = useState<
     Product | undefined
   >();
@@ -134,6 +144,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           isReviewModalOpen={isReviewModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           userId={user?.id}
+          setReviews={setReviews}
         />
 
         <div className="xss:px-6 s:px-8 flex flex-col px-4 lg:px-0">
@@ -169,7 +180,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
                 <div className="mb-10 self-baseline">
                   {/* product rating */}
                   <ProductRating
-                    productReviews={productReviews}
+                    productReviews={reviews}
                     rating={matchedProductByOrder.rating}
                   />
 
@@ -390,7 +401,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
         <AllSpecAndReviews
           product={TheProduct}
-          productReviews={productReviews}
+          productReviews={reviews}
           setIsModalOpen={setIsModalOpen}
           setIsReviewModalOpen={setIsReviewModalOpen}
           setIsMobileModalOpen={setIsMobileModalOpen}
@@ -476,6 +487,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
         isReviewModalOpen={isReviewModalOpen}
         setIsReviewModalOpen={setIsReviewModalOpen}
         userId={user?.id}
+        setReviews={setReviews}
       />
       <div className="xss:px-6 s:px-8 flex flex-col px-4 lg:px-0">
         {/* bread crump */}
@@ -642,7 +654,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
       <AllSpecAndReviews
         product={matchedProductByOrder}
-        productReviews={productReviews}
+        productReviews={reviews}
         setIsModalOpen={setIsModalOpen}
         setIsReviewModalOpen={setIsReviewModalOpen}
         setIsMobileModalOpen={setIsMobileModalOpen}

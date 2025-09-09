@@ -114,22 +114,6 @@ const ProductList = ({
                     </div>
                   );
 
-                const LowStockTag = (
-                  <div className="flex items-center gap-x-0.5 text-[10px] text-[#e6123d]">
-                    <Box size={16} />
-                    <span>{convertToPersianNumber(product.quantity)}</span>
-                    <span>عدد باقی مانده</span>
-                  </div>
-                );
-
-                const RatingTag = (
-                  <div className="flex items-center gap-x-0.5">
-                    <Star color="#f1c21b" size={16} />
-                    <span className="text-[10px] text-[#666666]">
-                      {convertToPersianNumber(averageRating)}
-                    </span>
-                  </div>
-                );
                 return (
                   <Link
                     href={`/products/${product.order}_${product.label}`}
@@ -173,18 +157,18 @@ const ProductList = ({
                               {isGamingLaptop ? (
                                 laptopGamingTag || MonitorGamingTag
                               ) : hasLowStock ? (
-                                LowStockTag
+                                <LowStockTag qty={product.quantity} />
                               ) : (
                                 <div></div>
                               )}
-                              {RatingTag}
+                              <RatingTag averageRating={averageRating} />
                             </>
                           ) : (
                             <>
                               {hasLowStock ? (
                                 <>
                                   {laptopGamingTag || MonitorGamingTag}{" "}
-                                  {LowStockTag}
+                                  <LowStockTag qty={product.quantity} />
                                 </>
                               ) : (
                                 <>
@@ -274,7 +258,7 @@ const ProductList = ({
                                     className={cn(
                                       "size-2.5 rounded-full shadow-sm",
 
-                                      product.color === "White" &&
+                                      p.color === "White" &&
                                         "border border-[#b4b4b4]",
                                     )}
                                     style={{
@@ -351,27 +335,9 @@ const ProductList = ({
                     </div>
                   );
 
-                const LowStockTag = (
-                  <div className="flex items-center gap-x-0.5 text-[10px] text-[#e6123d]">
-                    <Box size={16} />
-                    <span>{convertToPersianNumber(product.quantity)}</span>
-                    <span>عدد باقی مانده</span>
-                  </div>
-                );
-
-                const RatingTag = (
-                  <div className="flex items-center gap-x-0.5">
-                    <Star color="#f1c21b" fill="#f1c21b" size={16} />
-                    <span className="text-[10px] text-[#666666]">
-                      {convertToPersianNumber(averageRating)}
-                    </span>
-                  </div>
-                );
-
                 return (
                   <Link
                     href={`/products/${product.order}_${product.label}`}
-                   
                     className={cn(
                       "relative min-h-[480px] w-full rounded-md bg-white shadow-[0px_1px_4px_rgba(0,0,0,0.08)]",
                       !isAfinoPage && "pt-[50px]",
@@ -410,7 +376,7 @@ const ProductList = ({
                                     className={cn(
                                       "size-2.5 rounded-full shadow-sm",
                                       index === 3 && "hidden",
-                                      product.color === "White" &&
+                                      p.color === "White" &&
                                         "border border-[#b4b4b4]",
                                     )}
                                     style={{
@@ -470,18 +436,18 @@ const ProductList = ({
                           {isGamingLaptop ? (
                             laptopGamingTag || MonitorGamingTag
                           ) : hasLowStock ? (
-                            LowStockTag
+                            <LowStockTag qty={product.quantity} />
                           ) : (
                             <div></div>
                           )}
-                          {RatingTag}
+                          <RatingTag averageRating={averageRating} />
                         </>
                       ) : (
                         <>
                           {hasLowStock ? (
                             <>
                               {laptopGamingTag || MonitorGamingTag}{" "}
-                              {LowStockTag}
+                              <LowStockTag qty={product.quantity} />
                             </>
                           ) : (
                             <>
@@ -568,3 +534,24 @@ const ProductList = ({
   );
 };
 export default ProductList;
+
+const LowStockTag = ({ qty }: { qty: number }) => {
+  return (
+    <div className="flex items-center gap-x-0.5 text-[10px] text-[#e6123d]">
+      <Box size={16} />
+      <span>{convertToPersianNumber(qty)}</span>
+      <span>عدد باقی مانده</span>
+    </div>
+  );
+};
+
+const RatingTag = ({ averageRating }: { averageRating: number }) => {
+  return (
+    <div className="flex items-center gap-x-0.5">
+      <Star color="#f1c21b" fill="#f1c21b" size={14} />
+      <span className="text-[14px] text-[#666666] pt-[3px]">
+        {convertToPersianNumber(averageRating)}
+      </span>
+    </div>
+  );
+};

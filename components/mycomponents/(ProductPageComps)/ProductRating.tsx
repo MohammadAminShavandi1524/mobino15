@@ -4,6 +4,7 @@ import { convertToPersianNumber } from "@/lib/utils";
 import { Product, Review } from "@/payload-types";
 import { Star } from "lucide-react";
 import { Link, Element } from "react-scroll";
+import AnimatedCount from "../AnimatedCount";
 
 interface ProductRatingProps {
   rating: number;
@@ -11,6 +12,7 @@ interface ProductRatingProps {
 }
 
 const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
+  console.log("🚀 ~ ProductRating ~ productReviews:", productReviews);
   const ratings: number[] = [];
   productReviews?.forEach((review) => {
     ratings.push(review.rating);
@@ -21,21 +23,22 @@ const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
 
   return (
     <div className="mb-4 flex items-center gap-x-0.5 self-baseline border-b border-b-[#d3d8e4] pb-4 pl-6">
-      <div className="ml-0.5 2xl:text-base text-sm">
-        {productReviews && productReviews?.length > 0
-          ? "امتیاز کاربران :"
-          : "نظرات کاربران :"}
-      </div>
-      {productReviews && productReviews?.length > 0 && (
+      <div className="ml-0.5 text-sm 2xl:text-base">نظرات کاربران :</div>
+      {productReviews && productReviews.length > 0 && (
         <>
           <div className="pb-0.5">
             <Star color="#f1c21b" size={16} />
           </div>
           <div className="text-[14px]">
-            {convertToPersianNumber(averageRating)}
+            <AnimatedCount
+              count={averageRating ?? 0} 
+              duration={1.5}
+              decimals={1}
+            />
           </div>
         </>
       )}
+
       <Link
         to="reviews"
         offset={-30}
@@ -44,12 +47,17 @@ const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
         duration={500}
         className="mr-1 cursor-pointer text-[12px] text-[#0079b1]"
       >
-        {productReviews && productReviews?.length > 0 && <span>(</span>}
-        <span className="ml-0.25 text-xs 2xl:text-sm">
-          {productReviews && convertToPersianNumber(productReviews?.length)}
+        {/* تعداد نظرات */}
+        <span>
+          (
+          <span className="ml-0.25 text-xs 2xl:text-sm">
+            <AnimatedCount
+              count={productReviews?.length ?? 0} // اگر undefined بود صفر
+              duration={1.5}
+            />
+          </span>{" "}
+          <span className="text-xs 2xl:text-sm">نظر</span>)
         </span>
-        <span className="text-xs 2xl:text-sm">نظر</span>
-        {productReviews && productReviews?.length > 0 && <span>)</span>}
       </Link>
     </div>
   );

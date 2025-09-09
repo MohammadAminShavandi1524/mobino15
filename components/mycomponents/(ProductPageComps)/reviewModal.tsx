@@ -7,7 +7,7 @@ import {
   getColorInfo,
   getMainImageUrl,
 } from "@/lib/utils";
-import { Product } from "@/payload-types";
+import { Product, Review } from "@/payload-types";
 import { CircleCheck, CircleX, Percent, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,6 +39,7 @@ interface ReviewModalProps {
   setIsReviewModalOpen: Dispatch<SetStateAction<boolean>>;
   product: Product;
   userId?: string;
+  setReviews: Dispatch<SetStateAction<Review[] | undefined>>;
 }
 
 const formSchema = z.object({
@@ -56,13 +57,12 @@ const ReviewModal = ({
   setIsReviewModalOpen,
   product,
   userId,
+  setReviews,
 }: ReviewModalProps) => {
   const { sm } = useBreakpoints();
-
   const mainImageUrl = getMainImageUrl(product);
 
   const trpc = useTRPC();
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "all", // this will show the form errors immediently
@@ -85,9 +85,10 @@ const ReviewModal = ({
         toast.error(error.message);
       },
 
-      onSuccess: () => {
+      onSuccess: (newReview) => {
         setIsReviewModalOpen(false);
-        router.refresh();
+
+        setReviews((prev = []) => [...prev, newReview]);
       },
     }),
   );
@@ -113,9 +114,9 @@ const ReviewModal = ({
               sm
                 ? {
                     type: "spring",
-                    stiffness: 240, // کمتر = حرکت نرم‌تر و کندتر
-                    damping: 27, // کمی بالاتر برای کاهش لرزش اضافه
-                    mass: 1, // سنگین‌تر = حرکت کندتر
+                    stiffness: 240,
+                    damping: 27,
+                    mass: 1,
                   }
                 : { duration: 0.3, ease: "easeOut" }
             }

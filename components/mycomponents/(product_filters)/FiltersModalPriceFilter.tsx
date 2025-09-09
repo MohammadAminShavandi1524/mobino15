@@ -5,7 +5,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
 
 import TomanLogo from "../TomanLogo";
-import { formatWithThousandSeparator } from "@/lib/utils";
+import { formatWithThousandSeparator, persianToEnglishNumber } from "@/lib/utils";
 
 interface FiltersModalPriceFilterProps {
   minPrice: string | null;
@@ -14,6 +14,8 @@ interface FiltersModalPriceFilterProps {
   onMaxPriceChange: (value: string) => void;
   isPriceFilterActive: boolean;
 }
+
+
 
 const FiltersModalPriceFilter = ({
   maxPrice,
@@ -36,12 +38,18 @@ const FiltersModalPriceFilter = ({
   }, [maxPrice]);
 
   const handleLocalMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
+    const numericValue = persianToEnglishNumber(e.target.value).replace(
+      /\D/g,
+      "",
+    );
     setLocalMinPrice(numericValue);
   };
 
   const handleLocalMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = e.target.value.replace(/\D/g, "");
+    const numericValue = persianToEnglishNumber(e.target.value).replace(
+      /\D/g,
+      "",
+    );
     setLocalMaxPrice(numericValue);
   };
 
@@ -81,10 +89,10 @@ const FiltersModalPriceFilter = ({
         </div>
 
         <div className="mb-6 flex flex-col items-center">
-          <div className="flex items-center gap-x-1 w-full">
-            <span className="text-[18px] text-[#81858b] shrink-0">از</span>
+          <div className="flex w-full items-center gap-x-1">
+            <span className="shrink-0 text-[18px] text-[#81858b]">از</span>
             <input
-              className="caret-custom-primary h-[54px] w-full  lg:max-w-[150px] border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none"
+              className="caret-custom-primary h-[54px] w-full border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none lg:max-w-[150px]"
               dir="ltr"
               type="text"
               value={formatWithThousandSeparator(localMinPrice)}
@@ -92,12 +100,12 @@ const FiltersModalPriceFilter = ({
               onBlur={handleMinBlur}
               onFocus={(e) => e.target.select()}
             />
-            <TomanLogo className="shrink-0"/>
+            <TomanLogo className="shrink-0" />
           </div>
-          <div className="flex items-center gap-x-1 w-full">
+          <div className="flex w-full items-center gap-x-1">
             <span className="text-[18px] text-[#81858b]">تا</span>
             <input
-              className="caret-custom-primary h-[54px] w-full  lg:max-w-[150px] border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none"
+              className="caret-custom-primary h-[54px] w-full border-0 border-b px-[10px] text-[24px] font-extrabold text-[#3f4064] placeholder-[#3f4064] focus:ring-0 focus:outline-none lg:max-w-[150px]"
               dir="ltr"
               placeholder="∞"
               type="text"
@@ -106,7 +114,7 @@ const FiltersModalPriceFilter = ({
               onBlur={handleMaxBlur}
               onFocus={(e) => e.target.select()}
             />
-            <TomanLogo className="shrink-0"/>
+            <TomanLogo className="shrink-0" />
           </div>
         </div>
       </div>

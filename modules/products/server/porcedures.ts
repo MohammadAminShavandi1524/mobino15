@@ -117,7 +117,7 @@ export const productsRouter = createTRPCRouter({
         depth: 1,
         pagination: true,
         where,
-        limit: 150,
+        limit: 250,
       });
 
       // ** مرتب سازی ها

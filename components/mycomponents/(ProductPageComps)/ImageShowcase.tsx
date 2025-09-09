@@ -31,13 +31,13 @@ const ImageShowcase = ({ product }: ImageShowcaseProps) => {
  
 
   return (
-    <div className="3xl:px-[50px] relative col-span-10 flex h-full flex-col gap-y-[70px] rounded-l-xl pt-[60px] pr-4 pb-0 pl-0 xl:col-span-9 xl:px-6 xl:pb-5 justify-center 2xl:px-10 2xl:pt-[60px] 2xl:pb-[42px]">
+    <div className="3xl:px-[50px] relative col-span-10 flex h-full flex-col gap-y-[70px] rounded-l-xl pt-[60px] pr-4 pb-0 pl-0 xl:col-span-9 xl:px-6 xl:pb-5 justify-center 2xl:px-10 2xl:pt-[60px] 2xl:pb-[42px] ">
       {/* like share and reviews btns */}
       <div className="absolute top-[3px] left-[50%] z-2  -translate-x-[50%]  2xl:top-[20px]">
         <LikeAndShareBtns/>
       </div>
       {/* main image */}
-      <div className="flex w-full items-center justify-center">
+      <div className="flex w-full items-center justify-center pt-2 2xl:pt-4">
         <div>
           <Image
             className={cn("")}

@@ -31,6 +31,7 @@ import { Progress } from "@/components/ui/progress";
 
 import { Link, Element } from "react-scroll";
 import { useBreakpoints } from "@/hooks/useBreakPoint";
+import AnimatedCount from "../AnimatedCount";
 
 interface AllSpecAndReviewsProps {
   product: Product;
@@ -327,15 +328,19 @@ const AllSpecAndReviews = ({
                   <div className="flex flex-col items-end">
                     {/* reviews averege */}
                     <div className="mb-3 text-[32px]/[32px] font-extrabold text-[#385086] sm:text-[40px]/[40px]">
-                      {convertToPersianNumber(
-                        productReviews && productReviews?.length > 0
-                          ? averageRating
-                          : 0,
+                      {productReviews && productReviews?.length > 0 ? (
+                        <AnimatedCount
+                          count={averageRating}
+                          decimals={1}
+                          duration={1.5}
+                        />
+                      ) : (
+                        0
                       )}
                     </div>
                     {/* reviews count */}
                     <div className="mb-3 flex items-center gap-x-1 text-sm sm:text-base">
-                      <span>{convertToPersianNumber(ratings.length)}</span>
+                      <AnimatedCount count={ratings.length} duration={1.5} />
                       <span className="">نظر</span>
                     </div>
                     {/* reviews star averege  */}

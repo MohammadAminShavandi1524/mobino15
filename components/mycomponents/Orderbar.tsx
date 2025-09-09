@@ -11,6 +11,9 @@ import FiltersModal from "./FiltersModal";
 import { useProductFilters } from "@/hooks/useProductFilter";
 import { useSearchParams } from "next/navigation";
 
+import { animate, motion, useMotionValue, useTransform } from "framer-motion";
+import AnimatedCount from "./AnimatedCount";
+
 interface OrderbarProps {
   products: Product[] | undefined | null;
   setFilters: SetValues<{
@@ -36,6 +39,7 @@ const Orderbar = ({
   productslength,
   activePage,
 }: OrderbarProps) => {
+  
   const [isOrderbarModalOpened, setIsOrderbarModalOpened] = useState(false);
   const [isfiltersModalOpened, setIsfiltersModalOpened] = useState(false);
 
@@ -118,7 +122,8 @@ const Orderbar = ({
             </div>
             {/* total products */}
             <div className="hidden gap-x-1 lg:flex">
-              <span>{convertToPersianNumber(productslength)}</span>
+              
+              <AnimatedCount count={productslength} duration={2} />
               <span>کالا</span>
             </div>
           </>
@@ -151,7 +156,7 @@ const Orderbar = ({
             </div>
             {/* total products */}
             <div className="flex gap-x-1 max-lg:py-3 lg:hidden">
-              <span>{convertToPersianNumber(productslength)}</span>
+              <AnimatedCount count={productslength} duration={2} />
               <span>کالا</span>
             </div>
           </>
