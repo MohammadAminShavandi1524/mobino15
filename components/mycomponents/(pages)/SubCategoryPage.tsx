@@ -31,6 +31,8 @@ const SubCategoryPage = ({ category, subcategory }: SubCategoryPageProps) => {
     trpc.reviews.getSubReviews.queryOptions({ Id: id }),
   ).data;
 
+  // console.log("🚀 ~ SubCategoryPage ~ subReviews:", subReviews)
+
   const products = useSuspenseQuery(
     trpc.products.getSubCatProducts.queryOptions({ ...filters, Id: id }),
   ).data.docs;

@@ -77,7 +77,7 @@ const ProductList = ({
             {finalProducts &&
               finalProducts.map((product, index) => {
                 const averageRating = getProductRating(product);
-
+               
                 const mainImageUrl = getMainImageUrl(product);
 
                 const discountPercent = getDiscountPercent(product);
@@ -549,7 +549,7 @@ const RatingTag = ({ averageRating }: { averageRating: number }) => {
   return (
     <div className="flex items-center gap-x-0.5">
       <Star color="#f1c21b" fill="#f1c21b" size={14} />
-      <span className="text-[14px] text-[#666666] pt-[3px]">
+      <span className="pt-[3px] text-[14px] text-[#666666]">
         {convertToPersianNumber(averageRating)}
       </span>
     </div>

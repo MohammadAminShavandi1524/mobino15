@@ -12,7 +12,6 @@ interface ProductRatingProps {
 }
 
 const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
-  console.log("🚀 ~ ProductRating ~ productReviews:", productReviews);
   const ratings: number[] = [];
   productReviews?.forEach((review) => {
     ratings.push(review.rating);
@@ -31,7 +30,7 @@ const ProductRating = ({ rating, productReviews }: ProductRatingProps) => {
           </div>
           <div className="text-[14px]">
             <AnimatedCount
-              count={averageRating ?? 0} 
+              count={averageRating ?? 0}
               duration={1.5}
               decimals={1}
             />

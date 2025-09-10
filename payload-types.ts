@@ -275,270 +275,268 @@ export interface Product {
   offPrice?: number | null;
   category: string | Category;
   subCategory: string | Category;
-  images?:
-    | {
-        url: string;
-        isMain?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
+  images: {
+    url: string;
+    isMain?: boolean | null;
+    id?: string | null;
+  }[];
   quantity: number;
   rating: number;
   introduction: string;
   available?: boolean | null;
-  productType?:
-    | (
-        | {
-            brand: 'apple' | 'samsung' | 'xiaomi' | 'honor' | 'realme';
-            model: string;
-            /**
-             * دسته بندی گوشی
-             */
-            classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
-            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
-            storage: '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
-            /**
-             * سیستم عامل
-             */
-            os: 'ios' | 'android' | 'harmony';
-            batteryCapacity: number;
-            mainCameraResolution: number;
-            FrontCameraResolution: number;
-            /**
-             * نوع پردازنده - CPU
-             */
-            chipset: string;
-            /**
-             * تعداد هسته پردازشگر
-             */
-            cpuCores: '1' | '2' | '4' | '6' | '8' | '9' | '10';
-            /**
-             * پردازنده گرافیکی - GPU :
-             */
-            gpu: string;
-            simCount: '1' | '2';
-            dimensions: string;
-            weight: number;
-            isRegistered?: boolean | null;
-            displayType: 'ips' | 'oled' | 'amoled' | 'super_amoled' | 'dynamic_amoled';
-            displaySize: string;
-            displayResolution: string;
-            refreshRate: number;
-            network: '2g' | '3g' | '4g' | '5g';
-            waterResistant?: boolean | null;
-            accessories?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'mobile';
-          }
-        | {
-            brand: 'apple' | 'asus' | 'hp' | 'lenovo' | 'msi' | 'dell' | 'acer';
-            model: string;
-            ram:
-              | '2gb'
-              | '4gb'
-              | '8gb'
-              | '12gb'
-              | '16gb'
-              | '20gb'
-              | '28gb'
-              | '32gb'
-              | '36gb'
-              | '40gb'
-              | '44gb'
-              | '48gb'
-              | '64gb'
-              | '128gb';
-            AbilityToUpgradeLaptopRAM?: boolean | null;
-            storages: {
-              type: 'ssd' | 'hdd';
-              capacity: '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb' | '4tb';
-              id?: string | null;
-            }[];
-            AbilityToUpgradeLaptopStorage?: boolean | null;
-            usage: 'صنعتی' | 'حرفه ای' | 'مالتی مدیا' | 'دسکتاپ' | 'طراحی' | 'عمومی' | 'گیمینگ';
-            cpuSeries:
-              | 'intel_i3'
-              | 'intel_i5'
-              | 'intel_i7'
-              | 'intel_i9'
-              | 'intel_pentium'
-              | 'intel_celeron'
-              | 'intel_xeon'
-              | 'amd_ryzen3'
-              | 'amd_ryzen5'
-              | 'amd_ryzen7'
-              | 'amd_ryzen9'
-              | 'amd_athlon'
-              | 'amd_fx'
-              | 'apple_m1'
-              | 'apple_m2'
-              | 'apple_m3'
-              | 'other';
-            CPUProcessorGeneration: '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14';
-            gpuInfo: {
-              series:
-                | 'nvidia_mx'
-                | 'nvidia_gtx'
-                | 'nvidia_rtx'
-                | 'nvidia_quadro'
-                | 'amd_rx'
-                | 'amd_vega'
-                | 'amd_pro'
-                | 'intel_iris_xe'
-                | 'intel_uhd'
-                | 'apple_m_series_gpu'
-                | 'other';
-              model: string;
-            };
-            DisplaySize: number;
-            screenResolution:
-              | 'hd1366x768'
-              | 'fullHd1920x1080'
-              | 'qhd2560x1440'
-              | 'wqhd2560x1600'
-              | 'threeK2880x1620'
-              | 'retina2880x1800'
-              | 'uhd4k3840x2160'
-              | 'wuxga1920x1200'
-              | 'wxga1280x800'
-              | 'qhdPlus3200x1800'
-              | 'fiveK5120x2880'
-              | 'sixK6016x3384';
-            accessories: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'laptop';
-          }
-        | {
-            brand: 'apple' | 'samsung' | 'microsoft' | 'xiaomi';
-            model: string;
-            /**
-             * دسته‌بندی تبلت
-             */
-            classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
-            ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb' | '32gb' | '64gb' | '128gb';
-            storage: '32gb' | '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb';
-            os: 'ipados' | 'android' | 'windows';
-            batteryCapacity: number;
-            mainCameraResolution?: number | null;
-            frontCameraResolution?: number | null;
-            chipset: string;
-            cpuCores: '2' | '4' | '6' | '8' | '10' | '12' | '14';
-            gpu: string;
-            simSupport: 'none' | '1' | '2';
-            dimensions: string;
-            weight: number;
-            isRegistered?: boolean | null;
-            displayType: 'ips' | 'tft' | 'oled' | 'amoled';
-            displaySize: string;
-            displayResolution: string;
-            refreshRate?: number | null;
-            network: 'wifi' | '4g' | '5g';
-            waterResistant?: boolean | null;
-            accessories?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'tablet';
-          }
-        | {
-            brand: 'beats' | 'razer' | 'anker' | 'tsco';
-            /**
-             * آیا هدفون دارای قابلیت حذف نویز فعال است؟
-             */
-            noiseCancelling?: boolean | null;
-            bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
-            /**
-             * مدت زمان بازدهی باتری با استفاده معمول (بر حسب ساعت)
-             */
-            batteryLife: number;
-            chargingTime: number;
-            connectionType: 'wired' | 'wireless' | 'both';
-            weight: number;
-            dimensions: string;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'headphone';
-          }
-        | {
-            brand: 'apple' | 'samsung' | 'xiaomi';
-            /**
-             * سازگاری با نسخه‌های خاص سیستم‌عامل‌ها
-             */
-            compatibility: (
-              | 'android_6_up'
-              | 'android_8_up'
-              | 'android_10_up'
-              | 'android_11_up'
-              | 'android_12_up'
-              | 'ios_12_up'
-              | 'ios_11_up'
-              | 'ios_13_up'
-              | 'ios_18_up'
-              | 'harmony'
-            )[];
-            batteryCapacity: number;
-            persianLanguageSupport?: boolean | null;
-            callSupport?: boolean | null;
-            /**
-             * مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...
-             */
-            sensors: (
-              | 'gps'
-              | 'accelerometer'
-              | 'heart_rate_monitor'
-              | 'spo2'
-              | 'gyroscope'
-              | 'barometer'
-              | 'compass'
-              | 'ambient_light'
-              | 'temperature'
-              | 'ecg'
-            )[];
-            dimensions: string;
-            weight: number;
-            strapMaterial: 'silicone' | 'metal' | 'leather' | 'nylon' | 'mixed';
-            displayShape: 'round' | 'rectangular' | 'square';
-            bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
-            chargingTime: number;
-            batteryLife: number;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'smartwatch';
-          }
-        | {
-            brand: 'asus' | 'samsung' | 'dell' | 'lg' | 'acer';
-            usageType: ('industrial' | 'trading' | 'office' | 'gaming' | 'design')[];
-            displaySize: number;
-            panelType: 'ips' | 'tn' | 'va' | 'oled' | 'mini_led';
-            screenType: 'flat' | 'curved';
-            resolution: '1080p' | '1440p' | '4k' | '5k' | '8k';
-            /**
-             * تعداد رنگ‌های قابل نمایش توسط مانیتور، مثلاً 16.7 میلیون رنگ
-             */
-            colorCount: '16.7 میلیون رنگ' | '1.07 میلیارد رنگ' | '256 هزار رنگ' | '1 میلیارد رنگ';
-            responseTime: number;
-            accessories?:
-              | (
-                  | 'کابل برق'
-                  | 'کابل HDMI'
-                  | 'دفترچه راهنما'
-                  | 'پایه قابل تنظیم'
-                  | 'کابل DisplayPort'
-                  | 'کابل VGA'
-                  | 'کابل USB'
-                  | 'آداپتور برق'
-                  | 'کابل DVI'
-                  | 'محافظ صفحه'
-                  | 'خروجی هدفون'
-                )[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'monitor';
-          }
-      )[]
-    | null;
+  productType: (
+    | {
+        brand: 'apple' | 'samsung' | 'xiaomi' | 'honor' | 'realme';
+        model: string;
+        /**
+         * دسته بندی گوشی
+         */
+        classification: 'Economic' | 'FlagBearer' | 'MidRange';
+        ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb';
+        storage: '64gb' | '128gb' | '256gb' | '512gb' | '1tb';
+        /**
+         * سیستم عامل
+         */
+        os: 'ios' | 'android' | 'harmony';
+        batteryCapacity: number;
+        mainCameraResolution: number;
+        FrontCameraResolution: number;
+        /**
+         * نوع پردازنده - CPU
+         */
+        chipset: string;
+        /**
+         * تعداد هسته پردازشگر
+         */
+        cpuCores: '1' | '2' | '4' | '6' | '8' | '9' | '10';
+        /**
+         * پردازنده گرافیکی - GPU :
+         */
+        gpu: string;
+        simCount: '1' | '2';
+        dimensions: string;
+        weight: number;
+        isRegistered?: boolean | null;
+        displayType: 'ips' | 'oled' | 'amoled' | 'super_amoled' | 'dynamic_amoled';
+        displaySize: string;
+        displayResolution: string;
+        refreshRate: number;
+        network: '2g' | '3g' | '4g' | '5g';
+        waterResistant?: boolean | null;
+        accessories?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'mobile';
+      }
+    | {
+        brand: 'apple' | 'asus' | 'hp' | 'lenovo' | 'msi' | 'dell' | 'acer';
+        model: string;
+        ram:
+          | '2gb'
+          | '4gb'
+          | '8gb'
+          | '12gb'
+          | '16gb'
+          | '20gb'
+          | '28gb'
+          | '32gb'
+          | '36gb'
+          | '40gb'
+          | '44gb'
+          | '48gb'
+          | '64gb'
+          | '128gb';
+        AbilityToUpgradeLaptopRAM?: boolean | null;
+        storages: {
+          type: 'ssd' | 'hdd';
+          capacity: '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb' | '4tb';
+          id?: string | null;
+        }[];
+        AbilityToUpgradeLaptopStorage?: boolean | null;
+        usage: 'صنعتی' | 'حرفه ای' | 'مالتی مدیا' | 'دسکتاپ' | 'طراحی' | 'عمومی' | 'گیمینگ';
+        cpuSeries:
+          | 'intel_i3'
+          | 'intel_i5'
+          | 'intel_i7'
+          | 'intel_i9'
+          | 'intel_pentium'
+          | 'intel_celeron'
+          | 'intel_xeon'
+          | 'amd_ryzen3'
+          | 'amd_ryzen5'
+          | 'amd_ryzen7'
+          | 'amd_ryzen9'
+          | 'amd_athlon'
+          | 'amd_fx'
+          | 'apple_m1'
+          | 'apple_m2'
+          | 'apple_m3'
+          | 'apple_m4'
+          | 'apple_m5'
+          | 'other';
+        CPUProcessorGeneration: '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14';
+        gpuInfo: {
+          series:
+            | 'nvidia_mx'
+            | 'nvidia_gtx'
+            | 'nvidia_rtx'
+            | 'nvidia_quadro'
+            | 'amd_rx'
+            | 'amd_vega'
+            | 'amd_pro'
+            | 'intel_iris_xe'
+            | 'intel_uhd'
+            | 'apple_m_series_gpu'
+            | 'other';
+          model: string;
+        };
+        DisplaySize: number;
+        screenResolution:
+          | 'hd1366x768'
+          | 'fullHd1920x1080'
+          | 'qhd2560x1440'
+          | 'wqhd2560x1600'
+          | 'threeK2880x1620'
+          | 'retina2880x1800'
+          | 'uhd4k3840x2160'
+          | 'wuxga1920x1200'
+          | 'wxga1280x800'
+          | 'qhdPlus3200x1800'
+          | 'fiveK5120x2880'
+          | 'sixK6016x3384';
+        accessories: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'laptop';
+      }
+    | {
+        brand: 'apple' | 'samsung' | 'microsoft' | 'xiaomi';
+        model: string;
+        /**
+         * دسته‌بندی تبلت
+         */
+        classification?: ('Economic' | 'FlagBearer' | 'MidRange') | null;
+        ram: '3gb' | '4gb' | '6gb' | '8gb' | '12gb' | '16gb' | '32gb' | '64gb' | '128gb';
+        storage: '32gb' | '64gb' | '128gb' | '256gb' | '512gb' | '1tb' | '2tb';
+        os: 'ipados' | 'android' | 'windows';
+        batteryCapacity: number;
+        mainCameraResolution?: number | null;
+        frontCameraResolution?: number | null;
+        chipset: string;
+        cpuCores: '2' | '4' | '6' | '8' | '10' | '12' | '14';
+        gpu: string;
+        simSupport: 'none' | '1' | '2';
+        dimensions: string;
+        weight: number;
+        isRegistered?: boolean | null;
+        displayType: 'ips' | 'tft' | 'oled' | 'amoled';
+        displaySize: string;
+        displayResolution: string;
+        refreshRate?: number | null;
+        network: 'wifi' | '4g' | '5g';
+        waterResistant?: boolean | null;
+        accessories?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'tablet';
+      }
+    | {
+        brand: 'beats' | 'razer' | 'anker' | 'tsco';
+        /**
+         * آیا هدفون دارای قابلیت حذف نویز فعال است؟
+         */
+        noiseCancelling?: boolean | null;
+        bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
+        /**
+         * مدت زمان بازدهی باتری با استفاده معمول (بر حسب ساعت)
+         */
+        batteryLife: number;
+        chargingTime: number;
+        connectionType: 'wired' | 'wireless' | 'both';
+        weight: number;
+        dimensions: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'headphone';
+      }
+    | {
+        brand: 'apple' | 'samsung' | 'xiaomi';
+        /**
+         * سازگاری با نسخه‌های خاص سیستم‌عامل‌ها
+         */
+        compatibility: (
+          | 'android_6_up'
+          | 'android_8_up'
+          | 'android_10_up'
+          | 'android_11_up'
+          | 'android_12_up'
+          | 'ios_12_up'
+          | 'ios_11_up'
+          | 'ios_13_up'
+          | 'ios_18_up'
+          | 'harmony'
+        )[];
+        batteryCapacity: number;
+        persianLanguageSupport?: boolean | null;
+        callSupport?: boolean | null;
+        /**
+         * مانند: GPS، شتاب‌سنج، ضربان قلب، SpO2 و ...
+         */
+        sensors: (
+          | 'gps'
+          | 'accelerometer'
+          | 'heart_rate_monitor'
+          | 'spo2'
+          | 'gyroscope'
+          | 'barometer'
+          | 'compass'
+          | 'ambient_light'
+          | 'temperature'
+          | 'ecg'
+        )[];
+        dimensions: string;
+        weight: number;
+        strapMaterial: 'silicone' | 'metal' | 'leather' | 'nylon' | 'mixed';
+        displayShape: 'round' | 'rectangular' | 'square';
+        bluetoothVersion: '4.0' | '4.1' | '4.2' | '5.0' | '5.1' | '5.2' | '5.3';
+        chargingTime: number;
+        batteryLife: number;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'smartwatch';
+      }
+    | {
+        brand: 'asus' | 'samsung' | 'dell' | 'lg' | 'acer';
+        usageType: ('industrial' | 'trading' | 'office' | 'gaming' | 'design')[];
+        displaySize: number;
+        panelType: 'ips' | 'tn' | 'va' | 'oled' | 'mini_led';
+        screenType: 'flat' | 'curved';
+        resolution: '1080p' | '1440p' | '4k' | '5k' | '8k';
+        /**
+         * تعداد رنگ‌های قابل نمایش توسط مانیتور، مثلاً 16.7 میلیون رنگ
+         */
+        colorCount: '16.7 میلیون رنگ' | '1.07 میلیارد رنگ' | '256 هزار رنگ' | '1 میلیارد رنگ';
+        responseTime: number;
+        accessories?:
+          | (
+              | 'کابل برق'
+              | 'کابل HDMI'
+              | 'دفترچه راهنما'
+              | 'پایه قابل تنظیم'
+              | 'کابل DisplayPort'
+              | 'کابل VGA'
+              | 'کابل USB'
+              | 'آداپتور برق'
+              | 'کابل DVI'
+              | 'محافظ صفحه'
+              | 'خروجی هدفون'
+            )[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'monitor';
+      }
+  )[];
   updatedAt: string;
   createdAt: string;
 }

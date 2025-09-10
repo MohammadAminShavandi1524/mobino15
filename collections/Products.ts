@@ -138,6 +138,7 @@ export const Products: CollectionConfig = {
     {
       name: "images",
       type: "array",
+      required: true,
       label: "image urls",
       fields: [
         {
@@ -191,6 +192,7 @@ export const Products: CollectionConfig = {
     {
       name: "productType",
       type: "blocks",
+      required: true,
       label: "product Type",
 
       blocks: [
@@ -224,6 +226,7 @@ export const Products: CollectionConfig = {
 
             {
               name: "classification",
+              required: true,
               type: "select",
               options: [
                 { label: "اقتصادی", value: "Economic" },
@@ -391,6 +394,7 @@ export const Products: CollectionConfig = {
               name: "isRegistered",
               label: "Registered (رجیستر شده)",
               type: "checkbox",
+              defaultValue: true,
             },
 
             //**         نوع صفحه نمایش         **//
@@ -457,6 +461,7 @@ export const Products: CollectionConfig = {
               name: "waterResistant",
               label: "Water Resistant",
               type: "checkbox",
+              defaultValue: false,
             },
 
             //**         اقلام همراه          **//
@@ -616,6 +621,8 @@ export const Products: CollectionConfig = {
                 { label: "Apple M1", value: "apple_m1" },
                 { label: "Apple M2", value: "apple_m2" },
                 { label: "Apple M3", value: "apple_m3" },
+                { label: "Apple M4", value: "apple_m4" },
+                { label: "Apple M5", value: "apple_m5" },
 
                 // سایر موارد خاص
                 { label: "Other", value: "other" },
@@ -654,7 +661,7 @@ export const Products: CollectionConfig = {
                     { label: "Intel Iris Xe", value: "intel_iris_xe" },
                     { label: "Intel UHD", value: "intel_uhd" },
                     {
-                      label: "Apple M1/M2/M3 GPU",
+                      label: "Apple M1/M2/M3/M4/M5 GPU",
                       value: "apple_m_series_gpu",
                     },
                     { label: "Other", value: "other" },

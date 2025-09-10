@@ -9,18 +9,19 @@ export const reviewsRouter = createTRPCRouter({
   getMany: baseProcedure.query(async ({ ctx, input }) => {
     const reviewsData = await ctx.db.find({
       collection: "reviews",
+      limit: 1000,
       depth: 0,
     });
 
     return reviewsData?.docs || [];
   }),
-//  affino reviews
+  //  affino reviews
 
   getCatReviews: baseProcedure
     .input(
       z.object({
         Id: z.string(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       const products = await ctx.db.find({
@@ -46,10 +47,12 @@ export const reviewsRouter = createTRPCRouter({
       const reviewsData = await ctx.db.find({
         collection: "reviews",
         depth: 0,
+        limit: 1000,
         where: {
           product: { in: productIds },
         },
       });
+     
 
       return reviewsData?.docs || [];
     }),
@@ -58,11 +61,9 @@ export const reviewsRouter = createTRPCRouter({
     .input(
       z.object({
         Id: z.string(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
-     
-      
       const products = await ctx.db.find({
         collection: "products",
         depth: 0,
@@ -73,7 +74,6 @@ export const reviewsRouter = createTRPCRouter({
           },
         },
       });
-      
 
       if (!products || products.totalDocs === 0) {
         throw new TRPCError({
@@ -87,6 +87,7 @@ export const reviewsRouter = createTRPCRouter({
       const reviewsData = await ctx.db.find({
         collection: "reviews",
         depth: 0,
+        limit: 1000,
         where: {
           product: { in: productIds },
         },
@@ -102,6 +103,7 @@ export const reviewsRouter = createTRPCRouter({
 
       const matchedProductsByOrder = await ctx.db.find({
         collection: "products",
+        limit: 100,
         where: {
           order: { equals: Number(orderParam) },
         },

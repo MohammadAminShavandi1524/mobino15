@@ -9,6 +9,7 @@ interface AuthBtnProps {
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>;
 }
 
+
 const AuthBtn = ({ setIsSideBarOpen, user }: AuthBtnProps) => {
   return (
     <Link
@@ -19,7 +20,7 @@ const AuthBtn = ({ setIsSideBarOpen, user }: AuthBtnProps) => {
         user
           ? user.roles?.includes("user")
             ? "/profile"
-            : "admin"
+            : "/admin"
           : "/auth/user"
       }
       className="border-custom-primary block rounded-md border px-2.5 py-1.25 text-[15px] sm:rounded-lg sm:px-4 sm:py-2 lg:min-w-[140px]"

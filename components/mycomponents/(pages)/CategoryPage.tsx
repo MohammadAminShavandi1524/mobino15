@@ -30,6 +30,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
   const catReviews = useSuspenseQuery(
     trpc.reviews.getCatReviews.queryOptions({ Id: id }),
   ).data;
+  // console.log("🚀 ~ CategoryPage ~ catReviews:", catReviews)
 
   const products = useSuspenseQuery(
     trpc.products.getCatProducts.queryOptions({ ...filters, Id: id }),
